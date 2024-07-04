@@ -14,11 +14,15 @@ export default function Home() {
     }
   }, []);
 
-  const handleSubmit = async() => {
+  const handleSubmit = async () => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
     try {
-      const data = {
-        email
-      };
+      const data = { email };
   
       const response = await fetch('/api/user/', {
         method: 'POST',
@@ -30,22 +34,29 @@ export default function Home() {
   
       if (response.ok) {
         setSuccess(true);
+      } else {
+        const errorData = await response.json();
+        alert(errorData.error || 'An unexpected error occurred. Please try again.');
       }
-    }catch(error) {
-
+    } catch (error) {
+      alert('An unexpected error occurred. Please try again.');
+      console.error('Error submitting email:', error);
     }
   }
-
 
   return (
     <div className={styles.MainDiv}>
       <span className={styles.Join}>Join the pre-launch exclusive club to unlock premium access to CoinMarketJob!</span>
       <div style={{display: 'flex', marginTop: '20px'}}>
         <input className={styles.Mail} ref={emailRef} placeholder="Enter email..." 
-        value={email} onChange={(e) => setEmail(e.target.value)} />
+        value={email} onChange={(e) => setEmail(e.target.value)} type="email" />
         <button onClick={handleSubmit}>Submit</button>
       </div>
-      <div style={{height: "30px"}}><span className={styles.SuccessMessage}>{success ? "Successfully joined! You will be notified soon…" : ''}</span></div>
+      <div style={{height: "30px"}}>
+        <span className={styles.SuccessMessage}>
+          {success ? "Successfully joined! You will be notified soon…" : ''}
+        </span>
+      </div>
     </div>
   );
 }
