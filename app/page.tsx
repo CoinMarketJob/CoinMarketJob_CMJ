@@ -3,15 +3,15 @@ import styles from "./page.module.css";
 import React, { useEffect, useRef, useState } from 'react';
 
 export default function Home() {
-  const emailRef = useRef(null);
+  const emailRef = useRef<HTMLInputElement>(null);
 
   const [email, setEmail] = useState<string>("");
   const [success, setSuccess] = useState<boolean>(false);
 
   useEffect(() => {
-    if(emailRef != null){
+    if (emailRef.current) {
       emailRef.current.focus();
-    } 
+    }
   }, []);
 
   const handleSubmit = async() => {
