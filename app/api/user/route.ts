@@ -30,7 +30,7 @@ export async function POST(request: Request) {
 
         return NextResponse.json(user, { status: 201 });
     } catch (error) {
-        console.error('Error creating user:', error);
+        console.log('Error creating user:', error);
         return NextResponse.json({ error: error }, { status: 500 });
     }
 }
