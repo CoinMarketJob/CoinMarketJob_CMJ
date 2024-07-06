@@ -32,6 +32,7 @@
   padding-top: 10px;
   padding-left: 0px;
   border: none;
+  border-radius: 0px;
   border-bottom: 0.3px solid #000000;
   outline: none;
   font-family: 'Inter';
@@ -59,10 +60,18 @@
 .button{
   margin-top: 8px;
   width: 100%;
+  border: 1px solid #000000;
+  border-radius: 2px;
   font-family: 'Inter';
   color: #000000;
 }
 
 .socialMediaX{ 
   margin-right: 5px;
+}
+
+.Footer{
+  font-family: 'Inter';
+  color: #000000;
+  font-size: 6px;
 }
