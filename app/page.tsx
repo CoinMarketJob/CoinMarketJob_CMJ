@@ -73,7 +73,7 @@ export default function Home() {
               <p className={styles.ConnectMinds}>CONNECTING MINDS AND JOBS</p>
               {success ? (<div className={styles.Description}>
                             <div className={styles.DescriptionContentSuccess}>
-                              <span className={styles.SucccessText}>Success! You're on the waitlist</span>
+                              <span className={styles.SucccessText}>Success You're on the waitlist.</span>
                               <p className={styles.DesText}>Refer your friends with the link below to move up!</p>
                               <ReferralLink link={referenceLink} />
                             </div>
@@ -81,7 +81,7 @@ export default function Home() {
                 <div className={styles.Description}>
                   <div className={styles.DescriptionContent}>
                     <span className={styles.JoinClub}>JOIN THE <span className={styles.Launch}>PRE-LAUNCH</span> CLUB</span>
-                    <p className={styles.DescriptionText}>Get exclusive early access and be the first to know when the launch.</p>
+                    <p className={styles.DescriptionText}>Get exclusive early access and be &nbsp;the first to know when the launch.</p>
                     
                     <input className={styles.Mail} ref={emailRef} placeholder="Email" 
                     value={email} onChange={(e) => setEmail(e.target.value)} type="email" />
