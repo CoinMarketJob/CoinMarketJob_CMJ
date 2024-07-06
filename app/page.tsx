@@ -46,11 +46,23 @@ export default function Home() {
 
   return (
     <div className={styles.MainDiv}>
-      <span className={styles.Join}>Join the pre-launch exclusive club to unlock premium access to CoinMarketJob!</span>
-      <div style={{display: 'flex', marginTop: '20px'}}>
-        <input className={styles.Mail} ref={emailRef} placeholder="Enter email..." 
+      <div style={{display: 'flex',height: '5vh', position: 'relative'}}></div>
+      <div style={{display: 'flex',flexDirection: 'column',justifyContent: 'flex-start', width: '90%'}}>
+        <div className={styles.Title}>CoinMarketJob</div>
+        <div style={{display: 'flex',height: '10px', position: 'relative'}}></div>
+        <span className={styles.Join}>CONNECTING MINDS AND JOBS</span> 
+      </div>
+      <div style={{display: 'flex',height: '25vh', position: 'relative'}}></div>
+      <div style={{display: 'flex',height: '140px', position: 'relative'}}></div>
+      <span className={styles.Club}>JOIN THE <span className={styles.Launch}>PRE-LAUNCH</span> CLUB</span> 
+      <span className={styles.Description}>Get exclusive early access and be the first to know when the launch.</span>
+      <div style={{display: 'flex',height: '50px', position: 'relative'}}></div>
+      <div style={{display: 'flex'}}>
+        <input className={styles.Mail} ref={emailRef} placeholder="Email" 
         value={email} onChange={(e) => setEmail(e.target.value)} type="email" />
-        <button onClick={handleSubmit}>Submit</button>
+      </div>
+      <div className={styles.buttonDiv}>
+        <button onClick={handleSubmit} className={styles.button} >Join the waitlist</button>
       </div>
       <div style={{height: "30px"}}>
         <span className={styles.SuccessMessage}>

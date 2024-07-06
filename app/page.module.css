@@ -1,14 +1,29 @@
 .MainDiv {
   width: 100%;
-  height: 50%;
+  height: 100%;
   display: flex;  
-  justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
 .Join{
   font-family: 'Times New Roman', Times, serif;
+  text-align: left;
+  font-size: 13.8px;
+}
+
+.Club{
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.Launch{
+  color: #ccc;
+}
+
+.Description{
+  text-align: center;
+  color: #ccc;
+  width: 220px;
 }
 
 .Mail{
@@ -29,4 +44,18 @@
 .SuccessMessage{
   font-family: 'Times New Roman', Times, serif;
   font-size: 12px;
+}
+
+.Title{
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 33px;
+}
+
+.buttonDiv{
+  width: 171px;
+  margin-top: 8px
+}
+
+.button{
+  width: 100%;
 }
