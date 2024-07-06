@@ -4,7 +4,11 @@ import './ReferralLink.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 
-const ReferralLink = ({ link }) => {
+interface props {
+  link: string;
+}
+
+const ReferralLink:React.FC<props> = ({ link }) => {
   const [copied, setCopied] = useState(false);
 
   const copyToClipboard = () => {

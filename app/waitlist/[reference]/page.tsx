@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import styles from "./page.module.css";
 import React, { useEffect, useRef, useState } from 'react';
