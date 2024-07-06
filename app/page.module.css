@@ -7,13 +7,14 @@
 }
 
 .Join{
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'Inter';
   text-align: left;
-  font-size: 13.8px;
+  color: #ccc;
+  font-size: 19px;
 }
 
 .Club{
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'Inter';
 }
 
 .Launch{
@@ -27,11 +28,13 @@
 }
 
 .Mail{
+  width: 100%;
   padding-top: 10px;
   padding-left: 0px;
   border: none;
   border-bottom: 0.3px solid #000000;
   outline: none;
+  font-family: 'Inter';
 }
 
 
@@ -47,15 +50,19 @@
 }
 
 .Title{
-  font-family: 'Times New Roman', Times, serif;
-  font-size: 33px;
+  font-family: 'Inter';
+  font-size: 29px;
 }
 
-.buttonDiv{
-  width: 171px;
-  margin-top: 8px
-}
+
 
 .button{
+  margin-top: 8px;
   width: 100%;
+  font-family: 'Inter';
+  color: #000000;
+}
+
+.socialMediaX{ 
+  margin-right: 5px;
 }
