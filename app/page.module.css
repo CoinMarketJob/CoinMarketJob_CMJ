@@ -60,6 +60,13 @@
   max-width: 14.5rem;
 }
 
+.DescriptionContentSuccess{
+  max-width: 25rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  padding: 1rem;
+}
+
 .DescriptionText{
   margin-top: 0;
   color: #ccc;
@@ -100,6 +107,15 @@
 
 .socialMediaX{ 
   margin-right: 5px;
+}
+
+.SucccessText{
+  font-family: 'Inter';
+  font-weight: bold;
+}
+
+.DesText{
+  font-family: 'Inter';
 }
 
 

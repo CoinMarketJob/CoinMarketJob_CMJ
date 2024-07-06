@@ -1,22 +1,36 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useEffect, useRef, useState } from 'react';
-import ReferralLink from "./components/ReferenceLink";
+import ReferralLink from "../../components/ReferenceLink";
 
-function encodeEmail(email: string): string {
-  // E-postayı Base64'e çevir
-  const base64 = btoa(email);
-  
-  // Her karakteri ASCII koduna çevir ve birleştir
-  const numberString = base64.split('').map(char => {
-    const code = char.charCodeAt(0);
-    return code.toString().padStart(3, '0');
-  }).join('');
-  
-  return numberString;
+type ReferenceProps = {
+    reference : string
 }
 
-export default function Home() {
+function decodeEmail(encoded: string): string {
+    // Her 3 rakamı bir ASCII koduna çevir
+    const base64 = encoded.match(/.{1,3}/g)?.map(num => {
+      return String.fromCharCode(parseInt(num, 10));
+    }).join('') || '';
+    
+    // Base64'ten geri çözümle
+    return atob(base64);
+  }
+
+  function encodeEmail(email: string): string {
+    // E-postayı Base64'e çevir
+    const base64 = btoa(email);
+    
+    // Her karakteri ASCII koduna çevir ve birleştir
+    const numberString = base64.split('').map(char => {
+      const code = char.charCodeAt(0);
+      return code.toString().padStart(3, '0');
+    }).join('');
+    
+    return numberString;
+  }
+
+const page = ({params}: {params: ReferenceProps}) => {
   const emailRef = useRef<HTMLInputElement>(null);
 
   const [email, setEmail] = useState<string>("");
@@ -37,9 +51,10 @@ export default function Home() {
     }
 
     try {
-      const data = { email };
+      const referenceMail = decodeEmail(params.reference);
+      const data = { email, referenceMail };
   
-      const response = await fetch('/api/user/', {
+      const response = await fetch('/api/user/reference', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -100,3 +115,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default page

@@ -1,0 +1,38 @@
+/* styles/ReferralLink.css */
+.referral-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .referral-link {
+    color: #0070f3;
+    text-decoration: none;
+    word-break: break-all;
+  }
+  
+  .referral-link:hover {
+    text-decoration: underline;
+  }
+  
+  .copy-button {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+    background-color: #0070f3;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .copy-button:hover {
+    background-color: #005bb5;
+  }
+  
