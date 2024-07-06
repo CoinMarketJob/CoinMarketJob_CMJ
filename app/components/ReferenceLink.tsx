@@ -10,6 +10,7 @@ const ReferralLink = ({ link }) => {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(link);
     setCopied(true);
+    alert('Link Copied');
     setTimeout(() => setCopied(false), 2000);
   };
 
