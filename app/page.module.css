@@ -94,6 +94,10 @@
   padding-bottom: 4px;
 }
 
+.button:hover{
+  cursor: pointer;
+}
+
 .socialMediaX{ 
   margin-right: 5px;
 }
