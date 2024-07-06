@@ -1,13 +1,105 @@
 .MainDiv {
   width: 100%;
-  height: 100%;
-  display: flex;  
-  align-items: center;
-  flex-direction: column;
-  overflow-y: visible;
+  height: 83.5vh;
+  padding-top: 8rem;
 }
 
-.Join{
+.Grid{
+  display: grid;
+  width: 100%;
+  min-height: fit-content;
+  height: 100%;
+  align-items: self-start;
+  justify-content: center;
+}
+
+.Content{
+  text-align: center;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 80rem;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.Full{
+  max-width: 28rem;
+}
+
+
+.Title{
+  font-family: 'Inter';
+  font-size: 29px;
+  width: 100%;
+}
+
+.ConnectMinds{
+  font-family: 'Inter';
+  color: #ccc;
+  font-size: 19px;
+}
+
+.Launch{
+  color: #ccc;
+}
+
+.JoinClub{
+  font-family: 'Inter';
+}
+
+.Description{
+  display: grid;
+  place-items: center;
+  text-align: center;
+  margin-top: 8rem;
+}
+
+.DescriptionContent{
+  max-width: 14.5rem;
+}
+
+.DescriptionText{
+  margin-top: 0;
+  color: #ccc;
+}
+
+.Mail{
+  width: 100%;
+  padding-left: 0px;
+  border: none;
+  border-radius: 0px;
+  border-bottom: 0.3px solid #000000;
+  outline: none;
+  font-family: 'Inter';
+  margin-top: 2rem;
+}
+
+
+.Mail:focus{
+  border: none;
+  border-bottom: 0.3px solid #000000;
+  outline: none;
+}
+.button{
+  margin: 0;
+  margin-top: 8px;
+  width: 100%;
+  border-radius: 2px;
+  font-family: 'Inter';
+  border: none;
+  color: #000000;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.socialMediaX{ 
+  margin-right: 5px;
+}
+
+
+/* .Join{
   font-family: 'Inter';
   text-align: left;
   color: #ccc;
@@ -50,10 +142,6 @@
   font-size: 12px;
 }
 
-.Title{
-  font-family: 'Inter';
-  font-size: 29px;
-}
 
 
 
@@ -77,4 +165,4 @@
   font-family: 'Inter';
   color: #000000;
   font-size: 6px;
-}
+} */

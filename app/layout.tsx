@@ -19,7 +19,8 @@ export default function RootLayout({
       </head>
       <body>
         {children}
-        </body>
+        <div className='footer'>© 2024 COINMARKETJOB</div>
+      </body>
     </html>
   );
 }
