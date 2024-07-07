@@ -154,12 +154,12 @@
   
   .button:hover{
     cursor: pointer;
-    background-color: #b1aca866;
+    background-color: #cfccc966;
   }
 
   .button:active{
     cursor: pointer;
-    background-color: #24222099;
+    background-color: #24222066;
   }
   
   .socialMediaX{ 
