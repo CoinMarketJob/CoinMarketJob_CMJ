@@ -18,10 +18,9 @@ export default function RootLayout({
         <link rel="shortcut icon" href="/favicon.ico" />
       </head>
       <body>
-        <div style={{flex: 1}}>
+        <div>
           {children}
         </div>
-        <div className='footer'>© 2024 COINMARKETJOB</div>
       </body>
     </html>
   );

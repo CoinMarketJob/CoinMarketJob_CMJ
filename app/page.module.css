@@ -1,7 +1,55 @@
+.footer{
+  display: flex;
+  height: 1rem;
+  min-height: fit-content;
+  justify-content: flex-start;
+  align-items: flex-end;
+  width: 100%;
+  font-family: 'Inter';
+  color: #000000;
+  font-size: 6px;   
+}
+
 .MainDiv {
   width: 100%;
   height: 83.5vh;
   padding-top: 8rem;
+}
+
+@media (min-height: 0px) and (max-height: 200px) {
+  .MainDiv {
+    height: 240vh; /* Örnek bir değer */
+  }
+}
+
+@media (min-height: 201px) and (max-height: 251px) {
+  .MainDiv {
+    height: 180vh; /* Örnek bir değer */
+  }
+}
+
+@media (min-height: 251px) and (max-height: 350px) {
+  .MainDiv {
+    height: 140vh; /* Örnek bir değer */
+  }
+}
+
+@media (min-height: 351px) and (max-height: 600px) {
+  .MainDiv {
+    height: 120vh; /* Örnek bir değer */
+  }
+}
+
+@media (min-height: 601px) and (max-height: 900px) {
+  .MainDiv {
+    height: 83.5vh; /* Örnek bir değer */
+  }
+}
+
+@media (min-height: 901px) {
+  .MainDiv {
+    height: 83.5vh; /* Başlangıç değeri */
+  }
 }
 
 .Grid{

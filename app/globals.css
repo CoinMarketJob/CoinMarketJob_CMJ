@@ -6,14 +6,4 @@ body
   overflow-y: auto;
 }
 
-.footer{ display: flex;
-  height: 1rem;
-  min-height: fit-content;
-  justify-content: flex-start;
-  align-items: flex-end;
-  width: 100%;
-  font-family: 'Inter';
-  color: #000000;
-  font-size: 6px; 
-  
-}
+
