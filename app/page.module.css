@@ -105,6 +105,12 @@
 
 .button:hover{
   cursor: pointer;
+  background-color: #24222066;
+}
+
+.button:active{
+  cursor: pointer;
+  background-color: #24222099;
 }
 
 .socialMediaX{ 

@@ -35,4 +35,29 @@
   .copy-button:hover {
     background-color: #005bb5;
   }
+
+  .CopyIcon{
+    color: #24222073;
+  }
+
+  .CopyIcon:hover{
+    cursor: pointer;    
+  }
+
+  .CopyIcon{
+    color: #000;
+  }
+
+  .hover-div{
+    margin-left: 1rem;
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+  }
+
+  .CopyIcon:hover .hover-div{
+    background-color: #2422200D;  
+  }
   

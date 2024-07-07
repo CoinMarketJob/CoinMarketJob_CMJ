@@ -72,11 +72,10 @@ const page = ({params}: {params: ReferenceProps}) => {
         setSuccess(true);
       } else {
         const errorData = await response.json();
-        if(errorData.error == 'Email already exists'){
+        if(errorData.error == 'Email already exists'){         
           const encryptedEmail = encodeEmail(email);
-          navigator.clipboard.writeText("https://www.coinmarketjob.com/waitlist/" + encryptedEmail);
-          alert('Email already exists. Your reference link: ' + "https://www.coinmarketjob.com/waitlist/" + encryptedEmail + " Your reference link has been copied to the clipboard.");
-
+          setReferenceLink("https://www.coinmarketjob.com/waitlist/" + encryptedEmail);
+          setSuccess(true);
         }else{
           alert(errorData.error || 'An unexpected error occurred. Please try again.');
         }

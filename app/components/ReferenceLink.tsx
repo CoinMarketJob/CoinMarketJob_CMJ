@@ -3,6 +3,7 @@ import { useState } from 'react';
 import './ReferralLink.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
+import Icon from './Icon';
 
 interface props {
   link: string;
@@ -11,7 +12,7 @@ interface props {
 const ReferralLink:React.FC<props> = ({ link }) => {
   const [copied, setCopied] = useState(false);
 
-  const copyToClipboard = () => {
+  const copyToClipboard = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     navigator.clipboard.writeText(link);
     setCopied(true);
     alert('Link Copied');
@@ -23,7 +24,7 @@ const ReferralLink:React.FC<props> = ({ link }) => {
       <a href={link} className="referral-link">
         {link}
       </a>
-      <FontAwesomeIcon onClick={copyToClipboard} style={{width: 16, height: 16, overflow: 'visible', marginLeft: '1rem'}} icon={faLink}/>
+      <Icon onClick={copyToClipboard} />
     </div>
   );
 };
