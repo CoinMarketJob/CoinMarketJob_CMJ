@@ -1,10 +1,11 @@
 'use client'
 import styles from "./page.module.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 export default function Home() {
 
   const [password, setPassword] = useState<string>("");
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   const handleDownload = async () => {
     try {
@@ -28,11 +29,11 @@ export default function Home() {
         link.click();
         link.remove();
       }
-      else{
-        if(response.status === 401){
+      else {
+        if (response.status === 401) {
           alert('Incorrect Password.');
         }
-        else{
+        else {
           alert('An unexpected error occurred');
         }
       }
@@ -42,9 +43,15 @@ export default function Home() {
     }
   }
 
+  useEffect(() => {
+    if (passwordRef.current) {
+      passwordRef.current.focus();
+    }
+  }, [])
+
   return (
     <main className={styles.main}>
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className={styles.password} placeholder="Password" />
+      <input ref={passwordRef} type="password" value={password} onChange={(e) => setPassword(e.target.value)} className={styles.password} placeholder="Password" />
       <button onClick={handleDownload} className={styles.button}>Download the files</button>
     </main>
   );
