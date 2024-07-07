@@ -44,7 +44,7 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <input value={password} onChange={(e) => setPassword(e.target.value)} className={styles.password} placeholder="Password" />
+      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className={styles.password} placeholder="Password" />
       <button onClick={handleDownload} className={styles.button}>Download the files</button>
     </main>
   );
