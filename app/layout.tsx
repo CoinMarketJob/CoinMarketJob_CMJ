@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "<c/acc> Career accelerator platform.",
-  description: "CoinMarketJob",
+  description: "invest.coinmarketjob.com",
 };
 
 export default function RootLayout({
@@ -17,11 +17,7 @@ export default function RootLayout({
         <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet' />
         <link rel="shortcut icon" href="/favicon.ico" />
       </head>
-      <body>
-        <div>
-          {children}
-        </div>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
