@@ -7,7 +7,7 @@
   width: 100%;
   font-family: 'Inter';
   color: #000000;
-  font-size: 6px;   
+  font-size: 9px;   
 }
 
 .MainDiv {
@@ -153,16 +153,16 @@
 
 .button:hover{
   cursor: pointer;
-  background-color: #24222066;
+  background-color: #b1aca866;
 }
 
 .button:active{
   cursor: pointer;
-  background-color: #24222099;
+  background-color: #24222066;
 }
 
 .socialMediaX{ 
-  margin-right: 5px;
+  margin-right: 10px;
 }
 
 .SucccessText{

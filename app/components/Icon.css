@@ -16,10 +16,15 @@
     background-color: #2422200D;
 }
 .icon-hover:active{
-    background-color: white;
+    background-color: transparent;
 }
 .icon-hover:active .svg-icon{
     stroke: #24222099;
+}
+
+.icon-hover:active .svg-icon-social {
+    fill: #24222099;
+    fill-opacity: 1;
 }
 
 
