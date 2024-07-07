@@ -24,7 +24,7 @@ export default function Home() {
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', 'files.zip');
+        link.setAttribute('download', 'CmjFiles.zip');
         document.body.appendChild(link);
         link.click();
         link.remove();
@@ -50,9 +50,23 @@ export default function Home() {
   }, [])
 
   return (
-    <main className={styles.main}>
-      <input ref={passwordRef} type="password" value={password} onChange={(e) => setPassword(e.target.value)} className={styles.password} placeholder="Password" />
-      <button onClick={handleDownload} className={styles.button}>Download the files</button>
-    </main>
+    <div>
+      <main className={styles.main}>
+        <div className={styles.Grid}>
+          <div className={styles.Content}>            
+            <div className={styles.Full}>
+              <div style={{width: '234px'}}>
+                <input ref={passwordRef} type="password" value={password} onChange={(e) => setPassword(e.target.value)} className={styles.password} placeholder="Password" />
+              </div>
+              <div>
+                <button onClick={handleDownload} className={styles.button}>Download the files</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      
+      <div className={styles.footer}>© 2024 COINMARKETJOB</div>
+    </div>
   );
 }
