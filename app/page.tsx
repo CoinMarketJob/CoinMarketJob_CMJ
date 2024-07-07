@@ -24,7 +24,7 @@ export default function Home() {
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', 'CmjFiles.zip');
+        link.setAttribute('download', 'CoinMarketJob_docs.zip');
         document.body.appendChild(link);
         link.click();
         link.remove();
