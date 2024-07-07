@@ -104,7 +104,8 @@ const page = ({params}: {params: ReferenceProps}) => {
                   <div className={styles.Description}>
                     <div className={styles.DescriptionContent}>
                       <span className={styles.JoinClub}>JOIN THE <span className={styles.Launch}>PRE-LAUNCH</span> CLUB</span>
-                      <p className={styles.DescriptionText}>Get exclusive early access and be &nbsp;the first to know when the launch.</p>
+                      <p className={styles.DescriptionText}>Get exclusive early access and <span style={{marginRight: '1.2px'}}></span> be the first to know when the launch.</p>
+
                       
                       <input className={styles.Mail} ref={emailRef} placeholder="Email" 
                       value={email} onChange={(e) => setEmail(e.target.value)} type="email" />
