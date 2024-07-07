@@ -51,8 +51,12 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <input ref={passwordRef} type="password" value={password} onChange={(e) => setPassword(e.target.value)} className={styles.password} placeholder="Password" />
-      <button onClick={handleDownload} className={styles.button}>Download the files</button>
+      <div>
+        <input ref={passwordRef} type="password" value={password} onChange={(e) => setPassword(e.target.value)} className={styles.password} placeholder="Password" />
+      </div>
+      <div>
+        <button onClick={handleDownload} className={styles.button}>Download the files</button>
+      </div>
     </main>
   );
 }

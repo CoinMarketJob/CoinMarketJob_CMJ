@@ -6,4 +6,18 @@ body {
 }
 
 body {
+  display: grid;
+  justify-content: center;
+}
+
+.footer{
+  display: flex;
+  height: 1rem;
+  min-height: fit-content;
+  justify-content: flex-start;
+  align-items: flex-end;
+  width: 100vw;
+  font-family: 'Inter';
+  color: #000000;
+  font-size: 9px;   
 }
