@@ -6,7 +6,7 @@ export async function POST(request: Request) {
   const body = await request.json();
   const { password } = body;
 
-  if (password !== '@CMJ2024x') {
+  if (password !== 'ETHCC2024') {
     return NextResponse.json({ error: 'Incorrect password.' }, { status: 401 });
   }
 
