@@ -159,7 +159,8 @@
 
   .button:active{
     cursor: pointer;
-    background-color: #24222066;
+    background-color: #000000;
+    color: #FFFFFF;
   }
   
   .socialMediaX{ 
