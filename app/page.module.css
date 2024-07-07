@@ -80,6 +80,8 @@
     border: none;
     border-radius: 0px;
     outline: 0;
+    height: 20px;
+    width: 100%;
     border-bottom: 1px solid #000000;
     padding-left: 0px;
     margin: 0;

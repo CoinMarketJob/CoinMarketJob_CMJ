@@ -17,7 +17,9 @@ export default function RootLayout({
         <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet' />
         <link rel="shortcut icon" href="/favicon.ico" />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+      </body>
     </html>
   );
 }
