@@ -4,33 +4,33 @@
 import styles from "./page.module.css";
 import React, { useEffect, useRef, useState } from 'react';
 import ReferralLink from "../../components/ReferenceLink";
+import CryptoJS from 'crypto-js';
 
 type ReferenceProps = {
     reference : string
 }
 
-function decodeEmail(encoded: string): string {
-    // Her 3 rakamı bir ASCII koduna çevir
-    const base64 = encoded.match(/.{1,3}/g)?.map(num => {
-      return String.fromCharCode(parseInt(num, 10));
-    }).join('') || '';
-    
-    // Base64'ten geri çözümle
-    return atob(base64);
-  }
+function encodeEmail(email: string): string {
+  // E-postayı Base64'e çevir
+  const base64 = btoa(email);
+  
+  // Base64 stringini hex formatına çevir
+  const hexString = base64.split('').map(char => {
+    return char.charCodeAt(0).toString(16).padStart(2, '0');
+  }).join('');
+  
+  return hexString;
+}
 
-  function encodeEmail(email: string): string {
-    // E-postayı Base64'e çevir
-    const base64 = btoa(email);
-    
-    // Her karakteri ASCII koduna çevir ve birleştir
-    const numberString = base64.split('').map(char => {
-      const code = char.charCodeAt(0);
-      return code.toString().padStart(3, '0');
-    }).join('');
-    
-    return numberString;
-  }
+function decodeEmail(encoded: string): string {
+  // Hex stringini Base64 formatına çevir
+  const base64 = encoded.match(/.{1,2}/g)?.map(hex => {
+    return String.fromCharCode(parseInt(hex, 16));
+  }).join('') || '';
+  
+  // Base64'ten geri çözümle
+  return atob(base64);
+}
 
 const page = ({params}: {params: ReferenceProps}) => {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -72,7 +72,14 @@ const page = ({params}: {params: ReferenceProps}) => {
         setSuccess(true);
       } else {
         const errorData = await response.json();
-        alert(errorData.error || 'An unexpected error occurred. Please try again.');
+        if(errorData.error == 'Email already exists'){
+          const encryptedEmail = encodeEmail(email);
+          navigator.clipboard.writeText("https://www.coinmarketjob.com/waitlist/" + encryptedEmail);
+          alert('Email already exists. Your reference link: ' + "https://www.coinmarketjob.com/waitlist/" + encryptedEmail + " Your reference link has been copied to the clipboard.");
+
+        }else{
+          alert(errorData.error || 'An unexpected error occurred. Please try again.');
+        }
       }
     } catch (error) {
       alert('An unexpected error occurred. Please try again.');

@@ -3,18 +3,18 @@
 import styles from "./page.module.css";
 import React, { useEffect, useRef, useState } from 'react';
 import ReferralLink from "./components/ReferenceLink";
+import CryptoJS from 'crypto-js';
 
 function encodeEmail(email: string): string {
   // E-postayı Base64'e çevir
   const base64 = btoa(email);
   
-  // Her karakteri ASCII koduna çevir ve birleştir
-  const numberString = base64.split('').map(char => {
-    const code = char.charCodeAt(0);
-    return code.toString().padStart(3, '0');
+  // Base64 stringini hex formatına çevir
+  const hexString = base64.split('').map(char => {
+    return char.charCodeAt(0).toString(16).padStart(2, '0');
   }).join('');
   
-  return numberString;
+  return hexString;
 }
 
 export default function Home() {
@@ -56,7 +56,14 @@ export default function Home() {
         setSuccess(true);
       } else {
         const errorData = await response.json();
-        alert(errorData.error || 'An unexpected error occurred. Please try again.');
+        if(errorData.error == 'Email already exists'){
+          const encryptedEmail = encodeEmail(email);
+          navigator.clipboard.writeText("https://www.coinmarketjob.com/waitlist/" + encryptedEmail);
+          alert('Email already exists. Your reference link has been copied to the clipboard.');
+
+        }else{
+          alert(errorData.error || 'An unexpected error occurred. Please try again.');
+        }
       }
     } catch (error) {
       alert('An unexpected error occurred. Please try again.');
