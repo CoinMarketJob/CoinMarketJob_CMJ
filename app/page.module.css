@@ -116,8 +116,10 @@
 }
 
 .DescriptionText{
+  font-family: 'Inter';
   margin-top: 0;
   color: #ccc;
+  font-size: 14px;
 }
 
 .Mail{
