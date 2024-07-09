@@ -116,10 +116,11 @@
 }
 
 .DescriptionText{
-  font-family: 'Inter';
+  font-family: "Inter", sans-serif;
   margin-top: 0;
   color: #ccc;
   font-size: 14px;
+  font-weight: 200;
 }
 
 .Mail{
@@ -166,6 +167,9 @@
 
 .socialMediaX{ 
   margin-right: 10px;
+}
+
+.socialMediaMail{
 }
 
 .SucccessText{

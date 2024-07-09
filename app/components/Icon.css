@@ -28,6 +28,17 @@
     fill-opacity: 1;
 }
 
+.svg-icon-mail {
+    color: #242220;
+    opacity: 0.4;
+}
+
+
+.icon-hover:active .svg-icon-mail {
+    color: #24222099;
+    opacity: 1;
+}
+
 
 .hover-content {
     display: none; 
