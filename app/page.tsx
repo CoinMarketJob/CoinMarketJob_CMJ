@@ -116,20 +116,18 @@ export default function Home() {
                       <div style={{display: 'flex', justifyContent: 'center', marginTop: '8px'}}>
                         <Icon size={32} marginRight>
                           <a className={styles.socialMedia} style={{marginTop: '4px'}} href='https://x.com/CoinMarketJob' target="_blank">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0,0,256,256" width="23px" height="23px"><g className="svg-icon-social" fill-opacity="0.4" fill="#242220" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none"><g transform="scale(10.66667,10.66667)"><path d="M2.36719,3l7.0957,10.14063l-6.72266,7.85938h2.64063l5.26367,-6.16992l4.31641,6.16992h6.91016l-7.42187,-10.625l6.29102,-7.375h-2.59961l-4.86914,5.6875l-3.97266,-5.6875zM6.20703,5h2.04883l9.77734,14h-2.03125z"></path></g></g></svg>
-                          </a>
-                        </Icon>
+                          <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.43971 6.86383L15.3445 0H13.9453L8.81813 5.95977L4.72312 0H0L6.19247 9.01222L0 16.21H1.39932L6.81369 9.91628L11.1383 16.21H15.8614L9.43937 6.86383H9.43971ZM7.52315 9.09162L6.89572 8.19421L1.90352 1.05339H4.0528L8.08156 6.81626L8.70899 7.71367L13.9459 15.2045H11.7966L7.52315 9.09196V9.09162Z" fill="#242220" fill-opacity="0.4" className="svg-icon-social"/>
+                          </svg>
 
-                        <Icon size={32}>
-                            <a className={styles.socialMedia} style={{marginTop: '4px'}} href='https://www.instagram.com/coinmarketjob/' target="_blank">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0,0,256,256" width="21.0px" height="21.0px"><g className="svg-icon-social" fill-opacity="0.4" fill="#242220" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none"><g transform="scale(5.12,5.12)"><path d="M16,3c-7.16752,0 -13,5.83248 -13,13v18c0,7.16752 5.83248,13 13,13h18c7.16752,0 13,-5.83248 13,-13v-18c0,-7.16752 -5.83248,-13 -13,-13zM16,5h18c6.08648,0 11,4.91352 11,11v18c0,6.08648 -4.91352,11 -11,11h-18c-6.08648,0 -11,-4.91352 -11,-11v-18c0,-6.08648 4.91352,-11 11,-11zM37,11c-1.10457,0 -2,0.89543 -2,2c0,1.10457 0.89543,2 2,2c1.10457,0 2,-0.89543 2,-2c0,-1.10457 -0.89543,-2 -2,-2zM25,14c-6.06329,0 -11,4.93671 -11,11c0,6.06329 4.93671,11 11,11c6.06329,0 11,-4.93671 11,-11c0,-6.06329 -4.93671,-11 -11,-11zM25,16c4.98241,0 9,4.01759 9,9c0,4.98241 -4.01759,9 -9,9c-4.98241,0 -9,-4.01759 -9,-9c0,-4.98241 4.01759,-9 9,-9z"></path></g></g></svg>                            </a>
-                        </Icon>
+                          </a>
+                        </Icon>                        
 
                         
-                        <Icon size={32} marginLeft>
+                        <Icon size={32} marginLeft marginTop>
                           <a className={styles.socialMediaMail} style={{marginTop: '4px'}} onClick={() => visitMail()}>
                             
-                          <svg fill="#24222066" height="23px" width="23px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                          <svg fill="#24222066" height="22px" width="22px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512" className="svg-icon-social">
                           <g transform="translate(1 1)">
                             <g>
