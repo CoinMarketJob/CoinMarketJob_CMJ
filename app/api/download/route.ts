@@ -6,7 +6,9 @@ export async function POST(request: Request) {
   const body = await request.json();
   const { password } = body;
 
-  if (password !== 'EthCC' || password !== 'OrangeDAO' || password !== 'OutlierVentures' || password !== 'a16z') {
+  const validPasswords = ['EthCC', 'OrangeDAO', 'OutlierVentures', 'a16z'];
+
+  if (!validPasswords.includes(password)) {
     return NextResponse.json({ error: 'Incorrect password.' }, { status: 401 });
   }
 
