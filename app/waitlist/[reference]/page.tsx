@@ -40,7 +40,7 @@ const page = ({params}: {params: ReferenceProps}) => {
   const [email, setEmail] = useState<string>("");
   const [success, setSuccess] = useState<boolean>(false);
   const [referenceLink, setReferenceLink] = useState<string>("");
-  const to = 'info@coinmarketjob.com';
+  const to = 'elyesa@coinmarketjob.com';
 
   useEffect(() => {
     if (emailRef.current) {
@@ -94,7 +94,7 @@ const page = ({params}: {params: ReferenceProps}) => {
     if (navigator.share) {
       navigator.share({
         title: 'Contact Us',
-        text: 'Contact us at info@coinmarketjob.com',
+        text: 'Contact us at CoinMarketJob',
         url: `mailto:${email}`,
       }).catch(() => {
         window.location.href = `mailto:${to}`;
