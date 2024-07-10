@@ -116,7 +116,7 @@ export default function Home() {
 
                         
                         <Icon size={32} marginLeft>
-                          <a className={styles.socialMediaMail} style={{marginTop: '3.5px'}} onClick={() => visitMail()}>
+                          <a className={styles.socialMediaMail} style={{marginTop: '4px'}} onClick={() => visitMail()}>
                             
                           <svg fill="#24222066" height="23px" width="23px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512" className="svg-icon-social">
