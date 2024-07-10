@@ -7,11 +7,12 @@ interface IconProps {
     size : number;
     margin? : boolean
     marginLeft? : boolean
+    marginRight? : boolean
   }
 
-const Icon:React.FC<IconProps> = ({ onClick, children, size, margin, marginLeft }) => {
+const Icon:React.FC<IconProps> = ({ onClick, children, size, margin, marginLeft, marginRight }) => {
   return (
-    <div className="icon-div" onClick={onClick} style={{marginLeft: margin ? '1rem' : marginLeft ? "2.7px" : '0rem', position: "relative" }}>
+    <div className="icon-div" onClick={onClick} style={{marginLeft: margin ? '1rem' : marginLeft ? "2.7px" : '0rem', position: "relative", marginRight: marginRight ? "-0.5px" : 0 }}>
       <div className="icon-hover" style={{width: size, height: size}}>
         {children}
       </div>
