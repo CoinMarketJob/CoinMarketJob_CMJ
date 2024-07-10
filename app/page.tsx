@@ -99,7 +99,7 @@ export default function Home() {
                 <p className={styles.ConnectMinds}>CONNECTING MINDS AND JOBS</p>
                 {success ? (<div className={styles.Description}>
                               <div className={styles.DescriptionContentSuccess}>
-                                <span className={styles.SucccessText}>Success You're on the waitlist.</span>
+                                <span className={styles.SucccessText}>Success! You're on the waitlist.</span>
                                 <p className={styles.DesText}>Refer your friends with the link below to move up!</p>
                                 <ReferralLink link={referenceLink} />
                               </div>
