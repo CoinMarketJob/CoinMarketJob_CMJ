@@ -84,9 +84,11 @@
   }
   
   .ConnectMinds{
-    font-family: 'Inter';
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 200;
     color: #ccc;
-    font-size: 19px;
+    margin-left: 1px;
   }
   
   .Launch{
