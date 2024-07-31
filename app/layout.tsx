@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import type { Metadata } from "next";
 import "./globals.css";
 import DefaultContainer from "./components/containers/DefaultContainer";
