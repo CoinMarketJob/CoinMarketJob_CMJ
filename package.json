@@ -52,6 +52,7 @@
     "react-router-dom": "^6.24.0",
     "react-select": "^5.8.0",
     "sass": "^1.77.6",
+    "sharp": "^0.33.4",
     "styled-components": "^6.1.11",
     "uuid": "^10.0.0"
   },
