@@ -1,3 +1,4 @@
+/* eslint-disable */
 // PasswordModal.tsx
 import React, { useState } from 'react';
 

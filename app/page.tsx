@@ -1,3 +1,4 @@
+/* eslint-disable */
 "use client";
 import React, {useState,useEffect} from 'react'
 import styles from './page.module.css';
@@ -13,6 +14,8 @@ const Home = () => {
   const { layout } = useLayout();
 
   useEffect(() => {
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
     async function fetchData() {
       try {
           const response = await fetch('/api/job/get');

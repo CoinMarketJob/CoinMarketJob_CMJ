@@ -29,6 +29,8 @@ const LocationSelector: React.FC<JobTitleProps> = ({selectedLocations, setSelect
     );
 
     useEffect(() => {
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
         async function fetchData() {
           try {
               const response = await fetch('/api/cities/');

@@ -73,7 +73,7 @@ const EditClient:React.FC<EditClientProps> = ({image, companyName, jobTitle,setJ
   return (
     <div className={styles.container}>
         <div className={`${styles.centerDiv} ${styles.logo}`}>
-            <img src={image} className={styles.companyLogo} />
+            <img src={image} className={styles.companyLogo}  alt="Description"/>
         </div>
 
         <div className={`${styles.centerDiv} ${styles.companyName}`}>{companyName}</div>

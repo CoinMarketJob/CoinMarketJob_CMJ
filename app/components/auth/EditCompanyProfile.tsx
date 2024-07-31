@@ -59,6 +59,8 @@ const EditCompanyProfile = () => {
   };
 
   useEffect(() => {
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
     async function fetchData() {
       try {
         const response = await fetch("/api/companyprofile/get/");

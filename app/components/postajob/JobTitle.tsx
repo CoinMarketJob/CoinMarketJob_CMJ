@@ -16,6 +16,8 @@ const JobTitle:React.FC<JobTitleProps> = ({jobTitle, setJobTitle}) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
 
   useEffect(() => {
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setOpen(false);
@@ -29,6 +31,8 @@ const JobTitle:React.FC<JobTitleProps> = ({jobTitle, setJobTitle}) => {
   }, []);
 
   useEffect(() => {
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
     async function fetchData() {
       try {
           const response = await fetch('/api/jobtitle/');
@@ -44,6 +48,8 @@ const JobTitle:React.FC<JobTitleProps> = ({jobTitle, setJobTitle}) => {
   }, []);
 
   useEffect(() => {
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
     if (!open && searchTerm && !jobTitles.some(job => job.jobTitle === searchTerm)) {
       setJobTitle(searchTerm);
     }

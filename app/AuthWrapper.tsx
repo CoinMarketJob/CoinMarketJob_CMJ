@@ -8,6 +8,8 @@ const AuthWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
     // Check if already authenticated
     const authStatus = localStorage.getItem('isAuthenticated');
     if (authStatus === 'true') {

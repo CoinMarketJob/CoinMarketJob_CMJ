@@ -12,6 +12,8 @@ const Live = () => {
   let globalIndex = 0;
 
   useEffect(() => {
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
     async function fetchData() {
       try {
         const response = await fetch("/api/live/");

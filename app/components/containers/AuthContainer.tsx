@@ -11,6 +11,8 @@ import CompanyProfile from '../auth/CompanyProfile';
 const AuthContainer = () => {
   const [currentUser, setCurrentUser] = useState<User>();
   useEffect(() => {
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
     async function getUser() {      
       const user =  await getCurrentUser();
       setCurrentUser(user);

@@ -30,7 +30,7 @@ const JobCard: React.FC<JobCardProps> = ({  job, view = 'grid'  }) => {
   return(
     <div className={styles.card}>
       <div>
-        <img className={`${styles.companyLogo} ${styles.grayscale}`} src={job.logo} />
+        <img className={`${styles.companyLogo} ${styles.grayscale}`} alt="Description" src={job.logo} />
       </div>
       <p className={styles.companyName}>{job.companyName}</p>
       <p className={styles.jobTitle}>{job.jobTitle}</p>

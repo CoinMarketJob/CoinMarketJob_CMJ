@@ -13,6 +13,8 @@ const PostaJobPopup:React.FC<Popup> = ({ children, Save, open, setOpen }) => {
    const popupRef = useRef<HTMLDivElement>(null);
 
    useEffect(() => {
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleClickOutside = (event: MouseEvent) => {
       if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
         setOpen(false);

@@ -21,6 +21,7 @@ const DefaultContainer: React.FC<ContainerProps> = ({ children }) => {
     });
 
     useEffect(() => {
+
         localStorage.setItem('profileRatio', profileRatio.toString());
     }, [profileRatio]);
 

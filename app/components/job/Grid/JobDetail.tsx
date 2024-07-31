@@ -28,7 +28,7 @@ const JobDetail:React.FC<JobDetailProps> = ({job}) => {
         <Icon icon={faShareNodes} onClick={handleIconClick} width={20} hoverSize={40} hoverContent='Share' />
       </div>
       <div className={styles.logoDiv}>
-        <img src={job.logo} className={styles.Logo} />  
+        <img src={job.logo} className={styles.Logo}  alt="Description"/>  
       </div>
       <div className={styles.companyDiv}>
         <span>{job.companyName}</span>

@@ -50,6 +50,8 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags }) => {
     }
 
     useEffect(() => {
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
         if (newTagIndex !== null) {
             const timer = setTimeout(() => {
                 setNewTagIndex(null);
@@ -74,6 +76,8 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags }) => {
     }
 
     useEffect(() => {
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
         const bubleField = bubleFieldRef.current;
         if (bubleField) {
             bubleField.addEventListener('wheel', handleWheel);

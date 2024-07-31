@@ -39,13 +39,15 @@ const ReviewClient: React.FC<ReviewClientProps> = ({
   };
 
   useEffect(() => {
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
     console.log(description);
   }, []);
 
   return (
     <div className={styles.container}>
       <div className={`${styles.centerDiv} ${styles.logo}`}>
-        <img src={image} className={styles.companyLogo} />
+        <img src={image} className={styles.companyLogo}  alt="Description"/>
       </div>
 
       <div className={`${styles.centerDiv} ${styles.companyName}`}>

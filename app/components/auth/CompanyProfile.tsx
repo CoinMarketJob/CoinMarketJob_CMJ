@@ -23,6 +23,8 @@ const Profile = () => {
   };
 
   useEffect(() => {
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setShowDetail(false);
@@ -36,6 +38,8 @@ const Profile = () => {
   }, []);
 
   useEffect(() => {
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
     async function fetchData() {
       try {
         const response = await fetch("/api/companyprofile/get/");

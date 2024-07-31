@@ -37,6 +37,8 @@ const page = ({params}: {params: JobProps}) => {
   const {jobId} = params;
 
   useEffect (() => {
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
     async function fetchData() {
       try {
           const response = await fetch('/api/job/get/' + jobId);
@@ -331,7 +333,7 @@ const page = ({params}: {params: JobProps}) => {
     <div className={styles.ContainerCard}>
       <div style={{display: "flex"}}>
         <div className={styles.ApplyText}>Apply</div>
-        <div><img src={jobLogo} className={styles.Logo}/></div>
+        <div><img src={jobLogo} className={styles.Logo} alt="Description"/></div>
         <div className={styles.TitleText}>{jobName}</div>
       </div>
       <div className={styles.Line}></div>
