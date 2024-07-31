@@ -1,0 +1,88 @@
+.card{
+    border: 1px solid #E7E5E4;
+    border-radius: 15px;
+    padding-top: 12px;
+    padding-left: 24px;
+    padding-right: 12px;
+    padding-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align:center;
+}
+
+.companyLogo{
+    width: 60px;
+    height: 60px;
+    border: 1px solid #ADACAE1A;
+    opacity: 0.94;
+    border-radius: 12px;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+.grayscale {
+    filter: grayscale(100%);
+}
+
+.companyName{
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 15.73px;
+    letter-spacing: 0.04em;
+    color: #000000;
+    padding: 0;
+    margin:0;
+    margin-bottom: 4px;
+}
+
+.jobTitle{
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19.36px;
+    letter-spacing: 0.04em;
+    padding: 0;
+    margin:0;
+    margin-bottom: 4px;
+}
+.jobLocation{
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 15.73px;
+    letter-spacing: 0.03em;
+    padding: 0;
+    margin:0;
+    margin-bottom: 4px;
+    color: #222420B2;
+
+}
+.jobType{
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 15.73px;
+    letter-spacing: 0.03em;
+    padding: 0;
+    margin:0;
+    margin-bottom: 4px;
+    color: #222420B2;
+}
+
+.jobSalary{
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 15.73px;
+    letter-spacing: 0.03em;
+    padding: 0;
+    margin:0;
+    color: #222420B2;
+}
+
+.saveJob{
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+}

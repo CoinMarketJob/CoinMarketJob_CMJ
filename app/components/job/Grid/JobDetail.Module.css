@@ -1,0 +1,76 @@
+.DetailArea {
+    border: 1px solid #E7E5E4;
+    border-radius: 15px;
+    margin-bottom: 12px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 13px;
+    padding-top: 31px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.ShareIcon{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.Logo{
+    width: 83px;
+    height: 83px;
+    opacity: 0.94;
+    border-radius: 50%;
+}
+
+.logoDiv{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+.companyDiv{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2px;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16.94px;
+    letter-spacing: 0.04em;
+}
+.titleDiv{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2px;
+    font-family: Inter;
+    font-size: 27px;
+    font-weight: 500;
+    line-height: 32.68px;
+    letter-spacing: 0.04em;
+}
+.locationDiv{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14.52px;
+    letter-spacing: 0.04em;
+    color: #00000099;    
+}
+
+.applyButton{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 67px;
+}
+
+.section{
+    border: 1px solid #E7E5E4;
+    width: 85%;
+    border-radius: 15px;
+    padding: 24px;
+    padding-bottom: 25px;
+    margin-bottom: 17px;
+    margin-top: 67px;
+}

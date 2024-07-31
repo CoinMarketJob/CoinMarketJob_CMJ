@@ -1,0 +1,41 @@
+.container{
+    width: 100%;
+}
+
+.TopInfo{
+    display: flex;    
+}
+
+.ExText{
+    color: #242220;
+    font-family: Inter;
+    font-size: 23px;
+    font-weight: 500;
+    line-height: 27.84px;
+    letter-spacing: 0.04em;
+}
+
+.CloseIcon{
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.Line{
+    background-color: #E7E5E4;
+    width: 100%;
+    height: 1px;
+    margin-top: 12px;
+}
+
+.Row{
+    margin-top: 24px;
+}
+
+.FirstColumn{
+    width: calc(calc(100% - 15px) / 2);
+    margin-right: 15px;
+}
+.SecondColumn{
+    width: calc(calc(100% - 15px) / 2);
+}

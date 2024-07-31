@@ -1,0 +1,23 @@
+.container {
+  position: relative;
+}
+
+.input {
+  width: calc(100% - 70px);
+  padding-top: 14px;
+  padding-bottom: 14px;
+  padding-left: 70px;
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  color: #999999;
+  border-radius: 64px;
+  border: 1px solid #E7E5E4;
+}
+
+.searchIcon{
+    position: absolute;
+    top: 11px;
+    left: 24px;
+}
