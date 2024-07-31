@@ -1,0 +1,145 @@
+.search-input {
+    background-color: white;
+    border-radius: 49px;
+    width: 100%;
+    height: 72px;
+    border: 1px solid #E7E5E4;
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 21px;
+    text-align: left;
+    -webkit-appearance: none;
+    appearance: none;
+    box-sizing: border-box;
+    vertical-align: middle;
+    padding-left: 92.35px;
+    padding-right: 92.35px;
+    padding-top: 28px;
+    padding-bottom: 23px;
+    margin: 0;
+}
+
+.search-input::placeholder {
+    font-family: Inter; 
+    font-size: 20px;
+    font-weight: 400; 
+    color: #24222066; 
+    line-height: 21px; 
+    text-align: left; 
+    font-style: normal;
+}
+
+
+.search-bar-icon {
+    position: absolute;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.search-icon {
+    left: 36px;
+    top: 19px;
+}
+
+.filter-icon:hover {
+    cursor: pointer;
+}
+
+.filter-div{
+    position: absolute;
+    width: 37px;
+    height: 24px;
+    right: 42.35px;
+    top: 25px;
+}
+
+.buble-field {
+    position: absolute;
+    white-space: nowrap;
+    top: 6px;
+    left: 92.35px;
+    width: calc(100% - 184.70px);
+    max-width: calc(100% - 184.70px);
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: inline-flex;
+    scrollbar-width: none;
+    scrollbar-color: #E7E5E4 transparent;
+    -webkit-overflow-scrolling: touch;
+}
+
+.buble-field::-webkit-scrollbar {
+    height: 6px;
+}
+
+.buble-field::-webkit-scrollbar-thumb {
+    background-color: #E7E5E4;
+    border-radius: 3px;
+}
+
+
+.buble {
+    background-color: #2422201A;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-left: 8px;
+    border-radius: 38px;
+    color: #24222066;
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 21px;
+    text-align: center;
+    position: relative;
+    transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+}
+
+.animate-from-input {
+    position: absolute;
+    opacity: 0; /* Başlangıçta görünmez */
+}
+
+.animate-from-input.animate {
+    opacity: 1; /* Bitişte görünür */
+    transform: translate(50px, -20px); /* Hem sağa hem yukarı kaydır */
+}
+
+.Icons {
+    position: relative;
+}
+
+.Overlay {
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.4s ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.Overlay svg {
+    color: #24222066;
+    width: 10px;
+    height: 10px;
+}
+
+.buble:hover .Overlay {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.buble:hover {
+    background-color: #24222033;
+    color: #24222033;
+
+}
+
+

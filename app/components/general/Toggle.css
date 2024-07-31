@@ -1,0 +1,49 @@
+.toggle-container {
+  display: flex;
+  align-items: center;
+}
+
+.toggle-title {
+  margin-right: 10px;
+  font-size: 16px;
+  color: #24222099;
+  font-family: Inter; 
+}
+
+.toggle-switch {
+  cursor: pointer;  
+  text-indent: -9999px;  
+  width: 58px;  
+  height: 33px;  
+  background: #000000;
+  display: block;  
+  border-radius: 100px;  
+  position: relative;
+  transition: background 0.3s;
+}
+
+.toggle-switch.checked {
+  background: #E9E9EA;  
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-switch .slider1, .toggle-switch .slider2 {
+  content: "";    
+  position: absolute;    
+  left: 27px;    
+  top: 2.5px;    
+  width: 28px;    
+  height: 28px;    
+  background: #fff;    
+  border-radius: 90px;    
+  transition: left 0.3s;
+}
+
+.toggle-switch.checked .slider1, .toggle-switch.checked .slider2 {
+  left: calc(100% - 55px);  
+}

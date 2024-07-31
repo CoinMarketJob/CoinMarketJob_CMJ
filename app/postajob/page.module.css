@@ -1,0 +1,31 @@
+.Container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.indicatorContainer{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.indicator{
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid #E7E5E499;
+    box-shadow: 0px 1px 2px -1px #0000001A;
+    box-shadow: 0px 1px 3px 0px #0000001A;
+    box-shadow: 0px 0px 2px 0px #0000001A;
+}
+
+.indicatorMargin{
+    margin-right: 24px;
+}
+
+.selectedIndicator{
+    background-color: #242220;
+    border: none;
+}

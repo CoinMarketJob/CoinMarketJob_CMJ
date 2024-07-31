@@ -1,0 +1,7 @@
+.SocialLogo{
+    margin-left: 12px;
+}
+
+.SocialLogo:hover{
+    cursor: pointer;    
+}

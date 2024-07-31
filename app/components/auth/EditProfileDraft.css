@@ -1,0 +1,98 @@
+.draft-container{
+    width: 100%;
+    display: flex;
+}
+
+.ContentTypeText{
+    margin-left: 24px;
+    margin-bottom: 4px;
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 23.81px;
+    letter-spacing: 0.03em;
+}
+
+.CloseSvg{
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.control-group{
+    border-radius: 15px;
+    width: 100%;
+    height: auto;
+    max-height: 40vh;
+}
+
+.button-group{
+    display: flex;
+    align-items: center;
+    border-bottom: 1.45px solid #E7E5E4;
+    padding-left: 26px;
+    padding-right: 24px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.add-button-div{
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.ProseMirror-focused {
+    border: none !important;
+    outline: none !important;
+}
+
+.control-group p, .control-group h4, .control-group h2  {
+    margin-left: 26px;
+    margin-right: 26px;
+}
+
+.editor-content {
+    width: calc(100%); 
+    max-width: calc(100%);
+     
+    flex-grow: 1; 
+    overflow: auto; 
+    word-wrap: break-word; 
+    white-space: pre-wrap; 
+    padding: 5px; 
+    box-sizing: border-box; 
+}
+
+.text-size-label{
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 21px;
+    color: #999999;
+}
+
+.text-size-select{
+    border: none;
+    outline: none;
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 21px;
+    color: #999999;
+    margin-right: 26px;    
+}
+
+.text-size-select:active{
+    border: none;
+    outline: none;
+}
+
+.right-line{
+    width: 2px;
+    height: 36px;
+    background-color: #ADACAE1A;
+    margin-right: 6px;
+}

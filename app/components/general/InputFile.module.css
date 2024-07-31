@@ -1,0 +1,39 @@
+.container {
+    position: relative;
+    width: 100%;
+    height: 50px; /* Yüksekliği isteğinize göre ayarlayın */
+    border-radius: 25px; /* Kenarları yuvarlat */
+    border: 1px solid #E7E5E4;
+    display: flex;
+    align-items: center;
+    padding: 0 29px;
+    background-color: #fff;
+}
+
+.FileInput {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.FileLabel {
+    display: flex;
+    align-items: center;
+    color: #999999;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    pointer-events: none; /* Tıklanabilirliği kapatır */
+    z-index: 1;
+}
+
+
+.FileLabel .text {
+    display: inline-block;
+    margin-left: 12px;
+}

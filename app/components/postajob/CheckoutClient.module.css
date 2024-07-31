@@ -1,0 +1,86 @@
+.container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    justify-content: flex-start;
+    flex-grow: 1;    
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+    scrollbar-color: #E7E5E4 transparent;
+    -webkit-overflow-scrolling: touch; 
+}
+
+.CheckoutText{
+    font-family: Inter;
+    font-size: 23px;
+    font-weight: 500;
+    line-height: 27.84px;
+    letter-spacing: 0.04em;
+    color: #000000BF;
+}
+
+.Line{
+    margin-top: 12px;
+    width: 100%;
+    background-color: #ADACAE33;
+    height: 2px;
+}
+
+.PaymentText{
+    font-family: Inter;
+    font-size: 23px;
+    font-weight: 500;
+    line-height: 27.84px;
+    letter-spacing: 0.04em;
+    color: #000000BF;
+    margin-top: 35px;
+}
+
+.CreditCardGroup{
+    margin-top: 36px;
+    width: 100%;
+    display: flex;
+    position: relative;
+}
+
+.AddressGroup{
+    margin-top: 8px;
+    width: 100%;
+    display: flex;
+    position: relative;
+}
+
+.MailGroup{
+    margin-top: 8px;
+    width: 100%;
+    display: flex;
+    position: relative;
+}
+
+.AddCol{
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 1;
+    color: #999999;
+    font-family: 'Inter';
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.FirstCol{
+    color: #999999;
+    font-family: 'Inter';
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.Continue{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 64px;
+    margin-bottom: 200px;
+}

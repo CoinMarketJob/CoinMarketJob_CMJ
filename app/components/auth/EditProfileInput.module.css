@@ -1,0 +1,37 @@
+.InputGroup{
+    width: 100%;
+    margin-left: 48px;
+}
+
+.InputLabel{
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 18.15px;
+    letter-spacing: 0.03em;
+    color: #999999;
+    margin-bottom: 4px;
+}
+
+.Input{
+    width: calc(100% - 90px);
+    border: 1px solid #E7E5E4;
+    border-radius: 39px;
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 21px;
+    color: #999999;
+    padding-top: 4px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 4px;
+}
+
+.Input::placeholder {
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 21px;
+    color: #999999;
+}
