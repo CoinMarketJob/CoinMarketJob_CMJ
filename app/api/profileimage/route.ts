@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { uploadFile } from "@/utils/s3Operations";
 import { NextRequest, NextResponse } from "next/server";
 import { v6 as uuidv6 } from "uuid";

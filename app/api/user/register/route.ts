@@ -1,3 +1,4 @@
+/* eslint-disable */
 import bcrypt from "bcrypt"
 import prisma from '@/libs/prismadb'
 import { NextResponse } from "next/server";

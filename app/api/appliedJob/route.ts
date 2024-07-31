@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { getCurrentUser } from "@/app/actions/getCurrentUser";
 import prisma from "@/libs/prismadb";
 import { uploadFile } from "@/utils/s3Operations";

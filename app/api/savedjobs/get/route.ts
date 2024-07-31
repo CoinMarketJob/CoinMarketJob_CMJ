@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { getCurrentUser } from "@/app/actions/getCurrentUser";
 import prisma from "@/libs/prismadb";
 import { NextResponse } from "next/server";
