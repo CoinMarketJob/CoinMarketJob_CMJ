@@ -1,39 +1,36 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'; 
 import JobCard from './JobCard';
 import styles from './JobBoard.module.css';
 import { Job } from '@prisma/client';
 import { useJobs } from '@/hooks/useJobs';
 import JobDetail from './JobDetail';
 
-
 const JobBoard = () => {
-  const { filteredJobs, setFilteredJobs} = useJobs();
+  const { filteredJobs, setFilteredJobs } = useJobs();
 
-  const [jobs, setJobs] = useState(filteredJobs);
+  const [jobs, setJobs] = useState<Job[]>(filteredJobs);
   const [selectedJobs, setSelectedJobs] = useState<Array<Job>>([]);
-  const [activeJob, setActiveJob] = useState<Job>(null);
+  const [activeJob, setActiveJob] = useState<Job | undefined>(undefined);
   const [isDetailViewVisible, setIsDetailViewVisible] = useState(false);
 
   useEffect(() => {
     setJobs(filteredJobs);
-  }, [filteredJobs])
-  
-  const onDragEnd = (result) => {
+  }, [filteredJobs]);
+
+  const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
 
     const newJobs = Array.from(jobs);
     const [draggedItem] = newJobs.splice(result.source.index, 1);
 
     if (result.destination.droppableId === 'selectedList') {
-      // Kart sağ listeye sürüklendi
       if (!selectedJobs.some(job => job.id === draggedItem.id)) {
         setSelectedJobs(prevSelected => [...prevSelected, draggedItem]);
       }
     } else {
-      // Kart sol listede kaldı
-      if(isDetailViewVisible){
+      if (isDetailViewVisible) {
         newJobs.splice(result.destination.index, 0, draggedItem);
       }
     }
@@ -43,7 +40,6 @@ const JobBoard = () => {
     if (!isDetailViewVisible) {
       setIsDetailViewVisible(true);
       setSelectedJobs([draggedItem]);
-
     }
   };
 
@@ -74,7 +70,7 @@ const JobBoard = () => {
                           backgroundColor: snapshot.isDragging ? 'lightblue' : 'white',
                         }}
                       >
-                        <JobCard job={job} />
+                        <JobCard job={job} view="list" /> {/* Add the view prop here */}
                       </div>
                     )}
                   </Draggable>
@@ -131,13 +127,11 @@ const JobBoard = () => {
                 </div>
               )}
             </Droppable>
-            
           </div>
         )}
       </div>
     </DragDropContext>
   );
 };
-
 
 export default JobBoard;

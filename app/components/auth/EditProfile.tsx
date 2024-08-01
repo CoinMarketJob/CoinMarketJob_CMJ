@@ -12,13 +12,35 @@ import SocialMediaItem from "./SocialMediaItem";
 import { SocialMedia } from "@prisma/client";
 import AddProfileSectionPopup from "./AddProfileSectionPopup";
 
+
+interface Profile {
+  id: string;
+  jobTitle: string;
+  headline: string;
+  location: string;
+  siteUrl: string;
+  about: JSONContent;
+  socialMedias: SocialMedia[];
+}
+
+interface AddSocialMediaProps {
+  profileType: string;
+  profileId: string; // Türü güncelleyin
+  setPopup: (value: boolean) => void;
+  fetchData: () => void;
+}
+
+
+
+
 const EditProfile = () => {
   const [jobTitle, setJobTitle] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [headline, setHeadline] = useState<string>("");
   const [site, setSite] = useState<string>("");
   const [about, setAbout] = useState<JSONContent>();
-  const [profile, setProfile] = useState();
+  const [profile, setProfile] = useState<Profile | undefined>(undefined);
+
 
   const [socialPopup, setSocialPopup] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
@@ -36,7 +58,7 @@ const EditProfile = () => {
     async function fetchData() {
       try {
         const response = await fetch("/api/profile/get/");
-        const data = await response.json();
+        const data: Profile = await response.json();
         console.log(data);
         setProfile(data);
         setJobTitle(data.jobTitle);
@@ -50,6 +72,7 @@ const EditProfile = () => {
         setLoading(false);
       }
     }
+  
 
     fetchData();
   }, []);
@@ -155,11 +178,11 @@ const EditProfile = () => {
           </div>
 
           <div className={styles.SocialMedias}>
-            {socialPopup && (
+            {socialPopup && profile?.id !== undefined && (
               <>
                 <AddSocialMedia
                   profileType="Job Seeker"
-                  profileId={profile?.id}
+                  profileId={Number(profile.id)}
                   setPopup={setSocialPopup}
                   fetchData={fetchData}
                 />

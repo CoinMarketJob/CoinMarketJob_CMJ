@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./CompanyProfile.module.css";
 import Icon from "../general/Icon";
@@ -9,10 +8,20 @@ import { SocialMedia } from "@prisma/client";
 import EditProfile from "./EditProfile";
 import avatarImage from "./PlaceholderCompanyProfile.png";
 import EditCompanyProfile from "./EditCompanyProfile";
+import { JSONContent } from '@tiptap/react';
+
+// Profile türünü tanımlayın
+interface Profile {
+  logoURL?: string;
+  headline?: string;
+  siteUrl?: string;
+  about?: JSONContent; // JSONContent türünü kullanın.
+  socialMedias: SocialMedia[];
+}
 
 const Profile = () => {
-  const [showDetail, setShowDetail] = useState<boolean>();
-  const [profile, setProfile] = useState();
+  const [showDetail, setShowDetail] = useState<boolean>(false);
+  const [profile, setProfile] = useState<Profile | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(true);
   const [editProfile, setEditProfile] = useState<boolean>(false);
 
@@ -23,8 +32,6 @@ const Profile = () => {
   };
 
   useEffect(() => {
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setShowDetail(false);
@@ -38,8 +45,6 @@ const Profile = () => {
   }, []);
 
   useEffect(() => {
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
     async function fetchData() {
       try {
         const response = await fetch("/api/companyprofile/get/");
@@ -115,7 +120,7 @@ const Profile = () => {
                 <Draft show border content={profile?.about} />
               </div>
               <div className={styles.SocialMedias}>
-                {profile.socialMedias.map(
+                {profile?.socialMedias.map(
                   (item: SocialMedia, index: number) => (
                     <SocialMediaItem
                       key={index}

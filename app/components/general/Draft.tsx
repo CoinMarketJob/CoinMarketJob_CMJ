@@ -75,8 +75,8 @@ const MenuBar: React.FC<{ editor: Editor | null }> = ({ editor }) => {
 const Draft: React.FC<DraftProps> = ({show, content, onChange, border}) => {
   const editor = useEditor({
     extensions: [
-      Color.configure({ types: [TextStyle.name, ListItem.name] }),
-      TextStyle.configure({ types: [ListItem.name] }),
+      Color.configure({ /* Yapılandırma seçeneklerini buraya ekleyin, örneğin:  */}),
+      TextStyle.configure({ /* Yapılandırma seçeneklerini buraya ekleyin, örneğin:  */}),
       StarterKit.configure({
         bulletList: {
           keepMarks: true,
@@ -90,8 +90,11 @@ const Draft: React.FC<DraftProps> = ({show, content, onChange, border}) => {
     ],
     content: content,
     onUpdate: ({ editor }) => {
-      onChange(editor.getJSON());
+      if (onChange) {
+        onChange(editor.getJSON());
+      }
     },
+    
     editable: !show
   })
 

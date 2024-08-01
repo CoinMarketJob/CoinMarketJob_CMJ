@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './JobDetails.module.css';
 import { faXmark, faShare, faCopy, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/navigation';
@@ -7,7 +7,7 @@ import { Job } from '@prisma/client';
 import Icon from '../general/Icon';
 import Button from '../general/Button';
 import Draft from '../general/Draft';
-
+import { JSONContent } from '@tiptap/react'; // Ensure correct import
 
 interface JobDetailsProps {
     job: Job | null;
@@ -27,6 +27,22 @@ const JobDetails: React.FC<JobDetailsProps> = ({ job, onClose = () => { } }) => 
     const handleButtonClick = (jobId: number) => {
         router.push("/applyjob/" + jobId);
     };
+
+    // Convert jobDescription to JSONContent if applicable
+    const convertToJSONContent = (value: any): JSONContent | undefined => {
+        try {
+            if (typeof value === 'string') {
+                return JSON.parse(value) as JSONContent; // Assume it's a JSON string
+            }
+            // Handle other types if needed
+            return value as JSONContent;
+        } catch (e) {
+            console.error("Failed to parse JSON content:", e);
+            return undefined;
+        }
+    };
+
+    const jobDescription: JSONContent | undefined = job ? convertToJSONContent(job.jobDescription) : undefined;
 
     return (
         <div className={styles.containerJobDetails}>
@@ -61,7 +77,9 @@ const JobDetails: React.FC<JobDetailsProps> = ({ job, onClose = () => { } }) => 
 
             {job && (
                 <div className={styles.section}>
-                    <Draft show content={job.jobDescription} />
+                    {jobDescription && (
+                        <Draft show content={jobDescription} />
+                    )}
                 </div>
             )}
         </div>

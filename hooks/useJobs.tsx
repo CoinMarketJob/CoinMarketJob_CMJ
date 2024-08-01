@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Job } from '@prisma/client';
 import React, { createContext, ReactNode, useState } from 'react';
 

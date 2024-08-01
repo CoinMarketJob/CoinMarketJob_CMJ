@@ -42,7 +42,7 @@ const ReviewClient: React.FC<ReviewClientProps> = ({
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
     console.log(description);
-  }, []);
+  }, [description]);
 
   return (
     <div className={styles.container}>

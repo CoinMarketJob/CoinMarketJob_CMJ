@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./EditCompanyProfile.module.css";
-import defaultAvatarImage from "./PlaceholderCompanyProfile.png";
+//import defaultAvatarImage from "./PlaceholderCompanyProfile.png";
 import Image from "next/image";
 import EditProfileInput from "./EditProfileInput";
 import EditProfileDraft from "./EditProfileDraft";
@@ -11,6 +11,17 @@ import SocialMediaItem from "./SocialMediaItem";
 import { SocialMedia } from "@prisma/client";
 import AddSocialMedia from "./AddSocialMedia";
 import Button from "../general/Button";
+const defaultAvatarImage = "./PlaceholderCompanyProfile.png"; // URL veya dosya yolu
+
+interface Profile {
+  id: number; // veya string, ID'nin türüne göre
+  companyName: string;
+  headline: string;
+  siteUrl: string;
+  about: JSONContent;
+  logoURL: string;
+  socialMedias: SocialMedia[];
+}
 
 const EditCompanyProfile = () => {
   const [companyName, setCompanyName] = useState<string>("");
@@ -18,12 +29,13 @@ const EditCompanyProfile = () => {
   const [site, setSite] = useState<string>("");
   const [about, setAbout] = useState<JSONContent>();
   const [avatar, setAvatar] = useState<string>(defaultAvatarImage);
-  const [profile, setProfile] = useState();
+
+
+  const [profile, setProfile] = useState<Profile | null>(null);
+
 
   const [socialPopup, setSocialPopup] = useState<boolean>(false);
-
   const [imageFile, setImageFile] = useState<File | null>(null);
-
   const [oldLogo, setOldLogo] = useState("");
   const [changeLogo, setChangeLogo] = useState<boolean>(false);
 
@@ -36,20 +48,24 @@ const EditCompanyProfile = () => {
   };
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      
-      setImageFile(e.target.files[0]);
-
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      setImageFile(file);
+  
       const reader = new FileReader();
       reader.onload = (event) => {
         if (event.target && typeof event.target.result === "string") {
-          setAvatar(event.target.result);
+          const url = URL.createObjectURL(file);
+          setAvatar(url); // URL.string olarak ayarlanmış
           setChangeLogo(true);
         }
       };
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(file);
     }
   };
+  
+  
+  
 
   const triggerFileInput = () => {
     const fileInput = document.getElementById("avatarInput");
@@ -59,12 +75,10 @@ const EditCompanyProfile = () => {
   };
 
   useEffect(() => {
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
     async function fetchData() {
       try {
         const response = await fetch("/api/companyprofile/get/");
-        const data = await response.json();
+        const data: Profile = await response.json();
         console.log(data);
         setProfile(data);
         setCompanyName(data.companyName);
@@ -76,9 +90,10 @@ const EditCompanyProfile = () => {
         console.error("Veri getirme hatası:", error);
       }
     }
-
+  
     fetchData();
   }, []);
+  
 
   async function fetchData() {
     try {
@@ -90,22 +105,21 @@ const EditCompanyProfile = () => {
       console.error("Veri getirme hatası:", error);
     }
   }
-  
-  const Done = async () => {
-    var logoLink = "";
-    try {
 
+  const Done = async () => {
+    let logoLink = "";
+    try {
       const uploadLogo = async () => {
         if (imageFile && changeLogo) {
           const formData = new FormData();
           formData.append("file", imageFile);
           formData.append("Content-Type", imageFile.type);
-  
+
           const response = await fetch("/api/profileimage/", {
             method: "POST",
             body: formData,
           });
-  
+
           if (response.ok) {
             const data = await response.json();
             logoLink = data.url;
@@ -115,7 +129,6 @@ const EditCompanyProfile = () => {
         }
       };
 
-      
       await Promise.all([uploadLogo()]);
       const profileData = {
         companyName,
@@ -124,7 +137,7 @@ const EditCompanyProfile = () => {
         about,
         logoLink,
       };
-  
+
       const response = await fetch('/api/companyprofile/', {
         method: 'POST',
         body: JSON.stringify(profileData),
@@ -132,7 +145,7 @@ const EditCompanyProfile = () => {
           'Content-Type': 'application/json',
         },
       });
-  
+
       if (response.ok) {
         console.log("Başarıyla günellendi.");
       } else {
@@ -213,11 +226,15 @@ const EditCompanyProfile = () => {
       </div>
 
       <div className={styles.SocialMedias}>
-        {socialPopup && (
-            <>
-                <AddSocialMedia profileType="Company" profileId={profile?.id} setPopup={setSocialPopup} fetchData={fetchData} />
-            </>            
+        {socialPopup && profile && (
+          <AddSocialMedia
+            profileType="Company"
+            profileId={profile.id} // ID'nin doğru türde olduğundan emin olun
+            setPopup={setSocialPopup}
+            fetchData={fetchData}
+          />
         )}
+
 
         {profile?.socialMedias.map((item: SocialMedia, index: number) => (
           <SocialMediaItem

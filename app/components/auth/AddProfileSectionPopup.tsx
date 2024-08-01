@@ -80,7 +80,7 @@ const AddProfileSectionPopup: React.FC<PopupProps> = ({
         type == "Education" ||
         type == "Publications"
     );
-  });
+  }, [type]);
 
   return (
     <div className={styles.container}>

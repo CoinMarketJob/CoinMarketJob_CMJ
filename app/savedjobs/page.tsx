@@ -1,40 +1,60 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-"use client"
-import React, { useState, useEffect } from 'react'
-import styles from './page.module.css'
-import JobCard from '../components/job/Basic/JobCard';
+"use client";
+import React, { useState, useEffect } from 'react';
+import styles from './page.module.css';
 import Basic from '../components/layouts/Basic';
 
-const page = () => {
-   const [savedJobs, setSavedJobs] = useState<Array<any>>([]); 
+// Define the JobType, ExperienceLevel, EducationalDegree, and other related types
+type JobType = 'Internship' | 'PartTime' | 'FullTime' | 'Contract' | 'Temporary' | 'other';
+type ExperienceLevel = 'EntryLevel' | 'Junior' | 'MidLevel' | 'Senior' | 'Lead' | 'Manager' | 'Executive';
+type EducationalDegree = 'HighSchool' |'Master' | 'PhD';
 
+interface Job {
+  id: number;
+  userId: number;
+  logo: string;
+  companyName: string;
+  jobTitle: string;
+  location: string;
+  jobType: JobType;
+  experienceLevel: ExperienceLevel;
+  educationalDegree: EducationalDegree;
+  salaryMin: number;
+  salaryMax: number;
+  packageId: number;
+  visaSponsorship: boolean;
+  jobDescription: string;
+}
 
-   useEffect(() => {
+const Page = () => {
+  const [savedJobs, setSavedJobs] = useState<Job[]>([]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
     async function fetchData() {
-        try {
-            const response = await fetch('/api/savedjobs/get');
-            const data = await response.json();
-            console.log(data);
-            const jobArray = data.map(item => item.job);
-            setSavedJobs(jobArray);
-        } catch (error) {
-            console.error('Veri getirme hatası:', error);
-        }
+      try {
+        const response = await fetch('/api/savedjobs/get');
+        const data: { job: Job }[] = await response.json();
+        console.log(data);
+
+        // Map the data to extract jobs
+        const jobArray = data.map(item => item.job);
+        setSavedJobs(jobArray);
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
-  
-      fetchData();
-   },[]);
+    }
+
+    fetchData();
+  }, []);
 
   return (
     <div className={styles.Container}>
-        <span className={styles.JobsText}>JOBS</span>
-        <div>
-            <Basic jobs={savedJobs} />
-        </div>        
+      <span className={styles.JobsText}>JOBS</span>
+      <div>
+        <Basic jobs={savedJobs} />
+      </div>        
     </div>
-  )
+  );
 }
 
-export default page
+export default Page;

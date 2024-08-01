@@ -25,7 +25,7 @@ const PostaJobPopup:React.FC<Popup> = ({ children, Save, open, setOpen }) => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, [setOpen]);
 
     const Cancel = () => {
         setOpen(false);  

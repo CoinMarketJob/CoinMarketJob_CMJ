@@ -5,7 +5,6 @@ import Selection from '../components/general/CheckboxSelection';
 import RangeSlider from '../components/general/Slider';
 import ToggleSwitch from '../components/general/Toggle';
 
-
 const JobFilter: React.FC = () => {
   const [datePosted, setDatePosted] = useState<string[]>([]);
   const [location, setLocation] = useState<string[]>([]);
@@ -13,6 +12,10 @@ const JobFilter: React.FC = () => {
   const [salary, setSalary] = useState<string[]>([]);
   const [salaryRange, setSalaryRange] = useState<[number, number]>([100, 800]);
   const [experienceLevel, setExperienceLevel] = useState<string[]>([]);
+  
+  // State for toggle switches
+  const [isActivelyHiring, setIsActivelyHiring] = useState(false);
+  const [isVisaSponsorship, setIsVisaSponsorship] = useState(false);
 
   const dateOptions = [
     { id: 'last24Hours', label: 'Last 24 Hours' },
@@ -59,76 +62,83 @@ const JobFilter: React.FC = () => {
 
   return (
     <div className="filter-wrapper">
-        <div className="filter-group">
-          <div className="left-group">
+      <div className="filter-group">
+        <div className="left-group">
+          <Selection
+            name="Date Posted"
+            id="datePosted"
+            value={datePosted}
+            onChange={setDatePosted}
+            list={dateOptions}
+            multiple={false}
+          />
+          <div className="salary-experience">
             <Selection
-              name="Date Posted"
-              id="datePosted"
-              value={datePosted}
-              onChange={setDatePosted}
-              list={dateOptions}
-              multiple={false}
+              name="Salary"
+              id="salary"
+              value={salary}
+              onChange={setSalary}
+              list={salaryOptions}
+              multiple={true}
             />
-            <div className="salary-experience">
-              <Selection
-                name="Salary"
-                id="salary"
-                value={salary}
-                onChange={setSalary}
-                list={salaryOptions}
-                multiple={true}
+            <div className="custom-slider">
+              <RangeSlider
+                min={100}
+                max={800}
+                step={1}
+                onRangeChange={handleSalaryChange}
               />
-              <div className="custom-slider">
-                <RangeSlider
-                  min={100}
-                  max={800}
-                  step={1}
-                  onRangeChange={handleSalaryChange}
-                />
-              </div>
             </div>
           </div>
-          <div className="centered-group">
-            <Selection
-              name="Location"
-              id="location"
-              value={location}
-              onChange={setLocation}
-              list={locationOptions}
-              multiple={true}
+        </div>
+        <div className="centered-group">
+          <Selection
+            name="Location"
+            id="location"
+            value={location}
+            onChange={setLocation}
+            list={locationOptions}
+            multiple={true}
+          />
+          <Selection
+            name="Experience Level"
+            id="experienceLevel"
+            value={experienceLevel}
+            onChange={setExperienceLevel}
+            list={experienceLevelOptions}
+            multiple={true}
+          />
+        </div>
+        <div className="right-aligned-group">
+          <Selection
+            name="Job Type"
+            id="jobType"
+            value={jobType}
+            onChange={setJobType}
+            list={jobTypeOptions}
+            multiple={true}
+          />
+          <div className="toggles">
+            <ToggleSwitch
+              title="Actively Hiring"
+              sliderName='slider1'
+              switchState={isActivelyHiring}
+              setSwitchState={setIsActivelyHiring}
             />
-            <Selection
-              name="Experience Level"
-              id="experienceLevel"
-              value={experienceLevel}
-              onChange={setExperienceLevel}
-              list={experienceLevelOptions}
-              multiple={true}
+            <ToggleSwitch
+              title="Visa Sponsorship"
+              sliderName='slider2'
+              switchState={isVisaSponsorship}
+              setSwitchState={setIsVisaSponsorship}
             />
           </div>
-          <div className="right-aligned-group">
-            <Selection
-              name="Job Type"
-              id="jobType"
-              value={jobType}
-              onChange={setJobType}
-              list={jobTypeOptions}
-              multiple={true}
-            />
-            <div className="toggles">
-            <ToggleSwitch title="Actively Hiring" sliderName='slider1'/>
-            <ToggleSwitch title="Visa Sponsorship" sliderName='slider2'/>
-            </div>
-            
-              <div className="button-container">
-                <button onClick={() => console.log('Reset filters')}>Reset</button>
-                <button onClick={() => console.log('Apply filters')}>Apply</button>
-              </div>
-            
+          <div className="button-container">
+            <button onClick={() => console.log('Reset filters')}>Reset</button>
+            <button onClick={() => console.log('Apply filters')}>Apply</button>
           </div>
         </div>
       </div>
-    
+    </div>
   );
 };
 

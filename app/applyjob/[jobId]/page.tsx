@@ -52,7 +52,7 @@ const page = ({params}: {params: JobProps}) => {
     }
 
     fetchData();
-  },[])
+  },[jobId])
 
   const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);

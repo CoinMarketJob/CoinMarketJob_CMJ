@@ -5,22 +5,32 @@ import styles from "./Live.module.css";
 import Search from "./Search";
 import Categories from "./Categories";
 
-const Live = () => {
-  const [live, setLive] = useState([]);
-  const [blog, setBlog] = useState([]);
-  const [expandedIndex, setExpandedIndex] = useState(null);
+// Define the type for live and blog items
+interface LiveItem {
+  liveType: string;
+  title: string;
+  organisation?: string;
+  headline?: string;
+  content?: string;
+  // Add other properties based on your data structure
+}
+
+const Live: React.FC = () => {
+  // Use the defined type for state
+  const [live, setLive] = useState<LiveItem[]>([]);
+  const [blog, setBlog] = useState<LiveItem[]>([]);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   let globalIndex = 0;
 
   useEffect(() => {
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     async function fetchData() {
       try {
         const response = await fetch("/api/live/");
-        const data = await response.json();
+        const data: LiveItem[] = await response.json(); // Assert type
         console.log(data);
-        setLive(data.filter((x) => x.liveType != "BLOG"));
-        setBlog(data.filter((x) => x.liveType == "BLOG"));
+        setLive(data.filter((x) => x.liveType !== "BLOG"));
+        setBlog(data.filter((x) => x.liveType === "BLOG"));
       } catch (error) {
         console.error("Veri getirme hatası:", error);
       }
@@ -29,12 +39,12 @@ const Live = () => {
     fetchData();
   }, []);
 
-  const toggleExpand = (index) => {
+  const toggleExpand = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
   const getAlternatingRows = () => {
-    const combined = [];
+    const combined: JSX.Element[] = [];
     let liveIndex = 0;
     let blogIndex = 0; // Total index to uniquely identify each element
 
@@ -61,7 +71,7 @@ const Live = () => {
                 />
               </motion.svg>
             </div>
-            {live[liveIndex].liveType == "News" ? (
+            {live[liveIndex].liveType === "News" ? (
               <>
                 <div className={styles.Title}>{live[liveIndex].title}</div>
                 <div className={styles.Type}>News</div>

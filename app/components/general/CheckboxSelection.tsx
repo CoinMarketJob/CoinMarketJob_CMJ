@@ -7,9 +7,9 @@ interface SelectionType {
     id: string;
     value: string[];
     onChange: (selectedValues: string[]) => void;
-    list: Array<{ id: string, label: string }>;
+    list: Array<{ id: string, label: string, sublabel?: string }>; // Added sublabel
     multiple: boolean;
-    borderRadius? : number
+    borderRadius?: number;
 }
 
 const Selection: React.FC<SelectionType> = ({ name, id, value, onChange, list, multiple, borderRadius }) => {
@@ -34,29 +34,28 @@ const Selection: React.FC<SelectionType> = ({ name, id, value, onChange, list, m
 
     return (
         <div>
-        <h1 className="name">{name}</h1>
-        <div className="selection-container">
-            {list.map((item) => (
-                <div key={item.id} className="checkbox-item">
-                    <input
-                    style={{borderRadius}}
-                        type="checkbox"
-                        id={`${id}-${item.id}`}
-                        value={item.id}
-                        checked={value.includes(item.id)}
-                        onChange={handleCheckboxChange}
-                    />
-                    <label
-                        htmlFor={`${id}-${item.id}`}
-                        className={multiple ? 'square-checkbox' : 'circle-checkbox'}
-                    >
-                        {item.label}
-                        {item.sublabel && <span className="sublabel">{item.sublabel}</span>}
-                    </label>
-                </div>
-            ))}
-
-        </div>
+            <h1 className="name">{name}</h1>
+            <div className="selection-container">
+                {list.map((item) => (
+                    <div key={item.id} className="checkbox-item">
+                        <input
+                            style={{ borderRadius }}
+                            type="checkbox"
+                            id={`${id}-${item.id}`}
+                            value={item.id}
+                            checked={value.includes(item.id)}
+                            onChange={handleCheckboxChange}
+                        />
+                        <label
+                            htmlFor={`${id}-${item.id}`}
+                            className={multiple ? 'square-checkbox' : 'circle-checkbox'}
+                        >
+                            {item.label}
+                            {item.sublabel && <span className="sublabel">{item.sublabel}</span>}
+                        </label>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }

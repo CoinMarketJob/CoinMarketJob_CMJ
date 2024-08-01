@@ -8,7 +8,7 @@ import ReviewClient from "../components/postajob/ReviewClient";
 import CheckoutClient from "../components/postajob/CheckoutClient";
 import { useRouter } from "next/navigation";
 
-const page = () => {
+const Page = () => {
   const [page, setPage] = useState<number>(0);
 
   const router = useRouter();
@@ -24,7 +24,7 @@ const page = () => {
   const [jobTitle, setJobTitle] = useState<string>("");
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
 
-  const [profile, setProfile] = useState();
+  const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   const [oneJobIsChecked, setOneJobIsChecked] = useState<boolean>(true);
@@ -39,8 +39,8 @@ const page = () => {
           : monthlyChecked
           ? "Monthly"
           : "FiveJob",
-        logo: profile?.logoURL,
-        companyName: profile?.headline,
+        logo: profile?.logoURL || "",
+        companyName: profile?.headline || "",
         jobTitle,
         location: selectedLocations[0],
         jobType,
@@ -71,8 +71,6 @@ const page = () => {
   };
 
   useEffect(() => {
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
     async function fetchData() {
       try {
         const response = await fetch("/api/companyprofile/get/");
@@ -80,7 +78,7 @@ const page = () => {
         console.log(data);
         setProfile(data);
       } catch (error) {
-        console.error("Veri getirme hatası:", error);
+        console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
@@ -94,25 +92,25 @@ const page = () => {
       <div className={styles.indicatorContainer}>
         <div
           className={`${styles.indicator} ${styles.indicatorMargin} ${
-            page == 0 ? styles.selectedIndicator : ""
+            page === 0 ? styles.selectedIndicator : ""
           }`}
         ></div>
         <div
           className={`${styles.indicator} ${styles.indicatorMargin} ${
-            page == 1 ? styles.selectedIndicator : ""
+            page === 1 ? styles.selectedIndicator : ""
           }`}
         ></div>
         <div
           className={`${styles.indicator} ${
-            page == 2 ? styles.selectedIndicator : ""
+            page === 2 ? styles.selectedIndicator : ""
           }`}
         ></div>
       </div>
 
-      {page == 0 ? (
+      {page === 0 ? (
         <EditClient
-          image={profile?.logoURL}
-          companyName={profile?.headline}
+          image={profile?.logoURL || ""}
+          companyName={profile?.headline || ""}
           jobTitle={jobTitle}
           setJobTitle={setJobTitle}
           selectedLocations={selectedLocations}
@@ -133,10 +131,10 @@ const page = () => {
           setDescription={setDescription}
           setPage={setPage}
         />
-      ) : page == 1 ? (
+      ) : page === 1 ? (
         <ReviewClient
-          image={profile?.logoURL}
-          companyName={profile?.headline}
+          image={profile?.logoURL || ""}
+          companyName={profile?.headline || ""}
           jobTitle={jobTitle}
           selectedLocations={selectedLocations}
           jobType={jobType}
@@ -163,4 +161,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

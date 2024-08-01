@@ -1,34 +1,52 @@
-import { Job } from '@prisma/client'
-import React from 'react'
-import styles from './JobDetail.module.css'
+import { Job } from '@prisma/client';
+import React from 'react';
+import styles from './JobDetail.module.css';
 import Icon from '../../general/Icon';
-import { faShare, faShareNodes } from '@fortawesome/free-solid-svg-icons';
+import { faShareNodes } from '@fortawesome/free-solid-svg-icons';
 import Button from '../../general/Button';
 import { useRouter } from 'next/navigation';
 import Draft from '../../general/Draft';
+import { JSONContent } from '@tiptap/react'; // Ensure correct import
 
 interface JobDetailProps {
-    job: Job;
+  job: Job;
 }
 
-const JobDetail:React.FC<JobDetailProps> = ({job}) => {
-    const router = useRouter();
+const JobDetail: React.FC<JobDetailProps> = ({ job }) => {
+  const router = useRouter();
 
-    const handleIconClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        e.stopPropagation();
-    };
+  const handleIconClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.stopPropagation();
+    // Add functionality for the share icon click
+  };
 
-    const handleButtonClick = (jobId: number) => {
-        router.push("/jobapply/" + jobId);
-    };
+  const handleButtonClick = (jobId: number) => {
+    router.push('/jobapply/' + jobId);
+  };
+
+  // Ensure jobDescription is converted to a string if necessary
+  const jobDescriptionString: string = typeof job.jobDescription === 'string' 
+    ? job.jobDescription 
+    : JSON.stringify(job.jobDescription);
+
+  // Convert to JSONContent if applicable
+  const jobDescription: JSONContent | undefined = 
+    jobDescriptionString ? (JSON.parse(jobDescriptionString) as JSONContent) : undefined;
 
   return (
     <div className={styles.DetailArea}>
       <div className={styles.ShareIcon}>
-        <Icon icon={faShareNodes} onClick={handleIconClick} width={20} hoverSize={40} hoverContent='Share' />
+        <Icon 
+          onClick={handleIconClick} 
+          width={20} 
+          hoverSize={40} 
+          hoverContent='Share'
+        >
+          <i className={`fas fa-share-nodes`} />
+        </Icon>
       </div>
       <div className={styles.logoDiv}>
-        <img src={job.logo} className={styles.Logo}  alt="Description"/>  
+        <img src={job.logo} className={styles.Logo} alt="Company Logo" />  
       </div>
       <div className={styles.companyDiv}>
         <span>{job.companyName}</span>
@@ -43,17 +61,25 @@ const JobDetail:React.FC<JobDetailProps> = ({job}) => {
       </div>
 
       <div className={styles.applyButton}>
-           <Button onClick={() => handleButtonClick(job.id)} textColor='#FFFFFF' backgroundColor='#242220' 
-           text='Apply' fontSize={18} fontWeight={500}
-           paddingLeft={48} paddingRight={49}
-           paddingTop={12} paddingBottom={12} />
-       </div>
+        <Button 
+          onClick={() => handleButtonClick(job.id)} 
+          textColor='#FFFFFF' 
+          backgroundColor='#242220' 
+          text='Apply' 
+          fontSize={18} 
+          fontWeight={500}
+          paddingLeft={48} 
+          paddingRight={49}
+          paddingTop={12} 
+          paddingBottom={12} 
+        />
+      </div>
 
-       <div className={styles.section}>
-        <Draft show content={job.jobDescription} />
-        </div>
+      <div className={styles.section}>
+        <Draft show content={jobDescription} />
+      </div>
     </div>
-  )
+  );
 }
 
-export default JobDetail
+export default JobDetail;
