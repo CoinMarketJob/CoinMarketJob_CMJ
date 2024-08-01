@@ -8,6 +8,10 @@ export async function POST(request: Request) {
   const { companyName, headline, siteUrl, about, logoLink } = body;
 
   const currentUser = await getCurrentUser();
+  
+  if (!currentUser) {
+    return NextResponse.json({ error: 'User not authenticated' }, { status: 401 });
+  }
 
   const profile = await prisma.companyProfile.update({
     where: {

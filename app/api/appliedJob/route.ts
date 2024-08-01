@@ -23,6 +23,10 @@ export async function POST(request: Request) {
 
   const currentUser = await getCurrentUser();
 
+  if (!currentUser) {
+    return NextResponse.json({ error: 'User not authenticated' }, { status: 401 });
+  }
+
   const appliedJob = await prisma.appliedJobs.create({
     data: {
         userId: currentUser.id,
