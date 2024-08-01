@@ -55,6 +55,10 @@ export async function POST(request: Request) {
     });
   }
 
+  if (!buyedPackage) {
+    return NextResponse.json({ error: 'Package not authenticated' }, { status: 401 });
+  }
+
   const job = await prisma.job.create({
     data: { 
         userId: currentUser.id,
