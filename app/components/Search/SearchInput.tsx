@@ -37,14 +37,14 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags }) => {
 
     function filterJobs() {
         const fjobs = jobs.filter(job => {
-          return tags.every(tag => 
-            job.companyName.toLowerCase().includes(tag.toLowerCase()) ||
-            job.jobTitle.toLowerCase().includes(tag.toLowerCase()) ||
-            job.location.toLowerCase().includes(tag.toLowerCase()) ||
-            job.jobType.toLowerCase().includes(tag.toLowerCase()) ||
-            job.experienceLevel.toLowerCase().includes(tag.toLowerCase()) ||
-            job.jobDescription.toLowerCase().includes(tag.toLowerCase())
-          );
+            return tags.every(tag => 
+                job.companyName.toLowerCase().includes(tag.toLowerCase()) ||
+                job.jobTitle.toLowerCase().includes(tag.toLowerCase()) ||
+                job.location.toLowerCase().includes(tag.toLowerCase()) ||
+                job.jobType.toLowerCase().includes(tag.toLowerCase()) ||
+                job.experienceLevel.toLowerCase().includes(tag.toLowerCase()) ||
+                (job.jobDescription?.toLowerCase().includes(tag.toLowerCase()) ?? false)
+            );
         });
         setFilteredJobs(fjobs);
     }
