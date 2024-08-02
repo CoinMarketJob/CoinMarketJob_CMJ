@@ -32,10 +32,8 @@ const LoginClient = () => {
 
   const complete = async () => {
     const submitData = { email };
-    console.log(submitData);
-    alert(email);
-    alert(email);
-
+    console.log('Submitting data:', submitData);
+  
     try {
       const response = await fetch('/api/user/get', {
         method: 'POST',
@@ -44,55 +42,64 @@ const LoginClient = () => {
           'Content-Type': 'application/json'
         }
       });
+  
+      if (!response.ok) {
+        throw new Error(`Fetch error: ${response.status} ${response.statusText}`);
+      }
+  
       const data = await response.json();
-
-      alert(data);
-
+      console.log('Received data:', data);
+  
       if (data == null) {
         // User register.
-        try {
-          const registerData = { email, password };
-          const response = await fetch('/api/user/register', {
-            method: 'POST',
-            body: JSON.stringify(registerData),
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          });
-
-          if (response.ok) {
-            signIn('credentials', {
-              email: email,
-              password: password,
-              redirect: false
-            }).then((callback) => {
-              if (callback?.ok) {
-                window.location.reload();
-              }
-            });
-          } else {
-            console.log("Failed");
+        const registerData = { email, password };
+        console.log('Registering user:', registerData);
+  
+        const registerResponse = await fetch('/api/user/register', {
+          method: 'POST',
+          body: JSON.stringify(registerData),
+          headers: {
+            'Content-Type': 'application/json'
           }
-        } catch (error) {
-          console.log(error);
+        });
+  
+        if (!registerResponse.ok) {
+          throw new Error(`Register fetch error: ${registerResponse.status} ${registerResponse.statusText}`);
         }
-      } else {
-        // User Login.
-        console.log("Login");
-        signIn('credentials', {
+  
+        console.log('User registered, attempting sign in...');
+        const registerResult = await registerResponse.json();
+  
+        const signInResult = await signIn('credentials', {
           email: email,
           password: password,
           redirect: false
-        }).then((callback) => {
-          console.log(callback);
-          if (callback?.ok) {
-            window.location.reload();
-          }
         });
+  
+        if (signInResult?.ok) {
+          console.log('Sign in successful, reloading page...');
+          window.location.reload();
+        } else {
+          console.error('Sign in failed:', signInResult);
+        }
+      } else {
+        // User Login.
+        console.log('Logging in user...');
+        const signInResult = await signIn('credentials', {
+          email: email,
+          password: password,
+          redirect: false
+        });
+  
+        if (signInResult?.ok) {
+          console.log('Sign in successful, reloading page...');
+          window.location.reload();
+        } else {
+          console.error('Sign in failed:', signInResult);
+        }
       }
     } catch (error) {
-      alert(error);
-      console.log(error);
+      console.error('Error during complete:', error);
     }
   };
 
