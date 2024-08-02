@@ -53,8 +53,7 @@ const AuthContainer = () => {
   
     try {
       const response = await fetch('/api/live/get', {
-        method: 'POST',
-        body: JSON.stringify(submitData),
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json'
         }
