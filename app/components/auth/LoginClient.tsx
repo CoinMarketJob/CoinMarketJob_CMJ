@@ -88,6 +88,7 @@ const LoginClient = () => {
         });
       }
     } catch (error) {
+      alert(error);
       console.log(error);
     }
   };
