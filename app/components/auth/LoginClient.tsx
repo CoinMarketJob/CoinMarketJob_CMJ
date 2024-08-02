@@ -32,7 +32,9 @@ const LoginClient = () => {
 
   const complete = async () => {
     const submitData = { email };
-    alert(submitData);
+    console.log(submitData);
+    alert(email);
+    alert(email);
 
     try {
       const response = await fetch('/api/user/get', {
