@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./EditCompanyProfile.module.css";
-//import defaultAvatarImage from "./PlaceholderCompanyProfile.png";
 import Image from "next/image";
 import EditProfileInput from "./EditProfileInput";
 import EditProfileDraft from "./EditProfileDraft";
@@ -11,10 +10,10 @@ import SocialMediaItem from "./SocialMediaItem";
 import { SocialMedia } from "@prisma/client";
 import AddSocialMedia from "./AddSocialMedia";
 import Button from "../general/Button";
-const defaultAvatarImage = "./PlaceholderCompanyProfile.png"; // URL veya dosya yolu
+const defaultAvatarImage = "/PlaceholderCompanyProfile.png";
 
 interface Profile {
-  id: number; // veya string, ID'nin türüne göre
+  id: number;
   companyName: string;
   headline: string;
   siteUrl: string;
@@ -84,7 +83,7 @@ const EditCompanyProfile = () => {
         setCompanyName(data.companyName);
         setHeadline(data.headline);
         setSite(data.siteUrl);
-        setAbout(data.about);
+        setAbout(data.about as JSONContent);
         setOldLogo(data.logoURL);
       } catch (error) {
         console.error("Veri getirme hatası:", error);

@@ -43,7 +43,7 @@ const AuthContainer = () => {
 
   return (
     <div style={{display: "flex", width: "100%", height: "100%"}}>
-      {currentUser ? <Profile /> : <LoginClient />}
+      {currentUser ? <CompanyProfile /> : <LoginClient />}
     </div>
   );
 }

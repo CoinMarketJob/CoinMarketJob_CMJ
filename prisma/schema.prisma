@@ -39,7 +39,7 @@ model Job {
   salaryMin         Int
   salaryMax         Int
   visaSponsorship   Boolean
-  jobDescription    String?
+  jobDescription    Json
   packageId         Int
   package           BuyedPackage  @relation(fields: [packageId], references: [id], onDelete: Cascade)
   savedJobs         SavedJobs[]
