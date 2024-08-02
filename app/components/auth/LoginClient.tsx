@@ -42,6 +42,8 @@ const LoginClient = () => {
       });
       const data = await response.json();
 
+      alert(data);
+
       if (data == null) {
         // User register.
         try {
