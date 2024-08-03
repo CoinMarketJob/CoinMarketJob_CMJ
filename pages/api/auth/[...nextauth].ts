@@ -1,7 +1,6 @@
 import NextAuth, { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { PrismaClient, User } from "@prisma/client";
 import prisma from '@/libs/prismadb';
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from 'bcrypt';
@@ -55,8 +54,7 @@ export const authOptions: AuthOptions = {
   session: {
     strategy: "jwt"
   },
-  secret: "@CMJ2024",
-   useSecureCookies: true
+  secret: "@CMJ2024"
 };
 
 export default NextAuth(authOptions);

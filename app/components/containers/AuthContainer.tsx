@@ -1,14 +1,9 @@
 "use client";
-import Profile from '../auth/Profile';
 import LoginClient from '../auth/LoginClient';
 import { User } from '@prisma/client';
 import { getCurrentUser } from '@/app/actions/getCurrentUser';
 import { useEffect, useState } from 'react';
-import {useRouter, useSearchParams } from 'next/navigation';
 import CompanyProfile from '../auth/CompanyProfile';
-import { signIn } from 'next-auth/react';
-import Button from '../general/Button';
-import Input from '../general/Input';
 
 // Define the type for user, including null
 type UserType = User | null;
@@ -23,6 +18,20 @@ const convertUserDates = (user: any): User => ({
 
 const AuthContainer = () => {
   const [currentUser, setCurrentUser] = useState<UserType>(null); // Initialize with null
+
+  useEffect(() => {
+    async function getUser() {
+      const user = await getCurrentUser();
+      if (user) {
+        setCurrentUser(convertUserDates(user));
+      } else {
+        setCurrentUser(null);
+      }
+    }
+    
+    getUser();
+
+  },[])
 
   return (
     <div style={{display: "flex", width: "100%", height: "100%"}}>
