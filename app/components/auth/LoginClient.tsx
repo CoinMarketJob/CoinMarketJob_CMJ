@@ -35,7 +35,7 @@ const LoginClient = () => {
     console.log('Submitting data:', submitData);
   
     try {
-      const response = await fetch('/api/live/get', {
+      const response = await fetch('/api/user/get', {
         method: 'POST',
         body: JSON.stringify(submitData),
         headers: {
@@ -55,7 +55,7 @@ const LoginClient = () => {
         const registerData = { email, password };
         console.log('Registering user:', registerData);
   
-        const registerResponse = await fetch('/api/live/register', {
+        const registerResponse = await fetch('/api/user/register', {
           method: 'POST',
           body: JSON.stringify(registerData),
           headers: {
