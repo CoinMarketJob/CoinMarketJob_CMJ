@@ -55,7 +55,8 @@ export const authOptions: AuthOptions = {
   session: {
     strategy: "jwt"
   },
-  secret: "@CMJ2024"
+  secret: "@CMJ2024",
+   useSecureCookies: true
 };
 
 export default NextAuth(authOptions);
