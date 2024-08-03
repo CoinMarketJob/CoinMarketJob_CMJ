@@ -1,16 +1,10 @@
 import NextAuth, { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, User } from "@prisma/client";
 import prisma from '@/libs/prismadb';
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from 'bcrypt';
-
-interface User {
-  id: string; // Ensure ID type matches what is returned by Prisma (string if Prisma ID is string)
-  email: string;
-  // Include other properties if needed
-}
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -48,17 +42,16 @@ export const authOptions: AuthOptions = {
 
         // Ensure the user object returned conforms to the expected User type
         return {
-          id: user.id.toString(), // Convert ID to string if necessary
-          email: user.email,
-          // Map other properties if needed
-        } as User;
+          ...user,
+          id: user.id.toString() // Convert the id to string
+        };
       }
     })
   ],
   pages: {
     signIn: "/",
   },
-  debug: process.env.NODE_ENV === "development",
+  debug: true,
   session: {
     strategy: "jwt"
   },
