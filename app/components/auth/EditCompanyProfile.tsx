@@ -22,16 +22,19 @@ interface Profile {
   socialMedias: SocialMedia[];
 }
 
-const EditCompanyProfile = () => {
+interface props {
+  setEditProfile: React.Dispatch<React.SetStateAction<boolean>>;
+  setProfile: React.Dispatch<React.SetStateAction<any>>;
+}
+
+const EditCompanyProfile: React.FC<props> = ({ setEditProfile }) => {
   const [companyName, setCompanyName] = useState<string>("");
   const [headline, setHeadline] = useState<string>("");
   const [site, setSite] = useState<string>("");
   const [about, setAbout] = useState<JSONContent>();
   const [avatar, setAvatar] = useState<string>(defaultAvatarImage);
 
-
   const [profile, setProfile] = useState<Profile | null>(null);
-
 
   const [socialPopup, setSocialPopup] = useState<boolean>(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -50,7 +53,7 @@ const EditCompanyProfile = () => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       setImageFile(file);
-  
+
       const reader = new FileReader();
       reader.onload = (event) => {
         if (event.target && typeof event.target.result === "string") {
@@ -62,9 +65,6 @@ const EditCompanyProfile = () => {
       reader.readAsDataURL(file);
     }
   };
-  
-  
-  
 
   const triggerFileInput = () => {
     const fileInput = document.getElementById("avatarInput");
@@ -89,10 +89,9 @@ const EditCompanyProfile = () => {
         console.error("Veri getirme hatası:", error);
       }
     }
-  
+
     fetchData();
   }, []);
-  
 
   async function fetchData() {
     try {
@@ -137,24 +136,26 @@ const EditCompanyProfile = () => {
         logoLink,
       };
 
-      const response = await fetch('/api/companyprofile/', {
-        method: 'POST',
+      const response = await fetch("/api/companyprofile/", {
+        method: "POST",
         body: JSON.stringify(profileData),
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
 
+      const data = await response.json();
+
       if (response.ok) {
-        console.log("Başarıyla günellendi.");
+        setProfile(data)
+        setEditProfile(false);
       } else {
         console.error("Error applying for job:", response.statusText);
       }
-      
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   return (
     <div className={styles.container}>
@@ -234,7 +235,6 @@ const EditCompanyProfile = () => {
           />
         )}
 
-
         {profile?.socialMedias.map((item: SocialMedia, index: number) => (
           <SocialMediaItem
             key={index}
@@ -266,8 +266,16 @@ const EditCompanyProfile = () => {
       </div>
 
       <div className={styles.Done}>
-        <Button text="Done" onClick={Done} fontSize={14} fontWeight={500}
-        paddingTop={12} paddingBottom={12} paddingLeft={26} paddingRight={26} />
+        <Button
+          text="Done"
+          onClick={Done}
+          fontSize={14}
+          fontWeight={500}
+          paddingTop={12}
+          paddingBottom={12}
+          paddingLeft={26}
+          paddingRight={26}
+        />
       </div>
     </div>
   );

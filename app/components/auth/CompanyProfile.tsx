@@ -21,7 +21,7 @@ interface Profile {
 
 const Profile = () => {
   const [showDetail, setShowDetail] = useState<boolean>(false);
-  const [profile, setProfile] = useState<Profile | undefined>(undefined);
+  const [profile, setProfile] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
   const [editProfile, setEditProfile] = useState<boolean>(false);
 
@@ -60,6 +60,8 @@ const Profile = () => {
 
     fetchData();
   }, []);
+
+
 
   const EditProfileClick = () => {
     setEditProfile(true);
@@ -136,7 +138,7 @@ const Profile = () => {
               </div>
             </>
           ) : (
-            <EditCompanyProfile />
+            <EditCompanyProfile setEditProfile={setEditProfile} setProfile={setProfile} />
           )}
         </>
       )}

@@ -13,17 +13,28 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'User not authenticated' }, { status: 401 });
   }
 
-  const profile = await prisma.companyProfile.update({
+  const profile = await prisma.companyProfile.upsert({
     where: {
         userId: currentUser.id,
     },
-    data: {
+    update: {
         logoURL: logoLink,
         companyName,
         headline,
         siteUrl,
         about
     },
+    create: {
+      userId: currentUser.id,
+      logoURL: logoLink,
+      companyName,
+      headline,
+      siteUrl,
+      about
+    },
+    include: {
+      socialMedias: true
+    }
   })
 
   return NextResponse.json(profile);

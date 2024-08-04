@@ -1,4 +1,13 @@
-.header-text{
+.login-client-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.header-text{ 
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-smooth: never;
     width: 100%;
     font-family: Inter;
     font-size: 22px;
@@ -9,7 +18,7 @@
     margin-bottom: 48px; 
 }
 .google-button{
-    padding: 19px 22px 19px 57px;
+    padding: 19.7px 23px 19.7px 58px;
     border-radius: 50px;
     background-color: #FFFFFF;
     border: 1px solid #E0E0E9;
@@ -21,7 +30,7 @@
 }
 
 .apple-button{
-    padding: 19px 32px 19px 57px;
+    padding: 19.7px 33px 19.7px 58px;
     border-radius: 50px;
     background-color: #FFFFFF;
     border: 1px solid #E0E0E9;
