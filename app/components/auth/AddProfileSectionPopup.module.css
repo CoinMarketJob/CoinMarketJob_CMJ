@@ -39,3 +39,10 @@
 .SecondColumn{
     width: calc(calc(100% - 15px) / 2);
 }
+
+.ButtonGroup{
+    margin-top: 24px;
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+}

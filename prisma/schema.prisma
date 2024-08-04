@@ -228,8 +228,8 @@ model ProfileSection {
   profile             Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
   sectionType         SectionType
   title               String
-  from                DateTime
-  to                  DateTime
+  from                String
+  to                  String
   institution         String
   location            String
   description         Json?

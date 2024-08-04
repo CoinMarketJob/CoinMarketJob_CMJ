@@ -138,7 +138,7 @@ const Profile = () => {
               </div>
             </>
           ) : (
-            <EditCompanyProfile setEditProfile={setEditProfile} setProfile={setProfile} />
+            <EditCompanyProfile setEditProfile={setEditProfile} setProfile={setProfile} oldProfile={profile}/>
           )}
         </>
       )}

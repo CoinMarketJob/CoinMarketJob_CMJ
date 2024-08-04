@@ -30,9 +30,6 @@ interface AddSocialMediaProps {
   fetchData: () => void;
 }
 
-
-
-
 const EditProfile = () => {
   const [jobTitle, setJobTitle] = useState<string>("");
   const [location, setLocation] = useState<string>("");
@@ -46,7 +43,8 @@ const EditProfile = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   const [showAddPopup, setShowAddPopup] = useState<boolean>(false);
-  const [popupType, setPopupType] = useState<string>("");
+  const [sectionPopup, setSectionPopup] = useState<boolean>(false);
+  const [popupType, setPopupType] = useState<string>("WorkExperience");
 
   const closeTest = () => {
     console.log("Close");
@@ -95,7 +93,7 @@ const EditProfile = () => {
   }
 
   const ProfileSections = [
-    { value: "Work Experience", label: "Work Experience" },
+    { value: "WorkExperience", label: "Work Experience" },
     { value: "Volunteering", label: "Volunteering" },
     { value: "Education", label: "Education" },
     { value: "Certifications", label: "Certifications" },
@@ -104,7 +102,6 @@ const EditProfile = () => {
     { value: "Awards", label: "Awards" },
   ];
 
-  const AddProfileSection = () => {};
 
   const AddElement = (type: string) => {
     setShowAddPopup(true);
@@ -171,7 +168,6 @@ const EditProfile = () => {
           <div className={styles.About}>
             <EditProfileDraft
               ContentType="About"
-              close={closeTest}
               content={about}
               onChange={(content: JSONContent) => setAbout(content)}
             />
@@ -225,7 +221,7 @@ const EditProfile = () => {
 
           <div className={styles.AddSection}>
             <Icon
-              onClick={() => AddProfileSection()}
+              onClick={() => setSectionPopup(!sectionPopup)}
               hoverSize={50}
               hoverContent="Add Profile Section"
             >
@@ -244,7 +240,7 @@ const EditProfile = () => {
               </svg>
             </Icon>
 
-            <div className={styles.SectionPopup}>
+            <div className={styles.SectionPopup} style={{display: !sectionPopup ? "none" : ""}}>
               {ProfileSections.map((item, index) => (
                 <div key={index} className={styles.ElementDiv}>
                   <Icon onClick={() => AddElement(item.value)}>
@@ -292,8 +288,9 @@ const EditProfile = () => {
             </div>
           </div>
 
-          <div className={styles.PopupContainer}>
-            <AddProfileSectionPopup type={popupType} setShowAddPopup={setShowAddPopup} />
+          <div className={styles.PopupContainer} style={{display: !showAddPopup ? "none" : ""}}>
+            <AddProfileSectionPopup type={popupType} setShowAddPopup={setShowAddPopup} 
+            profileId={Number(profile?.id)} />
           </div>
 
         </div>

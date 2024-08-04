@@ -4,6 +4,7 @@ import { User } from '@prisma/client';
 import { getCurrentUser } from '@/app/actions/getCurrentUser';
 import { useEffect, useState } from 'react';
 import CompanyProfile from '../auth/CompanyProfile';
+import Profile from '../auth/Profile';
 
 // Define the type for user, including null
 type UserType = User | null;
@@ -35,7 +36,7 @@ const AuthContainer = () => {
 
   return (
     <div style={{display: "flex", width: "100%", height: "100%"}}>
-      {currentUser ? <CompanyProfile /> : <LoginClient />}
+      {currentUser ? <Profile /> : <LoginClient />}
     </div>
   );
 }

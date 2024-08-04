@@ -25,9 +25,13 @@ interface Profile {
 interface props {
   setEditProfile: React.Dispatch<React.SetStateAction<boolean>>;
   setProfile: React.Dispatch<React.SetStateAction<any>>;
+  oldProfile: any;
 }
 
-const EditCompanyProfile: React.FC<props> = ({ setEditProfile }) => {
+const EditCompanyProfile: React.FC<props> = ({
+  setEditProfile,
+  oldProfile,
+}) => {
   const [companyName, setCompanyName] = useState<string>("");
   const [headline, setHeadline] = useState<string>("");
   const [site, setSite] = useState<string>("");
@@ -74,23 +78,13 @@ const EditCompanyProfile: React.FC<props> = ({ setEditProfile }) => {
   };
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch("/api/companyprofile/get/");
-        const data: Profile = await response.json();
-        console.log(data);
-        setProfile(data);
-        setCompanyName(data.companyName);
-        setHeadline(data.headline);
-        setSite(data.siteUrl);
-        setAbout(data.about as JSONContent);
-        setOldLogo(data.logoURL);
-      } catch (error) {
-        console.error("Veri getirme hatası:", error);
-      }
-    }
-
-    fetchData();
+    console.log(oldProfile);
+    setProfile(oldProfile);
+    setCompanyName(oldProfile.companyName);
+    setHeadline(oldProfile.headline);
+    setSite(oldProfile.siteUrl);
+    setAbout(oldProfile.about as JSONContent);
+    setOldLogo(oldProfile.logoURL);
   }, []);
 
   async function fetchData() {
@@ -147,7 +141,7 @@ const EditCompanyProfile: React.FC<props> = ({ setEditProfile }) => {
       const data = await response.json();
 
       if (response.ok) {
-        setProfile(data)
+        setProfile(data);
         setEditProfile(false);
       } else {
         console.error("Error applying for job:", response.statusText);

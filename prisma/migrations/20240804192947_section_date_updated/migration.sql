@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `ProfileSection` MODIFY `from` VARCHAR(191) NOT NULL,
+    MODIFY `to` VARCHAR(191) NOT NULL;

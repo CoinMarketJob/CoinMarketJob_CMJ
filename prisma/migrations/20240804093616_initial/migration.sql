@@ -25,7 +25,7 @@ CREATE TABLE `Job` (
     `salaryMin` INTEGER NOT NULL,
     `salaryMax` INTEGER NOT NULL,
     `visaSponsorship` BOOLEAN NOT NULL,
-    `jobDescription` JSON NULL,
+    `jobDescription` JSON NOT NULL,
     `packageId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)

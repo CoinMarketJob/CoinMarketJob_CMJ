@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import styles from "./Search.module.css";
 
-const Search = () => {
-  const [keyword, setKeyword] = useState<string>("");
+
+interface props {
+  keyword: string;
+  ChangeFunction: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+}
+
+const Search:React.FC<props> = ({keyword, ChangeFunction, handleKeyDown}) => {
 
   return (
     <div className={styles.container}>
@@ -26,7 +32,8 @@ const Search = () => {
         placeholder="Filter by keyword"
         type="text"
         value={keyword}
-        onChange={(e) => setKeyword(e.target.value)}
+        onChange={ChangeFunction}
+        onKeyDown={handleKeyDown}
       />
     </div>
   );

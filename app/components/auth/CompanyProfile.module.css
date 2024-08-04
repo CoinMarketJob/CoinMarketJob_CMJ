@@ -37,6 +37,7 @@
   right: 0px;
   padding: 0.75rem;
   border-radius: 7px;
+  z-index: 1000;
 }
 
 .menuItem {
@@ -63,7 +64,8 @@
 .LogoImage {
   opacity: 0.94;
   border-radius: 14px;
-  border: 1px solid #adacae1a;
+  border: 1px solid #adacae1a;  
+  z-index: 10;
 }
 
 .HeadLine {
