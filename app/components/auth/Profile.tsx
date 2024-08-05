@@ -7,17 +7,32 @@ import Image from "next/image";
 import Draft from "../general/Draft";
 import SocialMediaItem from "./SocialMediaItem";
 import EditProfile from "./EditProfile";
-import { SocialMedia } from "@prisma/client"; // Ensure this import is correct
+import { SocialMedia } from "@prisma/client";
+import { JSONContent } from '@tiptap/react';
+import ProfileSections from "./ProfileSections";
 
-// Import or define the JSONContent type according to your Draft component's requirement
-// For example, if using @tiptap/react, import JSONContent from there
-import { JSONContent } from '@tiptap/react'; // Adjust based on your actual setup
+interface ProfileSection {
+  id: number;
+  profileId: number;
+  sectionType: string;
+  title: string;
+  from: string;
+  to: string;
+  institution: string;
+  location: string;
+  description: string;
+}
 
-// Define interfaces for the profile and social media data
 interface ProfileData {
+  id: number;
+  userId: number;
+  jobTitle?: string;
+  location?: string;
   headline?: string;
   siteUrl?: string;
-  about?: string; // Adjust if you have a more complex type
+  about?: JSONContent;
+  sectionsOrder: string;
+  section: ProfileSection[];
   socialMedias: SocialMedia[];
 }
 
@@ -68,9 +83,7 @@ const Profile = () => {
     setShowDetail(false);
   };
 
-  // Convert string to JSONContent
   const convertToJSONContent = (text: string | undefined): JSONContent => {
-    // Example conversion, adjust as needed
     return { type: 'doc', content: [{ type: 'paragraph', content: [{ type: 'text', text: text || "" }] }] };
   };
 
@@ -117,7 +130,7 @@ const Profile = () => {
                 <div className={styles.SiteText}>{profile?.siteUrl}</div>
               </div>
               <div className={styles.About}>
-                <Draft show border content={convertToJSONContent(profile?.about)} />
+                <Draft show border content={profile?.about} />
               </div>
               <div className={styles.SocialMedias}>
                 {profile?.socialMedias.map((item: SocialMedia, index: number) => (
@@ -131,6 +144,10 @@ const Profile = () => {
 
               <div className={styles.LineDiv}>
                 <div className={styles.Line}></div>
+              </div>
+
+              <div>
+                <ProfileSections profile={profile} />
               </div>
             </>
           ) : (

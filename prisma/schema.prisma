@@ -160,6 +160,7 @@ model Profile {
   headline            String
   siteUrl             String
   about               Json? 
+  sectionsOrder       String?
 
   socialMedias        SocialMedia[]  
   section             ProfileSection[]

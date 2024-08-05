@@ -337,16 +337,16 @@ const page = ({params}: {params: JobProps}) => {
         <div className={styles.TitleText}>{jobName}</div>
       </div>
       <div className={styles.Line}></div>
-      <div style={{display: "flex", width: '38%', marginBottom: '1.5rem'}}>
+      <div className={styles.doubleRow}>
         <Input id='name' placeholder='Name*' type='text' required value={name} onChange={nameChange} />
         <div style={{width: '2.25rem'}}></div>
         <Input id='surname' placeholder='Surname*' type='text' required value={surname} onChange={surnameChange} />
       </div>
-      <div style={{ width: '38%', marginBottom: '1.5rem'}}>
+      <div className={styles.singleRow}>
         <Input id='email' placeholder='Email*' type='email' required value={email} onChange={emailChange} />
       </div>
 
-      <div style={{display: "flex", width: '38%', marginBottom: '1.5rem'}}>
+      <div className={styles.doubleRow}>
         <div style={{ width: '7.5rem'}}><Dropdown id='countryCode' value={countryCode} onChange={codeChange} list={countryCodes}  /></div>
         <div style={{width: '2.25rem'}}></div>
         <Input id='phone' placeholder='Phone' type='phone' required value={phone} onChange={phoneChange} />
