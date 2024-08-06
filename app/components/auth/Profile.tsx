@@ -146,7 +146,7 @@ const Profile = () => {
                 <div className={styles.Line}></div>
               </div>
 
-              <div>
+              <div className={styles.ProfileSectionContainer}>
                 <ProfileSections profile={profile} />
               </div>
             </>

@@ -1,36 +1,82 @@
-/* styles/ProfileSections.module.css */
-
 .container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px;
-  }
-  
-  .sectionGroup {
-    margin-bottom: 40px;
-  }
-  
-  .sectionTitle {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .sectionCard {
-    background-color: #f9f9f9;
-    border: 1px solid #eaeaea;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .sectionCard h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
-  
-  .sectionCard p {
-    margin: 5px 0;
-    color: #555;
-  }
+  display: flex;
+  flex-direction: column;
+  margin-top: 24px;
+  width: calc(100% - 48px);
+}
+.sectionGroup {
+  width: 100%;
+  margin-top: 36px;
+}
+
+.sectionTitle {
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 23.81px;
+  letter-spacing: 0.03em;
+}
+
+.SameTypeSectionGroup {
+  margin-top: 12px;
+  border: 1px solid #e7e5e4;
+  border-radius: 15px;
+  width: 100%;
+  padding: 24px;
+}
+
+.sectionCard {
+  margin-bottom: 28px;
+}
+
+.sectionTitle {
+  font-family: Inter;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 19.84px;
+  letter-spacing: 0.03em;
+  text-align: justified;
+  color: #000000;
+}
+
+.sectionDateDescription {
+  display: flex;
+  width: 100%;
+}
+
+.sectionLocation {
+  font-family: Inter;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 19.84px;
+  letter-spacing: 0.03em;
+  text-align: justified;
+  color: #999999;
+}
+
+.sectionDate {
+  width: 100px;
+  font-family: Inter;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 19.84px;
+  letter-spacing: 0.03em;
+  color: #999999;
+  white-space: nowrap;
+  margin-top: 8px;
+}
+
+.sectionDescription {
+  margin-left: 24px;
+}
+
+.HeadlineAward {
+  font-family: Inter;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 19.84px;
+  letter-spacing: 0.03em;
+  text-align: justified;
+  color: #999999;
+  margin-top: 8px;
+}
