@@ -1,0 +1,13 @@
+.container{
+    display: flex;
+    width: 100%;
+}
+
+.JobCardArea{
+    flex-grow: 1;
+}
+
+.DetailArea{
+    width: 50%;
+    margin-left: 12px;
+}

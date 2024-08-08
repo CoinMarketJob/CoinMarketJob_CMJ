@@ -1,32 +1,63 @@
-.TopPart{
-    display: flex;
+.TopPart {
+  display: flex;
 }
 
-.LocationText{
-    font-family: Inter;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 24.2px;
-    letter-spacing: 0.04em;
-    text-align: left;
-    color: #999999;
-    margin-right: 7px;
+.LocationText {
+  font-family: Inter;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24.2px;
+  letter-spacing: 0.04em;
+  text-align: left;
+  color: #999999;
+  margin-right: 7px;
 }
 
-.arrow-icon{
-    transition: transform 0.3s ease;
-  }
-  
-  .arrow-icon.open {
-    transform: rotate(180deg);
-  }
+.arrow-icon {
+  transition: transform 0.3s ease;
+}
 
-.Menu{
-    position: absolute;
-    background: #FFFFFFCC;
-    box-shadow: 0px 0px 2px 0px #00000033;
-    box-shadow: 0px 0px 11.3px 0px #00000033;
-    border-radius: 7px;
-    padding: 12px;
-    
+.arrow-icon.open {
+  transform: rotate(180deg);
+}
+
+.Menu {
+  position: absolute;
+  background-color: #ffffffcc;
+  box-shadow: 0px 0px 2px 0px #00000033;
+  box-shadow: 0px 0px 11.3px 0px #00000033;
+  z-index: 1000;
+  width: 199px;
+  max-width: 199px;
+  border-radius: 15px;
+  left: 67px;
+  padding: 12px;
+  padding-bottom: 33px;
+  flex-direction: column;
+}
+
+.RadioDiv {
+  display: flex;
+}
+
+.JobTitleContainer {
+  position: relative;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.LocationInput {
+  width: calc(100% - 50px);
+  margin: 0;
+  border: 1px solid #e7e5e4;
+  border-radius: 64px;
+  padding-top: 14px;
+  padding-bottom: 13px;
+  padding-left: 50px;
+}
+
+.SearchIcon {
+  position: absolute;
+  top: 9px;
+  left: 12px;
 }

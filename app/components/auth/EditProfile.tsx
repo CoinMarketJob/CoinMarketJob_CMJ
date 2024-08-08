@@ -13,7 +13,6 @@ import SocialMediaItem from "./SocialMediaItem";
 import { SocialMedia } from "@prisma/client";
 import AddProfileSectionPopup from "./AddProfileSectionPopup";
 
-
 interface Profile {
   id: string;
   jobTitle: string;
@@ -39,7 +38,6 @@ const EditProfile = () => {
   const [about, setAbout] = useState<JSONContent>();
   const [profile, setProfile] = useState<Profile | undefined>(undefined);
 
-
   const [socialPopup, setSocialPopup] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -52,8 +50,7 @@ const EditProfile = () => {
   };
 
   useEffect(() => {
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     async function fetchData() {
       try {
         const response = await fetch("/api/profile/get/");
@@ -71,14 +68,12 @@ const EditProfile = () => {
         setLoading(false);
       }
     }
-  
 
     fetchData();
   }, []);
 
   useEffect(() => {
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     console.log(about);
   });
 
@@ -93,27 +88,68 @@ const EditProfile = () => {
     }
   }
 
-  const [profileSections, setProfileSections] = useState([
-    { id: "WorkExperience", label: "Work Experience", order: 1 },
-    { id: "Volunteering", label: "Volunteering", order: 2 },
-    { id: "Education", label: "Education", order: 3 },
-    { id: "Certifications", label: "Certifications", order: 4 },
-    { id: "Projects", label: "Projects", order: 5 },
-    { id: "Publications", label: "Publications", order: 6 },
-    { id: "Awards", label: "Awards", order: 7 },
-  ]);
+  const defaultSections = [
+    { id: "WorkExperience", label: "Work Experience" },
+    { id: "Volunteering", label: "Volunteering" },
+    { id: "Education", label: "Education" },
+    { id: "Certifications", label: "Certifications" },
+    { id: "Projects", label: "Projects" },
+    { id: "Publications", label: "Publications" },
+    { id: "Awards", label: "Awards" },
+  ];
 
-  const [sectionOrder, setSectionOrder] = useState({});
+  const [profileSections, setProfileSections] = useState(defaultSections);
 
-  const updateSectionOrder = useCallback((sections) => {
-    const newOrder = {};
-    sections.forEach((section, index) => {
-      newOrder[section.order] = `${section.id}Order`;
-    });
-    setSectionOrder(newOrder);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch("/api/profile/get/");
+        const data: Profile = await response.json();
+        console.log(data);
+        setProfile(data);
+        setJobTitle(data.jobTitle);
+        setHeadline(data.headline);
+        setLocation(data.location);
+        setSite(data.siteUrl);
+        setAbout(data.about);
+
+        // Parse and set the sections order
+        if (data.sectionsOrder) {
+          const orderArray = JSON.parse(data.sectionsOrder);
+          const orderedSections = orderArray.map((id: string) => 
+            defaultSections.find(section => section.id === id)
+          ).filter(Boolean);
+          setProfileSections(orderedSections);
+        }
+      } catch (error) {
+        console.error("Veri getirme hatası:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  const updateSectionOrder = useCallback(async (sections) => {
+    const newOrder = sections.map(section => section.id);
     console.log("Updated section order:", newOrder);
-    // Burada API çağrısı yaparak sıra bilgisini backend'e gönderebilirsiniz
-    // updateSectionOrderInDatabase(newOrder);
+    
+    try {
+      const response = await fetch("/api/profile/update-sections-order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ sectionsOrder: JSON.stringify(newOrder) }),
+      });
+      
+      if (!response.ok) {
+        throw new Error("Failed to update section order");
+      }
+    } catch (error) {
+      console.error("Error updating section order:", error);
+    }
   }, []);
 
   const onDragEnd = useCallback((result) => {
@@ -128,10 +164,6 @@ const EditProfile = () => {
     setProfileSections(newItems);
     updateSectionOrder(newItems);
   }, [profileSections, updateSectionOrder]);
-
-  useEffect(() => {
-    updateSectionOrder(profileSections);
-  }, []);
 
   const AddElement = (type: string) => {
     setShowAddPopup(true);
@@ -270,13 +302,20 @@ const EditProfile = () => {
               </svg>
             </Icon>
 
-            <div className={styles.SectionPopup} style={{display: !sectionPopup ? "none" : ""}}>
+            <div
+              className={styles.SectionPopup}
+              style={{ display: !sectionPopup ? "none" : "" }}
+            >
               <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable droppableId="profileSections">
                   {(provided) => (
                     <div {...provided.droppableProps} ref={provided.innerRef}>
                       {profileSections.map((item, index) => (
-                        <Draggable key={item.id} draggableId={item.id} index={index}>
+                        <Draggable
+                          key={item.id}
+                          draggableId={item.id}
+                          index={index}
+                        >
                           {(provided) => (
                             <div
                               ref={provided.innerRef}
@@ -295,7 +334,9 @@ const EditProfile = () => {
                                   {/* ... (SVG path'leri aynı kalacak) */}
                                 </svg>
                               </Icon>
-                              <div className={styles.SectionText}>{item.label}</div>
+                              <div className={styles.SectionText}>
+                                {item.label}
+                              </div>
                               <div className={styles.ChangeRow}>
                                 <svg
                                   width="27"
@@ -319,11 +360,16 @@ const EditProfile = () => {
             </div>
           </div>
 
-          <div className={styles.PopupContainer} style={{display: !showAddPopup ? "none" : ""}}>
-            <AddProfileSectionPopup type={popupType} setShowAddPopup={setShowAddPopup} 
-            profileId={Number(profile?.id)} />
+          <div
+            className={styles.PopupContainer}
+            style={{ display: !showAddPopup ? "none" : "" }}
+          >
+            <AddProfileSectionPopup
+              type={popupType}
+              setShowAddPopup={setShowAddPopup}
+              profileId={Number(profile?.id)}
+            />
           </div>
-
         </div>
       )}
     </>

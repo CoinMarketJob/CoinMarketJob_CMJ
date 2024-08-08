@@ -8,6 +8,7 @@ import JobBoard from './components/job/Grid/JobBoard';
 import Cozy from './components/layouts/Cozy';
 import Compact from './components/layouts/Compact';
 import { useLayout } from '@/hooks/useLayout';
+import MainLayout from './components/layouts/MainLayout';
 
 const Home = () => {
   const { jobs, setJobs, filteredJobs, setFilteredJobs } = useJobs();
@@ -34,12 +35,7 @@ const Home = () => {
 
   return (
     <div style={{width: '100%'}}>
-      {layout == 1 ? (
-        <Basic jobs={filteredJobs} />
-      ) : layout == 2 ? (
-        <JobBoard />
-      ) : layout == 3 ? (
-        <Cozy jobs={filteredJobs} />) : (<Compact jobs={filteredJobs}  />)}
+      <MainLayout filteredJobs={filteredJobs}  layout={layout} />
     </div>
   )
 }
