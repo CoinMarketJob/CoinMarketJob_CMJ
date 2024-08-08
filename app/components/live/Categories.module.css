@@ -18,3 +18,12 @@
     color: #999999;
     margin-right: 19px;
 }
+
+.Element:hover {
+    background-color: #f0f0f0;
+}
+
+.Element.active {
+    background-color: #0070f3; /* Örneğin mavi bir arka plan */
+    color: white;
+}

@@ -1,14 +1,45 @@
-import React from 'react'
-import styles from './Categories.module.css'
+import React, { useState } from 'react';
+import styles from './Categories.module.css';
 
-const Categories = () => {
-  return (
-    <div className={styles.Container}>
-        <div className={styles.Element}>NEWS</div>
-        <div className={styles.Element}>HACKHATHONS</div>
-        <div className={styles.Element}>BLOG</div>
-    </div>
-  )
+interface Props {
+  onCategoryClick: (category: string) => void;
 }
 
-export default Categories
+const Categories: React.FC<Props> = ({ onCategoryClick }) => {
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+
+  const handleCategoryClick = (category: string) => {
+    if (activeCategory === category) {
+      setActiveCategory(null);
+      onCategoryClick(''); // Filtreyi kaldırmak için boş bir değer gönderiyoruz
+    } else {
+      setActiveCategory(category);
+      onCategoryClick(category);
+    }
+  };
+
+  return (
+    <div className={styles.Container}>
+      <div
+        className={`${styles.Element} ${activeCategory === 'News' ? styles.active : ''}`}
+        onClick={() => handleCategoryClick('News')}
+      >
+        NEWS
+      </div>
+      <div
+        className={`${styles.Element} ${activeCategory === 'HACKHATHONS' ? styles.active : ''}`}
+        onClick={() => handleCategoryClick('HACKHATHONS')}
+      >
+        HACKHATHONS
+      </div>
+      <div
+        className={styles.Element}
+        onClick={() => window.location.href = 'https://blog.coinmarketjob.com'}
+      >
+        BLOG
+      </div>
+    </div>
+  );
+};
+
+export default Categories;
