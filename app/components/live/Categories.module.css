@@ -18,13 +18,25 @@
     line-height: 21px;
     color: #999999;
     margin-right: 19px;
+    z-index: ;
+
+
 }
+
+
 
 .Element:hover {
     background-color: #f0f0f0;
 }
 
 .Element.active {
-    background-color: #0070f3; /* Örneğin mavi bir arka plan */
+    background-color: #bbbbbb; /* Örneğin mavi bir arka plan */
     color: white;
+}
+
+@media (max-width: 768px) {
+    .Element {
+      flex: 1 1 100%; /* Full width on smaller screens */
+      margin-bottom: 8px; /* Spacing between rows */
+    }
 }
