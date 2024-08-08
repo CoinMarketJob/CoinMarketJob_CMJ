@@ -34,7 +34,7 @@ const Categories: React.FC<Props> = ({ onCategoryClick }) => {
       </div>
       <div
         className={styles.Element}
-        onClick={() => window.location.href = 'https://blog.coinmarketjob.com'}
+        onClick={() => window.open('https://blog.coinmarketjob.com', '_blank')}
       >
         BLOG
       </div>

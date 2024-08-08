@@ -1,18 +1,15 @@
-// Live.tsx
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import styles from "./Live.module.css";
 import Search from "./Search";
 import Categories from "./Categories";
 
-// Define the type for live and blog items
 interface LiveItem {
   liveType: string;
   title: string;
   organisation?: string;
   headline?: string;
   content?: string;
-  // Add other properties based on your data structure
 }
 
 const Live: React.FC = () => {
@@ -21,6 +18,7 @@ const Live: React.FC = () => {
   const [blog, setBlog] = useState<LiveItem[]>([]);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [keyword, setKeyword] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   let globalIndex = 0;
 
@@ -42,30 +40,37 @@ const Live: React.FC = () => {
 
   const ChangeFunction = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
+    applyFilters(e.target.value, selectedCategory);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      filterLiveItems();
+      applyFilters(keyword, selectedCategory);
     }
-  };
-
-  const filterLiveItems = () => {
-    const lowerCaseKeyword = keyword.toLowerCase();
-    const filteredLiveItems = live.filter(item =>
-      item.title.toLowerCase().includes(lowerCaseKeyword)
-    );
-    setFilteredLive(filteredLiveItems);
   };
 
   const handleCategoryClick = (category: string) => {
-    if (category === 'BLOG') {
-      window.location.href = 'https://blog.coinmarketjob.com';
-    } else {
-      const filteredLiveItems = live.filter(item => item.liveType === category);
-      setFilteredLive(filteredLiveItems);
+    const newCategory = selectedCategory === category ? null : category;
+    setSelectedCategory(newCategory);
+    applyFilters(keyword, newCategory);
+  };
+
+  const applyFilters = (keyword: string, category: string | null) => {
+    const lowerCaseKeyword = keyword.toLowerCase();
+    let filteredItems = live;
+
+    if (category) {
+      filteredItems = filteredItems.filter(item => item.liveType === category);
     }
+
+    if (lowerCaseKeyword) {
+      filteredItems = filteredItems.filter(item =>
+        item.title.toLowerCase().includes(lowerCaseKeyword)
+      );
+    }
+
+    setFilteredLive(filteredItems);
   };
 
   const toggleExpand = (index: number) => {
@@ -181,8 +186,8 @@ const Live: React.FC = () => {
 
   return (
     <div className={styles.Container}>
-      <Categories onCategoryClick={handleCategoryClick} />
       <Search keyword={keyword} ChangeFunction={ChangeFunction} handleKeyDown={handleKeyDown} />
+      <Categories onCategoryClick={handleCategoryClick} />
       <div className={styles.Content}>{getAlternatingRows(filteredLive)}</div>
     </div>
   );
