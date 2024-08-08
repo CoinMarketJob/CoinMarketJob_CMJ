@@ -1,11 +1,10 @@
-"use client";
+import React, { useState, useRef, useEffect } from "react";
 import "./Dropdown.css";
-import React, { useEffect, useRef, useState } from "react";
 
 interface DropdownProps {
   id: string;
   value: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void; // ChangeEvent<HTMLSelectElement> türü beklenir
   list: Array<{ value: string; label: string }>;
   placeholder?: string;
 }
@@ -13,7 +12,7 @@ interface DropdownProps {
 const Dropdown: React.FC<DropdownProps> = ({
   id,
   value,
-  setValue,
+  onChange,
   list,
   placeholder,
 }) => {
@@ -34,6 +33,16 @@ const Dropdown: React.FC<DropdownProps> = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleItemClick = (value: string) => {
+    const event = {
+      target: {
+        value
+      }
+    } as unknown as React.ChangeEvent<HTMLSelectElement>; // Type assertion
+    onChange(event); // Call onChange with the event object
+    setOpen(false);
+  };
 
   return (
     <div ref={dropdownRef} style={{ position: "relative" }}>
@@ -63,7 +72,7 @@ const Dropdown: React.FC<DropdownProps> = ({
             className={`list-item ${
               value === item.value ? "item-selected" : ""
             }`}
-            onClick={() => {setValue(item.value); setOpen(false);}}
+            onClick={() => handleItemClick(item.value)} // Use handleItemClick
           >
             {item.label}
           </div>

@@ -1,27 +1,93 @@
-.checkboxIcon {
-    width: 22px;
-    height: 22px;
-    background-color: #D3D3D3;
-    border-radius: 7px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    cursor: pointer;
-  }
+.selection-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.name {
+  font-size: 17px;
+  font-weight: 500;
+  color: #242220CC;
+  font-family: Inter;
+  line-height: 20.57px;
+  height: 21px;
+  opacity: 1;
+  padding-bottom: 12px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19.36px;
+  padding-bottom: 12px;
+  color: #24222099;
+  font-family: Inter;
   
-  .checkmark {
-    color: white;
-    font-size: 40px;
-    font-weight: bold;
-    opacity: 0;
-    transition: opacity 0.2s ease-in-out;
-  }
-  
-  .checked {
-    background-color: #808080;
-  }
-  
-  .checked .checkmark {
-    opacity: 1;
-  }
+}
+
+.checkbox-item input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox-item label {
+  position: relative;
+  padding-left: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #999999;
+  flex-grow: 1;
+  font-family: Inter;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 21px;
+  text-align: left;
+
+}
+
+.square-checkbox::before{
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  color: #BBBBBB33;
+  border: 1px solid #00000014;
+  box-shadow: 0px 1px 2px 0px #00000026 inset;
+
+}
+
+.square-checkbox::before {
+  border-radius: 7px; /* Square shape */
+}
+
+
+
+.checkbox-item input[type="checkbox"]:checked + .square-checkbox::before {
+  background-color: #999999;
+  border: 1px solid #E7E5E4;
+  content: '✓';
+  font-size: 18px; 
+  color: white;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+
+
+
+
+
+.checkbox-item .sublabel {
+  margin-left: auto;
+  padding-left: 10px;
+  color: #24222066;
+  white-space: nowrap;
+}

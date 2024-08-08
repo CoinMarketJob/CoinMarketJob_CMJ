@@ -1,8 +1,6 @@
 "use client"
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import Typography from '@mui/material/Typography';
 import './Slider.css';
 
 interface RangeSliderProps {
@@ -28,8 +26,8 @@ const RangeSlider: React.FC<RangeSliderProps> = ({ min, max, step, onRangeChange
   return (
     <div className="range-slider-container">
       <div className="value-labels">
-        <Typography variant="caption" className="value-label1">${value[0]}</Typography>
-        <Typography variant="caption" className="value-label2">${value[1]}</Typography>
+        <span className="value-label1">${value[0]}</span>
+        <span className="value-label2">${value[1]}</span>
       </div>
       <Slider
         value={value}

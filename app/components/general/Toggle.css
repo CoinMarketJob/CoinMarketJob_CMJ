@@ -15,11 +15,13 @@
   text-indent: -9999px;  
   width: 58px;  
   height: 33px;  
-  background: #000000;
+  background: #999999;
   display: block;  
   border-radius: 100px;  
   position: relative;
-  transition: background 0.3s;
+  animation-timing-function: cubic-bezier(0.7, -0.4, 0.4, 1.4);
+  animation-duration: 350ms;
+
 }
 
 .toggle-switch.checked {

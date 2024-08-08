@@ -1,33 +1,44 @@
-import React, { useState } from 'react';
-import styles from './Checkbox.module.css';
+"use client";
+import './CheckboxSelection.css';
+import React from 'react';
 
-interface CheckboxProps {
-  initialChecked?: boolean;
-  onChange?: (isChecked: boolean) => void;
+interface SelectionType {
+    name: string;
+    id: string;
+    value: boolean;
+    onChange: (selectedValue: boolean) => void;
+    label: string;
+    sublabel?: string;
+    borderRadius?: number;
 }
 
-const Checkbox: React.FC<CheckboxProps> = ({ initialChecked = false, onChange }) => {
-  const [isChecked, setIsChecked] = useState(initialChecked);
+const Selection: React.FC<SelectionType> = ({ name, id, value, onChange, label, sublabel, borderRadius }) => {
 
-  const toggleCheckbox = () => {
-    const newCheckedState = !isChecked;
-    setIsChecked(newCheckedState);
-    if (onChange) {
-      onChange(newCheckedState);
-    }
-  };
+    const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { checked } = e.target;
+        onChange(checked);
+    };
 
-  return (
-    <div style={{display: 'flex'}}>
-        <div 
-        className={`${styles.checkboxIcon} ${isChecked ? styles.checked : ''}`} 
-        onClick={toggleCheckbox}
-        >
-            <div className={styles.checkmark}>&#10003;</div>
+    return (
+        <div>
+            <div className="checkbox-item">
+                <input
+                    style={{ borderRadius }}
+                    type="checkbox"
+                    id={id}
+                    checked={value}
+                    onChange={handleCheckboxChange}
+                />
+                <label
+                    htmlFor={id}
+                    className="square-checkbox"
+                >
+                    {label}
+                    {sublabel && <span className="sublabel">{sublabel}</span>}
+                </label>
+            </div>
         </div>
-        <div >1 Job Posting</div>
-    </div>
-  );
-};
+    );
+}
 
-export default Checkbox;
+export default Selection;
