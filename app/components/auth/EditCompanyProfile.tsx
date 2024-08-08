@@ -214,7 +214,6 @@ const EditCompanyProfile: React.FC<props> = ({
       <div className={styles.About}>
         <EditProfileDraft
           ContentType="About"
-          close={closeTest}
           onChange={AboutChange}
         />
       </div>
