@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import styles from "./JobCard.module.css";
 import { Job } from "@prisma/client";
 import Icon from "../../general/Icon";
@@ -83,9 +83,15 @@ const Compact: React.FC<JobCardProps> = ({
     onClick(job);
   };
 
+  const dragRef = useCallback((node: HTMLDivElement | null) => {
+    if (node) {
+      drag(node);
+    }
+  }, [drag]);
+
   return (
     <div
-      ref={drag}
+      ref={dragRef}
       className={`${styles.card} ${collapsed ? styles.collapsed : ""} ${
         isActive ? styles.active : ""
       }`}

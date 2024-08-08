@@ -20,7 +20,7 @@ interface ProfileSection {
   to: string;
   institution: string;
   location: string;
-  description: string;
+  description: JSONContent;
 }
 
 interface ProfileData {
