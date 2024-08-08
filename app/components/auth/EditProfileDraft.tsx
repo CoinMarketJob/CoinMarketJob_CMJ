@@ -4,7 +4,7 @@ import TextStyle from "@tiptap/extension-text-style";
 import { useEditor, EditorContent, Editor, JSONContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import React from "react";
-import './EditPRofileDraft.css';
+import './EditProfileDraft.css';
 
 interface DraftProps {
   ContentType: string;

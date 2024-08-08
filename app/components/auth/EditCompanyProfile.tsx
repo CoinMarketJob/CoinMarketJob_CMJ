@@ -80,11 +80,11 @@ const EditCompanyProfile: React.FC<props> = ({
   useEffect(() => {
     console.log(oldProfile);
     setProfile(oldProfile);
-    setCompanyName(oldProfile.companyName);
-    setHeadline(oldProfile.headline);
-    setSite(oldProfile.siteUrl);
-    setAbout(oldProfile.about as JSONContent);
-    setOldLogo(oldProfile.logoURL);
+    setCompanyName(oldProfile?.companyName);
+    setHeadline(oldProfile?.headline);
+    setSite(oldProfile?.siteUrl);
+    setAbout(oldProfile?.about as JSONContent);
+    setOldLogo(oldProfile?.logoURL);
   }, []);
 
   async function fetchData() {
