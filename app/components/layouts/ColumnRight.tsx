@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useDrop } from "react-dnd";
 import { Job } from "@prisma/client";
 import styles from "./Column.module.css";
@@ -32,9 +32,15 @@ const ColumnRight: React.FC<ColumnProps> = ({ list, cards, onDrop }) => {
     setDetailJob(job);
   };
 
+  const dragRef = useCallback((node: HTMLDivElement | null) => {
+    if (node) {
+      drop(node);
+    }
+  }, [drop]);
+
   return (
     <div
-      ref={drop}
+      ref={dragRef}
       className={`${styles.column} ${isOver ? styles.highlight : ""}`}
     >
       {showDetail && (

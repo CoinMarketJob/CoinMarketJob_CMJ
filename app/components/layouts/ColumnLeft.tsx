@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useDrop } from "react-dnd";
 import JobCard from "../job/Basic/JobCard";
 import { Job } from "@prisma/client";
@@ -38,8 +38,14 @@ const ColumnLeft: React.FC<ColumnProps> = ({
     }),
   }));
 
+  const dragRef = useCallback((node: HTMLDivElement | null) => {
+    if (node) {
+      drop(node);
+    }
+  }, [drop]);
+
   return (
-    <div ref={drop} className={`${styles.columnLeft} ${layout == 0 ? styles.gridContainer : ""}`}>
+    <div ref={dragRef} className={`${styles.columnLeft} ${layout == 0 ? styles.gridContainer : ""}`}>
       {cards.map((card) => (
         <>
           {layout == 1 ? (

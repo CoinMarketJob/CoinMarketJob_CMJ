@@ -39,7 +39,7 @@ const BillingAddress = () => {
         </div>
         
         <div style={{ marginTop: "16px"}}>
-          <Dropdown id="California" value={country} list={countries} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setCountry(e.target.value)}  />
+          <Dropdown id="California" value={country} list={countries} setValue={setCountry}  />
         </div>
     </div>
   )

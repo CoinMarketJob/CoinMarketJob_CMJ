@@ -2,11 +2,7 @@
 "use client";
 import React, {useState,useEffect} from 'react'
 import styles from './page.module.css';
-import Basic from './components/layouts/Basic';
 import { useJobs } from '@/hooks/useJobs';
-import JobBoard from './components/job/Grid/JobBoard';
-import Cozy from './components/layouts/Cozy';
-import Compact from './components/layouts/Compact';
 import { useLayout } from '@/hooks/useLayout';
 import MainLayout from './components/layouts/MainLayout';
 
