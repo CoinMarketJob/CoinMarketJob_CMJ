@@ -21,6 +21,7 @@ interface Profile {
   siteUrl: string;
   about: JSONContent;
   socialMedias: SocialMedia[];
+  sectionsOrder: string;
 }
 
 interface AddSocialMediaProps {
@@ -28,6 +29,10 @@ interface AddSocialMediaProps {
   profileId: string; // Türü güncelleyin
   setPopup: (value: boolean) => void;
   fetchData: () => void;
+}
+
+interface Section {
+  id: number;
 }
 
 const EditProfile = () => {
@@ -131,7 +136,7 @@ const EditProfile = () => {
     fetchData();
   }, []);
 
-  const updateSectionOrder = useCallback(async (sections) => {
+  const updateSectionOrder = useCallback(async (sections : Section[]) => {
     const newOrder = sections.map(section => section.id);
     console.log("Updated section order:", newOrder);
     
@@ -152,7 +157,7 @@ const EditProfile = () => {
     }
   }, []);
 
-  const onDragEnd = useCallback((result) => {
+  const onDragEnd = useCallback((result : any) => {
     if (!result.destination) {
       return;
     }
@@ -162,7 +167,6 @@ const EditProfile = () => {
     newItems.splice(result.destination.index, 0, reorderedItem);
 
     setProfileSections(newItems);
-    updateSectionOrder(newItems);
   }, [profileSections, updateSectionOrder]);
 
   const AddElement = (type: string) => {
