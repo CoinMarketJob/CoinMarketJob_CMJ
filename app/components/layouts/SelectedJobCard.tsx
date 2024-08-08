@@ -1,8 +1,8 @@
 "use client";
-import React, { useRef, useState } from "react";
-import styles from "./JobCard.module.css";
+import React, { useState } from "react";
+import styles from "./SelectedJobCard.module.css";
 import { Job } from "@prisma/client";
-import Icon from "../../general/Icon";
+import Icon from "../general/Icon";
 import { formatJobType } from "@/utils/formatter";
 import { useJobs } from "@/hooks/useJobs";
 import { useDrag } from "react-dnd";
@@ -12,31 +12,25 @@ interface JobCardProps {
   onClick: (job: Job) => void;
   collapsed?: boolean;
   onDrop: (id: number, list: string) => void;
-  onDragBegin: () => void;
-  onDragEnd: () => void;
 }
 
 const ItemTypes = {
-    CARD: "card",
-  };
+  CARD: "card",
+};
 
-const Compact: React.FC<JobCardProps> = ({
+const SelectedJobCard: React.FC<JobCardProps> = ({
   job,
   onClick,
   collapsed,
   onDrop,
-  onDragBegin,
-  onDragEnd,
 }) => {
   const [isActive, setIsActive] = useState(false);
-  const { filteredJobs, setFilteredJobs } = useJobs();
   const id = job.id;
-  const cardType = "left";
+  const cardType = "right";
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes.CARD,
     item: () => {
-      onDragBegin();
       return { id, cardType };
     },
     end: (item, monitor) => {
@@ -45,8 +39,6 @@ const Compact: React.FC<JobCardProps> = ({
       console.log(dropResult);
       if (item && dropResult) {
         onDrop(item.id, dropResult.list);
-      } else if (dropResult?.list == "left") {
-        onDragEnd();
       }
     },
     collect: (monitor) => ({
@@ -72,12 +64,8 @@ const Compact: React.FC<JobCardProps> = ({
       }
     } catch (error) {}
   };
+  const JobClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {};
 
-  const JobClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.stopPropagation();
-    const filter = filteredJobs.filter((x) => x.id !== job.id);
-    setFilteredJobs(filter);
-  };
   const JobSelect = () => {
     setIsActive(true);
     onClick(job);
@@ -92,13 +80,13 @@ const Compact: React.FC<JobCardProps> = ({
       onClick={JobSelect}
     >
       <div className={styles.details}>
-        <div className={styles.CompactLine}>
-          <div className={styles.JobTitle}>{job.jobTitle}</div>
-          <div className={styles.CompanyName}>@{job.companyName}</div>
+        <div className={styles.TitleCompany}>
+          <div className={styles.title}>{job.jobTitle}</div>
+          <div className={styles.company}>@{job.companyName}</div>
         </div>
-        <div className={styles.CompactLine}>
-          <div className={styles.JobType}>{formatJobType(job.jobType)}</div>
-          <div className={styles.Location}>{job.location}</div>
+        <div className={styles.meta}>
+          <span className={styles.type}>{formatJobType(job.jobType)}</span>
+          <span className={styles.location}>{job.location}</span>
         </div>
       </div>
       <div className={styles.actions}>
@@ -143,4 +131,4 @@ const Compact: React.FC<JobCardProps> = ({
   );
 };
 
-export default Compact;
+export default SelectedJobCard;

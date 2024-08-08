@@ -9,9 +9,11 @@ import { useDrag } from "react-dnd";
 
 interface JobCardProps {
   job: Job;
-  onClick: () => void;
+  onClick: (job: Job) => void;
   collapsed?: boolean;
   onDrop: (id: number, list: string) => void;
+  onDragBegin: () => void;
+  onDragEnd: () => void;
 }
 
 const ItemTypes = {
@@ -23,6 +25,8 @@ const JobCard: React.FC<JobCardProps> = ({
   onClick,
   collapsed,
   onDrop,
+  onDragBegin,
+  onDragEnd,
 }) => {
   const [isActive, setIsActive] = useState(false);
   const { filteredJobs, setFilteredJobs } = useJobs();
@@ -31,11 +35,18 @@ const JobCard: React.FC<JobCardProps> = ({
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes.CARD,
-    item: { id, cardType },
+    item: () => {
+      onDragBegin();
+      return { id, cardType };
+    },
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult<{ list: string }>();
+      console.log(item);
+      console.log(dropResult);
       if (item && dropResult) {
         onDrop(item.id, dropResult.list);
+      } else if (dropResult?.list == "left") {
+        onDragEnd();
       }
     },
     collect: (monitor) => ({
@@ -68,7 +79,7 @@ const JobCard: React.FC<JobCardProps> = ({
   };
   const JobSelect = () => {
     setIsActive(true);
-    onClick();
+    onClick(job);
   };
 
   return (

@@ -8,6 +8,7 @@ import ColumnRight from "./ColumnRight";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useEditor } from "@tiptap/react";
+import JobDetails from "../job/JobDetails";
 
 interface MainLayoutProps {
   layout: number;
@@ -15,7 +16,9 @@ interface MainLayoutProps {
 }
 
 const MainLayout: React.FC<MainLayoutProps> = ({ filteredJobs, layout }) => {
-  const [showDetail, setShowDetail] = useState<boolean>(true);
+  const [showDetail, setShowDetail] = useState<boolean>(false);
+  const [detailJob, setDetailJob] = useState<Job | null>(null);
+  const [showRightSide, setShowRightSide] = useState<boolean>(false);
 
   const [leftCards, setLeftCards] = useState<Array<Job>>([]);
   const [rightCards, setRightCards] = useState<Array<Job>>([]);
@@ -40,14 +43,45 @@ const MainLayout: React.FC<MainLayoutProps> = ({ filteredJobs, layout }) => {
     }
   };
 
+  const onClick = (job: Job) => {
+    setShowDetail(true);
+    setDetailJob(job);
+    setShowRightSide(false);
+  };
+
+  const onDragBegin = () => {
+    setShowRightSide(true);
+    setShowDetail(false);
+    setDetailJob(null);
+  };
+
+  const onDragEnd = () => {
+    console.log("Test");
+    setShowRightSide(false);
+  };
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div className={styles.container}>
         <div className={styles.JobCardArea}>
-          <ColumnLeft list="left" cards={leftCards} onDrop={handleDrop} />
+          <ColumnLeft
+            layout={layout}
+            onDragEnd={onDragEnd}
+            onDragBegin={onDragBegin}
+            onClick={onClick}
+            list="left"
+            cards={leftCards}
+            onDrop={handleDrop}
+          />
         </div>
 
         {showDetail && (
+          <div className={styles.DetailArea}>
+            <JobDetails job={detailJob} />
+          </div>
+        )}
+
+        {showRightSide && (
           <div className={styles.DetailArea}>
             <ColumnRight list="right" cards={rightCards} onDrop={handleDrop} />
           </div>

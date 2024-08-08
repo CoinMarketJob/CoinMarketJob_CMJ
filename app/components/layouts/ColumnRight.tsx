@@ -1,11 +1,13 @@
-import React from 'react';
-import { useDrop } from 'react-dnd';
-import JobCard from '../job/Basic/JobCard';
-import { Job } from '@prisma/client';
-import styles from './Column.module.css'
+"use client";
+import React, { useState } from "react";
+import { useDrop } from "react-dnd";
+import { Job } from "@prisma/client";
+import styles from "./Column.module.css";
+import SelectedJobCard from "./SelectedJobCard";
+import JobDetails from "../job/JobDetails";
 
 const ItemTypes = {
-  CARD: 'card',
+  CARD: "card",
 };
 
 interface ColumnProps {
@@ -15,6 +17,8 @@ interface ColumnProps {
 }
 
 const ColumnRight: React.FC<ColumnProps> = ({ list, cards, onDrop }) => {
+  const [showDetail, setShowDetail] = useState<boolean>(false);
+  const [detailJob, setDetailJob] = useState<Job | null>(null);
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.CARD,
     drop: () => ({ list }),
@@ -23,14 +27,29 @@ const ColumnRight: React.FC<ColumnProps> = ({ list, cards, onDrop }) => {
     }),
   }));
 
-  const onClick = () => {
-    console.log('Clicked on column');
-  }
+  const onClick = (job: Job) => {
+    setShowDetail(true);
+    setDetailJob(job);
+  };
 
   return (
-    <div ref={drop} className={`${styles.column} ${isOver ? styles.highlight : ''}`}>
+    <div
+      ref={drop}
+      className={`${styles.column} ${isOver ? styles.highlight : ""}`}
+    >
+      {showDetail && (
+        <div className={styles.DetailArea}>
+          <JobDetails job={detailJob} />
+        </div>
+      )}
+
       {cards.map((card) => (
-        <JobCard key={card.id} job={card} onClick={onClick} onDrop={onDrop} />
+        <SelectedJobCard
+          job={card}
+          onClick={onClick}
+          key={card.id}
+          onDrop={onDrop}
+        />
       ))}
     </div>
   );
