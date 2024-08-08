@@ -2,7 +2,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import styles from './page.module.css';
-import Basic from '../components/layouts/Basic';
 
 // Define the JobType, ExperienceLevel, EducationalDegree, and other related types
 type JobType = 'Internship' | 'PartTime' | 'FullTime' | 'Contract' | 'Temporary' | 'other';
@@ -51,7 +50,7 @@ const Page = () => {
     <div className={styles.Container}>
       <span className={styles.JobsText}>JOBS</span>
       <div>
-        <Basic jobs={savedJobs} />
+        
       </div>        
     </div>
   );
