@@ -1,0 +1,39 @@
+.defaults {
+    display: flex;
+    flex-direction: column;
+    
+  }
+  
+  .defaults-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0px;
+    font-family: Inter;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 31.75px;
+    letter-spacing: 0.03em;
+    text-align: left;
+    color: #999999;
+    
+    
+
+  }
+  
+  .defaults h4 {
+    font-family: Inter;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 31.75px;
+    letter-spacing: 0.03em;
+    text-align: left;
+    color: #999999;
+    height: 26px;
+    margin-top: 72px;
+    margin-left: 36px;
+    
+
+
+  }
+  

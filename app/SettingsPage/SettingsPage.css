@@ -1,0 +1,11 @@
+.settings-page {
+    display: flex;
+    height: 100vh;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .content {
+    width: 80%;
+    padding: 20px;
+  }
+  

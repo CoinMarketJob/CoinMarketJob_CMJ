@@ -1,0 +1,33 @@
+.single-slider-container {
+    width: 280px;
+    height: 28px; 
+    margin: auto;
+    position: relative;
+  }
+  
+  .custom-single-slider .MuiSlider-thumb {
+    background-color: white;
+    border: 0.5px solid #2422201A;
+  }
+  
+  .custom-single-slider .MuiSlider-track {
+    background-color: black;
+  }
+  
+  .custom-single-slider .MuiSlider-rail {
+    background-color: #2422201A;
+  }
+  
+  .value-label {
+    padding: 0 10px;
+    margin-bottom: 20px;
+  }
+  
+  .value-label-text {
+    margin: 17px; 
+    color: #24222099;
+    font-weight: 300;
+    font-size: 16px;
+    font-family: Inter;
+  }
+  

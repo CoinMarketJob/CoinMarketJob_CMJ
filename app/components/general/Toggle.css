@@ -15,13 +15,11 @@
   text-indent: -9999px;  
   width: 58px;  
   height: 33px;  
-  background: #999999;
+  background: #000000;
   display: block;  
   border-radius: 100px;  
   position: relative;
-  animation-timing-function: cubic-bezier(0.7, -0.4, 0.4, 1.4);
-  animation-duration: 350ms;
-
+  transition: background 0.3s;
 }
 
 .toggle-switch.checked {
@@ -34,7 +32,7 @@
   height: 0;
 }
 
-.toggle-switch .slider1, .toggle-switch .slider2 {
+.toggle-switch .slider1, .toggle-switch .slider2, .toggle-switch .slider3 {
   content: "";    
   position: absolute;    
   left: 27px;    
@@ -46,6 +44,6 @@
   transition: left 0.3s;
 }
 
-.toggle-switch.checked .slider1, .toggle-switch.checked .slider2 {
+.toggle-switch.checked .slider1, .toggle-switch.checked .slider2, .toggle-switch.checked .slider3 {
   left: calc(100% - 55px);  
 }

@@ -1,0 +1,34 @@
+.general {
+    padding-top: 4px;
+    
+  }
+  
+  .general-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .general h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 31.75px;
+    letter-spacing: 0.03em;
+    text-align: left;
+    color: #999999;
+    padding-left: 36px;
+  }
+  
+  .general p {
+    color: #666;
+  }
+  
+  .general-dropdown {
+    width: 133px; 
+    height: 50px; 
+    text-align: right;
+    margin-right: 0; /* Sağdan boşluk bırakmaz */
+    margin-left: auto;
+}
+  
