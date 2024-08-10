@@ -1,5 +1,6 @@
+"use client";
 import React, { useState } from 'react';
-import Sidebar from '../components/general/Sidebar';
+import Sidebar from '../components/general/SideBar';
 import './SettingsPage.css';
 
 import General from './General';
