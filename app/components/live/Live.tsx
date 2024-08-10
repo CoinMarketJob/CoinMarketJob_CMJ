@@ -1,37 +1,32 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import styles from "./Live.module.css";
 import Search from "./Search";
 import Categories from "./Categories";
 
-// Define the type for live and blog items
 interface LiveItem {
   liveType: string;
   title: string;
   organisation?: string;
   headline?: string;
   content?: string;
-  // Add other properties based on your data structure
 }
 
 const Live: React.FC = () => {
-  // Use the defined type for state
   const [live, setLive] = useState<LiveItem[]>([]);
   const [filteredLive, setFilteredLive] = useState<LiveItem[]>([]);
   const [blog, setBlog] = useState<LiveItem[]>([]);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [keyword, setKeyword] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   let globalIndex = 0;
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     async function fetchData() {
       try {
         const response = await fetch("/api/live/");
-        const data: LiveItem[] = await response.json(); // Assert type
-        console.log(data);
+        const data: LiveItem[] = await response.json();
         setLive(data.filter((x) => x.liveType !== "BLOG"));
         setFilteredLive(data.filter((x) => x.liveType !== "BLOG"));
         setBlog(data.filter((x) => x.liveType === "BLOG"));
@@ -45,34 +40,50 @@ const Live: React.FC = () => {
 
   const ChangeFunction = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
+    applyFilters(e.target.value, selectedCategory);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      const lowerCaseKeyword = keyword.toLowerCase();
-      const fltrdLive = live.filter((x) => x.title.toLowerCase().includes(lowerCaseKeyword));
-      setFilteredLive(fltrdLive);
-      console.log(fltrdLive);
+      applyFilters(keyword, selectedCategory);
     }
+  };
+
+  const handleCategoryClick = (category: string) => {
+    const newCategory = selectedCategory === category ? null : category;
+    setSelectedCategory(newCategory);
+    applyFilters(keyword, newCategory);
+  };
+
+  const applyFilters = (keyword: string, category: string | null) => {
+    const lowerCaseKeyword = keyword.toLowerCase();
+    let filteredItems = live;
+
+    if (category) {
+      filteredItems = filteredItems.filter(item => item.liveType === category);
+    }
+
+    if (lowerCaseKeyword) {
+      filteredItems = filteredItems.filter(item =>
+        item.title.toLowerCase().includes(lowerCaseKeyword)
+      );
+    }
+
+    setFilteredLive(filteredItems);
   };
 
   const toggleExpand = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
-  const getAlternatingRows = () => {
+  const getAlternatingRows = (items: LiveItem[]) => {
     const combined: JSX.Element[] = [];
     let liveIndex = 0;
-    let blogIndex = 0; // Total index to uniquely identify each element
+    let blogIndex = 0;
 
-    while (liveIndex < live.length || blogIndex < blog.length) {
-      // Add 2 live items
-      for (
-        let i = 0;
-        i < 2 && liveIndex < filteredLive.length;
-        i++, liveIndex++, globalIndex++
-      ) {
+    while (liveIndex < items.length || blogIndex < blog.length) {
+      for (let i = 0; i < 2 && liveIndex < items.length; i++, liveIndex++, globalIndex++) {
         const isExpanded = expandedIndex === globalIndex;
         const index = globalIndex;
         combined.push(
@@ -97,23 +108,23 @@ const Live: React.FC = () => {
                 />
               </motion.svg>
             </div>
-            {filteredLive[liveIndex].liveType === "News" ? (
+            {items[liveIndex].liveType === "News" ? (
               <>
                 <div className={styles.Title}>
-                  {filteredLive[liveIndex].title}
+                  {items[liveIndex].title}
                 </div>
                 <div className={styles.Type}>News</div>
               </>
             ) : (
               <>
                 <div className={styles.Title}>
-                  {filteredLive[liveIndex].title} by
+                  {items[liveIndex].title} by
                 </div>
                 <div className={styles.Organisation}>
-                  {filteredLive[liveIndex].organisation}
+                  {items[liveIndex].organisation}
                 </div>
                 <div className={styles.Headline}>
-                  {filteredLive[liveIndex].headline}
+                  {items[liveIndex].headline}
                 </div>
                 <div className={styles.Type}>Event Hackathon</div>
               </>
@@ -126,7 +137,7 @@ const Live: React.FC = () => {
                 className={styles.Details}
               >
                 <div className={styles.NewsDetails}>
-                  {filteredLive[liveIndex].content}
+                  {items[liveIndex].content}
                 </div>
               </motion.div>
             )}
@@ -134,14 +145,9 @@ const Live: React.FC = () => {
         );
       }
 
-      // Add 10 blog items in 2 rows of 5
       for (let i = 0; i < 2 && blogIndex < blog.length; i++) {
         const rowItems = [];
-        for (
-          let j = 0;
-          j < 5 && blogIndex < blog.length;
-          j++, blogIndex++, globalIndex++
-        ) {
+        for (let j = 0; j < 5 && blogIndex < blog.length; j++, blogIndex++, globalIndex++) {
           rowItems.push(
             <div
               key={`blog-${blogIndex}`}
@@ -159,7 +165,7 @@ const Live: React.FC = () => {
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M10.5942 1.70775L0.82875 11.4537C0.73525 11.5474 0.6205 11.591 0.4845 11.5845C0.348666 11.5782 0.233917 11.5282 0.14025 11.4345C0.04675 11.341 0 11.2295 0 11.1C0 10.9705 0.04675 10.859 0.14025 10.7655L9.8865 1H3.5C3.35833 1 3.23958 0.952 3.14375 0.856C3.04792 0.76 3 0.641083 3 0.499249C3 0.357416 3.04792 0.23875 3.14375 0.14325C3.23958 0.0477495 3.35833 0 3.5 0H10.7865C11.0153 0 11.2072 0.0774161 11.362 0.232249C11.5168 0.387083 11.5942 0.578917 11.5942 0.80775V7.5C11.5942 7.64167 11.5463 7.76042 11.4503 7.85625C11.3543 7.95208 11.2353 8 11.0935 8C10.9517 8 10.833 7.95208 10.7375 7.85625C10.642 7.76042 10.5942 7.64167 10.5942 7.5V1.70775Z"
+                    d="M7.5 0L12 4.5L7.5 9L6.75 8.25L10.5 4.5L6.75 0.75L7.5 0Z"
                     fill="#999999"
                   />
                 </svg>
@@ -168,7 +174,7 @@ const Live: React.FC = () => {
           );
         }
         combined.push(
-          <div key={`blog-row-${i}-${blogIndex}`} className={styles.blogRow}>
+          <div key={`blog-row-${globalIndex}`} className={styles.blogRow}>
             {rowItems}
           </div>
         );
@@ -179,14 +185,10 @@ const Live: React.FC = () => {
   };
 
   return (
-    <div>
-      <Search
-        keyword={keyword}
-        ChangeFunction={ChangeFunction}
-        handleKeyDown={handleKeyDown}
-      />
-      <Categories />
-      <div className={styles.LiveContainer}>{getAlternatingRows()}</div>
+    <div className={styles.Container}>
+      <Search keyword={keyword} ChangeFunction={ChangeFunction} handleKeyDown={handleKeyDown} />
+      <Categories onCategoryClick={handleCategoryClick} />
+      <div className={styles.Content}>{getAlternatingRows(filteredLive)}</div>
     </div>
   );
 };

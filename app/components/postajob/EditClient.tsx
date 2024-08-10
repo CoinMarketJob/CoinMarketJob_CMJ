@@ -14,6 +14,8 @@ interface EditClientProps {
   companyName: string;
   jobTitle: string;
   setJobTitle: React.Dispatch<React.SetStateAction<string>>;
+  locationType: string;
+  setLocationType: React.Dispatch<React.SetStateAction<string>>;
   selectedLocations: string[];
   setSelectedLocations: React.Dispatch<React.SetStateAction<string[]>>;
   jobType: string;
@@ -38,6 +40,8 @@ const EditClient: React.FC<EditClientProps> = ({
   companyName,
   jobTitle,
   setJobTitle,
+  locationType,
+  setLocationType,
   selectedLocations,
   setSelectedLocations,
   jobType,
@@ -107,6 +111,8 @@ const EditClient: React.FC<EditClientProps> = ({
         <LocationSelector
           selectedLocations={selectedLocations}
           setSelectedLocations={setSelectedLocations}
+          locationType={locationType}
+          setLocationType={setLocationType}
         />
       </div>
 

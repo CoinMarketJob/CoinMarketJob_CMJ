@@ -1,42 +1,36 @@
 "use client";
-import React, { useCallback, useRef, useState } from "react";
-import styles from "./JobCard.module.css";
+import React, { useCallback, useState } from "react";
+import styles from "./SelectedJobCard.module.css";
 import { Job } from "@prisma/client";
-import Icon from "../../general/Icon";
+import Icon from "../general/Icon";
 import { formatJobType } from "@/utils/formatter";
-import { useDrag } from "react-dnd";
 import { useJobs } from "@/hooks/useJobs";
+import { useDrag } from "react-dnd";
 
 interface JobCardProps {
   job: Job;
   onClick: (job: Job) => void;
   collapsed?: boolean;
   onDrop: (id: number, list: string) => void;
-  onDragBegin: () => void;
-  onDragEnd: () => void;
 }
 
 const ItemTypes = {
   CARD: "card",
 };
 
-const Cozy: React.FC<JobCardProps> = ({
+const SelectedJobCard: React.FC<JobCardProps> = ({
   job,
   onClick,
   collapsed,
   onDrop,
-  onDragBegin,
-  onDragEnd,
 }) => {
   const [isActive, setIsActive] = useState(false);
-  const { filteredJobs, setFilteredJobs } = useJobs();
   const id = job.id;
-  const cardType = "left";
+  const cardType = "right";
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes.CARD,
     item: () => {
-      onDragBegin();
       return { id, cardType };
     },
     end: (item, monitor) => {
@@ -45,8 +39,6 @@ const Cozy: React.FC<JobCardProps> = ({
       console.log(dropResult);
       if (item && dropResult) {
         onDrop(item.id, dropResult.list);
-      } else if (dropResult?.list == "left") {
-        onDragEnd();
       }
     },
     collect: (monitor) => ({
@@ -72,16 +64,13 @@ const Cozy: React.FC<JobCardProps> = ({
       }
     } catch (error) {}
   };
-  const JobClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.stopPropagation();
-    const filter = filteredJobs.filter((x) => x.id !== job.id);
-    setFilteredJobs(filter);
-  };
+  const JobClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {};
+
   const JobSelect = () => {
     setIsActive(true);
     onClick(job);
   };
-  
+
   const dragRef = useCallback((node: HTMLDivElement | null) => {
     if (node) {
       drag(node);
@@ -96,16 +85,15 @@ const Cozy: React.FC<JobCardProps> = ({
       }`}
       onClick={JobSelect}
     >
-      <div className={styles.icon}>
-        <img src={job.logo} alt={`${job.companyName} Logo`} />
-      </div>
       <div className={styles.details}>
-        <h2 className={styles.title}>{job.jobTitle}</h2>
-        <p className={styles.company}>{job.companyName}</p>
-        <p className={styles.meta}>
+        <div className={styles.TitleCompany}>
+          <div className={styles.title}>{job.jobTitle}</div>
+          <div className={styles.company}>@{job.companyName}</div>
+        </div>
+        <div className={styles.meta}>
           <span className={styles.type}>{formatJobType(job.jobType)}</span>
           <span className={styles.location}>{job.location}</span>
-        </p>
+        </div>
       </div>
       <div className={styles.actions}>
         <div>
@@ -149,4 +137,4 @@ const Cozy: React.FC<JobCardProps> = ({
   );
 };
 
-export default Cozy;
+export default SelectedJobCard;

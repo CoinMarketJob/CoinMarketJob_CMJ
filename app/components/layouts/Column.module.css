@@ -1,0 +1,37 @@
+.columnLeft {
+  width: 100%;
+  height: 100%;
+}
+
+.gridContainer {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.gridContainerSelectedDetail {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.column {
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  border: 1px solid #E7E5E4;
+  padding: 12px;
+}
+
+.highlight {
+  background: #2422201a;
+  border: 1px dashed #242220;
+}
+
+.DetailArea{
+  margin-bottom: 12px;
+}

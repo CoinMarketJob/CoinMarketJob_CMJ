@@ -22,6 +22,7 @@ const Page = () => {
   const [description, setDescription] = useState<JSONContent>(JSON);
 
   const [jobTitle, setJobTitle] = useState<string>("");
+  const [locationType, setLocationType] = useState<string>("Remote");
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
 
   const [profile, setProfile] = useState<any>(null);
@@ -113,6 +114,8 @@ const Page = () => {
           companyName={profile?.headline || ""}
           jobTitle={jobTitle}
           setJobTitle={setJobTitle}
+          locationType={locationType}
+          setLocationType={setLocationType}
           selectedLocations={selectedLocations}
           setSelectedLocations={setSelectedLocations}
           jobType={jobType}

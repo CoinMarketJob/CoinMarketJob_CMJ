@@ -1,20 +1,20 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
-import { useState, useEffect } from 'react';
-import styles from './applyjob.module.css';
-import Input from '@/app/components/general/Input';
-import Dropdown from '@/app/components/general/Dropdown';
-import Draft from '@/app/components/general/Draft'
-import InputFile from '@/app/components/general/InputFile';
-import Button from '@/app/components/general/Button';
-import { JSONContent } from '@tiptap/react';
-import LocationSelector from '@/app/components/location/LocationSelector';
+import { useState, useEffect } from "react";
+import styles from "./applyjob.module.css";
+import Input from "@/app/components/general/Input";
+import Dropdown from "@/app/components/general/Dropdown";
+import Draft from "@/app/components/general/Draft";
+import InputFile from "@/app/components/general/InputFile";
+import Button from "@/app/components/general/Button";
+import { JSONContent } from "@tiptap/react";
+import LocationSelector from "@/app/components/location/LocationSelector";
 
 type JobProps = {
-  jobId : string
-}
+  jobId: string;
+};
 
-const page = ({params}: {params: JobProps}) => {
+const page = ({ params }: { params: JobProps }) => {
   const [name, setName] = useState<string>("");
   const [surname, setSurname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -30,64 +30,57 @@ const page = ({params}: {params: JobProps}) => {
   const [cv, setCv] = useState<JSONContent>();
   const [coverLetter, setCoverLetter] = useState<JSONContent>();
 
-  
   const [jobName, setJobName] = useState<string>("");
   const [jobLogo, setJobLogo] = useState<string>("");
 
-  const {jobId} = params;
+  const { jobId } = params;
 
-  useEffect (() => {
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     async function fetchData() {
       try {
-          const response = await fetch('/api/job/get/' + jobId);
-          const data = await response.json();
-          setJobName(data.jobTitle);
-          setJobLogo(data.logo);
-
+        const response = await fetch("/api/job/get/" + jobId);
+        const data = await response.json();
+        setJobName(data.jobTitle);
+        setJobLogo(data.logo);
       } catch (error) {
-          console.error('Veri getirme hatası:', error);
+        console.error("Veri getirme hatası:", error);
       }
     }
 
     fetchData();
-  },[jobId])
+  }, [jobId]);
 
   const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
-  }
+  };
 
   const surnameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSurname(e.target.value);
-  }
+  };
 
   const emailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
-  }
+  };
   const phoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPhone(e.target.value);
-  }
-
-  const codeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCountryCode(e.target.value);
-  }
+  };
 
   const cvFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCvFile(e.target.files ? e.target.files[0] : null);
-  }
+  };
 
   const letterFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLetterFile(e.target.files ? e.target.files[0] : null);
-  }
+  };
 
   const cvDraftChange = (content: JSONContent) => {
     setCv(content);
-  }
+  };
 
   const coverLetterDraftChange = (content: JSONContent) => {
     setCoverLetter(content);
-  }
+  };
 
   const countryCodes = [
     { value: "+0", label: "+0" },
@@ -257,12 +250,12 @@ const page = ({params}: {params: JobProps}) => {
           const formData = new FormData();
           formData.append("file", letterFile);
           formData.append("Content-Type", letterFile.type);
-  
+
           const response = await fetch("/api/appliedJob/documents/", {
             method: "POST",
             body: formData,
           });
-  
+
           if (response.ok) {
             const data = await response.json();
             letterLink = data.url;
@@ -271,19 +264,19 @@ const page = ({params}: {params: JobProps}) => {
           }
         }
       };
-  
+
       // Upload CV
       const uploadCvPromise = async () => {
         if (!cvManualState && cvFile) {
           const formData = new FormData();
           formData.append("file", cvFile);
           formData.append("Content-Type", cvFile.type);
-  
+
           const response = await fetch("/api/appliedJob/documents/", {
             method: "POST",
             body: formData,
           });
-  
+
           if (response.ok) {
             const data = await response.json();
             resumeLink = data.url;
@@ -292,10 +285,10 @@ const page = ({params}: {params: JobProps}) => {
           }
         }
       };
-  
+
       // Wait for both uploads to complete
       await Promise.all([uploadLetterPromise(), uploadCvPromise()]);
-  
+
       // Proceed with submitting job data
       const jobData = {
         jobId,
@@ -310,15 +303,15 @@ const page = ({params}: {params: JobProps}) => {
         coverLetterLink: !letterManualState ? letterLink : null,
         visaSponsorship: true,
       };
-  
-      const response = await fetch('/api/appliedJob/', {
-        method: 'POST',
+
+      const response = await fetch("/api/appliedJob/", {
+        method: "POST",
         body: JSON.stringify(jobData),
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
-  
+
       if (response.ok) {
         console.log(jobData);
       } else {
@@ -331,62 +324,150 @@ const page = ({params}: {params: JobProps}) => {
 
   return (
     <div className={styles.ContainerCard}>
-      <div style={{display: "flex"}}>
+      <div style={{ display: "flex" }}>
         <div className={styles.ApplyText}>Apply</div>
-        <div><img src={jobLogo} className={styles.Logo} alt="Description"/></div>
+        <div>
+          <img src={jobLogo} className={styles.Logo} alt="Description" />
+        </div>
         <div className={styles.TitleText}>{jobName}</div>
       </div>
       <div className={styles.Line}></div>
       <div className={styles.doubleRow}>
-        <Input id='name' placeholder='Name*' type='text' required value={name} onChange={nameChange} />
-        <div style={{width: '2.25rem'}}></div>
-        <Input id='surname' placeholder='Surname*' type='text' required value={surname} onChange={surnameChange} />
+        <Input
+          id="name"
+          placeholder="Name*"
+          type="text"
+          required
+          value={name}
+          onChange={nameChange}
+        />
+        <div style={{ width: "2.25rem" }}></div>
+        <Input
+          id="surname"
+          placeholder="Surname*"
+          type="text"
+          required
+          value={surname}
+          onChange={surnameChange}
+        />
       </div>
       <div className={styles.singleRow}>
-        <Input id='email' placeholder='Email*' type='email' required value={email} onChange={emailChange} />
+        <Input
+          id="email"
+          placeholder="Email*"
+          type="email"
+          required
+          value={email}
+          onChange={emailChange}
+        />
       </div>
 
       <div className={styles.doubleRow}>
-        <div style={{ width: '7.5rem'}}><Dropdown id='countryCode' value={countryCode} onChange={codeChange} list={countryCodes}  /></div>
-        <div style={{width: '2.25rem'}}></div>
-        <Input id='phone' placeholder='Phone' type='phone' required value={phone} onChange={phoneChange} />
+        <div style={{ width: "7.5rem" }}>
+          <Dropdown
+            id="countryCode"
+            value={countryCode}
+            setValue={setCountryCode}
+            list={countryCodes}
+          />
+        </div>
+        <div style={{ width: "2.25rem" }}></div>
+        <Input
+          id="phone"
+          placeholder="Phone"
+          type="phone"
+          required
+          value={phone}
+          onChange={phoneChange}
+        />
       </div>
-      
+
       {cvManualState == false ? (
-        <div style={{display: "flex", alignItems: 'center', marginBottom: '1.5rem'}}>
-          <div style={{display: "flex", width: '38%'}}>
-            <InputFile id="cv" placeholder="Attach Resume / CV" required onChange={cvFileChange} />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "1.5rem",
+          }}
+        >
+          <div style={{ display: "flex", width: "38%" }}>
+            <InputFile
+              id="cv"
+              placeholder="Attach Resume / CV"
+              required
+              onChange={cvFileChange}
+            />
           </div>
           <span className={styles.orText}>or</span>
-          <span className={styles.manuallyText} onClick={() => setCvManualState(true)}>Enter Manually</span>
+          <span
+            className={styles.manuallyText}
+            onClick={() => setCvManualState(true)}
+          >
+            Enter Manually
+          </span>
         </div>
       ) : (
-        <div style={{display: "flex", alignItems: 'center', marginBottom: '1.5rem'}}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "1.5rem",
+          }}
+        >
           <Draft onChange={cvDraftChange} />
         </div>
       )}
 
       {letterManualState == false ? (
-        <div style={{display: "flex", alignItems: 'center', marginBottom: '1.5rem'}}>
-          <div style={{display: "flex", width: '38%'}}>
-            <InputFile id="letter" placeholder="Attach Cover Letter" required onChange={letterFileChange} />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "1.5rem",
+          }}
+        >
+          <div style={{ display: "flex", width: "38%" }}>
+            <InputFile
+              id="letter"
+              placeholder="Attach Cover Letter"
+              required
+              onChange={letterFileChange}
+            />
           </div>
           <span className={styles.orText}>or</span>
-          <span className={styles.manuallyText} onClick={() => setLetterManualState(true)}>Enter Manually</span>
+          <span
+            className={styles.manuallyText}
+            onClick={() => setLetterManualState(true)}
+          >
+            Enter Manually
+          </span>
         </div>
       ) : (
-        <div style={{display: "flex", alignItems: 'center', marginBottom: '1.5rem'}}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "1.5rem",
+          }}
+        >
           <Draft onChange={coverLetterDraftChange} />
         </div>
       )}
 
-      <div style={{display: "flex", justifyContent: 'flex-end'}}>
-        <Button text="Submit" fontSize={15} fontWeight={500}
-        paddingLeft={60} paddingRight={59} paddingTop={15}
-        paddingBottom={15} onClick={submit} />
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <Button
+          text="Submit"
+          fontSize={15}
+          fontWeight={500}
+          paddingLeft={60}
+          paddingRight={59}
+          paddingTop={15}
+          paddingBottom={15}
+          onClick={submit}
+        />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

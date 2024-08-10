@@ -20,7 +20,7 @@ interface ProfileSection {
   to: string;
   institution: string;
   location: string;
-  description: string;
+  description: JSONContent;
 }
 
 interface ProfileData {
@@ -146,7 +146,7 @@ const Profile = () => {
                 <div className={styles.Line}></div>
               </div>
 
-              <div>
+              <div className={styles.ProfileSectionContainer}>
                 <ProfileSections profile={profile} />
               </div>
             </>

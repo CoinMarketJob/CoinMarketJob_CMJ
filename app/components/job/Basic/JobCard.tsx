@@ -1,21 +1,58 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useCallback, useState } from "react";
 import styles from "./JobCard.module.css";
 import { Job } from "@prisma/client";
 import Icon from "../../general/Icon";
-import { useRouter } from "next/navigation";
 import { formatJobType } from "@/utils/formatter";
 import { useJobs } from "@/hooks/useJobs";
+import { useDrag } from "react-dnd";
 
 interface JobCardProps {
   job: Job;
-  onClick: () => void;
+  onClick: (job: Job) => void;
   collapsed?: boolean;
+  onDrop: (id: number, list: string) => void;
+  onDragBegin: () => void;
+  onDragEnd: () => void;
 }
 
-const JobCard: React.FC<JobCardProps> = ({ job, onClick, collapsed }) => {
+const ItemTypes = {
+  CARD: "card",
+};
+
+const JobCard: React.FC<JobCardProps> = ({
+  job,
+  onClick,
+  collapsed,
+  onDrop,
+  onDragBegin,
+  onDragEnd,
+}) => {
   const [isActive, setIsActive] = useState(false);
   const { filteredJobs, setFilteredJobs } = useJobs();
+  const id = job.id;
+  const cardType = "left";
+
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: ItemTypes.CARD,
+    item: () => {
+      onDragBegin();
+      return { id, cardType };
+    },
+    end: (item, monitor) => {
+      const dropResult = monitor.getDropResult<{ list: string }>();
+      console.log(item);
+      console.log(dropResult);
+      if (item && dropResult) {
+        onDrop(item.id, dropResult.list);
+      } else if (dropResult?.list == "left") {
+        onDragEnd();
+      }
+    },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  }));
 
   const JobSave = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
@@ -37,18 +74,23 @@ const JobCard: React.FC<JobCardProps> = ({ job, onClick, collapsed }) => {
   };
   const JobClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
-    const filter = filteredJobs.filter(x=> x.id !== job.id);
+    const filter = filteredJobs.filter((x) => x.id !== job.id);
     setFilteredJobs(filter);
   };
-
-
   const JobSelect = () => {
     setIsActive(true);
-    onClick();
+    onClick(job);
   };
+
+  const dragRef = useCallback((node: HTMLDivElement | null) => {
+    if (node) {
+      drag(node);
+    }
+  }, [drag]);
 
   return (
     <div
+      ref={dragRef}
       className={`${styles.card} ${collapsed ? styles.collapsed : ""} ${
         isActive ? styles.active : ""
       }`}
