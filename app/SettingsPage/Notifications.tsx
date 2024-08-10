@@ -48,6 +48,7 @@ const Notifications: React.FC = () => {
         <span>Updates about CoinMarketJob</span>
         <ToggleSwitch sliderName="slider3" />
       </div>
+      <div className='slider'>
       <SingleSlider 
         min={0} 
         max={100} 
@@ -55,6 +56,7 @@ const Notifications: React.FC = () => {
         onValueChange={handleValueChange} 
         sublabel={sublabel} 
       />
+      </div>
       <div className='sub-label'>
       <span>{sublabel}</span>
       </div>

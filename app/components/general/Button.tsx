@@ -4,6 +4,7 @@ import React from 'react';
 interface ButtonProps {
   text: string;
   onClick: () => void;
+  onHover: () => void;
   backgroundColor?: string;
   textColor?: string;
   borderLine?: number;
@@ -19,8 +20,8 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = ({
   text,
   onClick,
-  backgroundColor,
-  textColor,
+  backgroundColor = "#242220",
+  textColor = "#FFFFFF",
   borderLine = 0,
   borderColor = "#242220",
   fontSize,

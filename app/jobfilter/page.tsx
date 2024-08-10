@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './page.css'; 
 import { useJobs } from '@/hooks/useJobs';
 import Selection from '../components/general/CheckboxSelection';
