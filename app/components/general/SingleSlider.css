@@ -8,14 +8,18 @@
   .custom-single-slider .MuiSlider-thumb {
     background-color: white;
     border: 0.5px solid #2422201A;
+    width: 28px;
+    height: 28px;
   }
   
   .custom-single-slider .MuiSlider-track {
     background-color: black;
+    height: 7px;
   }
   
   .custom-single-slider .MuiSlider-rail {
     background-color: #2422201A;
+    height: 7px;
   }
   
   .value-label {

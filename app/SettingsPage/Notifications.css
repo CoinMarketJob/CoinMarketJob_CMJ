@@ -1,4 +1,4 @@
-.notifications {
+/* .notifications {
     padding: 20px;
     font-family: 'Inter', sans-serif;
   }
@@ -56,4 +56,97 @@
   .notification-item + .single-slider-container {
     margin-top: 72px;
   }
+   */
+
+   /* Notifications.css */
+/* Updated Notifications.css */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.notifications {
+  padding-left: 16px;
+  padding-top: 20px;
+  width: 100%;
+  max-width: calc(100% - 72px); /* 36px margin on each side */
+  box-sizing: border-box;
+}
+
+.notifications h4 {
+  margin-bottom: 20px;
+  color: #999999;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 31.75px;
+  letter-spacing: 0.03em;
+  text-align: left;
+}
+
+.notification-divider {
+  border: none;
+  border-top: 1px solid #E7E5E4;
+  margin: 20px 0;
+}
+
+.notification-item {
+  display: flex;
+  justify-content: space-between;
+ 
+  align-items: center;
+  margin-top: 36px;
+}
+
+.notification-item span {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 31.75px;
+  letter-spacing: 0.03em;
+  text-align: left;
+  color: #999999;
+}
+
+.sub-label {
   
+  text-align: center;
+  margin-top: 24px;
+}
+
+.sub-label span {
+  font-size: clamp(14px, 1.5vw, 18px);
+  font-weight: 400;
+  line-height: 23.81px;
+  letter-spacing: 0.03em;
+  color: #999999;
+  
+}
+
+
+.single-slider-container {
+  width: 280px;
+  height: 28px;
+  margin-top: 72px !important;
+  position: relative;
+}
+
+/* Responsive behavior */
+@media screen and (max-width: 500px) {
+  .notifications {
+    max-width: 500px;
+  }
+  .sub-label span {
+    font-size: 0.5vw;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .notifications {
+    max-width: calc(100% - 36px); /* Adjust to maintain the 36px margin */
+  }
+}

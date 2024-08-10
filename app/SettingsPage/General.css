@@ -1,6 +1,6 @@
 .general {
-    padding-top: 4px;
-    
+    margin-top: 52px;
+  
   }
   
   .general-header {
@@ -17,7 +17,8 @@
     letter-spacing: 0.03em;
     text-align: left;
     color: #999999;
-    padding-left: 36px;
+    padding-left: 16px;
+    margin-top: 0;
   }
   
   .general p {

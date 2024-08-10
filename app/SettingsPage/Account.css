@@ -1,18 +1,16 @@
 .account {
-  padding: 20px;
+  padding-left: 16px;
   font-family: 'Inter', sans-serif;
 }
 
-.account-section {
-  margin-bottom: 40px;
-}
+
 
 .account-item {
   display: flex;
   justify-content: space-between;
   align-items: center; /* Center align items vertically */
-  margin-bottom: 20px;
-  margin-top: 60px;
+  margin-bottom: 30px;
+  margin-top: 42px;
 }
 
 .account-item div {
@@ -31,6 +29,10 @@
   text-align: left;
 }
 
+.account-item Button {
+  width: 123px;
+}
+
 .account-subtext {
   color: #999999;
   margin-top: 5px;
@@ -42,7 +44,8 @@
 }
 
 .account-button {
-  margin-left: auto; /* Add spacing between text and button */
+  margin-left: auto;
+   /* Add spacing between text and button */
 }
 
 .danger-zone {

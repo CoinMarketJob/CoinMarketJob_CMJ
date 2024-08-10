@@ -1,6 +1,8 @@
 .defaults {
     display: flex;
     flex-direction: column;
+    padding-left: 16px;
+    padding-top: 20px;
     
   }
   
@@ -30,8 +32,8 @@
     text-align: left;
     color: #999999;
     height: 26px;
-    margin-top: 72px;
-    margin-left: 36px;
+    
+    
     
 
 
