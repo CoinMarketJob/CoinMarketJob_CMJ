@@ -89,7 +89,7 @@ button:last-of-type {
   border-radius: 41px;
   width: 89px;
   height: 41px;
-  color: white;
+  color: rgb(120, 28, 28);
 }
 
 .button-container {

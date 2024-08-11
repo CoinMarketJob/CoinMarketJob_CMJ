@@ -19,8 +19,8 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = ({
   text,
   onClick,
-  backgroundColor,
-  textColor,
+  backgroundColor = "#242220",
+  textColor = "#FFFFFF",
   borderLine = 0,
   borderColor = "#242220",
   fontSize,

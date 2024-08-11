@@ -95,12 +95,12 @@ const Notifications: React.FC<NotificationsProps> = ({ setting }) => {
         <span>Updates about CoinMarketJob</span>
         <ToggleSwitch switchState={updates} setSwitchState={setUpdates} sliderName="slider3" />
       </div>
-      <SingleSlider
-        min={0}
-        max={100}
-        step={25}
-        onValueChange={handleValueChange}
-        sublabel={sublabel}
+      <SingleSlider 
+        min={0} 
+        max={100} 
+        step={25} 
+        onValueChange={handleValueChange} 
+        sublabel={sublabel} 
         value={alertFrequency}
         setValue={setAlertFrequency}
       />
