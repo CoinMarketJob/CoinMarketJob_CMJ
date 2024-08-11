@@ -1,3 +1,5 @@
+import { Frequency } from "@prisma/client";
+
  export function formatJobType(value: any): string {
     if (value == "FullTime") {
         return "Full Time";
@@ -14,3 +16,30 @@
     }
     return "Other";
 }
+
+export function formatFrequency(value: Frequency | undefined): number{
+    if (value == "AlmostNothing") {
+        return 0;
+    } else if (value == "Monthly") {
+        return 25;
+    } else if (value == "Weekly") {
+        return 50;
+    } else if (value == "Daily") {
+        return 75;
+    } 
+    return 100;
+}
+
+export function formatValueToFrequency(value: number): string{
+    if (value == 0) {
+        return "AlmostNothing";
+    } else if (value == 25) {
+        return "Monthly";
+    } else if (value == 50) {
+        return "Weekly";
+    } else if (value == 75) {
+        return "Daily";
+    } 
+    return "PrettyMuchEverything";
+}
+

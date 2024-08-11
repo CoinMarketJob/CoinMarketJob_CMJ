@@ -4,14 +4,14 @@ import React, { useState, ChangeEvent } from "react";
 import './Toggle.css';
 
 interface ToggleSwitchProps {
-  initialChecked?: boolean;
   title?: string;
   sliderName: string;
   onChange?: (checked: boolean) => void;
+  switchState: boolean | undefined;
+  setSwitchState: React.Dispatch<React.SetStateAction<boolean | undefined>>;
 }
 
-const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ initialChecked = true, title = "", sliderName, onChange }) => { 
-  const [switchState, setSwitchState] = useState(initialChecked);  
+const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ title = "", sliderName, onChange, switchState, setSwitchState }) => { 
   const uniqueId = `${sliderName}-${Math.random().toString(36).substr(2, 9)}`;
 
   function handleOnChange(e: ChangeEvent<HTMLInputElement>) {

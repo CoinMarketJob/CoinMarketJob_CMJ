@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import Typography from '@mui/material/Typography';
 import './SingleSlider.css';
+import { useEffect } from 'react';
 
 interface SingleSliderProps {
   min: number; 
@@ -11,16 +12,21 @@ interface SingleSliderProps {
   step: number; 
   onValueChange: (value: number) => void; 
   sublabel?: string;
+  value: number;
+  setValue: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const SingleSlider: React.FC<SingleSliderProps> = ({ min, max, step, onValueChange, sublabel }) => {
-  const [value, setValue] = React.useState<number>(min);
+const SingleSlider: React.FC<SingleSliderProps> = ({ min, max, step, onValueChange, sublabel, value, setValue }) => {
 
   const handleChange = (event: Event, newValue: number | number[]) => {
     const newValueNum = newValue as number;
     setValue(newValueNum);
     onValueChange(newValueNum);
   };
+
+  useEffect(() => {
+    console.log(value);
+  },[value])
 
   return (
     <div className="single-slider-container">
