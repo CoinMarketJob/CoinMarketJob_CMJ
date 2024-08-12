@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import './Button.css';
+import './Button.css'
+import React from 'react';
 
 interface ButtonProps {
   text: string;
@@ -14,13 +14,6 @@ interface ButtonProps {
   paddingBottom?: number;
   paddingLeft?: number;
   paddingRight?: number;
-  clickedBackgroundColor?: string;
-  clickedTextColor?: string;
-  clickedBorderColor?: string;
-  hoverBackgroundColor?: string;
-  hoverTextColor?: string;
-  hoverBorderColor?: string;
-  hoverUnderlineText?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -36,63 +29,21 @@ const Button: React.FC<ButtonProps> = ({
   paddingBottom = 10,
   paddingLeft = 21,
   paddingRight = 21,
-  clickedBackgroundColor,
-  clickedTextColor,
-  clickedBorderColor,
-  hoverBackgroundColor,
-  hoverTextColor,
-  hoverBorderColor,
-  hoverUnderlineText = false,
 }) => {
-  const [isClicked, setIsClicked] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleClick = () => {
-    setIsClicked(!isClicked);
-    onClick();
-  };
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
-
   const buttonStyle = {
     paddingTop,
     paddingBottom,
     paddingLeft,
     paddingRight,
-    backgroundColor: isClicked && clickedBackgroundColor 
-      ? clickedBackgroundColor 
-      : isHovered && hoverBackgroundColor 
-        ? hoverBackgroundColor 
-        : backgroundColor,
-    color: isClicked && clickedTextColor 
-      ? clickedTextColor 
-      : isHovered && hoverTextColor 
-        ? hoverTextColor 
-        : textColor,
-    border: `${borderLine}px solid ${isClicked && clickedBorderColor 
-      ? clickedBorderColor 
-      : isHovered && hoverBorderColor 
-        ? hoverBorderColor 
-        : borderColor}`,
+    backgroundColor,
+    color: textColor,
+    border: `${borderLine}px solid ${borderColor}`,
     fontSize,
     fontWeight,
-    textDecoration: isHovered && hoverUnderlineText ? 'underline' : 'none', // Hover durumunda alt çizgi
   };
 
   return (
-    <button 
-      className={`form-button`} 
-      style={buttonStyle} 
-      onClick={handleClick}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <button className={`form-button`} style={buttonStyle} onClick={onClick}>
       {text}
     </button>
   );
