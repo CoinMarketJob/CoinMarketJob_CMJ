@@ -50,6 +50,7 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18",
     "react-draft-wysiwyg": "^1.15.0",
+    "react-modal": "^3.16.1",
     "react-resizable": "^3.0.5",
     "react-router-dom": "^6.24.0",
     "react-select": "^5.8.0",
