@@ -6,6 +6,7 @@ import { faMagnifyingGlass, faSliders, faTimes } from '@fortawesome/free-solid-s
 import Image from 'next/image';
 import { useJobs } from '@/hooks/useJobs';
 import { useRouter } from 'next/navigation';
+import JobFilterPopUp from '@/app/jobfilter/page';
 
 interface Job {
     companyName: string;
@@ -28,6 +29,7 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags }) => {
     const bubleFieldRef = useRef<HTMLDivElement>(null);
     const { jobs, filteredJobs, setFilteredJobs } = useJobs();
     const router = useRouter();
+    const [modalOpen, setModalOpen] = useState(false); // State to control modal visibility
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Tab' && inputValue) {
@@ -77,9 +79,8 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags }) => {
         }
     };
 
-    const filter = () => {
-        console.log("Test");
-        router.push("/jobfilter");
+    const toggleFilter = () => {
+        setModalOpen(prevState => !prevState);  // Toggle the modal visibility
     };
 
     useEffect(() => {
@@ -127,7 +128,7 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags }) => {
                 onKeyDown={handleKeyDown}
                 ref={inputRef}
             />
-            <div className="filter-div" onClick={filter}>
+            <div className="filter-div" onClick={toggleFilter}>
             <svg width="37" height="24" viewBox="0 0 37 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0 5C0 4.44772 0.447715 4 1 4H8V6H1C0.447715 6 0 5.55228 0 5Z" fill="#242220" fill-opacity="0.4"/>
                 <path d="M37 5C37 5.55228 36.5523 6 36 6L16 6V5V4L36 4C36.5523 4 37 4.44772 37 5Z" fill="#242220" fill-opacity="0.4"/>
@@ -139,6 +140,13 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags }) => {
                 <path d="M9 5C9 3.34315 10.3431 2 12 2C13.6569 2 15 3.34315 15 5C15 6.65685 13.6569 8 12 8C10.3431 8 9 6.65685 9 5Z" fill="white"/>
             </svg>
             </div>
+
+            <div className='JobFilterPopUp'>
+            {modalOpen && (
+                <JobFilterPopUp />
+            )}
+                </div>
+            
         </div>
     );
 };
