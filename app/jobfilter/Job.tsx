@@ -21,7 +21,7 @@ const JobFilter: React.FC = () => {
   const [isAlertSet, setIsAlertSet] = useState(false);
   const [chooseLocationValue, setchooseLocationValue] = useState('option1');
   const [isResetDisabled, setIsResetDisabled] = useState(true);
-  
+  const [isPopupVisible, setIsPopupVisible] = useState(true);
 
   const chooseLocationOptions = [
     { value: 'USA', label: 'USA' },
@@ -92,6 +92,7 @@ const JobFilter: React.FC = () => {
     });
 
     setFilteredJobs(filtered);
+    setIsPopupVisible(true);
   }, [jobs, location, jobType, experienceLevel, salaryRange, visaSponsorship, setFilteredJobs]);
 
   useEffect(() => {
@@ -134,6 +135,8 @@ const JobFilter: React.FC = () => {
   
 
   return (
+    <>
+    {isPopupVisible && (
     <div className="filter-wrapper">
         <div className="popup-content">
           <div className="filter-group">
@@ -252,7 +255,7 @@ const JobFilter: React.FC = () => {
                     setActivelyHiring(false);
                     setIsAlertSet(false);
                     setchooseLocationValue('Choose Location Value');
-                    applyFilters();
+                    
                    
           
                   }} 
@@ -264,7 +267,11 @@ const JobFilter: React.FC = () => {
                 />
                 <Button 
                   text="Apply" 
-                  onClick={applyFilters} 
+                  onClick={() => {
+                    applyFilters();
+                    setIsPopupVisible(false);
+                
+                  }}
                   backgroundColor="#242220"
                   textColor="#FFFFFF"
                   clickedBackgroundColor='#242220CC'
@@ -287,6 +294,8 @@ const JobFilter: React.FC = () => {
           </div>
         </div>
     </div>
+  )}
+  </>
   );
 };
 
