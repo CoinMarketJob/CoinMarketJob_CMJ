@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, use } from 'react';
 import './Job.css'; 
 import { useJobs } from '@/hooks/useJobs';
 import Selection from '../components/general/CheckboxSelection';
@@ -99,9 +99,6 @@ const JobFilter: React.FC = () => {
     applyFilters();
   }, [jobs, datePosted, location, jobType, experienceLevel, salaryRange, visaSponsorship, activelyHiring, applyFilters]);
 
-  useEffect(() => {
-    checkIfFiltersChanged();
-  }, [datePosted, location, jobType, salary, salaryRange, experienceLevel, visaSponsorship, activelyHiring]);
   
 
   const initialFiltersRef = useRef({
@@ -116,7 +113,7 @@ const JobFilter: React.FC = () => {
     isAlertSet: false
   });
 
-  const checkIfFiltersChanged = () => {
+  const checkIfFiltersChanged = useCallback(() => {
     const initialFilters = initialFiltersRef.current;
     const filtersChanged = 
       datePosted.length !== initialFilters.datePosted.length ||
@@ -127,11 +124,15 @@ const JobFilter: React.FC = () => {
       salaryRange[1] !== initialFilters.salaryRange[1] ||
       experienceLevel.length !== initialFilters.experienceLevel.length ||
       visaSponsorship !== initialFilters.visaSponsorship ||
-      activelyHiring !== initialFilters.activelyHiring
+      activelyHiring !== initialFilters.activelyHiring ||
       isAlertSet !== initialFilters.isAlertSet;
   
     setIsResetDisabled(!filtersChanged);
-  };
+  }, [datePosted, location, jobType, salary, salaryRange, experienceLevel, visaSponsorship, activelyHiring, isAlertSet]);
+  
+  useEffect(() => {
+    checkIfFiltersChanged();
+  }, [datePosted, location, jobType, salary, salaryRange, experienceLevel, visaSponsorship, activelyHiring, checkIfFiltersChanged]);
   
 
   return (
