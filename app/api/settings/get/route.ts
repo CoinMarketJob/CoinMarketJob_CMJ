@@ -10,6 +10,7 @@ export async function GET() {
 
   const user = await prisma.settings.findUnique({
     where: { userId: currentUser.id },
+    cacheStrategy: { swr: 60, ttl: 60 },
   });
 
   return NextResponse.json(user);
