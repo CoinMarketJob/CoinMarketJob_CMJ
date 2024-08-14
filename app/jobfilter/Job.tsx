@@ -97,22 +97,29 @@ const JobFilter: React.FC = () => {
   };
 
   function filterJobs() {
+
     const fjobs = jobs.filter((job: Job) => {
-      return (
-        (location.length === 0 || job.location?.toLowerCase().includes(location.join().toLowerCase())) &&
-        (chooseLocationValue === '' || job.location?.toLowerCase() === chooseLocationValue.toLowerCase()) &&
-        (datePosted.length === 0 || job.datePosted?.toLowerCase().includes(datePosted.join().toLowerCase())) &&
-        (jobType.length === 0 || job.jobType?.toLowerCase().includes(jobType.join().toLowerCase())) &&
-        (experienceLevel.length === 0 || job.experienceLevel?.toLowerCase().includes(experienceLevel.join().toLowerCase())) &&
-        (job.salaryMin !== undefined && job.salaryMin >= salaryRange[0]) &&
-        (job.salaryMax !== undefined && job.salaryMax <= salaryRange[1]) &&
-        (!visaSponsorship || job.visaSponsorship === visaSponsorship)
-      );
+        const matchesJobType = jobType.length === 0 || jobType.includes((job.jobType ?? '').toLowerCase());
+        const matchesChooseLocation = chooseLocationValue === '' || job.location?.toLowerCase() === chooseLocationValue.toLowerCase();
+        const matchesDatePosted = datePosted.length === 0 || datePosted.includes((job.datePosted ?? '').toLowerCase());
+        const matchesLocation = location.length === 0 || location.some(loc => job.location?.toLowerCase().includes(loc.toLowerCase()));
+        const matchesExperienceLevel = experienceLevel.length === 0 || experienceLevel.includes((job.experienceLevel ?? '').toLowerCase());
+        const matchesSalaryRange = job.salaryMin !== undefined && job.salaryMin >= salaryRange[0] && job.salaryMax !== undefined && job.salaryMax <= salaryRange[1];
+        const matchesVisaSponsorship = !visaSponsorship || job.visaSponsorship === visaSponsorship;
+        const matchesActivelyHiring = !activelyHiring || job.activelyHiring === activelyHiring;
+        return matchesLocation  && matchesDatePosted && matchesJobType && matchesExperienceLevel && matchesSalaryRange && matchesVisaSponsorship && matchesActivelyHiring;
+        // && matchesChooseLocation oluşturulan joblar için ayrı kontrol parametresine sahip olmalı
     });
-  
+
+    console.log("Filtered Jobs:", fjobs); // Debugging: Log the filtered jobs array
     setFilteredJobs(fjobs);
-    setIsPopupVisible(true);
-  }
+}
+
+
+
+
+
+
   
 
 
@@ -298,18 +305,7 @@ const JobFilter: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="jobs-list">
-            {filteredJobs.map(job => (
-              <div key={job.id} className="job-item">
-                <h3>{job.jobTitle}</h3>
-                <p>{job.companyName}</p>
-                <p>{job.location}</p>
-                <p>{job.salaryMin} - {job.salaryMax}</p>
-                <p>{job.experienceLevel}</p>
-                <p>{job.jobType}</p>
-              </div>
-            ))}
-          </div>
+    
         </div>
     </div>
   )}
