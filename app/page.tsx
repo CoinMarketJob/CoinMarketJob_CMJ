@@ -6,7 +6,6 @@ import { useJobs } from '@/hooks/useJobs';
 import { useLayout } from '@/hooks/useLayout';
 import MainLayout from './components/layouts/MainLayout';
 
-
 const Home = () => {
   const { jobs, setJobs, filteredJobs, setFilteredJobs } = useJobs();
   const { layout } = useLayout();
@@ -33,8 +32,24 @@ const Home = () => {
     <div style={{width: '100%'}}>
       <MainLayout filteredJobs={filteredJobs}  layout={layout} />
     </div>
-    
   )
 }
 
-export default Home 
+export default Home /*
+"use client"
+import JobFilterModal from "./jobfilter/jobFilterModal";
+import JobFilter from "./jobfilter/Job";
+import { useState } from "react";
+import JobFilterPopUp  from "./jobfilter/page";
+import React from 'react';
+
+
+function App() {
+  return (
+    <div className="App">
+      <JobFilterPopUp />
+    </div>
+  );
+}
+
+export default App; */
