@@ -1,13 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./MainLayout.module.css";
-import { useJobs } from "@/hooks/useJobs";
 import { Job } from "@prisma/client";
 import ColumnLeft from "./ColumnLeft";
 import ColumnRight from "./ColumnRight";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useEditor } from "@tiptap/react";
 import JobDetails from "../job/JobDetails";
 
 interface MainLayoutProps {
