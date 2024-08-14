@@ -8,6 +8,8 @@ import ToggleSwitch from '../components/general/Toggle';
 import Button from '../components/general/Button';
 import Dropdown from '../components/general/Dropdown';
 
+
+
 const JobFilter: React.FC = () => {
   const { jobs, filteredJobs, setFilteredJobs } = useJobs();
   const [datePosted, setDatePosted] = useState<string[]>([]);
@@ -22,6 +24,20 @@ const JobFilter: React.FC = () => {
   const [chooseLocationValue, setchooseLocationValue] = useState('option1');
   const [isResetDisabled, setIsResetDisabled] = useState(true);
   const [isPopupVisible, setIsPopupVisible] = useState(true);
+
+  interface Job {
+    location?: string;
+    jobType?: string;  
+    experienceLevel?: string;  
+    packageId?: number;
+    salaryMin?: number;  
+    salaryMax?: number;  
+    datePosted?: string; 
+    visaSponsorship?: boolean; 
+    activelyHiring?: boolean;  
+  }
+  
+  
 
   const chooseLocationOptions = [
     { value: 'USA', label: 'USA' },
@@ -80,26 +96,25 @@ const JobFilter: React.FC = () => {
     setchooseLocationValue(e.target.value);
   };
 
-  const applyFilters = useCallback(() => {
-    const filtered = jobs.filter(job => {
-      const meetsLocation = location.length === 0 || location.includes(job.location);
-      const meetsJobType = jobType.length === 0 || jobType.includes(job.jobType);
-      const meetsExperienceLevel = experienceLevel.length === 0 || experienceLevel.includes(job.experienceLevel);
-      const meetsSalary = job.salaryMin >= salaryRange[0] && job.salaryMax <= salaryRange[1];
-      const meetsVisaSponsorship = !visaSponsorship || job.visaSponsorship === visaSponsorship;
-
-      return meetsLocation && meetsJobType && meetsExperienceLevel && meetsSalary && meetsVisaSponsorship;
+  function filterJobs() {
+    const fjobs = jobs.filter((job: Job) => {
+      return (
+        (location.length === 0 || job.location?.toLowerCase().includes(location.join().toLowerCase())) &&
+        (chooseLocationValue === '' || job.location?.toLowerCase() === chooseLocationValue.toLowerCase()) &&
+        (datePosted.length === 0 || job.datePosted?.toLowerCase().includes(datePosted.join().toLowerCase())) &&
+        (jobType.length === 0 || job.jobType?.toLowerCase().includes(jobType.join().toLowerCase())) &&
+        (experienceLevel.length === 0 || job.experienceLevel?.toLowerCase().includes(experienceLevel.join().toLowerCase())) &&
+        (job.salaryMin !== undefined && job.salaryMin >= salaryRange[0]) &&
+        (job.salaryMax !== undefined && job.salaryMax <= salaryRange[1]) &&
+        (!visaSponsorship || job.visaSponsorship === visaSponsorship)
+      );
     });
-
-    setFilteredJobs(filtered);
-    setIsPopupVisible(true);
-  }, [jobs, location, jobType, experienceLevel, salaryRange, visaSponsorship, setFilteredJobs]);
-
-  useEffect(() => {
-    applyFilters();
-  }, [jobs, datePosted, location, jobType, experienceLevel, salaryRange, visaSponsorship, activelyHiring, applyFilters]);
-
   
+    setFilteredJobs(fjobs);
+    setIsPopupVisible(true);
+  }
+  
+
 
   const initialFiltersRef = useRef({
     datePosted: [],
@@ -200,13 +215,15 @@ const JobFilter: React.FC = () => {
                 multiple={true}
               />
                </div>
-              <Dropdown 
-                id="exampleDropdown"
-                value={chooseLocationValue}
-                onChange={handleDropdownChange}
-                list={chooseLocationOptions}
-                className="general-dropdown"
-              />
+               <div className="choose-location">
+                <Dropdown 
+                  id="Choose Location"
+                  list={chooseLocationOptions}
+                  value={chooseLocationValue}
+                  onChange={handleDropdownChange}
+                  disabled={!location.includes('onsite')}
+                />
+              </div>
               </div>
               <div className='experience-level' >
               <Selection
@@ -269,7 +286,7 @@ const JobFilter: React.FC = () => {
                 <Button 
                   text="Apply" 
                   onClick={() => {
-                    applyFilters();
+                    filterJobs();
                     setIsPopupVisible(false);
                 
                   }}

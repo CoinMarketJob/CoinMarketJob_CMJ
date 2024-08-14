@@ -10,6 +10,7 @@
   height: 760px;
   top: 108px;
   left: 496px;
+  z-index: 1;
   
 }
 
@@ -28,7 +29,7 @@
   border-radius: 30px;
   box-shadow: 0px 0px 11.3px 0px #00000033;
   position: absolute; 
-  z-index: 1;
+  
   
  
   
