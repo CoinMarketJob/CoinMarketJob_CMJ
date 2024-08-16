@@ -3,7 +3,7 @@ import './CheckboxSelection.css';
 import React from 'react';
 
 interface SelectionType {
-    name: string;
+    name?: string;
     id: string;
     value: string[];
     onChange: (selectedValues: string[]) => void;
@@ -34,7 +34,7 @@ const Selection: React.FC<SelectionType> = ({ name, id, value, onChange, list, m
 
     return (
         <div>
-            <h1 className="name">{name}</h1>
+            { name && <h1 className="name">{name}</h1> }
             <div className="selection-container">
                 {list.map((item) => (
                     <div key={item.id} className="checkbox-item">

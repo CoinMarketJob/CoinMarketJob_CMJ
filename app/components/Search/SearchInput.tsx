@@ -6,7 +6,7 @@ import { faMagnifyingGlass, faSliders, faTimes } from '@fortawesome/free-solid-s
 import Image from 'next/image';
 import { useJobs } from '@/hooks/useJobs';
 import { useRouter } from 'next/navigation';
-import JobFilterPopUp from '@/app/jobfilter/page';
+import JobFilterPopUp from '@/app/jobfilter/Job';
 
 interface Job {
     companyName: string;
