@@ -1,4 +1,4 @@
-/* eslint-disable */
+
 "use client";
 import React, {useState,useEffect} from 'react'
 import styles from './page.module.css';
@@ -11,23 +11,22 @@ const Home = () => {
   const { layout } = useLayout();
 
   useEffect(() => {
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
     async function fetchData() {
       try {
-          const response = await fetch('/api/job/get');
-          const data = await response.json();
-          console.log(data);
-          setJobs(data);
-          setFilteredJobs(data);
-          console.log(layout);
+        const response = await fetch('/api/job/get');
+        const data = await response.json();
+        console.log(data);
+        setJobs(data);
+        setFilteredJobs(data);
+        console.log(layout);
       } catch (error) {
-          console.error('Veri getirme hatası:', error);
+        console.error('Veri getirme hatası:', error);
       }
     }
-
+  
     fetchData();
-  },[])
+  }, [setJobs, setFilteredJobs, layout]);
+  
 
   return (
     <div style={{width: '100%'}}>
@@ -36,4 +35,21 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home /*
+"use client"
+import JobFilterModal from "./jobfilter/jobFilterModal";
+import JobFilter from "./jobfilter/Job";
+import { useState } from "react";
+import JobFilterPopUp  from "./jobfilter/page";
+import React from 'react';
+
+
+function App() {
+  return (
+    <div className="App">
+      <JobFilterPopUp />
+    </div>
+  );
+}
+
+export default App; */

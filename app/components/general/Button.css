@@ -10,20 +10,4 @@
   color: #FFFFFF;
 }
 
-.form-button:hover {
-  font-family: Inter;
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 24.2px;
-  letter-spacing: 0.03em;
-  text-align: left;
-}
 
-.form-button:active {
-  font-family: Inter;
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 21.78px;
-  letter-spacing: 0.03em;
-  background-color: #242220cc;
-}

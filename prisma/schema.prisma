@@ -5,7 +5,8 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://admin:gQK6YoNsBL8U11QMWkrP@cmj-main-database.cw1sl1nanwvx.eu-north-1.rds.amazonaws.com:3306/coinmarketjob"
+  url            = "prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiNjlmMzc0M2QtMDdhMy00NzA3LWI2YTQtYzllZTk3MzIxMjY2IiwidGVuYW50X2lkIjoiOTcxZTRmMTkxZDAxNmY1ZTU4NDFmOWY5N2E3ZTc3OWQwZmQ3NGFhNjVmOWM0NzMxY2NmMGEyZDhlMzc1MjBjYiIsImludGVybmFsX3NlY3JldCI6IjE3ZTJmZTIyLTI3NzItNGYyMi05ZGMzLTA0ODZjM2NhZWY3MSJ9.LALqRKr76LtCOS6_FK6yf91Cr4bwf0GA18Bg-JLLato"
+  directUrl      = "mysql://admin:gQK6YoNsBL8U11QMWkrP@cmj-main-database.cw1sl1nanwvx.eu-north-1.rds.amazonaws.com:3306/coinmarketjob"
 }
 
 model User {
