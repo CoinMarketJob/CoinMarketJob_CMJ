@@ -9,11 +9,11 @@ const Searchbar = () => {
   const [tags, setTags] = useState<Array<string>>([]);
   const router = useRouter();
   const back = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    console.log("geri");
+    router.back();
   };
 
   const forward = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    console.log("ileri");
+    router.forward();
   };
 
   const home = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
