@@ -1,4 +1,14 @@
-
+.filter-page{
+  position: fixed !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 928px;
+  height: 760px;
+  top: 108px;
+  left: 496px;
+  z-index: 1;
+}
 
 
 .filter-group{
@@ -25,10 +35,10 @@
   left: 496px;
   border: 0.5px solid #E7E5E4; 
   background-color: #FFFFFFCC;
-  opacity: 0.8;
+  
   border-radius: 30px;
   box-shadow: 0px 0px 11.3px 0px #00000033;
-  position: absolute; 
+  
   
   
  
@@ -55,7 +65,7 @@
   
   align-items: left;
   max-width: 200px;
-  margin-left: 50px;
+  margin-left: 90px;
   margin-top: 60px;
   gap: 70px;
   
@@ -67,16 +77,18 @@
   align-items: flex-end;
   gap: 60px;
 }
-.Location-Selection-Selection{
-  margin-left: 25px;
-}
+
 
 .toggles {
   display: flex;
   flex-direction: column;
   gap: 10px;
   align-items: flex-end;
+
+  
 }
+
+
 
 .general-dropdown {
   border: none !important ;
@@ -86,12 +98,83 @@
   
 }
 .Location-Selection{
-  gap: 19px;
+  gap: 50px;
+  
   
 }
-.experience-level{
-  padding-left: 25px !important;
+
+.choose-location{
+  margin-top: 21px;
 }
+
+
+.dropdown-content {
+  position: relative;
+  z-index: 999; /* Ensure dropdown appears above the overlay */
+}
+
+
+/* Overlay Styles */
+#overlay {
+  position: fixed;
+
+  width: 928px;
+  height: 760px;
+  top: 150px;
+  left: 496px;
+  background-color: #FFFFFFCC; /* Dark background with 50% opacity */
+  z-index: 800; /* Ensure it is above other elements */
+  display: none; /* Hidden by default */
+  border-radius: 30px;
+  border: 0.5px solid #E7E5E4;
+  box-shadow: 0px 0px 2px 0px #00000033;
+  box-shadow: 0px 0px 11.3px 0px #00000033;
+
+}
+
+#overlay.active {
+  display: block; /* Show overlay when active */
+}
+
+/* Location Selector Styles */
+.location-selector {
+  position: relative;
+  z-index: 1000; /* Ensure dropdown is above the overlay */
+}
+
+.location-selector .dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.location-selector .dropdown input {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+}
+
+.location-selector .dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.location-selector .dropdown ul li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.location-selector .dropdown ul li:hover {
+  background-color: #f0f0f0;
+}
+
 
 
 
@@ -99,9 +182,12 @@
 .range-slider-container {
   margin-top: 65px;
   width: 100%;
+  
+
 }
 .custom-slider {
   padding-top: 50px;
+  z-index: 1200 !important;
 
 }
 button {
@@ -109,6 +195,8 @@ button {
   padding: 10px 20px;
   border: none;
   cursor: pointer;
+  
+  
 }
 
 button:first-of-type {
@@ -119,6 +207,8 @@ button:first-of-type {
   letter-spacing: 0.04em;
   text-align: left;
   background-color: white;
+  
+  
 }
 
 button:last-of-type {
@@ -127,10 +217,14 @@ button:last-of-type {
   width: 89px;
   height: 41px;
   color: rgb(120, 28, 28);
+  
+ 
 }
 
 .button-container {
   padding-top: 100px; 
+  z-index: 1200 !important;
+  
 }
 
 

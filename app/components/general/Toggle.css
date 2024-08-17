@@ -20,6 +20,7 @@
   border-radius: 100px;  
   position: relative;
   transition: background 0.3s;
+  z-index: 1000;
 }
 
 .toggle-switch.checked {
