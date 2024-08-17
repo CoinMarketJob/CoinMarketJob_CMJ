@@ -28,21 +28,7 @@ const JobDetails: React.FC<JobDetailsProps> = ({ job, onClose = () => { } }) => 
         router.push("/applyjob/" + jobId);
     };
 
-    // Convert jobDescription to JSONContent if applicable
-    const convertToJSONContent = (value: any): JSONContent | undefined => {
-        try {
-            if (typeof value === 'string') {
-                return JSON.parse(value) as JSONContent; // Assume it's a JSON string
-            }
-            // Handle other types if needed
-            return value as JSONContent;
-        } catch (e) {
-            console.error("Failed to parse JSON content:", e);
-            return undefined;
-        }
-    };
-
-    const jobDescription: JSONContent | undefined = job ? convertToJSONContent(job.jobDescription) : undefined;
+    const jobDescription: JSONContent | undefined = job ? job.jobDescription as JSONContent : undefined;
 
     return (
         <div className={styles.containerJobDetails}>

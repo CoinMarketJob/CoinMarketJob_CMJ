@@ -96,7 +96,7 @@ const Draft: React.FC<DraftProps> = ({show, content, onChange, border}) => {
     },
     
     editable: !show
-  })
+  }, [content])
 
   if (show) {
     return (      
