@@ -26,18 +26,21 @@ const MainLayout: React.FC<MainLayoutProps> = ({ filteredJobs, layout }) => {
   }, [filteredJobs]);
 
   const handleDrop = (id: number, list: string) => {
+
     if (list === "left") {
-      setLeftCards((prev) => [
-        ...prev,
-        ...rightCards.filter((card) => card.id === id),
-      ]);
-      setRightCards((prev) => prev.filter((card) => card.id !== id));
+      const movedCard = rightCards.find((card) => card.id === id);
+      console.log("Moved Card: ", movedCard);
+      if (movedCard) {
+        setLeftCards((prev) => [...prev, movedCard]);
+        setRightCards((prev) => prev.filter((card) => card.id !== id));
+      }
     } else {
-      setRightCards((prev) => [
-        ...prev,
-        ...leftCards.filter((card) => card.id === id),
-      ]);
-      setLeftCards((prev) => prev.filter((card) => card.id !== id));
+      const movedCard = leftCards.find((card) => card.id === id);
+      console.log("Moved Card: ", movedCard);
+      if (movedCard) {
+        setRightCards((prev) => [...prev, movedCard]);
+        setLeftCards((prev) => prev.filter((card) => card.id !== id));
+      }
     }
   };
 
@@ -54,7 +57,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ filteredJobs, layout }) => {
   };
 
   const onDragEnd = () => {
-    console.log("Test");
     setShowRightSide(false);
   };
 
@@ -81,7 +83,11 @@ const MainLayout: React.FC<MainLayoutProps> = ({ filteredJobs, layout }) => {
 
         {showRightSide && (
           <div className={styles.DetailArea}>
-            <ColumnRight list="right" cards={rightCards} onDrop={handleDrop} />
+            <ColumnRight
+              list="right"
+              cards={rightCards}
+              onDrop={handleDrop}
+            />
           </div>
         )}
       </div>

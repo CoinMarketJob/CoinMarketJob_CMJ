@@ -53,6 +53,7 @@ const ColumnLeft: React.FC<ColumnProps> = ({
               onDragEnd={onDragEnd}
               onDragBegin={onDragBegin}
               job={card}
+              key={card.id}
               onClick={onClick}
               onDrop={onDrop}
             />

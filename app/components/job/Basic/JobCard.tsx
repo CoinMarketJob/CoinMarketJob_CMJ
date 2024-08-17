@@ -41,8 +41,7 @@ const JobCard: React.FC<JobCardProps> = ({
     },
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult<{ list: string }>();
-      console.log(item);
-      console.log(dropResult);
+      console.log(monitor);
       if (item && dropResult) {
         onDrop(item.id, dropResult.list);
       } else if (dropResult?.list == "left") {
@@ -52,7 +51,7 @@ const JobCard: React.FC<JobCardProps> = ({
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
-  }));
+  }), [id, cardType, onDragBegin, onDrop, onDragEnd]);
 
   const JobSave = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
@@ -82,11 +81,14 @@ const JobCard: React.FC<JobCardProps> = ({
     onClick(job);
   };
 
-  const dragRef = useCallback((node: HTMLDivElement | null) => {
-    if (node) {
-      drag(node);
-    }
-  }, [drag]);
+  const dragRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (node) {
+        drag(node);
+      }
+    },
+    [drag]
+  );
 
   return (
     <div
@@ -95,6 +97,7 @@ const JobCard: React.FC<JobCardProps> = ({
         isActive ? styles.active : ""
       }`}
       onClick={JobSelect}
+      key={job.id}
     >
       <div className={styles.icon}>
         <img src={job.logo} alt={`${job.companyName} Logo`} />
