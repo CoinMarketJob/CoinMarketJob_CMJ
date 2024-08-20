@@ -32,11 +32,14 @@ const ColumnRight: React.FC<ColumnProps> = ({ list, cards, onDrop }) => {
     setDetailJob(job);
   };
 
-  const dragRef = useCallback((node: HTMLDivElement | null) => {
-    if (node) {
-      drop(node);
-    }
-  }, [drop]);
+  const dragRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (node) {
+        drop(node);
+      }
+    },
+    [drop]
+  );
 
   return (
     <div
@@ -49,14 +52,16 @@ const ColumnRight: React.FC<ColumnProps> = ({ list, cards, onDrop }) => {
         </div>
       )}
 
-      {cards.map((card) => (
-        <SelectedJobCard
-          job={card}
-          onClick={onClick}
-          key={card.id}
-          onDrop={onDrop}
-        />
-      ))}
+      <div className={styles.SelectedJobCardContainer}>
+        {cards.map((card) => (
+          <SelectedJobCard
+            job={card}
+            onClick={onClick}
+            key={card.id}
+            onDrop={onDrop}
+          />
+        ))}
+      </div>
     </div>
   );
 };

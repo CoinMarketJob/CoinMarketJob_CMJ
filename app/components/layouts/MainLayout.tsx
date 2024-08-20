@@ -76,7 +76,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ filteredJobs, layout }) => {
         </div>
 
         {showDetail && (
-          <div className={styles.DetailArea}>
+          <div className={`${styles.DetailArea} ${styles.JobDetailArea}`}>
             <JobDetails job={detailJob} />
           </div>
         )}
