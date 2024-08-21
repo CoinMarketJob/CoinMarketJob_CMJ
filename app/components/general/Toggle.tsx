@@ -8,7 +8,7 @@ interface ToggleSwitchProps {
   sliderName: string;
   onChange?: (checked: boolean) => void;
   switchState: boolean | undefined;
-  setSwitchState: React.Dispatch<React.SetStateAction<boolean>>;
+  setSwitchState: React.Dispatch<React.SetStateAction<boolean | undefined>>;
 }
 
 const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ title = "", sliderName, onChange, switchState, setSwitchState }) => { 

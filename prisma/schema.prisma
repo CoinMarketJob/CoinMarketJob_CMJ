@@ -36,6 +36,7 @@ model Job {
   companyName       String
   jobTitle          String
   location          String
+  locationType      LocationType?
   jobType           JobType
   experienceLevel   ExperienceLevel
   educationalDegree EducationalDegree
@@ -47,6 +48,12 @@ model Job {
   package           BuyedPackage  @relation(fields: [packageId], references: [id], onDelete: Cascade)
   savedJobs         SavedJobs[]
   appliedJobs       AppliedJobs[]
+}
+
+enum LocationType {
+  Remote
+  Hybrid
+  OnSite
 }
 
 

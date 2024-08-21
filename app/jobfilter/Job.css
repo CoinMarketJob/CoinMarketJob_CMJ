@@ -176,9 +176,6 @@
 }
 
 
-
-
-
 .range-slider-container {
   margin-top: 65px;
   width: 100%;
@@ -190,41 +187,10 @@
   z-index: 1200 !important;
 
 }
-button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  
-  
-}
-
-button:first-of-type {
-  font-family: Inter;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 16.94px;
-  letter-spacing: 0.04em;
-  text-align: left;
-  background-color: white;
-  
-  
-}
-
-button:last-of-type {
-  background-color: #242220;
-  border-radius: 41px;
-  width: 89px;
-  height: 41px;
-  color: rgb(120, 28, 28);
-  
- 
-}
 
 .button-container {
   padding-top: 100px; 
-  z-index: 1200 !important;
-  
+  z-index: 1200 !important;  
 }
 
 

@@ -6,7 +6,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from 'bcrypt';
 
 export const authOptions: AuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma as any),
   providers: [
     GoogleProvider({
       clientId: "http://795568910136-mboigjfkfi68ptn6oo28u89j9uod4cq3.apps.googleusercontent.com/",
