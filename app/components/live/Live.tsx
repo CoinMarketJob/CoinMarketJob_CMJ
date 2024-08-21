@@ -185,7 +185,7 @@ const Live: React.FC = () => {
   };
 
   return (
-    <div className={styles.Container}>
+    <div className={styles.LiveContainer}>
       <Search keyword={keyword} ChangeFunction={ChangeFunction} handleKeyDown={handleKeyDown} />
       <Categories onCategoryClick={handleCategoryClick} />
       <div className={styles.Content}>{getAlternatingRows(filteredLive)}</div>
