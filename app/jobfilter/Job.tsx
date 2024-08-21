@@ -20,8 +20,8 @@ const JobFilterPopUp: React.FC = () => {
   const [salary, setSalary] = useState<string[]>([]);
   const [salaryRange, setSalaryRange] = useState<[number, number]>([100, 800]);
   const [experienceLevel, setExperienceLevel] = useState<string[]>([]);
-  const [visaSponsorship, setVisaSponsorship] = useState<boolean>(false);
-  const [activelyHiring, setActivelyHiring] = useState<boolean>(false);
+  const [visaSponsorship, setVisaSponsorship] = useState<boolean | undefined>(false);
+  const [activelyHiring, setActivelyHiring] = useState<boolean | undefined>(false);
   const [isAlertSet, setIsAlertSet] = useState(false);
   const [chooseLocationValue, setchooseLocationValue] = useState<string[]>(['option1']);
   const [isResetDisabled, setIsResetDisabled] = useState(true);
