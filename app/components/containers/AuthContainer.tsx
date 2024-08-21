@@ -5,6 +5,7 @@ import { getCurrentUser } from '@/app/actions/getCurrentUser';
 import { useEffect, useState } from 'react';
 import CompanyProfile from '../auth/CompanyProfile';
 import Profile from '../auth/Profile';
+import styles from './AuthContainer.module.css'
 
 // Define the type for user, including null
 type UserType = User | null;
@@ -35,8 +36,8 @@ const AuthContainer = () => {
   },[])
 
   return (
-    <div style={{display: "flex", width: "100%", height: "100%"}}>
-      {currentUser ? <CompanyProfile /> : <LoginClient />}
+    <div className={styles.container} style={{display: "flex", width: "100%", height: "100%"}}>
+      {currentUser ? <Profile /> : <LoginClient />}
     </div>
   );
 }
