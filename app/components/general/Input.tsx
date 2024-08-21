@@ -1,6 +1,6 @@
 "use client"
 import './Input.css'
-import React, {useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect } from 'react'
 
 interface InputProps {
     id: string
@@ -10,13 +10,11 @@ interface InputProps {
     disabled?: boolean
     value?: string
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-    paddingRight? : number
-    paddingLeft? : number
+    paddingRight?: number
+    paddingLeft?: number
 }
 
-
-
-const Input:React.FC<InputProps> = ({id, placeholder, type, required, disabled, value, onChange, paddingRight, paddingLeft}) => {
+const Input: React.FC<InputProps> = ({ id, placeholder, type, required, disabled, value, onChange, paddingRight, paddingLeft }) => {
     const spanRef = useRef<HTMLSpanElement>(null);
 
     const InputFocus = () => {
@@ -24,8 +22,9 @@ const Input:React.FC<InputProps> = ({id, placeholder, type, required, disabled, 
             spanRef.current.classList.add('form-span-focused');
         }
     }
+
     const InputBlur = () => {
-        if(value == "") {
+        if (value === "") {
             if (spanRef.current) {
                 spanRef.current.classList.remove('form-span-focused');
             }
@@ -38,19 +37,23 @@ const Input:React.FC<InputProps> = ({id, placeholder, type, required, disabled, 
         }
     }, [value]);
 
-    const [inputValue, setInputValue] = useState(value || '');
-
-
-  return (
-    <div style={{ position: 'relative', overflow: "hidden", height: "100%" }}>
-        <span ref={spanRef} className="form-span">{placeholder}</span>
-        <input className="form-input" id={id} type={type}
-        required={required} disabled={disabled} value={value} onChange={onChange}
-        onFocus={() => InputFocus()}
-        onBlur={() => InputBlur()}
-        style={{ paddingRight, paddingLeft }} />
-    </div>
-  )
+    return (
+        <div style={{ position: 'relative', overflow: "visible", height: "100%" }}>
+            <input
+                className="form-input"
+                id={id}
+                type={type}
+                required={required}
+                disabled={disabled}
+                value={value}
+                onChange={onChange}
+                onFocus={InputFocus}
+                onBlur={InputBlur}
+                style={{ paddingRight, paddingLeft }}
+            />
+            <span ref={spanRef} className="form-span">{placeholder}</span>
+        </div>
+    );
 }
 
 export default Input

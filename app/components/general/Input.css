@@ -1,6 +1,7 @@
+/* Styles for the input field */
 .form-input {
     background-color: white;
-    border-radius: 39px;
+    border-radius: 15px;
     width: 100%;
     height: 100%;
     border: 1px solid #E7E5E4;
@@ -17,11 +18,18 @@
     padding-top: 15px;
     padding-bottom: 14px;
     margin: 0;
-    appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+    transition: border-color 0.2s ease, color 0.2s ease; /* Smooth transition for border color and text color */
+    color: #000000; /* Default text color for user input */
 }
 
+/* Hover effect for the input field */
+.form-input:hover {
+    border-color: #000000; /* Change border to black on hover */
+}
+
+/* Styles for the placeholder span */
 .form-span {
     position: absolute;
     font-family: Inter;
@@ -32,41 +40,58 @@
     color: #24222066;
     left: 24px;
     top: 15px;
-    transition-timing-function: ease-in;
-    transition-duration: .125s;
+    transition: all 0.2s ease;
     pointer-events: none;
     white-space: nowrap;
     overflow: hidden;
 }
 
+/* Styles for the focused state of the placeholder span */
 .form-span-focused {
-    font-size: 12px;
-    top: 2px;
+    top: -10px;
+    left: 21px;
+    font-size: 13px;
+    background-color: white;
+    padding: 0 4px;
+    overflow: visible;
+    color: #000000; /* Label color when focused */
 }
 
-.form-span-focused {
-    top: 0px;
-    left: 25px;
-    font-size: 0.8em;
-    color: #333;
+/* Styles for unfocused state with input */
+.form-input:not(:focus) + .form-span-focused {
+    color: #24222066; /* Return label to original color when unfocused */
 }
 
+/* Styles for unfocused input with text */
+.form-input:not(:focus):not(:placeholder-shown) {
+    color: #24222066; /* Change text color to unfocused color when not empty and not focused */
+}
+
+/* Styles for custom file input label */
 .custom-file-label {
     background-color: #f0f0f0;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #E7E5E4;
     cursor: pointer;
     display: inline-block;
     width: fit-content;
+    transition: all 0.2s ease; /* Smooth transition for hover effects */
 }
 
+/* Hover effect for custom file input label */
+.custom-file-label:hover {
+    background-color: #ffffff; /* Change to white background on hover */
+    border-color: #000000; /* Change border to black on hover */
+}
+
+/* Remove spinner for number input in WebKit browsers */
 input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-/* Firefox */
+/* Remove spinner for number input in Firefox */
 input[type=number] {
     -moz-appearance: textfield;
 }
