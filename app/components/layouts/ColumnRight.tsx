@@ -14,11 +14,13 @@ interface ColumnProps {
   list: string;
   cards: Array<Job>;
   onDrop: (id: number, list: string) => void;
+  detailJob: Job | null;
+  setDetailJob: React.Dispatch<React.SetStateAction<Job | null>>;
+  showDetail: boolean;
+  setShowDetail: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ColumnRight: React.FC<ColumnProps> = ({ list, cards, onDrop }) => {
-  const [showDetail, setShowDetail] = useState<boolean>(false);
-  const [detailJob, setDetailJob] = useState<Job | null>(null);
+const ColumnRight: React.FC<ColumnProps> = ({ list, cards, onDrop, detailJob, setDetailJob, showDetail, setShowDetail }) => {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.CARD,
     drop: () => ({ list }),
@@ -45,6 +47,7 @@ const ColumnRight: React.FC<ColumnProps> = ({ list, cards, onDrop }) => {
     <div
       ref={dragRef}
       className={`${styles.column} ${isOver ? styles.highlight : ""}`}
+      style={{ display: 'flex', flexDirection: 'column' }}
     >
       {showDetail && (
         <div className={styles.DetailArea}>
@@ -52,7 +55,7 @@ const ColumnRight: React.FC<ColumnProps> = ({ list, cards, onDrop }) => {
         </div>
       )}
 
-      <div className={styles.SelectedJobCardContainer}>
+      <div className={`${styles.SelectedJobCardContainer} ${showDetail ? styles.selectedJobCardContainerWithDetail : ''}`} style={{ flex: showDetail ? 'none' : 1 }}>
         {cards.map((card) => (
           <SelectedJobCard
             job={card}

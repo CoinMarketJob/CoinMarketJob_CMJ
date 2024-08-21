@@ -44,7 +44,9 @@ const JobCard: React.FC<JobCardProps> = ({
       console.log(monitor);
       if (item && dropResult) {
         onDrop(item.id, dropResult.list);
-      } else if (dropResult?.list == "left") {
+      }
+      
+      if (!monitor.didDrop() || dropResult?.list === "left") {
         onDragEnd();
       }
     },

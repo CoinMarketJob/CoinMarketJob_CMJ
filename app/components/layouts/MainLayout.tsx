@@ -15,6 +15,7 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ filteredJobs, layout }) => {
   const [showDetail, setShowDetail] = useState<boolean>(false);
+  const [showDetailInRightSide, setShowDetailInRightSide] = useState<boolean>(false);
   const [detailJob, setDetailJob] = useState<Job | null>(null);
   const [showRightSide, setShowRightSide] = useState<boolean>(false);
 
@@ -45,15 +46,17 @@ const MainLayout: React.FC<MainLayoutProps> = ({ filteredJobs, layout }) => {
   };
 
   const onClick = (job: Job) => {
-    setShowDetail(true);
+    console.log(showRightSide);
+    setShowDetail(showRightSide ? false : true);
     setDetailJob(job);
-    setShowRightSide(false);
+    setShowRightSide(showRightSide ? true : false);
+    setShowDetailInRightSide(showRightSide ? false : true);
   };
 
   const onDragBegin = () => {
-    setShowRightSide(true);
+    setShowDetailInRightSide(showDetail ? true : showDetailInRightSide ? true : false);
     setShowDetail(false);
-    setDetailJob(null);
+    setShowRightSide(true);
   };
 
   const onDragEnd = () => {
@@ -87,6 +90,10 @@ const MainLayout: React.FC<MainLayoutProps> = ({ filteredJobs, layout }) => {
               list="right"
               cards={rightCards}
               onDrop={handleDrop}
+              detailJob={detailJob}
+              setDetailJob={setDetailJob}
+              showDetail={showDetailInRightSide}
+              setShowDetail={setShowDetailInRightSide}
             />
           </div>
         )}
