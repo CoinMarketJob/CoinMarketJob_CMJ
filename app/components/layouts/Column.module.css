@@ -1,6 +1,10 @@
 .columnLeft {
   width: 100%;
-  height: 100%;
+  max-height: 100%;
+  overflow-y: auto;  
+  scrollbar-width: none;
+  scrollbar-color: #E7E5E4 transparent;
+  -webkit-overflow-scrolling: touch;
 }
 
 .gridContainer {
@@ -30,6 +34,24 @@
   border: 1px dashed #242220;
 }
 
+.SelectedJobCardContainer{
+  border: 1px solid #E7E5E4;
+  border-radius: 15px;
+  padding: 12px;
+  max-height: 28%;
+  overflow-y: auto;  
+  scrollbar-width: none; 
+  scrollbar-color: #E7E5E4 transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
 .DetailArea{
+  border: 1px solid #E7E5E4;
+  border-radius: 15px;
   margin-bottom: 12px;
+  max-height: 65%;
+  overflow-y: auto;  
+  scrollbar-width: none; 
+  scrollbar-color: #E7E5E4 transparent;
+  -webkit-overflow-scrolling: touch;
 }

@@ -26,8 +26,6 @@
 }
 
 .containerJobDetails {
-    border: 1px solid #E7E5E4;
-    border-radius: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
