@@ -22,7 +22,7 @@
 }
 
 .react-resizable-handle-e {
-  right: 0px; /* Doğu (sağ) kenar için */
+  right: -7px; /* Doğu (sağ) kenar için */
 }
 
 .react-resizable-handle-w {
@@ -45,10 +45,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow-y: auto;  
-  scrollbar-width: none;
-  scrollbar-color: #E7E5E4 transparent;
-  -webkit-overflow-scrolling: touch;
 }
 
 
