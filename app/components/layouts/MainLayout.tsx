@@ -50,7 +50,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ filteredJobs, layout }) => {
     setShowDetail(showRightSide ? false : true);
     setDetailJob(job);
     setShowRightSide(showRightSide ? true : false);
-    setShowDetailInRightSide(showRightSide ? false : true);
+    setShowDetailInRightSide(showRightSide ? true : false);
   };
 
   const onDragBegin = () => {
@@ -94,6 +94,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ filteredJobs, layout }) => {
               setDetailJob={setDetailJob}
               showDetail={showDetailInRightSide}
               setShowDetail={setShowDetailInRightSide}
+              setRightCards={setRightCards}
+              rightCards={rightCards}
             />
           </div>
         )}

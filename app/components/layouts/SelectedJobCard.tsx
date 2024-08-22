@@ -12,6 +12,8 @@ interface JobCardProps {
   onClick: (job: Job) => void;
   collapsed?: boolean;
   onDrop: (id: number, list: string) => void;
+  rightCards: Array<Job>;
+  setRightCards: React.Dispatch<React.SetStateAction<Array<Job>>>;
 }
 
 const ItemTypes = {
@@ -23,6 +25,8 @@ const SelectedJobCard: React.FC<JobCardProps> = ({
   onClick,
   collapsed,
   onDrop,
+  rightCards,
+  setRightCards
 }) => {
   const [isActive, setIsActive] = useState(false);
   const id = job.id;
@@ -64,7 +68,10 @@ const SelectedJobCard: React.FC<JobCardProps> = ({
       }
     } catch (error) {}
   };
-  const JobClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {};
+  const JobClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.stopPropagation();
+    setRightCards(rightCards.filter((card) => card.id !== job.id));
+  };
 
   const JobSelect = () => {
     setIsActive(true);
