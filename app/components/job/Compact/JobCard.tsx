@@ -41,18 +41,19 @@ const Compact: React.FC<JobCardProps> = ({
     },
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult<{ list: string }>();
-      console.log(item);
-      console.log(dropResult);
+      console.log(monitor);
       if (item && dropResult) {
         onDrop(item.id, dropResult.list);
-      } else if (dropResult?.list == "left") {
+      }
+      
+      if (!monitor.didDrop() || dropResult?.list === "left") {
         onDragEnd();
       }
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
-  }));
+  }), [id, cardType, onDragBegin, onDrop, onDragEnd]);
 
   const JobSave = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();

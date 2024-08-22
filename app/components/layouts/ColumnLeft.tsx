@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useDrop } from "react-dnd";
 import JobCard from "../job/Basic/JobCard";
 import { Job } from "@prisma/client";
@@ -19,6 +19,7 @@ interface ColumnProps {
   onClick: (job: Job) => void;
   onDragBegin: () => void;
   onDragEnd: () => void;
+  isDragging: boolean;
 }
 
 const ColumnLeft: React.FC<ColumnProps> = ({
@@ -29,7 +30,11 @@ const ColumnLeft: React.FC<ColumnProps> = ({
   onClick,
   onDragBegin,
   onDragEnd,
+  isDragging
 }) => {
+
+  const [selectedJobId, setSelectedJobId] = useState<number | null>(null);
+
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.CARD,
     drop: () => ({ list }),
@@ -38,6 +43,7 @@ const ColumnLeft: React.FC<ColumnProps> = ({
     }),
   }));
 
+
   const dragRef = useCallback((node: HTMLDivElement | null) => {
     if (node) {
       drop(node);
@@ -45,7 +51,7 @@ const ColumnLeft: React.FC<ColumnProps> = ({
   }, [drop]);
 
   return (
-    <div ref={dragRef} className={`${styles.columnLeft} ${layout == 0 ? styles.gridContainer : ""}`}>
+    <div ref={dragRef} className={`${styles.columnLeft} ${layout == 0 ? styles.gridContainer : ""} ${layout == 0 && isDragging ? styles.dragging : ""}`}>
       {cards.map((card) => (
         <>
           {layout == 1 ? (
@@ -56,6 +62,8 @@ const ColumnLeft: React.FC<ColumnProps> = ({
               key={card.id}
               onClick={onClick}
               onDrop={onDrop}
+              isSelected={selectedJobId === card.id}
+              onSelect={setSelectedJobId}
             />
           ) : layout == 2 ? (
             <Cozy
@@ -64,6 +72,8 @@ const ColumnLeft: React.FC<ColumnProps> = ({
               job={card}
               onClick={onClick}
               onDrop={onDrop}
+              isSelected={selectedJobId === card.id}
+              onSelect={setSelectedJobId}
             />
           ) : layout == 3 ? (
             <Compact
@@ -80,6 +90,8 @@ const ColumnLeft: React.FC<ColumnProps> = ({
               job={card}
               onClick={onClick}
               onDrop={onDrop}
+              isSelected={selectedJobId === card.id}
+              onSelect={setSelectedJobId}
             />
           )}
         </>

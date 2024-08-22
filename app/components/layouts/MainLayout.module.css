@@ -8,6 +8,10 @@
   flex-grow: 1;
 }
 
+.JobCardArea.dragging {
+  width: 50%;
+}
+
 .DetailArea {
   width: 50%;
   margin-left: 12px;

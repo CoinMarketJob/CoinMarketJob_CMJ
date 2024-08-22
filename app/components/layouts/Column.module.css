@@ -15,11 +15,15 @@
   gap: 16px;
 }
 
+.gridContainer.dragging {
+  grid-template-columns: repeat(2, 1fr);
+}
+
 .gridContainerSelectedDetail {
-  width: 100%;
+  width: 50%;
   height: 100%;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 16px;
 }
 

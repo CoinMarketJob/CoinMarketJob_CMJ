@@ -14,6 +14,8 @@ interface JobCardProps {
   onDrop: (id: number, list: string) => void;
   onDragBegin: () => void;
   onDragEnd: () => void;
+  isSelected: boolean;
+  onSelect: (id: number) => void;
 }
 
 const ItemTypes = {
@@ -27,8 +29,9 @@ const Cozy: React.FC<JobCardProps> = ({
   onDrop,
   onDragBegin,
   onDragEnd,
+  isSelected,
+  onSelect
 }) => {
-  const [isActive, setIsActive] = useState(false);
   const { filteredJobs, setFilteredJobs } = useJobs();
   const id = job.id;
   const cardType = "left";
@@ -41,18 +44,19 @@ const Cozy: React.FC<JobCardProps> = ({
     },
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult<{ list: string }>();
-      console.log(item);
-      console.log(dropResult);
+      console.log(monitor);
       if (item && dropResult) {
         onDrop(item.id, dropResult.list);
-      } else if (dropResult?.list == "left") {
+      }
+      
+      if (!monitor.didDrop() || dropResult?.list === "left") {
         onDragEnd();
       }
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
-  }));
+  }), [id, cardType, onDragBegin, onDrop, onDragEnd]);
 
   const JobSave = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
@@ -78,7 +82,7 @@ const Cozy: React.FC<JobCardProps> = ({
     setFilteredJobs(filter);
   };
   const JobSelect = () => {
-    setIsActive(true);
+    onSelect(job.id);
     onClick(job);
   };
   
@@ -92,7 +96,7 @@ const Cozy: React.FC<JobCardProps> = ({
     <div
       ref={dragRef}
       className={`${styles.card} ${collapsed ? styles.collapsed : ""} ${
-        isActive ? styles.active : ""
+        isSelected ? styles.active : ""
       }`}
       onClick={JobSelect}
     >
