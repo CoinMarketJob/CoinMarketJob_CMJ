@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styles from "./Live.module.css";
 import Search from "./Search";
 import Categories from "./Categories";
@@ -161,15 +161,16 @@ const Live: React.FC = () => {
         );
       }
 
-      for (let i = 0; i < 2 && blogIndex < blog.length; i++) {
+      for (let i = 0; i < 2; i++) {
         const rowItems = [];
-        for (let j = 0; j < 5 && blogIndex < blog.length; j++, blogIndex++, globalIndex++) {
+        for (let j = 0; j < 10; j++, blogIndex++, globalIndex++) { // 20'den 10'a düşürüldü
+          if (blogIndex >= blog.length) {
+            blogIndex = 0;
+          }
           rowItems.push(
             <div
-              key={`blog-${blogIndex}`}
-              className={`${styles.blogItem} ${
-                i % 2 === 0 ? styles.scrollLeft : styles.scrollRight
-              }`}
+              key={`blog-${blogIndex}-${j}`}
+              className={`${styles.blogItem}`}
             >
               <div className={styles.blogTitle}>{blog[blogIndex].title}</div>
               <div className={styles.blogArrow}>
@@ -181,7 +182,7 @@ const Live: React.FC = () => {
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M7.5 0L12 4.5L7.5 9L6.75 8.25L10.5 4.5L6.75 0.75L7.5 0Z"
+                    d="M10.5942 1.70775L0.82875 11.4537C0.73525 11.5474 0.6205 11.591 0.4845 11.5845C0.348666 11.5782 0.233917 11.5282 0.14025 11.4345C0.04675 11.341 0 11.2295 0 11.1C0 10.9705 0.04675 10.859 0.14025 10.7655L9.8865 1H3.5C3.35833 1 3.23958 0.952 3.14375 0.856C3.04792 0.76 3 0.641083 3 0.499249C3 0.357416 3.04792 0.23875 3.14375 0.14325C3.23958 0.0477495 3.35833 0 3.5 0H10.7865C11.0153 0 11.2072 0.0774161 11.362 0.232249C11.5168 0.387083 11.5942 0.578917 11.5942 0.80775V7.5C11.5942 7.64167 11.5463 7.76042 11.4503 7.85625C11.3543 7.95208 11.2353 8 11.0935 8C10.9517 8 10.833 7.95208 10.7375 7.85625C10.642 7.76042 10.5942 7.64167 10.5942 7.5V1.70775Z"
                     fill="#999999"
                   />
                 </svg>
@@ -190,8 +191,13 @@ const Live: React.FC = () => {
           );
         }
         combined.push(
-          <div key={`blog-row-${globalIndex}`} className={styles.blogRow}>
+          <div 
+            key={`blog-row-${globalIndex}`} 
+            className={`${styles.blogRow} ${i % 2 === 0 ? styles.scrollLeft : styles.scrollRight}`}
+          >
             {rowItems}
+            {rowItems}
+            {rowItems} {/* Eklenen üçüncü kopya */}
           </div>
         );
       }

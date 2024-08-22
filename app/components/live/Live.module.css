@@ -19,7 +19,6 @@
   box-sizing: border-box; 
   cursor: pointer;
   color: #242220D9;
-  ;
 }
 
 @media (max-width: 768px) {
@@ -73,14 +72,18 @@
 .blogRow {
   display: flex;
   overflow: hidden;
+  width: max-content;
+  position: relative;
 }
 
 .blogItem {
-  flex: 1;
-  padding: 8px;
+  flex: 0 0 auto;
+  width: auto;
+  padding: 12px 24px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-end;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .blogTitle {
@@ -89,35 +92,37 @@
   font-weight: 400;
   line-height: 23.81px;
   letter-spacing: 0.03em;
-  text-align: justified;  
+  text-align: justified;
   color: #999999;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 8px;
 }
 
 .blogArrow {
+  flex-shrink: 0;
+  margin-left: 8px;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 6px;
 }
 
-@keyframes blink {
-  50% {
-    opacity: 0;
-  }
+.blogArrow svg {
+  width: 12px;
+  height: 12px;
 }
-
-
 
 .scrollLeft {
-  animation: scrollLeft 10s linear infinite;
+  animation: scrollLeft 360s linear infinite;
 }
 
 .scrollRight {
-  animation: scrollRight 10s linear infinite;
+  animation: scrollRight 360s linear infinite;
 }
 
 @keyframes scrollLeft {
   0% {
-    transform: translateX(100%);
-  }
-  50% {
-    transform: translateX(0%);
+    transform: translateX(0);
   }
   100% {
     transform: translateX(-100%);
@@ -126,13 +131,9 @@
 
 @keyframes scrollRight {
   0% {
-    transform: translateX(-100%);
-  }
-  50% {
-    transform: translateX(0%);
+    transform: translateX(-100%)
   }
   100% {
-    transform: translateX(100%);
+    transform: translateX(0);
   }
 }
-
