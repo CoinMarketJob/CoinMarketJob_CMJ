@@ -24,19 +24,25 @@ const Categories: React.FC<Props> = ({ onCategoryClick }) => {
         className={`${styles.Element} ${activeCategory === 'News' ? styles.active : ''}`}
         onClick={() => handleCategoryClick('News')}
       >
-        NEWS
+        news
+      </div>
+      <div
+        className={`${styles.Element} ${activeCategory === 'EVENT' ? styles.active : ''}`}
+        onClick={() => handleCategoryClick('EVENT')}
+      >
+        event
       </div>
       <div
         className={`${styles.Element} ${activeCategory === 'HACKHATHONS' ? styles.active : ''}`}
         onClick={() => handleCategoryClick('HACKHATHONS')}
       >
-        HACKHATHONS
+        hackathon
       </div>
       <div
         className={styles.Element}
-        onClick={() => window.open('https://blog.coinmarketjob.com', '_blank')}
+        onClick={() => window.open('https://coinmarketjob.com/blog', '_blank')}
       >
-        BLOG
+        blog
       </div>
     </div>
   );

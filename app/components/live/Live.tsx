@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import styles from "./Live.module.css";
 import Search from "./Search";
 import Categories from "./Categories";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface LiveItem {
   liveType: string;
@@ -113,7 +113,20 @@ const Live: React.FC = () => {
                 <div className={styles.Title}>
                   {items[liveIndex].title}
                 </div>
-                <div className={styles.Type}>News</div>
+                <div className={styles.Type}>#news</div>
+              </>
+            ) : items[liveIndex].liveType === "EVENT" ? (
+              <>
+                <div className={styles.Title}>
+                  {items[liveIndex].title} by
+                </div>
+                <div className={styles.Organisation}>
+                  {items[liveIndex].organisation}
+                </div>
+                <div className={styles.Headline}>
+                  {items[liveIndex].headline}
+                </div>
+                <div className={styles.Type}>#event</div>
               </>
             ) : (
               <>
@@ -126,21 +139,24 @@ const Live: React.FC = () => {
                 <div className={styles.Headline}>
                   {items[liveIndex].headline}
                 </div>
-                <div className={styles.Type}>Event Hackathon</div>
+                <div className={styles.Type}>#hackathon</div>
               </>
             )}
-            {isExpanded && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                transition={{ duration: 0.3 }}
-                className={styles.Details}
-              >
-                <div className={styles.NewsDetails}>
-                  {items[liveIndex].content}
-                </div>
-              </motion.div>
-            )}
+            <AnimatePresence>
+              {isExpanded && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className={styles.Details}
+                >
+                  <div className={styles.NewsDetails}>
+                    {items[liveIndex].content}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         );
       }

@@ -1,42 +1,61 @@
-.Container{
+.Container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     margin-top: 16px;
-    margin-bottom: 32px;
-}
-
-.Element{
-    padding-top: 12px;
-    padding-bottom: 12px;
+    margin-bottom: 24px;
     padding-left: 24px;
     padding-right: 24px;
-    border: 1px solid #E7E5E4;
-    border-radius: 15px;
+}
+
+.Element {
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-bottom: 12px;
     font-family: Inter;
     font-size: 16px;
     font-weight: 400;
     line-height: 21px;
     color: #999999;
-    margin-right: 19px;
-
-
-
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s ease;
 }
 
-
+.Element::before {
+    content: '#';
+}
 
 .Element:hover {
-    background-color: #f0f0f0;
+    color: #666666;
 }
 
 .Element.active {
-    background-color: #bbbbbb; /* Örneğin mavi bir arka plan */
-    color: white;
+    color: #999999;
+}
+
+.Element::after {
+    content: '';
+    position: absolute;
+    bottom: 6px;
+    left: 24px;
+    width: 0;
+    height: 2px;
+    background-color: #999999;
+    transition: width 0.3s ease;
+}
+
+.Element.active::after {
+    width: calc(100% - 46px);
 }
 
 @media (max-width: 768px) {
+    .Container {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
     .Element {
-      flex: 1 1 100%; /* Full width on smaller screens */
-      margin-bottom: 8px; /* Spacing between rows */
+        flex: 1 1 auto;
+        margin-bottom: 8px;
     }
 }

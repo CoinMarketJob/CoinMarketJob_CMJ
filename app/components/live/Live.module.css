@@ -17,6 +17,9 @@
   border: 1px solid #e7e5e4;
   margin-bottom: 16px;
   box-sizing: border-box; 
+  cursor: pointer;
+  color: #242220D9;
+  ;
 }
 
 @media (max-width: 768px) {
@@ -44,6 +47,7 @@
 
 .Type {
   margin-top: 12px;
+  color:#999999CC;
 }
 
 .Organisation {
@@ -98,6 +102,8 @@
   }
 }
 
+
+
 .scrollLeft {
   animation: scrollLeft 10s linear infinite;
 }
@@ -107,19 +113,26 @@
 }
 
 @keyframes scrollLeft {
-  from {
+  0% {
     transform: translateX(100%);
   }
-  to {
+  50% {
+    transform: translateX(0%);
+  }
+  100% {
     transform: translateX(-100%);
   }
 }
 
 @keyframes scrollRight {
-  from {
+  0% {
     transform: translateX(-100%);
   }
-  to {
+  50% {
+    transform: translateX(0%);
+  }
+  100% {
     transform: translateX(100%);
   }
 }
+
