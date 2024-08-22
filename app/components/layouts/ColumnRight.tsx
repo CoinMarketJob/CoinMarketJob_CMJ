@@ -62,7 +62,9 @@ const ColumnRight: React.FC<ColumnProps> = ({
       style={{ display: "flex", flexDirection: "column" }}
     >
       {showDetail && (
-        <div className={styles.DetailArea}>
+        <div className={`${styles.DetailArea} ${
+          cards.length > 0 ? styles.DetailAreaWithList : ""
+        }`}>
           <JobDetails job={detailJob} />
         </div>
       )}

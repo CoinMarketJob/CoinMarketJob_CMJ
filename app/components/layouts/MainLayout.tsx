@@ -95,7 +95,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ filteredJobs, layout }) => {
           </div>
         )}
 
-        {(isDragging || hasRightItems) && (
+        {showRightSide && (
           <div className={styles.DetailArea}>
             <ColumnRight
               list="right"
