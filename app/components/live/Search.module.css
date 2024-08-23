@@ -1,12 +1,12 @@
 .container {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .input {
   width: calc(100% - 70px);
-  padding-top: 14px;
-  padding-bottom: 14px;
-  padding-left: 70px;
+  padding: 14px 14px 14px 70px;
   font-family: Inter;
   font-size: 16px;
   font-weight: 400;
@@ -16,8 +16,15 @@
   border: 1px solid #E7E5E4;
 }
 
-.searchIcon{
-    position: absolute;
-    top: 11px;
-    left: 24px;
+.input::placeholder {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.searchIcon {
+  position: absolute;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
 }

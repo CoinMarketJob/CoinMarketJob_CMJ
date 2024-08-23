@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styles from "./Search.module.css";
-
 
 interface props {
   keyword: string;
@@ -8,10 +7,15 @@ interface props {
   handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
-const Search:React.FC<props> = ({keyword, ChangeFunction, handleKeyDown}) => {
+const Search: React.FC<props> = ({ keyword, ChangeFunction, handleKeyDown }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleContainerClick = () => {
+    inputRef.current?.focus();
+  };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={handleContainerClick}>
       <svg
         width="27"
         height="26"
@@ -28,6 +32,7 @@ const Search:React.FC<props> = ({keyword, ChangeFunction, handleKeyDown}) => {
       </svg>
 
       <input
+        ref={inputRef}
         className={styles.input}
         placeholder="Filter by keyword"
         type="text"
