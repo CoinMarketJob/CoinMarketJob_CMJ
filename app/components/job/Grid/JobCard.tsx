@@ -55,7 +55,7 @@ const Grid: React.FC<JobCardProps> = ({
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
-  }));
+  }), [id, cardType, onDragBegin, onDrop, onDragEnd]);
 
   const JobSave = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
