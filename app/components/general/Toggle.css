@@ -33,7 +33,7 @@
   height: 0;
 }
 
-.toggle-switch .slider1, .toggle-switch .slider2, .toggle-switch .slider3 {
+.toggle-switch .slider1, .toggle-switch .slider2, .toggle-switch .slider3, .visa {
   content: "";    
   position: absolute;    
   left: 27px;    
@@ -45,6 +45,6 @@
   transition: left 0.3s;
 }
 
-.toggle-switch.checked .slider1, .toggle-switch.checked .slider2, .toggle-switch.checked .slider3 {
+.toggle-switch.checked .slider1, .toggle-switch.checked .slider2, .toggle-switch.checked .slider3, .toggle-switch.checked .visa  {
   left: calc(100% - 55px);  
 }

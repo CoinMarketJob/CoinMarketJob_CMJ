@@ -15,7 +15,7 @@ interface ReviewClientProps {
   educationalDegree: string;
   min: string;
   max: string;
-  visa: boolean;
+  visa: boolean | undefined;
   description: JSONContent;
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }

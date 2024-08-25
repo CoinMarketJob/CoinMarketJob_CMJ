@@ -1,9 +1,16 @@
 .dropdown-input {
   width: 100%;
   height: 50px;
-  border-radius: 39px;
+  border-radius: 15px;
   border: 1px solid #e7e5e4;
   display: flex;
+}
+
+.dropdown-input:hover {
+  background-color: #2422200D;
+}
+.dropdown-input:active {
+  background-color: #FFFFFF;
 }
 
 .dropdown-label {

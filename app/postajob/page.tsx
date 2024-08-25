@@ -18,7 +18,11 @@ const Page = () => {
   const [educationalDegree, setEducationalDegree] = useState<string>("");
   const [min, setMin] = useState<string>("");
   const [max, setMax] = useState<string>("");
-  const [visa, setVisa] = useState<boolean>(false);
+  const [single, setSingle] = useState<string>("");
+  const [visa, setVisa] = useState<boolean | undefined>(false);
+  const [showSalary, setShowSalary] = useState<boolean>(false);
+  const [unitSalary, setUnitSalary] = useState<string>("Year");
+  const [questions, setQuestions] = useState<string[]>([]);
   const [description, setDescription] = useState<JSONContent>(JSON);
 
   const [jobTitle, setJobTitle] = useState<string>("");
@@ -51,6 +55,11 @@ const Page = () => {
         salaryMin: min,
         salaryMax: max,
         jobDescription: description,
+        questions: questions,
+        showSalary,
+        single,
+        unitSalary,
+        locationType
       };
 
       const response = await fetch("/api/job/", {
@@ -94,17 +103,17 @@ const Page = () => {
         <div
           className={`${styles.indicator} ${styles.indicatorMargin} ${
             page === 0 ? styles.selectedIndicator : ""
-          }`}
+          }`} onClick={() =>  setPage(0)}
         ></div>
         <div
           className={`${styles.indicator} ${styles.indicatorMargin} ${
             page === 1 ? styles.selectedIndicator : ""
-          }`}
+          }`} onClick={() =>  setPage(1)}
         ></div>
         <div
           className={`${styles.indicator} ${
             page === 2 ? styles.selectedIndicator : ""
-          }`}
+          }`} onClick={() =>  setPage(2)}
         ></div>
       </div>
 
@@ -130,6 +139,12 @@ const Page = () => {
           setMax={setMax}
           visa={visa}
           setVisa={setVisa}
+          single={single}
+          setSingle={setSingle}
+          questions={questions}
+          setQuestions={setQuestions}
+          showSalary={showSalary}
+          setShowSalary={setShowSalary}
           description={description}
           setDescription={setDescription}
           setPage={setPage}

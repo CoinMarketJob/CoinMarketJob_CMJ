@@ -37,7 +37,8 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   return (
     <div ref={dropdownRef} style={{ position: "relative" }}>
-      <div className="dropdown-input" onClick={() => setOpen(!open)}>
+      <div className="dropdown-input" onClick={() => setOpen(!open)} style={{
+        borderColor: open ? "#242220" : "#E7E5E4"}}>
         <div className="dropdown-label">{placeholder}</div>
         <div className="dropdown-arrow">
           <svg

@@ -35,19 +35,39 @@ model Job {
   logo              String
   companyName       String
   jobTitle          String
-  location          String
-  locationType      LocationType?
+  location          String?
+  locationType      LocationType
   jobType           JobType
   experienceLevel   ExperienceLevel
   educationalDegree EducationalDegree
   salaryMin         Int
   salaryMax         Int
+  salaryShow        Boolean?
+  salaryUnit        SalaryUnit?
   visaSponsorship   Boolean
   jobDescription    Json
   packageId         Int
+  date              DateTime      @default(now())
   package           BuyedPackage  @relation(fields: [packageId], references: [id], onDelete: Cascade)
   savedJobs         SavedJobs[]
   appliedJobs       AppliedJobs[]
+
+  jobQuestions JobQuestions[]
+}
+
+enum SalaryUnit {
+  Year
+  Month
+  Week
+  Day
+  Hour
+}
+
+model JobQuestions {
+  id                Int      @id @default(autoincrement())
+  jobId             Int
+  job               Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  question          String
 }
 
 enum LocationType {
@@ -63,7 +83,7 @@ enum JobType {
   FullTime
   Contract
   Temporary
-  other
+  Other
 }
 
 enum ExperienceLevel {

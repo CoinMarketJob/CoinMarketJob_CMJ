@@ -107,9 +107,9 @@ const LocationSelector: React.FC<JobTitleProps> = ({
         <div className={styles.RadioDiv}>
           <input
             type="radio"
-            value="Onsite"
-            checked={locationType === "Onsite"}
-            onChange={() => setLocationType("Onsite")}
+            value="OnSite"
+            checked={locationType === "OnSite"}
+            onChange={() => setLocationType("OnSite")}
           />
 
           <div>Onsite</div>
