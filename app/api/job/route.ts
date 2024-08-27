@@ -17,7 +17,12 @@ export async function POST(request: Request) {
     salaryMin,
     salaryMax,
     jobDescription,
-    visaSponsorship
+    visaSponsorship,
+    questions,
+    showSalary,
+    single,
+    unitSalary,
+    locationType
   } = body;
 
   const currentUser = await getCurrentUser();
@@ -61,20 +66,29 @@ export async function POST(request: Request) {
 
   const job = await prisma.job.create({
     data: { 
-        userId: currentUser.id,
-        logo,
-        companyName,
-        jobTitle,
-        location,
-        jobType,
-        experienceLevel,
-        educationalDegree,
-        salaryMin: parseInt(salaryMin),
-        salaryMax: parseInt(salaryMax),
-        jobDescription,
-        visaSponsorship,
-        packageId: buyedPackage.id
+      userId: currentUser.id,
+      logo,
+      companyName,
+      jobTitle,
+      location,
+      jobType,
+      experienceLevel,
+      educationalDegree,
+      salaryMin: parseInt(salaryMin == "" && single != "" ? single : salaryMin),
+      salaryMax: parseInt(salaryMax == "" && single != "" ? single : salaryMax),
+      salaryShow: showSalary,
+      salaryUnit: unitSalary,
+      locationType,
+      jobDescription,
+      visaSponsorship,
+      packageId: buyedPackage.id,
+      jobQuestions: {
+        create: questions.map((question: string) => ({ question }))
+      }
     },
+    include: {
+      jobQuestions: true
+    }
   });
 
   return NextResponse.json(job);

@@ -61,10 +61,14 @@ enum SalaryUnit {
 }
 
 model JobQuestions {
-  id        Int  @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
+  userId    Int
   jobId     Int
-  job       Job  @relation(fields: [jobId], references: [id], onDelete: Cascade)
-  questions Json // job questions
+  job       Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  question  String 
+  appliedJobs AppliedJobs[]  
+  
+  @@unique([userId, jobId])
 }
 
 enum LocationType {
@@ -116,7 +120,10 @@ model AppliedJobs {
   user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   jobId            Int
   job              Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
-  answers          Json     //Job questionların answerları için
+  answers          Json     // Job questionların answerları için
+  jobQuestionId    Int
+  answer           String? 
+  jobQuestion      JobQuestions @relation(fields: [jobQuestionId], references: [id], onDelete: Cascade)
   name             String
   surname          String
   email            String
@@ -129,8 +136,9 @@ model AppliedJobs {
   coverLetterDraft Json?
   visaSponsorship  Boolean
 
-  @@unique([userId, jobId])
+  @@unique([userId, jobId, jobQuestionId])
 }
+
 
 model News {
   id      Int    @id @default(autoincrement())

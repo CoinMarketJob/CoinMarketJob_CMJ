@@ -17,6 +17,8 @@
   border: 1px solid #e7e5e4;
   margin-bottom: 16px;
   box-sizing: border-box; 
+  cursor: pointer;
+  color: #242220D9;
 }
 
 @media (max-width: 768px) {
@@ -44,6 +46,7 @@
 
 .Type {
   margin-top: 12px;
+  color:#999999CC;
 }
 
 .Organisation {
@@ -69,14 +72,18 @@
 .blogRow {
   display: flex;
   overflow: hidden;
+  width: max-content;
+  position: relative;
 }
 
 .blogItem {
-  flex: 1;
-  padding: 8px;
+  flex: 0 0 auto;
+  width: auto;
+  padding: 12px 24px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-end;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .blogTitle {
@@ -85,41 +92,48 @@
   font-weight: 400;
   line-height: 23.81px;
   letter-spacing: 0.03em;
-  text-align: justified;  
+  text-align: justified;
   color: #999999;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 8px;
 }
 
 .blogArrow {
+  flex-shrink: 0;
+  margin-left: 8px;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 6px;
 }
 
-@keyframes blink {
-  50% {
-    opacity: 0;
-  }
+.blogArrow svg {
+  width: 12px;
+  height: 12px;
 }
 
 .scrollLeft {
-  animation: scrollLeft 10s linear infinite;
+  animation: scrollLeft 360s linear infinite;
 }
 
 .scrollRight {
-  animation: scrollRight 10s linear infinite;
+  animation: scrollRight 360s linear infinite;
 }
 
 @keyframes scrollLeft {
-  from {
-    transform: translateX(100%);
+  0% {
+    transform: translateX(0);
   }
-  to {
+  100% {
     transform: translateX(-100%);
   }
 }
 
 @keyframes scrollRight {
-  from {
-    transform: translateX(-100%);
+  0% {
+    transform: translateX(-100%)
   }
-  to {
-    transform: translateX(100%);
+  100% {
+    transform: translateX(0);
   }
 }

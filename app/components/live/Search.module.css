@@ -1,23 +1,66 @@
 .container {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .input {
   width: calc(100% - 70px);
-  padding-top: 14px;
-  padding-bottom: 14px;
-  padding-left: 70px;
+  padding: 14px 14px 14px 70px;
   font-family: Inter;
   font-size: 16px;
   font-weight: 400;
   line-height: 21px;
-  color: #999999;
+  color: #999999; /* Default text color */
   border-radius: 64px;
   border: 1px solid #E7E5E4;
+  transition: border-color 0.3s ease, color 0.3s ease;
 }
 
-.searchIcon{
-    position: absolute;
-    top: 11px;
-    left: 24px;
+.input::placeholder {
+  font-family: Inter; 
+  font-size: 16px;
+  font-weight: 400; 
+  color: #24222066; 
+  line-height: 21px; 
+  text-align: left; 
+  font-style: normal;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.input:focus::placeholder {
+  opacity: 0;
+  color: transparent;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #242220;
+  color: #242220; /* Text color when focused, same as border color */
+}
+
+.inputWithContent {
+  color: #242220; /* Text color when input has content and is focused */
+}
+
+.inputWithContentUnfocused {
+  color: #999999; /* Text color when input has content but is not focused */
+}
+
+.searchIcon {
+  position: absolute;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: opacity 0.3s ease;
+}
+
+.searchIcon path {
+  fill: #242220;
+  fill-opacity: 0.4;
+  transition: fill-opacity 0.3s ease;
+}
+
+.container:focus-within .searchIcon path {
+  fill-opacity: 1;
 }
