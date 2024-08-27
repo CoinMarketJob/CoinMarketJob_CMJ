@@ -18,16 +18,31 @@ CREATE TABLE `Job` (
     `logo` VARCHAR(191) NOT NULL,
     `companyName` VARCHAR(191) NOT NULL,
     `jobTitle` VARCHAR(191) NOT NULL,
-    `location` VARCHAR(191) NOT NULL,
-    `jobType` ENUM('Internship', 'PartTime', 'FullTime', 'Contract', 'Temporary', 'other') NOT NULL,
+    `location` VARCHAR(191) NULL,
+    `locationType` ENUM('Remote', 'Hybrid', 'OnSite') NOT NULL,
+    `jobType` ENUM('Internship', 'PartTime', 'FullTime', 'Contract', 'Temporary', 'Other') NOT NULL,
     `experienceLevel` ENUM('EntryLevel', 'Junior', 'MidLevel', 'Senior', 'Lead', 'Manager', 'Executive') NOT NULL,
     `educationalDegree` ENUM('HighSchool', 'University', 'Master', 'PhD') NOT NULL,
     `salaryMin` INTEGER NOT NULL,
     `salaryMax` INTEGER NOT NULL,
+    `salaryShow` BOOLEAN NULL,
+    `salaryUnit` ENUM('Year', 'Month', 'Week', 'Day', 'Hour') NULL,
     `visaSponsorship` BOOLEAN NOT NULL,
     `jobDescription` JSON NOT NULL,
     `packageId` INTEGER NOT NULL,
+    `date` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `JobQuestions` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `userId` INTEGER NOT NULL,
+    `jobId` INTEGER NOT NULL,
+    `question` VARCHAR(191) NOT NULL,
+
+    UNIQUE INDEX `JobQuestions_userId_jobId_key`(`userId`, `jobId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -127,6 +142,7 @@ CREATE TABLE `Profile` (
     `headline` VARCHAR(191) NOT NULL,
     `siteUrl` VARCHAR(191) NOT NULL,
     `about` JSON NULL,
+    `sectionsOrder` VARCHAR(191) NULL,
 
     UNIQUE INDEX `Profile_userId_key`(`userId`),
     PRIMARY KEY (`id`)
@@ -183,8 +199,8 @@ CREATE TABLE `ProfileSection` (
     `profileId` INTEGER NOT NULL,
     `sectionType` ENUM('WorkExperience', 'Volunteering', 'Education', 'Certifications', 'Projects', 'Publications', 'Awards') NOT NULL,
     `title` VARCHAR(191) NOT NULL,
-    `from` DATETIME(3) NOT NULL,
-    `to` DATETIME(3) NOT NULL,
+    `from` VARCHAR(191) NOT NULL,
+    `to` VARCHAR(191) NOT NULL,
     `institution` VARCHAR(191) NOT NULL,
     `location` VARCHAR(191) NOT NULL,
     `description` JSON NULL,
@@ -213,11 +229,28 @@ CREATE TABLE `Live` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+-- CreateTable
+CREATE TABLE `Settings` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `userId` INTEGER NOT NULL,
+    `theme` ENUM('Light', 'Dark', 'System') NOT NULL,
+    `jobAlert` BOOLEAN NOT NULL,
+    `shouldKnow` BOOLEAN NOT NULL,
+    `updates` BOOLEAN NOT NULL,
+    `frequency` ENUM('AlmostNothing', 'Monthly', 'Weekly', 'Daily', 'PrettyMuchEverything') NOT NULL,
+
+    UNIQUE INDEX `Settings_userId_key`(`userId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 -- AddForeignKey
 ALTER TABLE `Job` ADD CONSTRAINT `Job_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Job` ADD CONSTRAINT `Job_packageId_fkey` FOREIGN KEY (`packageId`) REFERENCES `BuyedPackage`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `JobQuestions` ADD CONSTRAINT `JobQuestions_jobId_fkey` FOREIGN KEY (`jobId`) REFERENCES `Job`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `SavedJobs` ADD CONSTRAINT `SavedJobs_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
@@ -254,3 +287,6 @@ ALTER TABLE `ProfileSection` ADD CONSTRAINT `ProfileSection_profileId_fkey` FORE
 
 -- AddForeignKey
 ALTER TABLE `Attachments` ADD CONSTRAINT `Attachments_sectionId_fkey` FOREIGN KEY (`sectionId`) REFERENCES `ProfileSection`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Settings` ADD CONSTRAINT `Settings_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
