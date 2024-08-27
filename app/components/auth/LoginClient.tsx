@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '../general/Button';
 import Input from '../general/Input';
 import { signIn } from "next-auth/react";
@@ -13,6 +13,14 @@ const LoginClient = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [remember, setRemember] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Add this useEffect hook
+  useEffect(() => {
+    if (error) {
+      setError(null);
+    }
+  }, [email, password]);
 
   const login = () => {
     setProcess(1);
@@ -31,6 +39,7 @@ const LoginClient = () => {
   };
 
   const complete = async () => {
+    setError(null);
     const submitData = { email };
     console.log('Submitting data:', submitData);
   
@@ -76,7 +85,9 @@ const LoginClient = () => {
           redirect: false
         });
   
-        if (signInResult?.ok) {
+        if (signInResult?.error) {
+          setError('Invalid email or password');
+        } else if (signInResult?.ok) {
           console.log('Sign in successful, reloading page...');
           window.location.reload();
         } else {
@@ -91,7 +102,9 @@ const LoginClient = () => {
           redirect: false
         });
   
-        if (signInResult?.ok) {
+        if (signInResult?.error) {
+          setError('Invalid email or password');
+        } else if (signInResult?.ok) {
           console.log('Sign in successful, reloading page...');
           window.location.reload();
         } else {
@@ -100,6 +113,7 @@ const LoginClient = () => {
       }
     } catch (error) {
       console.error('Error during complete:', error);
+      setError('An error occurred. Please try again.');
     }
   };
 
@@ -159,11 +173,28 @@ const LoginClient = () => {
             </div>
           ) : (
             <div>
+              {error && <div className="error-message">{error}</div>}
               <div style={{ display: "flex", width: "252px", marginBottom: "20px" }}>
-                <Input id="email" placeholder="Email" type="email" required value={email} onChange={emailChange} />
+                <Input 
+                  id="email" 
+                  placeholder="Email" 
+                  type="email" 
+                  required 
+                  value={email} 
+                  onChange={emailChange}
+                  className={error ? 'error-input' : ''}
+                />
               </div>
               <div style={{ display: "flex", width: "252px", marginBottom: "24px" }}>
-                <Input id="password" placeholder="Password" type="password" required value={password} onChange={passwordChange} />
+                <Input 
+                  id="password" 
+                  placeholder="Password" 
+                  type="password" 
+                  required 
+                  value={password} 
+                  onChange={passwordChange}
+                  className={error ? 'error-input' : ''}
+                />
               </div>
               <div style={{ display: "flex", marginBottom: "20px" }}>
                 <div><input className="remember-input" id='remember' type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} /></div>

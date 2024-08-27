@@ -1,20 +1,32 @@
 "use client"
 import './Input.css'
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, ChangeEvent } from 'react'
 
 interface InputProps {
     id: string
     placeholder: string
     type: string
-    required?: boolean
-    disabled?: boolean
-    value?: string
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    required: boolean
+    value: string
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void
+    className?: string
     paddingRight?: number
     paddingLeft?: number
+    disabled?: boolean // Add this line
 }
 
-const Input: React.FC<InputProps> = ({ id, placeholder, type, required, disabled, value, onChange, paddingRight, paddingLeft }) => {
+const Input: React.FC<InputProps> = ({ 
+    id, 
+    placeholder, 
+    type, 
+    required, 
+    value, 
+    onChange, 
+    className, 
+    paddingRight, 
+    paddingLeft,
+    disabled // Add this line
+}) => {
     const spanRef = useRef<HTMLSpanElement>(null);
 
     const InputFocus = () => {
@@ -40,7 +52,7 @@ const Input: React.FC<InputProps> = ({ id, placeholder, type, required, disabled
     return (
         <div style={{ position: 'relative', overflow: "visible", height: "100%" }}>
             <input
-                className="form-input"
+                className={`form-input ${className || ''}`}
                 id={id}
                 type={type}
                 required={required}

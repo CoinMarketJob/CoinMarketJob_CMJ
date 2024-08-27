@@ -121,3 +121,14 @@ input.checked::before {
     color: #999999;
     margin-left: 40px;
 }
+
+.error-input {
+  border-color: #ff0000 !important;
+}
+
+.error-message {
+  color: #ff0000;
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-align: center;
+}
