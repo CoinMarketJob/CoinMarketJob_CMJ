@@ -15,16 +15,16 @@
   text-indent: -9999px;  
   width: 58px;  
   height: 33px;  
-  background: #000000;
+  background: #E9E9EA;
   display: block;  
   border-radius: 100px;  
   position: relative;
   transition: background 0.3s;
-  z-index: 1000;
+  
 }
 
 .toggle-switch.checked {
-  background: #E9E9EA;  
+  background: #000000;  
 }
 
 .toggle-switch input {

@@ -1,5 +1,5 @@
 "use client";
-import './CheckboxSelection.css';
+import styles from "./checkbox.module.css";
 import React from 'react';
 
 interface SelectionType {
@@ -12,33 +12,40 @@ interface SelectionType {
     borderRadius?: number;
 }
 
-const Selection: React.FC<SelectionType> = ({ name, id, value, onChange, label, sublabel, borderRadius }) => {
+const Checkbox: React.FC<SelectionType> = ({
+    name,
+    id,
+    value,
+    onChange,
+    label,
+    sublabel,
+    borderRadius
+}) => {
 
     const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { checked } = e.target;
         onChange(checked);
+        
     };
 
     return (
-        <div>
-            <div className="checkbox-item">
-                <input
-                    style={{ borderRadius }}
-                    type="checkbox"
-                    id={id}
-                    checked={value}
-                    onChange={handleCheckboxChange}
-                />
-                <label
-                    htmlFor={id}
-                    className="square-checkbox"
-                >
-                    {label}
-                    {sublabel && <span className="sublabel">{sublabel}</span>}
-                </label>
-            </div>
+        <div className={styles.checkboxItem}>
+            <input
+                style={{ borderRadius: borderRadius ?? 0 }}
+                type="checkbox"
+                id={id}
+                checked={value}
+                onChange={handleCheckboxChange}
+            />
+            <label
+                htmlFor={id}
+                className={styles.squareCheckbox}
+            >
+                {label}
+                {sublabel && <span className={styles.sublabel}>{sublabel}</span>}
+            </label>
         </div>
     );
 }
 
-export default Selection;
+export default Checkbox;

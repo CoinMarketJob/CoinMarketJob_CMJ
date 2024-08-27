@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import styles from "./applyjob.module.css";
 import Input from "@/app/components/general/Input";
 import Dropdown from "@/app/components/general/Dropdown";
@@ -9,9 +9,16 @@ import InputFile from "@/app/components/general/InputFile";
 import Button from "@/app/components/general/Button";
 import { JSONContent } from "@tiptap/react";
 import LocationSelector from "@/app/components/location/LocationSelector";
+import Checkbox from "@/app/components/general/Checkbox";
+import QuestionDraft from "@/app/components/general/QuestionDraft";
 
 type JobProps = {
   jobId: string;
+};
+
+type JobQuestion = {
+  id: string;
+  questionText: string; 
 };
 
 const page = ({ params }: { params: JobProps }) => {
@@ -33,21 +40,52 @@ const page = ({ params }: { params: JobProps }) => {
   const [jobName, setJobName] = useState<string>("");
   const [jobLogo, setJobLogo] = useState<string>("");
 
+  const panelRef = useRef<HTMLDivElement>(null);
+  const [panelWidth, setPanelWidth] = useState<number>(0); //for resizeability
+  const [visaSelected, setVisaSelected] = useState<boolean>(false);
+  const [jobQuestions, setJobQuestions] = useState<JobQuestion[]>([]);
+  const [jobAnswers, setJobAnswers] = useState<Record<string, string | JSONContent>>({});
+
+  const handleResize = () => {
+    if (panelRef.current) {
+      setPanelWidth(panelRef.current.offsetWidth);
+    }
+  };
+
   const { jobId } = params;
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const resizeObserver = new ResizeObserver(() => handleResize());
+
+    if (panelRef.current) {
+      resizeObserver.observe(panelRef.current);
+      handleResize(); // Initial call to set the size
+    }
+    return () => {
+      if (panelRef.current) {
+        resizeObserver.unobserve(panelRef.current);
+      }
+    };
+  }, []);
+
+  const calculateFontSize = (baseSize: number, scaleFactor: number) => {
+    return Math.min(baseSize + panelWidth * scaleFactor, 35);
+  };
+
+
+  useEffect(() => {
     async function fetchData() {
       try {
         const response = await fetch("/api/job/get/" + jobId);
         const data = await response.json();
         setJobName(data.jobTitle);
         setJobLogo(data.logo);
+        setJobQuestions(data.jobQuestions); 
       } catch (error) {
-        console.error("Veri getirme hatası:", error);
+        console.error("Error fetching data:", error);
       }
     }
-
+  
     fetchData();
   }, [jobId]);
 
@@ -81,6 +119,14 @@ const page = ({ params }: { params: JobProps }) => {
   const coverLetterDraftChange = (content: JSONContent) => {
     setCoverLetter(content);
   };
+
+  const questionDraftChange = (content: JSONContent, questionId: string) => {
+    setJobAnswers((prevAnswers) => ({
+      ...prevAnswers,
+      [questionId]: content, 
+    }));
+  };
+  
 
   const countryCodes = [
     { value: "+0", label: "+0" },
@@ -302,6 +348,7 @@ const page = ({ params }: { params: JobProps }) => {
         resumeLink: !cvManualState ? resumeLink : null,
         coverLetterLink: !letterManualState ? letterLink : null,
         visaSponsorship: true,
+        answers: jobAnswers,
       };
 
       const response = await fetch("/api/appliedJob/", {
@@ -322,8 +369,13 @@ const page = ({ params }: { params: JobProps }) => {
     }
   };
 
+  const VisaHandleChange: (selectedValue: boolean) => void = (selectedValue) => {
+    console.log('Selected value:', selectedValue);
+};
+
   return (
-    <div className={styles.ContainerCard}>
+    <div ref={panelRef} className={styles.ContainerCard} >
+      <div className={styles.ApplyCard} >
       <div style={{ display: "flex" }}>
         <div className={styles.ApplyText}>Apply</div>
         <div>
@@ -372,6 +424,7 @@ const page = ({ params }: { params: JobProps }) => {
           />
         </div>
         <div style={{ width: "2.25rem" }}></div>
+      
         <Input
           id="phone"
           placeholder="Phone"
@@ -381,78 +434,211 @@ const page = ({ params }: { params: JobProps }) => {
           onChange={phoneChange}
         />
       </div>
+      <div className={styles.jobQuestions}>
+      {jobQuestions.length > 0 ? (
+        jobQuestions.map((question, index) => (
+          <QuestionDraft
+            key={index}
+            question={question} // Pass only the necessary string
+            onChange={(content) => questionDraftChange(content, question.id)}
+          />
+        ))
+      ) : (
+        <p></p>
+      )}
+    </div>
+      
 
       {cvManualState == false ? (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            marginBottom: "1.5rem",
-          }}
-        >
-          <div style={{ display: "flex", width: "38%" }}>
-            <InputFile
-              id="cv"
-              placeholder="Attach Resume / CV"
-              required
-              onChange={cvFileChange}
-            />
-          </div>
-          <span className={styles.orText}>or</span>
-          <span
-            className={styles.manuallyText}
-            onClick={() => setCvManualState(true)}
-          >
-            Enter Manually
-          </span>
-        </div>
-      ) : (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            marginBottom: "1.5rem",
-          }}
-        >
-          <Draft onChange={cvDraftChange} />
-        </div>
-      )}
+  <div
+    style={{
+      display: "flex",
+      alignItems: "center",
+      marginBottom: "1.5rem",
+    }}
+  >
+    <div style={{ display: "flex", width: "38%" }}>
+      <InputFile
+        id="cv"
+        placeholder="Attach Resume / CV"
+        required
+        onChange={cvFileChange}
+      />
+    </div>
+    <span className={styles.orText}>or</span>
+    <span
+      className={styles.manuallyText}
+      onClick={() => setCvManualState(true)}
+    >
+      Enter Manually
+    </span>
+  </div>
+) : (
+  <div
+  style={{
+    display: "flex",
+    flexDirection: "column",
+    marginBottom: "1.5rem",
+    position: "relative",
+  }}
+>
+  <div style={{ display: "flex", width: "38%" }}>
+    <InputFile
+      id="cv"
+      placeholder="Attach Resume / CV"
+      required
+      onChange={cvFileChange}
+    />
+  </div>
+  {/* Make the Draft container relative to position the button inside it */}
+  <div style={{ position: "relative", marginTop: "24px" }}>
+    <button
+      onClick={() => setCvManualState(false)}
+      style={{
+        position: "absolute",
+        top: "12px", // Position button inside the Draft's top right corner
+        right: "7px", // Position button inside the Draft's top right corner
+        backgroundColor: "transparent",
+        border: "none",
+        cursor: "pointer",
+        padding: 0,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: '33px',
+        height: '33px',
+        borderRadius: '50%',
+        transition: 'background-color 0.2s ease-in-out',
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.backgroundColor = 'rgba(36, 34, 32, 0.05)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.backgroundColor = 'transparent';
+      }}
+    >
 
-      {letterManualState == false ? (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            marginBottom: "1.5rem",
-          }}
-        >
-          <div style={{ display: "flex", width: "38%" }}>
-            <InputFile
-              id="letter"
-              placeholder="Attach Cover Letter"
-              required
-              onChange={letterFileChange}
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M8 9.32876L1.60303 15.7261C1.42838 15.9005 1.20886 15.9898 0.944477 15.994C0.680301 15.998 0.456792 15.9087 0.273949 15.7261C0.0913163 15.5432 0 15.3217 0 15.0615C0 14.8013 0.0913163 14.5798 0.273949 14.397L6.67124 8L0.273949 1.60303C0.0995127 1.42838 0.010193 1.20886 0.00598975 0.944478C0.00199664 0.680302 0.0913163 0.456792 0.273949 0.273949C0.456792 0.0913163 0.678305 0 0.938488 0C1.19867 0 1.42018 0.0913163 1.60303 0.273949L8 6.67124L14.397 0.273949C14.5716 0.0995127 14.7911 0.010193 15.0555 0.00598975C15.3197 0.00199664 15.5432 0.0913163 15.7261 0.273949C15.9087 0.456792 16 0.678305 16 0.938488C16 1.19867 15.9087 1.42018 15.7261 1.60303L9.32876 8L15.7261 14.397C15.9005 14.5716 15.9898 14.7911 15.994 15.0555C15.998 15.3197 15.9087 15.5432 15.7261 15.7261C15.5432 15.9087 15.3217 16 15.0615 16C14.8013 16 14.5798 15.9087 14.397 15.7261L8 9.32876Z"
+          fill="#242220"
+          fillOpacity="0.2"
+        />
+      </svg>
+    </button>
+    {/* Draft component is inside this relatively positioned container */}
+    <Draft onChange={coverLetterDraftChange} />
+  </div>
+</div>
+
+)}
+
+{letterManualState == false ? (
+  <div
+    style={{
+      display: "flex",
+      alignItems: "center",
+      marginBottom: "1.5rem",
+    }}
+  >
+    <div style={{ display: "flex", width: "38%" }}>
+      <InputFile
+        id="letter"
+        placeholder="Attach Cover Letter"
+        required
+        onChange={letterFileChange}
+      />
+    </div>
+    <span className={styles.orText}>or</span>
+    <span
+      className={styles.manuallyText}
+      onClick={() => setLetterManualState(true)}
+    >
+      Enter Manually
+    </span>
+  </div>
+) : (
+  <div
+  style={{
+    display: "flex",
+    flexDirection: "column",
+    marginBottom: "1.5rem",
+    position: "relative",
+  }}
+>
+  <div style={{ display: "flex", width: "38%" }}>
+    <InputFile
+      id="cv"
+      placeholder="Attach Resume / CV"
+      required
+      onChange={cvFileChange}
+    />
+  </div>
+  {/* Make the Draft container relative to position the button inside it */}
+  <div style={{ position: "relative", marginTop: "24px" }}>
+    <button
+      onClick={() => setLetterManualState(false)}
+      style={{
+        position: "absolute",
+        top: "12px", // Position button inside the Draft's top right corner
+        right: "7px", // Position button inside the Draft's top right corner
+        backgroundColor: "transparent",
+        border: "none",
+        cursor: "pointer",
+        padding: 0,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: '33px',
+        height: '33px',
+        borderRadius: '50%',
+        transition: 'background-color 0.2s ease-in-out',
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.backgroundColor = 'rgba(36, 34, 32, 0.05)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.backgroundColor = 'transparent';
+      }}
+    >
+
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M8 9.32876L1.60303 15.7261C1.42838 15.9005 1.20886 15.9898 0.944477 15.994C0.680301 15.998 0.456792 15.9087 0.273949 15.7261C0.0913163 15.5432 0 15.3217 0 15.0615C0 14.8013 0.0913163 14.5798 0.273949 14.397L6.67124 8L0.273949 1.60303C0.0995127 1.42838 0.010193 1.20886 0.00598975 0.944478C0.00199664 0.680302 0.0913163 0.456792 0.273949 0.273949C0.456792 0.0913163 0.678305 0 0.938488 0C1.19867 0 1.42018 0.0913163 1.60303 0.273949L8 6.67124L14.397 0.273949C14.5716 0.0995127 14.7911 0.010193 15.0555 0.00598975C15.3197 0.00199664 15.5432 0.0913163 15.7261 0.273949C15.9087 0.456792 16 0.678305 16 0.938488C16 1.19867 15.9087 1.42018 15.7261 1.60303L9.32876 8L15.7261 14.397C15.9005 14.5716 15.9898 14.7911 15.994 15.0555C15.998 15.3197 15.9087 15.5432 15.7261 15.7261C15.5432 15.9087 15.3217 16 15.0615 16C14.8013 16 14.5798 15.9087 14.397 15.7261L8 9.32876Z"
+          fill="#242220"
+          fillOpacity="0.2"
+        />
+      </svg>
+    </button>
+    {/* Draft component is inside this relatively positioned container */}
+    <Draft onChange={coverLetterDraftChange} />
+  </div>
+</div>
+
+)}
+<div>
+            <Checkbox
+                name="Visa"
+                id="1"
+                value={visaSelected}
+                onChange={VisaHandleChange}
+                label="Visa Sponsorship is Required"
+                
             />
-          </div>
-          <span className={styles.orText}>or</span>
-          <span
-            className={styles.manuallyText}
-            onClick={() => setLetterManualState(true)}
-          >
-            Enter Manually
-          </span>
-        </div>
-      ) : (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            marginBottom: "1.5rem",
-          }}
-        >
-          <Draft onChange={coverLetterDraftChange} />
-        </div>
-      )}
+</div>
+</div>
 
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button
@@ -466,6 +652,7 @@ const page = ({ params }: { params: JobProps }) => {
           onClick={submit}
         />
       </div>
+
     </div>
   );
 };

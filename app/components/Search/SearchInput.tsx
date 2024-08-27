@@ -6,7 +6,7 @@ import { faMagnifyingGlass, faSliders, faTimes } from '@fortawesome/free-solid-s
 import Image from 'next/image';
 import { useJobs } from '@/hooks/useJobs';
 import { useRouter } from 'next/navigation';
-import JobFilterPopUp from '@/app/jobfilter/Job';
+import JobFilterPopUp from '../jobfilter/Job';
 
 interface Job {
     companyName: string;
@@ -20,16 +20,18 @@ interface Job {
 interface SearchProps {
     tags: Array<string>;
     setTags: (tags: Array<string>) => void;
+    isFilterOpen: boolean;
+    setIsFilterOpen: (isOpen: boolean) => void;
 }
 
-const SearchInput: React.FC<SearchProps> = ({ tags, setTags }) => {
+const SearchInput: React.FC<SearchProps> = ({ tags, setTags, isFilterOpen, setIsFilterOpen }) => {
     const [inputValue, setInputValue] = useState('');
     const [newTagIndex, setNewTagIndex] = useState<number | null>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const bubleFieldRef = useRef<HTMLDivElement>(null);
     const { jobs, filteredJobs, setFilteredJobs } = useJobs();
     const router = useRouter();
-    const [modalOpen, setModalOpen] = useState(false); // State to control modal visibility
+    
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Tab' && inputValue) {
@@ -80,7 +82,7 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags }) => {
     };
 
     const toggleFilter = () => {
-        setModalOpen(prevState => !prevState);  // Toggle the modal visibility
+        setIsFilterOpen(!isFilterOpen);  // Toggle the modal visibility
     };
 
     useEffect(() => {
@@ -142,7 +144,7 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags }) => {
             </div>
 
             <div className='JobFilterPopUp'>
-            {modalOpen && (
+            {isFilterOpen && (
                 <JobFilterPopUp />
             )}
                 </div>

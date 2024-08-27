@@ -1,53 +1,70 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "rhel-openssl-1.0.x"]
 }
 
 datasource db {
-  provider = "mysql"
-  url            = "prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiNjlmMzc0M2QtMDdhMy00NzA3LWI2YTQtYzllZTk3MzIxMjY2IiwidGVuYW50X2lkIjoiOTcxZTRmMTkxZDAxNmY1ZTU4NDFmOWY5N2E3ZTc3OWQwZmQ3NGFhNjVmOWM0NzMxY2NmMGEyZDhlMzc1MjBjYiIsImludGVybmFsX3NlY3JldCI6IjE3ZTJmZTIyLTI3NzItNGYyMi05ZGMzLTA0ODZjM2NhZWY3MSJ9.LALqRKr76LtCOS6_FK6yf91Cr4bwf0GA18Bg-JLLato"
-  directUrl      = "mysql://admin:gQK6YoNsBL8U11QMWkrP@cmj-main-database.cw1sl1nanwvx.eu-north-1.rds.amazonaws.com:3306/coinmarketjob"
+  provider  = "mysql"
+  url       = "prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiNjlmMzc0M2QtMDdhMy00NzA3LWI2YTQtYzllZTk3MzIxMjY2IiwidGVuYW50X2lkIjoiOTcxZTRmMTkxZDAxNmY1ZTU4NDFmOWY5N2E3ZTc3OWQwZmQ3NGFhNjVmOWM0NzMxY2NmMGEyZDhlMzc1MjBjYiIsImludGVybmFsX3NlY3JldCI6IjE3ZTJmZTIyLTI3NzItNGYyMi05ZGMzLTA0ODZjM2NhZWY3MSJ9.LALqRKr76LtCOS6_FK6yf91Cr4bwf0GA18Bg-JLLato"
+  directUrl = "mysql://admin:gQK6YoNsBL8U11QMWkrP@cmj-main-database.cw1sl1nanwvx.eu-north-1.rds.amazonaws.com:3306/coinmarketjob"
 }
 
 model User {
-  id                Int      @id @default(autoincrement())
-  email             String   @unique
-  hashedPassword    String
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime?
-  emailVerified     DateTime?
-
-  jobs              Job[]
-  savedJobs         SavedJobs[]
-  appliedJobs       AppliedJobs[]
-  jobAlerts         JobAlerts[]
-  profile           Profile?
-  companyProfile    CompanyProfile?
-  buyedPackages     BuyedPackage[]
-
-  Settings Settings[]
+  id             Int             @id @default(autoincrement())
+  email          String          @unique
+  hashedPassword String
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime?
+  emailVerified  DateTime?
+  jobs           Job[]
+  savedJobs      SavedJobs[]
+  appliedJobs    AppliedJobs[]
+  jobAlerts      JobAlerts[]
+  profile        Profile?
+  companyProfile CompanyProfile?
+  buyedPackages  BuyedPackage[]
+  Settings       Settings[]
 }
 
 model Job {
-  id                Int      @id @default(autoincrement())
+  id                Int               @id @default(autoincrement())
   userId            Int
-  user              User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User?             @relation(fields: [userId], references: [id], onDelete: Cascade)
   logo              String
   companyName       String
   jobTitle          String
-  location          String
-  locationType      LocationType?
+  location          String?
+  locationType      LocationType
   jobType           JobType
   experienceLevel   ExperienceLevel
   educationalDegree EducationalDegree
   salaryMin         Int
   salaryMax         Int
+  salaryShow        Boolean?
+  salaryUnit        SalaryUnit?
   visaSponsorship   Boolean
   jobDescription    Json
   packageId         Int
-  package           BuyedPackage  @relation(fields: [packageId], references: [id], onDelete: Cascade)
+  date              DateTime          @default(now())
+  package           BuyedPackage      @relation(fields: [packageId], references: [id], onDelete: Cascade)
   savedJobs         SavedJobs[]
   appliedJobs       AppliedJobs[]
+  jobQuestions      JobQuestions[]
+}
+
+enum SalaryUnit {
+  Year
+  Month
+  Week
+  Day
+  Hour
+}
+
+model JobQuestions {
+  id        Int  @id @default(autoincrement())
+  jobId     Int
+  job       Job  @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  questions Json // job questions
 }
 
 enum LocationType {
@@ -56,14 +73,13 @@ enum LocationType {
   OnSite
 }
 
-
 enum JobType {
   Internship
   PartTime
   FullTime
   Contract
   Temporary
-  other
+  Other
 }
 
 enum ExperienceLevel {
@@ -84,38 +100,35 @@ enum EducationalDegree {
 }
 
 model SavedJobs {
-  id                Int      @id @default(autoincrement())
-  userId            Int
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  jobId             Int
-  job               Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
-  date              DateTime @default(now())
-  
+  id     Int      @id @default(autoincrement())
+  userId Int
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobId  Int
+  job    Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  date   DateTime @default(now())
+
   @@unique([userId, jobId])
 }
 
 model AppliedJobs {
-  id                Int      @id @default(autoincrement())
-  userId            Int
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  jobId             Int
-  job               Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
-  name              String
-  surname           String
-  email             String
-  phoneCode         String
-  phone             String
-  date              DateTime @default(now())
+  id               Int      @id @default(autoincrement())
+  userId           Int
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobId            Int
+  job              Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  answers          Json     //Job questionların answerları için
+  name             String
+  surname          String
+  email            String
+  phoneCode        String
+  phone            String
+  date             DateTime @default(now())
+  resumeLink       String?
+  resumeDraft      Json?
+  coverLetterLink  String?
+  coverLetterDraft Json?
+  visaSponsorship  Boolean
 
-  resumeLink        String?
-  resumeDraft       Json?
-
-  coverLetterLink   String?
-  coverLetterDraft  Json?
-
-  visaSponsorship   Boolean
-  
-  
   @@unique([userId, jobId])
 }
 
@@ -126,85 +139,80 @@ model News {
 }
 
 model Hacks {
-  id      Int    @id @default(autoincrement())
-  logo    String
-  name    String
+  id          Int    @id @default(autoincrement())
+  logo        String
+  name        String
   companyName String
-  date    String
-  prize   Int
-  location  String
+  date        String
+  prize       Int
+  location    String
 }
 
 model JobTitles {
-  id        Int    @id @default(autoincrement())
-  jobTitle  String
+  id       Int    @id @default(autoincrement())
+  jobTitle String
 }
 
 model Cities {
-  id        Int    @id @default(autoincrement())
-  city      String
+  id   Int    @id @default(autoincrement())
+  city String
 }
 
 model JobAlerts {
-  id                  Int    @id @default(autoincrement())
-  userId              Int
-  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  jobTypes            String
-  experienceLevels    String
-  educationalDegrees  String
-  visaSponsorship     Boolean
-  salaryMin           Int
-  salaryMax           Int
-  location            String
-  date                DateTime
+  id                 Int      @id @default(autoincrement())
+  userId             Int
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobTypes           String
+  experienceLevels   String
+  educationalDegrees String
+  visaSponsorship    Boolean
+  salaryMin          Int
+  salaryMax          Int
+  location           String
+  date               DateTime
 }
 
 model Profile {
-  id                  Int    @id @default(autoincrement())
-  userId              Int @unique
-  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  logoURL             String
-  jobTitle            String
-  location            String
-  headline            String
-  siteUrl             String
-  about               Json? 
-  sectionsOrder       String?
-
-  socialMedias        SocialMedia[]  
-  section             ProfileSection[]
+  id            Int              @id @default(autoincrement())
+  userId        Int              @unique
+  user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  logoURL       String
+  jobTitle      String
+  location      String
+  headline      String
+  siteUrl       String
+  about         Json?
+  sectionsOrder String?
+  socialMedias  SocialMedia[]
+  section       ProfileSection[]
 }
 
 model CompanyProfile {
-  id                  Int    @id @default(autoincrement())
-  userId              Int @unique
-  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  logoURL             String
-  companyName         String
-  headline            String
-  siteUrl             String
-  about               Json?
-
-  socialMedias        SocialMediaCompany[]  
-
+  id           Int                  @id @default(autoincrement())
+  userId       Int                  @unique
+  user         User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  logoURL      String
+  companyName  String
+  headline     String
+  siteUrl      String
+  about        Json?
+  socialMedias SocialMediaCompany[]
 }
+
 model SocialMedia {
-  id                  Int    @id @default(autoincrement())
-  profileId           Int
-  profile             Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  
-  socialMediaType     socialMediaType
-  socialMediaUrl      String
+  id              Int             @id @default(autoincrement())
+  profileId       Int
+  profile         Profile         @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  socialMediaType socialMediaType
+  socialMediaUrl  String
 }
 
 model SocialMediaCompany {
-  id                  Int    @id @default(autoincrement())
-  profileId           Int
-  profile             CompanyProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  
-  socialMediaType     socialMediaType
-  socialMediaUrl      String
+  id              Int             @id @default(autoincrement())
+  profileId       Int
+  profile         CompanyProfile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  socialMediaType socialMediaType
+  socialMediaUrl  String
 }
 
 enum socialMediaType {
@@ -216,15 +224,13 @@ enum socialMediaType {
 }
 
 model BuyedPackage {
-  id                  Int    @id @default(autoincrement())
-  userId              Int
-  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  packageType         PackageType
-  subscriptionDate    DateTime @default(now())
-  expirationDate      DateTime?
-
-  jobs Job[]
+  id               Int         @id @default(autoincrement())
+  userId           Int
+  user             User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  packageType      PackageType
+  subscriptionDate DateTime    @default(now())
+  expirationDate   DateTime?
+  jobs             Job[]
 }
 
 enum PackageType {
@@ -234,18 +240,16 @@ enum PackageType {
 }
 
 model ProfileSection {
-  id                  Int    @id @default(autoincrement())
-  profileId           Int
-  profile             Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  sectionType         SectionType
-  title               String
-  from                String
-  to                  String
-  institution         String
-  location            String
-  description         Json?
-
-
+  id          Int           @id @default(autoincrement())
+  profileId   Int
+  profile     Profile       @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  sectionType SectionType
+  title       String
+  from        String
+  to          String
+  institution String
+  location    String
+  description Json?
   attachments Attachments[]
 }
 
@@ -260,14 +264,14 @@ enum SectionType {
 }
 
 model Attachments {
-  id                  Int    @id @default(autoincrement())
-  sectionId           Int
-  section             ProfileSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
-  attachmentUrl       String
+  id            Int            @id @default(autoincrement())
+  sectionId     Int
+  section       ProfileSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  attachmentUrl String
 }
 
 model Live {
-  id           Int           @id @default(autoincrement())
+  id           Int      @id @default(autoincrement())
   title        String
   liveType     LiveType
   organisation String
@@ -275,21 +279,21 @@ model Live {
   content      String
 }
 
-enum LiveType{
+enum LiveType {
   News
   HACKHATHONS
   BLOG
 }
 
 model Settings {
-  id           Int           @id @default(autoincrement())
-  userId       Int           @unique
-  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  theme        Theme
-  jobAlert     Boolean
-  shouldKnow   Boolean
-  updates      Boolean
-  frequency    Frequency
+  id         Int       @id @default(autoincrement())
+  userId     Int       @unique
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  theme      Theme
+  jobAlert   Boolean
+  shouldKnow Boolean
+  updates    Boolean
+  frequency  Frequency
 }
 
 enum Theme {

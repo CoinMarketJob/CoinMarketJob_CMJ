@@ -1,0 +1,236 @@
+.filterPage {
+  position: fixed !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 928px;
+  height: 760px;
+  top: 108px;
+  left: 496px;
+  z-index: 1;
+}
+
+.filterGroup {
+  position: fixed !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 928px;
+  height: 760px;
+  top: 108px;
+  left: 496px;
+  z-index: 1;
+}
+
+.filterWrapper {
+  position: fixed !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 928px;
+  height: 760px;
+  top: 150px;
+  left: 496px;
+  border: 0.5px solid #E7E5E4; 
+  background-color: rgba(255, 255, 255, 0.94);
+  border-radius: 30px;
+  box-shadow: 0px 0px 11.3px 0px #00000033;
+}
+
+.leftGroup, .centeredGroup, .rightAlignedGroup {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.leftGroup {
+  margin-left: 50px;
+  align-items: flex-start;
+  gap: 35px;
+  margin-top: 95px;
+}
+
+.centeredGroup {
+  align-items: left;
+  max-width: 200px;
+  margin-left: 90px;
+  margin-top: 82px;
+  gap: 70px;
+  position: relative;
+}
+
+.rightAlignedGroup {
+  margin-top: 103px;
+  margin-right: 65px;
+  align-items: flex-end;
+  gap: 60px;
+}
+
+.toggles {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.generalDropdown {
+  border: none !important;
+  background-color: none;
+  padding-left: 0;
+}
+.locationSelection {
+  gap: 20px;
+  position: relative; /* Make the parent relative for absolute positioning of child */
+  margin-bottom: 22px;
+}
+.locationSelectionSelection {
+  position: relative; /* Make the parent relative to position the dropdown */
+  margin-bottom: 21px;
+  
+}
+
+.chooseLocation {
+  position: absolute; /* Position absolutely to appear directly below the locationSelectionSelection */
+  top: 100%; /* Position the dropdown directly below the locationSelectionSelection */
+  left: 0; /* Align to the left of the parent */
+  width: 100%; /* Ensure it takes the full width of the parent */
+  visibility: hidden; /* Initially hidden */
+  opacity: 0; /* Fully transparent when hidden */
+  
+  z-index: 1000; /* Ensure dropdown appears above other content */
+ 
+}
+
+.chooseLocation.visible {
+  visibility: visible; /* Make visible when required */
+  opacity: 1; /* Fully opaque */
+}
+
+.experienceLevel {
+ 
+  flex-shrink: 0; /* Prevent flex items from shrinking */
+  position: relative; /* Ensures it stays in place */
+}
+
+
+.dropdownContent {
+  position: relative;
+  z-index: 999; /* Ensure dropdown appears above the overlay */
+}
+
+/* Overlay Styles */
+.overlay {
+  position: fixed;
+  width: 928px;
+  height: 760px;
+  top: 150px;
+  left: 496px;
+  background-color: #FFFFFFCC; /* Dark background with 50% opacity */
+  z-index: 800; /* Ensure it is above other elements */
+  display: none; /* Hidden by default */
+  border-radius: 30px;
+  border: 0.5px solid #E7E5E4;
+  box-shadow: 0px 0px 2px 0px #00000033;
+}
+
+.overlayActive {
+  display: block; /* Show overlay when active */
+}
+
+/* Location Selector Styles */
+.locationSelector { /* Change from .location-selector to .locationSelector for CSS Modules */
+  position: relative;
+  z-index: 1000; /* Ensure dropdown is above the overlay */
+}
+
+.locationSelectorDropdown { /* Combine class names for CSS Modules compatibility */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.locationSelectorDropdownInput { /* Convert input styling */
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+}
+
+.locationSelectorDropdownList { /* Convert ul styling */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.locationSelectorDropdownListItem { /* Convert li styling */
+  padding: 8px;
+  cursor: pointer;
+}
+
+.locationSelectorDropdownListItem:hover { /* Hover effect for li */
+  background-color: #f0f0f0;
+}
+
+.customSlider {
+  padding-top: 50px;
+}
+
+.buttonContainer {
+  padding-top: 150px; 
+}
+
+.setAlert {
+  padding-top: 115px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.setAlertSpan { /* Change to BEM style for CSS Modules */
+  font-size: 17px;
+  font-weight: 500;
+  color: #242220CC;
+  font-family: Inter;
+  opacity: 1;
+}
+
+.plusIcon {
+  margin-left: 10px;
+  width: 20px;
+  height: 20px;
+  color: #24222066;
+  position: relative; /* Hover background */
+}
+
+.plusIconActive {
+  margin-left: 10px;
+  width: 20px;
+  height: 20px;
+  color: #242220;
+  position: relative; /* Hover background */
+}
+
+.setAlertHoverIcon:hover .plusIcon { /* Hover effect for plus icon */
+  background-color: #2422200D; /* Hover background color */
+  border-radius: 50%; /* Circle background */
+}
+
+.setAlertHoverIcon:hover .plusIcon::before { /* Hover effect for icon background */
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 46.55px; /* Circle size */
+  height: 46.55px; /* Circle size */
+  background-color: #2422200D; /* Circle color */
+  border-radius: 50%; /* Circle shape */
+  transform: translate(-50%, -50%); /* Center the circle */
+  z-index: -1; /* Behind the icon */
+}

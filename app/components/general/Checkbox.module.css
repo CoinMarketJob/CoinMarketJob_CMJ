@@ -1,54 +1,33 @@
-.selection-container {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.name {
-  font-size: 17px;
-  font-weight: 500;
-  color: #242220CC;
-  font-family: Inter;
-  line-height: 20.57px;
-  height: 21px;
-  opacity: 1;
-  padding-bottom: 12px;
-}
-
-.checkbox-item {
+.checkboxItem {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   font-size: 16px;
   font-weight: 400;
   line-height: 19.36px;
   padding-bottom: 12px;
   color: #24222099;
   font-family: Inter;
-  
 }
 
-.checkbox-item input[type="checkbox"] {
-  display: none;
+.checkboxItem input[type="checkbox"] {
+  display: none; /* Hide the default checkbox */
 }
 
-.checkbox-item label {
+.checkboxItem label {
   position: relative;
   padding-left: 40px;
   cursor: pointer;
   display: flex;
   align-items: center;
   color: #999999;
-  flex-grow: 1;
   font-family: Inter;
   font-size: 15px;
   font-weight: 400;
   line-height: 21px;
   text-align: left;
-
 }
 
-.square-checkbox::before{
+.squareCheckbox::before {
   content: '';
   position: absolute;
   left: 0;
@@ -56,36 +35,25 @@
   transform: translateY(-50%);
   width: 22px;
   height: 22px;
-  color: #BBBBBB33;
+  border-radius: 7px; /* Rounded corners */
+  background-color: #BBBBBB33;
   border: 1px solid #00000014;
   box-shadow: 0px 1px 2px 0px #00000026 inset;
-
 }
 
-.square-checkbox::before {
-  border-radius: 7px; /* Square shape */
-}
-
-
-
-.checkbox-item input[type="checkbox"]:checked + .square-checkbox::before {
+.checkboxItem input[type="checkbox"]:checked + .squareCheckbox::before {
   background-color: #999999;
   border: 1px solid #E7E5E4;
-  content: '✓';
+  content: '✓'; /* Checkmark */
   font-size: 18px; 
   color: white;
   display: flex;
   align-items: center;
-  text-align: center;
   justify-content: center;
+  text-align: center;
 }
 
-
-
-
-
-
-.checkbox-item .sublabel {
+.checkboxItem .sublabel {
   margin-left: auto;
   padding-left: 10px;
   color: #24222066;

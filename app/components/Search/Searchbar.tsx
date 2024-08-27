@@ -4,9 +4,11 @@ import "./Searchbar.css";
 import Icon from "../general/Icon";
 import SearchInput from "./SearchInput";
 import { useRouter } from "next/navigation";
+import JobFilterPopUp from "../jobfilter/Job";
 
 const Searchbar = () => {
   const [tags, setTags] = useState<Array<string>>([]);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const router = useRouter();
   const back = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     router.back();
@@ -18,6 +20,7 @@ const Searchbar = () => {
 
   const home = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     router.push("/");
+    setIsFilterOpen(false); 
   };
 
   const postajob = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -84,7 +87,13 @@ const Searchbar = () => {
           </svg>
         </Icon>
         <div style={{ width: "34.34vw" }}>
-          <SearchInput tags={tags} setTags={setTags} />
+        <SearchInput
+            tags={tags}
+            setTags={setTags}
+            isFilterOpen={isFilterOpen}
+            setIsFilterOpen={setIsFilterOpen}
+        />
+
         </div>
         <Icon
           onClick={postajob}

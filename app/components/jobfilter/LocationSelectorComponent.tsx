@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect, useRef, Dispatch, SetStateAction } from 'react';
 import styles from './LocationSelector.module.css';
-import Selection from '../components/general/CheckboxSelection';
+import Selection from '../general/CheckboxSelection';
 
 interface LocationSelectorProps {
   label: string;

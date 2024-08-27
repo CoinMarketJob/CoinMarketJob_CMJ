@@ -1,11 +1,15 @@
 .ContainerCard {
-  padding-left: 24px;
-  padding-top: 36px;
-  padding-right: 24px;
-  padding-bottom: 36px;
+  padding-left: 14px;
+  padding-top: 16px;
+  padding-right: 14px;
+  padding-bottom: 16px;
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
+  justify-content: space-between; /* Add this line to distribute space between children */
+  height: 95%;
 }
+
 
 .ApplyText {
   font-family: Inter;
@@ -29,7 +33,7 @@
 
 .TitleText {
   font-family: Inter;
-  font-size: calc(10px + 0.5vw); /* Minimum 16px, ekran genişliğine göre artar */
+  font-size: calc(16px + 1vw); /* Minimum 16px, ekran genişliğine göre artar */
   max-font-size: 35px; /* Maksimum font boyutu */
   font-weight: 500;
   line-height: 42.36px;
@@ -73,29 +77,56 @@
   margin-bottom: 24px;
   width: 38%;
 }
+.jobQuestions{
+  margin-bottom: 24px;
+}
+.ButtonContainer {
+  display: flex;
+  justify-content: flex-end; /* Align button to the right */
+  align-self: flex-end;
+  margin-right: 24px; /* Right margin */
+}
+
+.DraftContainer,
+.InputFileContainer {
+  margin-right: 24px; /* Add right margin for alignment */
+  align-self: flex-end; /* Align these elements to the right */
+}
+
+.singleRow,
+.doubleRow {
+  
+  margin-bottom: 24px;
+  max-width: 479px; /* Set maximum width for all relevant rows */
+  width: 100%; /* Ensure it takes the full width up to the maximum */
+}
 
 @media (min-width: 375px) {
   .singleRow,
-  .doubleRow {
+  .doubleRow,
+  .InputFileContainer{
     width: 100%;
   }
 }
 @media (min-width: 768px) {
   .singleRow,
-  .doubleRow {
+  .doubleRow,
+  .InputFileContainer {
     width: 100%;
   }
 }
 @media (min-width: 1000px) {
   .singleRow,
-  .doubleRow {
+  .doubleRow,
+  .InputFileContainer {
     width: 75%;
   }
 }
 
 @media (min-width: 1200px) {
     .singleRow,
-    .doubleRow {
+    .doubleRow,
+    .InputFileContainer {
       width: 50%;
     }
   }
