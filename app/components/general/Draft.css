@@ -76,3 +76,11 @@
     background-color: #ADACAE1A;
     margin-right: 6px;
 }
+
+.errorBorder {
+    border: 2px solid red !important;
+  }
+
+.error-border {
+    border-color: #ff0000 !important;
+}

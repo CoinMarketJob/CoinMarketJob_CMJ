@@ -5,9 +5,10 @@ import React, { useEffect, useRef, useState } from "react";
 interface DropdownProps {
   id: string;
   value: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
+  setValue: (value: string) => void; // Bu satırı değiştirdik
   list: Array<{ value: string; label: string }>;
   placeholder?: string;
+  error?: boolean;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
@@ -16,6 +17,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   setValue,
   list,
   placeholder,
+  error,
 }) => {
   const [open, setOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -37,9 +39,16 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   return (
     <div ref={dropdownRef} style={{ position: "relative" }}>
-      <div className="dropdown-input" onClick={() => setOpen(!open)} style={{
-        borderColor: open ? "#242220" : "#E7E5E4"}}>
-        <div className="dropdown-label">{placeholder}</div>
+      <div 
+        className={`dropdown-input ${error ? 'error' : ''}`}
+        onClick={() => setOpen(!open)} 
+        style={{
+          borderColor: open ? "#242220" : error ? "red" : "#E7E5E4"
+        }}
+      >
+        <div className="dropdown-label">
+          {value ? list.find(item => item.value === value)?.label : placeholder}
+        </div>
         <div className="dropdown-arrow">
           <svg
             width="23"
@@ -64,7 +73,10 @@ const Dropdown: React.FC<DropdownProps> = ({
             className={`list-item ${
               value === item.value ? "item-selected" : ""
             }`}
-            onClick={() => {setValue(item.value); setOpen(false);}}
+            onClick={() => {
+              setValue(item.value);
+              setOpen(false);
+            }}
           >
             {item.label}
           </div>

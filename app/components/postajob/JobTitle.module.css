@@ -4,7 +4,9 @@
     font-weight: 500;
     line-height: 42.36px;
     letter-spacing: 0.04em;
+    color: #000000;
 }
+
 
 .Arrow{
     margin-left: 7px;
@@ -65,4 +67,8 @@
     padding-left: 12px;
     padding-bottom: 8px;
     border-radius: 64px;
+}
+
+.required {
+    color: red;
 }

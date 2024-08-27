@@ -64,7 +64,7 @@ const LocationSelector: React.FC<JobTitleProps> = ({
   return (
     <div ref={dropdownRef} style={{ position: "relative" }}>
       <div className={styles.TopPart} onClick={() => setIsOpen(!isOpen)}>
-        <div className={styles.LocationText}>Location</div>
+        <div className={styles.LocationText}>Location*</div>
         <div>
           <svg
             width="19"

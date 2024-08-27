@@ -7,7 +7,7 @@
 }
 
 .dropdown-input:hover {
-  background-color: #2422200D;
+  border-color: #242220;
 }
 .dropdown-input:active {
   background-color: #FFFFFF;
@@ -72,4 +72,12 @@
 
 .item-selected{
   background: #2422200D;
+}
+
+.dropdown-input.error {
+  border-color: red;
+}
+
+.dropdown-input.error:hover {
+  border-color: red;
 }

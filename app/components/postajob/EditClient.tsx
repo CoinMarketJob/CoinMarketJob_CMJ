@@ -105,6 +105,7 @@ const EditClient: React.FC<EditClientProps> = ({
 
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
   const handleEdit = (index: number) => {
     setEditingIndex(index);
@@ -141,26 +142,48 @@ const EditClient: React.FC<EditClientProps> = ({
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
 
-    if (!jobTitle) newErrors.jobTitle = "Job title is required";
+    // Job title kontrolü yapılıyor, ama hata mesajı atanmıyor
+    if (!jobTitle) newErrors.jobTitle = "";
+
     if (locationType !== "Remote" && selectedLocations.length === 0) {
       newErrors.location = "Location is required";
     }
     if (!jobType) newErrors.jobType = "Job type is required";
     if (!experienceLevel) newErrors.experienceLevel = "Experience level is required";
     if (!educationalDegree) newErrors.educationalDegree = "Educational degree is required";
-    if (!description.content) newErrors.description = "Job description is required";
+    
+    // Check if description is empty and set an error message
+    if (!description.content || description.content.length === 0) {
+      newErrors.description = "Job description is required";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSaveAndReview = () => {
+    setIsFormSubmitted(true);
     if (validateForm()) {
-      setPage(1); // ReviewClient sayfasına geçiş
+      setPage(1);
     } else {
-      // Form is invalid, show error message
       alert("Please fill in all required fields");
     }
+  };
+
+  const clearError = (field: string) => {
+    setErrors(prevErrors => {
+      const newErrors = { ...prevErrors };
+      delete newErrors[field];
+      return newErrors;
+    });
+  };
+
+  const clearDescriptionError = () => {
+    setErrors(prevErrors => {
+      const newErrors = { ...prevErrors };
+      delete newErrors.description;
+      return newErrors;
+    });
   };
 
   return (
@@ -174,8 +197,13 @@ const EditClient: React.FC<EditClientProps> = ({
       </div>
 
       <div className={`${styles.centerDiv}`}>
-        <JobTitle jobTitle={jobTitle} setJobTitle={setJobTitle} />
-        {errors.jobTitle && <div className={styles.error}>{errors.jobTitle}</div>}
+        <JobTitle 
+          jobTitle={jobTitle} 
+          setJobTitle={setJobTitle} 
+          isFormSubmitted={isFormSubmitted}
+        />
+        {/* Hata mesajı gösterilmiyor, ama stil uygulanabilir */}
+        {errors.jobTitle !== undefined && <div className={styles.errorBorder}></div>}
       </div>
 
       <div className={`${styles.centerDiv}`}>
@@ -196,10 +224,13 @@ const EditClient: React.FC<EditClientProps> = ({
             id="JobType"
             value={jobType}
             list={jobTypes}
-            setValue={setJobType}
+            setValue={(value) => {
+              setJobType(value);
+              if (value) clearError('jobType');
+            }}
             placeholder="Job Type*"
+            error={!!errors.jobType}
           />
-          {errors.jobType && <div className={styles.error}>{errors.jobType}</div>}
         </div>
         <div
           className={`${styles.DropDownContainerDiv} ${styles.DropDownContainerDivMargin}`}
@@ -208,20 +239,26 @@ const EditClient: React.FC<EditClientProps> = ({
             id="ExperienceLevel"
             value={experienceLevel}
             list={experienceLevels}
-            setValue={setExperienceLevel}
+            setValue={(value) => {
+              setExperienceLevel(value);
+              if (value) clearError('experienceLevel');
+            }}
             placeholder="Experience Level*"
+            error={!!errors.experienceLevel}
           />
-          {errors.experienceLevel && <div className={styles.error}>{errors.experienceLevel}</div>}
         </div>
         <div className={`${styles.DropDownContainerDiv}`}>
           <Dropdown
             id="EducationalDegree"
             value={educationalDegree}
             list={educationalDegrees}
-            setValue={setEducationalDegree}
+            setValue={(value) => {
+              setEducationalDegree(value);
+              if (value) clearError('educationalDegree');
+            }}
             placeholder="Educational Degree*"
+            error={!!errors.educationalDegree}
           />
-          {errors.educationalDegree && <div className={styles.error}>{errors.educationalDegree}</div>}
         </div>
       </div>
 
@@ -385,14 +422,17 @@ const EditClient: React.FC<EditClientProps> = ({
       <div className={`${styles.JobDescription}`}>
         <span className={`${styles.JobDescriptionText}`}>Job Description*</span>
         <div>
-          <Draft onChange={descriptionDraftChange} />
+          <Draft 
+            onChange={descriptionDraftChange} 
+            onContentChange={clearDescriptionError}
+            error={errors.description !== undefined}
+          />
         </div>
-        {errors.description && <div className={styles.error}>{errors.description}</div>}
       </div>
 
       <div className={`${styles.Continue}`}>
         <Button
-          onClick={handleSaveAndReview}
+                    onClick={handleSaveAndReview}
           text="Save and Review"
           paddingTop={16}
           paddingBottom={16}
