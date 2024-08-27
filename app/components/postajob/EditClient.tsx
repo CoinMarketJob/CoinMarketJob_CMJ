@@ -104,6 +104,7 @@ const EditClient: React.FC<EditClientProps> = ({
   const [QuestionInput, setQuestionInput] = useState<string | undefined>();
 
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const handleEdit = (index: number) => {
     setEditingIndex(index);
@@ -137,8 +138,29 @@ const EditClient: React.FC<EditClientProps> = ({
     setDescription(content);
   };
 
-  const Review = () => {
-    setPage(1);
+  const validateForm = () => {
+    const newErrors: { [key: string]: string } = {};
+
+    if (!jobTitle) newErrors.jobTitle = "Job title is required";
+    if (locationType !== "Remote" && selectedLocations.length === 0) {
+      newErrors.location = "Location is required";
+    }
+    if (!jobType) newErrors.jobType = "Job type is required";
+    if (!experienceLevel) newErrors.experienceLevel = "Experience level is required";
+    if (!educationalDegree) newErrors.educationalDegree = "Educational degree is required";
+    if (!description.content) newErrors.description = "Job description is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSaveAndReview = () => {
+    if (validateForm()) {
+      setPage(1); // ReviewClient sayfasına geçiş
+    } else {
+      // Form is invalid, show error message
+      alert("Please fill in all required fields");
+    }
   };
 
   return (
@@ -153,6 +175,7 @@ const EditClient: React.FC<EditClientProps> = ({
 
       <div className={`${styles.centerDiv}`}>
         <JobTitle jobTitle={jobTitle} setJobTitle={setJobTitle} />
+        {errors.jobTitle && <div className={styles.error}>{errors.jobTitle}</div>}
       </div>
 
       <div className={`${styles.centerDiv}`}>
@@ -162,6 +185,7 @@ const EditClient: React.FC<EditClientProps> = ({
           locationType={locationType}
           setLocationType={setLocationType}
         />
+        {errors.location && <div className={styles.error}>{errors.location}</div>}
       </div>
 
       <div className={`${styles.centerDiv} ${styles.SelectionGroup}`}>
@@ -175,6 +199,7 @@ const EditClient: React.FC<EditClientProps> = ({
             setValue={setJobType}
             placeholder="Job Type*"
           />
+          {errors.jobType && <div className={styles.error}>{errors.jobType}</div>}
         </div>
         <div
           className={`${styles.DropDownContainerDiv} ${styles.DropDownContainerDivMargin}`}
@@ -186,6 +211,7 @@ const EditClient: React.FC<EditClientProps> = ({
             setValue={setExperienceLevel}
             placeholder="Experience Level*"
           />
+          {errors.experienceLevel && <div className={styles.error}>{errors.experienceLevel}</div>}
         </div>
         <div className={`${styles.DropDownContainerDiv}`}>
           <Dropdown
@@ -195,6 +221,7 @@ const EditClient: React.FC<EditClientProps> = ({
             setValue={setEducationalDegree}
             placeholder="Educational Degree*"
           />
+          {errors.educationalDegree && <div className={styles.error}>{errors.educationalDegree}</div>}
         </div>
       </div>
 
@@ -205,20 +232,22 @@ const EditClient: React.FC<EditClientProps> = ({
             <div className={`${styles.MinMaxContainer}`}>
               <Input
                 id="min"
-                type="number"
+                type="text"
                 value={min}
                 onChange={(e) => setMin(e.target.value)}
                 placeholder="Min"
+                required={true}
               />
             </div>
             <span className={`${styles.SpaceMinMax}`}>-</span>
             <div className={`${styles.MinMaxContainer}`}>
               <Input
                 id="max"
-                type="number"
+                type="text"
                 value={max}
                 onChange={(e) => setMax(e.target.value)}
                 placeholder="Max"
+                required={true}
               />
             </div>
             <span className={`${styles.SpaceUnit}`}>/</span>
@@ -227,10 +256,11 @@ const EditClient: React.FC<EditClientProps> = ({
             <div className={`${styles.SingleSalary}`}>
               <Input
                 id="single"
-                type="number"
-                value={single}
+                type="text"
+                value={single || ''}
                 onChange={(e) => setSingle(e.target.value)}
                 placeholder="Enter a single value"
+                required={true}
               />
             </div>
 
@@ -250,7 +280,7 @@ const EditClient: React.FC<EditClientProps> = ({
           id="salaryShow"
           value={showSalary}
           onChange={(selectedValue) => setShowSalary(selectedValue)}
-          label="Don’t show in job listing"
+          label="Don't show in job listing"
         />
       </div>
 
@@ -324,6 +354,7 @@ const EditClient: React.FC<EditClientProps> = ({
               value={QuestionInput}
               onChange={(e) => setQuestionInput(e.target.value)}
               placeholder="Type your question"
+              required={true}
             />
           </div>
 
@@ -356,11 +387,12 @@ const EditClient: React.FC<EditClientProps> = ({
         <div>
           <Draft onChange={descriptionDraftChange} />
         </div>
+        {errors.description && <div className={styles.error}>{errors.description}</div>}
       </div>
 
       <div className={`${styles.Continue}`}>
         <Button
-          onClick={Review}
+          onClick={handleSaveAndReview}
           text="Save and Review"
           paddingTop={16}
           paddingBottom={16}
