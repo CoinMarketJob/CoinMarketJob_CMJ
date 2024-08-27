@@ -12,6 +12,7 @@ import AddSocialMedia from "./AddSocialMedia";
 import SocialMediaItem from "./SocialMediaItem";
 import { SocialMedia } from "@prisma/client";
 import AddProfileSectionPopup from "./AddProfileSectionPopup";
+import Button from "../general/Button";
 
 interface Profile {
   id: string;
@@ -121,9 +122,11 @@ const EditProfile = () => {
         // Parse and set the sections order
         if (data.sectionsOrder) {
           const orderArray = JSON.parse(data.sectionsOrder);
-          const orderedSections = orderArray.map((id: string) => 
-            defaultSections.find(section => section.id === id)
-          ).filter(Boolean);
+          const orderedSections = orderArray
+            .map((id: string) =>
+              defaultSections.find((section) => section.id === id)
+            )
+            .filter(Boolean);
           setProfileSections(orderedSections);
         }
       } catch (error) {
@@ -136,10 +139,10 @@ const EditProfile = () => {
     fetchData();
   }, []);
 
-  const updateSectionOrder = useCallback(async (sections : Section[]) => {
-    const newOrder = sections.map(section => section.id);
+  const updateSectionOrder = useCallback(async (sections: Section[]) => {
+    const newOrder = sections.map((section) => section.id);
     console.log("Updated section order:", newOrder);
-    
+
     try {
       const response = await fetch("/api/profile/update-sections-order", {
         method: "POST",
@@ -148,7 +151,7 @@ const EditProfile = () => {
         },
         body: JSON.stringify({ sectionsOrder: JSON.stringify(newOrder) }),
       });
-      
+
       if (!response.ok) {
         throw new Error("Failed to update section order");
       }
@@ -157,17 +160,20 @@ const EditProfile = () => {
     }
   }, []);
 
-  const onDragEnd = useCallback((result : any) => {
-    if (!result.destination) {
-      return;
-    }
+  const onDragEnd = useCallback(
+    (result: any) => {
+      if (!result.destination) {
+        return;
+      }
 
-    const newItems = Array.from(profileSections);
-    const [reorderedItem] = newItems.splice(result.source.index, 1);
-    newItems.splice(result.destination.index, 0, reorderedItem);
+      const newItems = Array.from(profileSections);
+      const [reorderedItem] = newItems.splice(result.source.index, 1);
+      newItems.splice(result.destination.index, 0, reorderedItem);
 
-    setProfileSections(newItems);
-  }, [profileSections, updateSectionOrder]);
+      setProfileSections(newItems);
+    },
+    [profileSections, updateSectionOrder]
+  );
 
   const AddElement = (type: string) => {
     setShowAddPopup(true);
@@ -373,6 +379,10 @@ const EditProfile = () => {
               setShowAddPopup={setShowAddPopup}
               profileId={Number(profile?.id)}
             />
+          </div>
+
+          <div className={styles.ButtonDiv}>
+            <Button text="Done" onClick={() => console.log("Done")} />
           </div>
         </div>
       )}

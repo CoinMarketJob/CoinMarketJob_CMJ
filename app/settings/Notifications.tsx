@@ -4,7 +4,7 @@ import './Notifications.css';
 import ToggleSwitch from '../components/general/Toggle';
 import SingleSlider from '../components/general/SingleSlider';
 import { Settings } from '@prisma/client';
-import { formatFrequency, formatValueToFrequency } from '@/utils/formatter';
+import { formatFrequency, formatValueToFrequency } from '../../utils/formatter';
 import Button from '../components/general/Button';
 
 
