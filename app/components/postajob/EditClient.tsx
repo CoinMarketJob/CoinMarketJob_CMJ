@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./EditClient.module.css";
 import JobTitle from "./JobTitle";
 import LocationSelector from "../location/LocationSelector";
@@ -99,13 +99,19 @@ const EditClient: React.FC<EditClientProps> = ({
     { value: "Master", label: "Master" },
     { value: "PhD", label: "PhD" },
   ];
+  const chooseLocationOptions = [
+    { value: 'Current Location', label: 'Current Location' },
+    { value: 'London', label: 'London' },
+    { value: 'New York', label: 'New York' },
+    { value: 'Papua New Guinea', label: 'Papua New Guinea' },
+    { value: 'San Fransisco', label: 'San Fransisco' },
+    { value: 'Las Vegas', label: 'Las Vegas' },
+  ];
 
   const [QuestionAddShow, setQuestionAddShow] = useState<boolean>(false);
   const [QuestionInput, setQuestionInput] = useState<string | undefined>();
-
+  const [isFormValid, setIsFormValid] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
   const handleEdit = (index: number) => {
     setEditingIndex(index);
@@ -139,52 +145,37 @@ const EditClient: React.FC<EditClientProps> = ({
     setDescription(content);
   };
 
+  const Review = () => {
+    setPage(1);
+  };
+
   const validateForm = () => {
-    const newErrors: { [key: string]: string } = {};
-
-    // Job title kontrolü yapılıyor, ama hata mesajı atanmıyor
-    if (!jobTitle) newErrors.jobTitle = "";
-
-    if (locationType !== "Remote" && selectedLocations.length === 0) {
-      newErrors.location = "Location is required";
-    }
-    if (!jobType) newErrors.jobType = "Job type is required";
-    if (!experienceLevel) newErrors.experienceLevel = "Experience level is required";
-    if (!educationalDegree) newErrors.educationalDegree = "Educational degree is required";
-    
-    // Check if description is empty and set an error message
-    if (!description.content || description.content.length === 0) {
-      newErrors.description = "Job description is required";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSaveAndReview = () => {
-    setIsFormSubmitted(true);
-    if (validateForm()) {
-      setPage(1);
+    if (
+      jobTitle &&
+      jobType &&
+      experienceLevel &&
+      educationalDegree 
+      
+    ) {
+      setIsFormValid(true);
     } else {
-      alert("Please fill in all required fields");
+      setIsFormValid(false);
     }
   };
-
-  const clearError = (field: string) => {
-    setErrors(prevErrors => {
-      const newErrors = { ...prevErrors };
-      delete newErrors[field];
-      return newErrors;
-    });
-  };
-
-  const clearDescriptionError = () => {
-    setErrors(prevErrors => {
-      const newErrors = { ...prevErrors };
-      delete newErrors.description;
-      return newErrors;
-    });
-  };
+  useEffect(() => {
+    validateForm();
+  }, [
+    jobTitle,
+    locationType,
+    jobType,
+    experienceLevel,
+    educationalDegree,
+    min,
+    max,
+    single,
+    description,
+  ]);
+    
 
   return (
     <div className={styles.container}>
@@ -197,23 +188,18 @@ const EditClient: React.FC<EditClientProps> = ({
       </div>
 
       <div className={`${styles.centerDiv}`}>
-        <JobTitle 
-          jobTitle={jobTitle} 
-          setJobTitle={setJobTitle} 
-          isFormSubmitted={isFormSubmitted}
-        />
-        {/* Hata mesajı gösterilmiyor, ama stil uygulanabilir */}
-        {errors.jobTitle !== undefined && <div className={styles.errorBorder}></div>}
+        <JobTitle jobTitle={jobTitle} setJobTitle={setJobTitle} />
       </div>
 
       <div className={`${styles.centerDiv}`}>
         <LocationSelector
-          selectedLocations={selectedLocations}
-          setSelectedLocations={setSelectedLocations}
-          locationType={locationType}
-          setLocationType={setLocationType}
-        />
-        {errors.location && <div className={styles.error}>{errors.location}</div>}
+                      label="Choose Location"
+                      options={chooseLocationOptions}
+                      selectedLocation={selectedLocations}
+                      setSelectedLocation={setSelectedLocations}
+                      locationType={locationType}
+                      setLocationType={setLocationType}
+                    />
       </div>
 
       <div className={`${styles.centerDiv} ${styles.SelectionGroup}`}>
@@ -224,12 +210,8 @@ const EditClient: React.FC<EditClientProps> = ({
             id="JobType"
             value={jobType}
             list={jobTypes}
-            setValue={(value) => {
-              setJobType(value);
-              if (value) clearError('jobType');
-            }}
+            setValue={setJobType}
             placeholder="Job Type*"
-            error={!!errors.jobType}
           />
         </div>
         <div
@@ -239,12 +221,8 @@ const EditClient: React.FC<EditClientProps> = ({
             id="ExperienceLevel"
             value={experienceLevel}
             list={experienceLevels}
-            setValue={(value) => {
-              setExperienceLevel(value);
-              if (value) clearError('experienceLevel');
-            }}
+            setValue={setExperienceLevel}
             placeholder="Experience Level*"
-            error={!!errors.experienceLevel}
           />
         </div>
         <div className={`${styles.DropDownContainerDiv}`}>
@@ -252,12 +230,8 @@ const EditClient: React.FC<EditClientProps> = ({
             id="EducationalDegree"
             value={educationalDegree}
             list={educationalDegrees}
-            setValue={(value) => {
-              setEducationalDegree(value);
-              if (value) clearError('educationalDegree');
-            }}
+            setValue={setEducationalDegree}
             placeholder="Educational Degree*"
-            error={!!errors.educationalDegree}
           />
         </div>
       </div>
@@ -269,22 +243,22 @@ const EditClient: React.FC<EditClientProps> = ({
             <div className={`${styles.MinMaxContainer}`}>
               <Input
                 id="min"
-                type="text"
+                type="number"
+                required={false}
                 value={min}
                 onChange={(e) => setMin(e.target.value)}
                 placeholder="Min"
-                required={true}
               />
             </div>
             <span className={`${styles.SpaceMinMax}`}>-</span>
             <div className={`${styles.MinMaxContainer}`}>
               <Input
                 id="max"
-                type="text"
+                type="number"
+                required={false}
                 value={max}
                 onChange={(e) => setMax(e.target.value)}
                 placeholder="Max"
-                required={true}
               />
             </div>
             <span className={`${styles.SpaceUnit}`}>/</span>
@@ -293,11 +267,11 @@ const EditClient: React.FC<EditClientProps> = ({
             <div className={`${styles.SingleSalary}`}>
               <Input
                 id="single"
-                type="text"
-                value={single || ''}
+                type="number"
+                required={false}
+                value={single}
                 onChange={(e) => setSingle(e.target.value)}
                 placeholder="Enter a single value"
-                required={true}
               />
             </div>
 
@@ -317,7 +291,7 @@ const EditClient: React.FC<EditClientProps> = ({
           id="salaryShow"
           value={showSalary}
           onChange={(selectedValue) => setShowSalary(selectedValue)}
-          label="Don't show in job listing"
+          label="Don’t show in job listing"
         />
       </div>
 
@@ -388,10 +362,10 @@ const EditClient: React.FC<EditClientProps> = ({
             <Input
               id="Question"
               type="text"
-              value={QuestionInput}
+              value={QuestionInput || ""}
+              required={false}
               onChange={(e) => setQuestionInput(e.target.value)}
               placeholder="Type your question"
-              required={true}
             />
           </div>
 
@@ -422,23 +396,20 @@ const EditClient: React.FC<EditClientProps> = ({
       <div className={`${styles.JobDescription}`}>
         <span className={`${styles.JobDescriptionText}`}>Job Description*</span>
         <div>
-          <Draft 
-            onChange={descriptionDraftChange} 
-            onContentChange={clearDescriptionError}
-            error={errors.description !== undefined}
-          />
+          <Draft onChange={descriptionDraftChange} />
         </div>
       </div>
 
       <div className={`${styles.Continue}`}>
         <Button
-                    onClick={handleSaveAndReview}
+          onClick={Review}
           text="Save and Review"
           paddingTop={16}
           paddingBottom={16}
           paddingLeft={27}
           paddingRight={28}
           fontSize={15}
+          disabled={!isFormValid}
         />
       </div>
     </div>

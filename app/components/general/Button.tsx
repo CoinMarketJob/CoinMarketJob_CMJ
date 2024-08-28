@@ -21,7 +21,9 @@ interface ButtonProps {
   hoverTextColor?: string;
   hoverBorderColor?: string;
   hoverUnderlineText?: boolean;
+  disabled?: boolean;  // Add disabled property here
 }
+
 
 const Button: React.FC<ButtonProps> = ({
   text,
@@ -43,21 +45,24 @@ const Button: React.FC<ButtonProps> = ({
   hoverTextColor,
   hoverBorderColor,
   hoverUnderlineText = false,
+  disabled = false,  // Add default value for disabled
 }) => {
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
   const handleClick = () => {
-    setIsClicked(!isClicked);
-    onClick();
+    if (!disabled) { // Only handle click if not disabled
+      setIsClicked((prev) => !prev);
+      onClick();
+    }
   };
 
   const handleMouseEnter = () => {
-    setIsHovered(true);
+    if (!disabled) setIsHovered(true); // Prevent hover state if disabled
   };
 
   const handleMouseLeave = () => {
-    setIsHovered(false);
+    if (!disabled) setIsHovered(false);
   };
 
   const buttonStyle = {
@@ -65,33 +70,38 @@ const Button: React.FC<ButtonProps> = ({
     paddingBottom,
     paddingLeft,
     paddingRight,
-    backgroundColor: isClicked && clickedBackgroundColor 
-      ? clickedBackgroundColor 
-      : isHovered && hoverBackgroundColor 
-        ? hoverBackgroundColor 
-        : backgroundColor,
-    color: isClicked && clickedTextColor 
-      ? clickedTextColor 
-      : isHovered && hoverTextColor 
-        ? hoverTextColor 
+    backgroundColor: disabled 
+      ? '#d3d3d3' // Set a default disabled color
+      : isClicked 
+        ? clickedBackgroundColor || backgroundColor 
+        : isHovered 
+          ? hoverBackgroundColor || backgroundColor 
+          : backgroundColor,
+    color: disabled ? '#888888' : isClicked 
+      ? clickedTextColor || textColor 
+      : isHovered 
+        ? hoverTextColor || textColor 
         : textColor,
-    border: `${borderLine}px solid ${isClicked && clickedBorderColor 
-      ? clickedBorderColor 
-      : isHovered && hoverBorderColor 
-        ? hoverBorderColor 
-        : borderColor}`,
+    border: `${borderLine}px solid ${
+      disabled ? '#cccccc' : isClicked 
+      ? clickedBorderColor || borderColor 
+      : isHovered ? hoverBorderColor || borderColor 
+      : borderColor
+    }`,
     fontSize,
     fontWeight,
-    textDecoration: isHovered && hoverUnderlineText ? 'underline' : 'none', // Hover durumunda alt çizgi
+    textDecoration: isHovered && hoverUnderlineText ? 'underline' : 'none',
+    cursor: disabled ? 'not-allowed' : 'pointer', // Change cursor if disabled
   };
 
   return (
-    <button 
-      className={`form-button`} 
-      style={buttonStyle} 
+    <button
+      className="form-button"
+      style={buttonStyle}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      disabled={disabled} // Pass disabled prop to button
     >
       {text}
     </button>

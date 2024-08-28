@@ -67,7 +67,12 @@
     padding-left: 12px;
     padding-bottom: 8px;
     border-radius: 64px;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflowed text */
+    text-overflow: ellipsis; 
 }
+
+  
 
 .required {
     color: red;

@@ -66,7 +66,8 @@ model JobQuestions {
   jobId     Int
   job       Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
   question  String 
-    
+  appliedJobs AppliedJobs[]  
+  
   @@unique([userId, jobId])
 }
 
@@ -113,12 +114,18 @@ model SavedJobs {
   @@unique([userId, jobId])
 }
 
+
+
 model AppliedJobs {
   id               Int      @id @default(autoincrement())
   userId           Int
   user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   jobId            Int
   job              Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  answers          Json     // Job questionların answerları için
+  jobQuestionId    Int
+  answer           String? 
+  jobQuestion      JobQuestions @relation(fields: [jobQuestionId], references: [id], onDelete: Cascade)
   name             String
   surname          String
   email            String
@@ -131,7 +138,7 @@ model AppliedJobs {
   coverLetterDraft Json?
   visaSponsorship  Boolean
 
-  @@unique([userId, jobId])
+  @@unique([userId, jobId, jobQuestionId])
 }
 
 
@@ -140,6 +147,8 @@ model News {
   logo    String
   summary String
 }
+
+
 
 model Hacks {
   id          Int    @id @default(autoincrement())

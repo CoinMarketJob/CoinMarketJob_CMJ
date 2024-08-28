@@ -1,6 +1,4 @@
 "use client"
-
-"use client"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './JobTitle.module.css';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
@@ -55,11 +53,16 @@ const JobTitle: React.FC<JobTitleProps> = ({ jobTitle, setJobTitle, isFormSubmit
     }
   }, [open, searchTerm, jobTitle, jobTitles, setJobTitle]);
 
-  const selectJob = (jobTitle: string) => {
+  const selectJob = (selectedJobTitle: string) => {
+    if (selectedJobTitle === jobTitle) {
+      setJobTitle(''); // Unselect the option
+      setSearchTerm(''); // Reset the search term
+    } else {
+      setJobTitle(selectedJobTitle); // Select new option
+      setSearchTerm(selectedJobTitle);
+    }
     setOpen(false);
-    setJobTitle(jobTitle);
-    setSearchTerm(jobTitle);
-  }
+  };
 
   const filteredTitles = jobTitles.filter(jobTitle =>
     jobTitle.jobTitle.toLowerCase().includes(searchTerm.toLowerCase())
