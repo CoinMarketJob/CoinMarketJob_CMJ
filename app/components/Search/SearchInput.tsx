@@ -168,7 +168,7 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags, isFilterOpen, setIs
             </div>
 
             <div className='JobFilterPopUp'>
-            {isFilterOpen && (
+            {modalOpen && (
                 <JobFilterPopUp />
             )}
             </div>
