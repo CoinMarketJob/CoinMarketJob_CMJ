@@ -17,8 +17,7 @@ export async function GET() {
 
   const profile = await prisma.profile.findUnique({
     where: { userId: currentUser?.id },
-    include: { socialMedias: true, section: true },
-    cacheStrategy: { swr: 60, ttl: 60 },
+    include: { socialMedias: true, section: true }
   });
 
   return NextResponse.json(profile);

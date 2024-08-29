@@ -148,6 +148,7 @@
 .avatarImage{
     width: 140px;
     height: 140px;
+    border-radius: 50%;
 }
 @media screen and (min-width: 1200px) {
     .avatarImage{

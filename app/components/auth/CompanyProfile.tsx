@@ -9,6 +9,7 @@ import EditProfile from "./EditProfile";
 import avatarImage from "./PlaceholderCompanyProfile.png";
 import EditCompanyProfile from "./EditCompanyProfile";
 import { JSONContent } from '@tiptap/react';
+import { useProfile } from "@/hooks/useCompanyProfile";
 
 // Profile türünü tanımlayın
 interface Profile {
@@ -24,6 +25,8 @@ const Profile = () => {
   const [profile, setProfile] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
   const [editProfile, setEditProfile] = useState<boolean>(false);
+
+  const { setProfileType } = useProfile();
 
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -99,8 +102,7 @@ const Profile = () => {
               <a onClick={EditProfileClick} className={styles.menuItem}>
                 Edit profile
               </a>
-              <a className={styles.menuItem}>Export Profile</a>
-              <a className={styles.menuItem}>Profile</a>
+              <a onClick={() => setProfileType(1)} className={styles.menuItem}>Profile</a>
             </div>
           </div>
           {editProfile == false ? (

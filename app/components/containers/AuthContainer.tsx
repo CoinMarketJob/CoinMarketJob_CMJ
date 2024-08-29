@@ -1,11 +1,12 @@
 "use client";
-import LoginClient from '../auth/LoginClient';
-import { User } from '@prisma/client';
-import { getCurrentUser } from '@/app/actions/getCurrentUser';
-import { useEffect, useState } from 'react';
-import CompanyProfile from '../auth/CompanyProfile';
-import Profile from '../auth/Profile';
-import styles from './AuthContainer.module.css'
+import LoginClient from "../auth/LoginClient";
+import { User } from "@prisma/client";
+import { getCurrentUser } from "@/app/actions/getCurrentUser";
+import { useEffect, useState } from "react";
+import CompanyProfile from "../auth/CompanyProfile";
+import Profile from "../auth/Profile";
+import styles from "./AuthContainer.module.css";
+import { useProfile } from "@/hooks/useCompanyProfile";
 
 // Define the type for user, including null
 type UserType = User | null;
@@ -20,6 +21,7 @@ const convertUserDates = (user: any): User => ({
 
 const AuthContainer = () => {
   const [currentUser, setCurrentUser] = useState<UserType>(null); // Initialize with null
+  const { profileType } = useProfile();
 
   useEffect(() => {
     async function getUser() {
@@ -30,16 +32,26 @@ const AuthContainer = () => {
         setCurrentUser(null);
       }
     }
-    
-    getUser();
 
-  },[])
+    getUser();
+  }, []);
 
   return (
-    <div className={styles.container} style={{display: "flex", width: "100%", height: "100%"}}>
-      {currentUser ? <Profile /> : <LoginClient />}
+    <div
+      className={styles.container}
+      style={{ display: "flex", width: "100%", height: "100%" }}
+    >
+      {currentUser ? (
+        profileType == 0 ? (
+          <Profile />
+        ) : (
+          <CompanyProfile />
+        )
+      ) : (
+        <LoginClient />
+      )}
     </div>
   );
-}
+};
 
 export default AuthContainer;

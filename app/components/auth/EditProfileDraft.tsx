@@ -77,6 +77,11 @@ const Draft: React.FC<DraftProps> = ({ ContentType, onChange, content, topInfo }
     onUpdate: ({ editor }) => {
       onChange(editor.getJSON());
     },
+    editorProps: {
+      attributes: {
+        class: 'custom-editor-content',
+      },
+    },
   });
 
   return (

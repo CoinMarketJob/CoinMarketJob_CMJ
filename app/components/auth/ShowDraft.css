@@ -8,32 +8,9 @@
     text-align: justified;
 }
 
-.draft-container{
-    width: 100%;
-    display: flex;
-}
-
-.ContentTypeText{
-    margin-left: 24px;
-    margin-bottom: 4px;
-    font-family: Inter;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 23.81px;
-    letter-spacing: 0.03em;
-}
-
-.CloseSvg{
-    flex-grow: 1;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
 .control-group{
     border-radius: 15px;
     width: 100%;
-    height: auto;
 }
 
 .button-group{
@@ -41,16 +18,17 @@
     align-items: center;
     border-bottom: 1.45px solid #E7E5E4;
     padding-left: 26px;
-    padding-right: 24px;
-    padding-top: 8px;
-    padding-bottom: 8px;
 }
 
-.add-button-div{
-    flex-grow: 1;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+.bold-button{
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 21px;
+    color: #999999;
+    border: none;
+    background-color: transparent;
+    margin-right: 12px;
 }
 
 .ProseMirror-focused {
@@ -63,6 +41,8 @@
     margin-right: 26px;
 }
 
+/* İhtiyaç halinde içine yazılan yazının birbirine yaklaşması ve Butona yaklaşmak için kullanılacak.*/
+
 .editor-content {
     width: calc(100%); 
     max-width: calc(100%);
@@ -74,6 +54,7 @@
     padding: 5px; 
     box-sizing: border-box; 
 }
+
 
 .text-size-label{
     font-family: Inter;

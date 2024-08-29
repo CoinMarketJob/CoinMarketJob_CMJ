@@ -2,7 +2,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import styles from "./EditProfile.module.css";
-import avatarImage from "./PlaceHolderAvatar.png";
 import Image from "next/image";
 import EditProfileInput from "./EditProfileInput";
 import EditProfileDraft from "./EditProfileDraft";
@@ -10,9 +9,12 @@ import { JSONContent } from "@tiptap/react";
 import Icon from "../general/Icon";
 import AddSocialMedia from "./AddSocialMedia";
 import SocialMediaItem from "./SocialMediaItem";
-import { SocialMedia } from "@prisma/client";
+import { ProfileSection, SocialMedia } from "@prisma/client";
 import AddProfileSectionPopup from "./AddProfileSectionPopup";
+import CollapsedSocialMedia from "./CollapsedSocialMedia";
 import Button from "../general/Button";
+import ProfileSections from "./ProfileSections";
+const defaultAvatarImage = "/PlaceholderCompanyProfile.png";
 
 interface Profile {
   id: string;
@@ -25,18 +27,19 @@ interface Profile {
   sectionsOrder: string;
 }
 
-interface AddSocialMediaProps {
-  profileType: string;
-  profileId: string; // Türü güncelleyin
-  setPopup: (value: boolean) => void;
-  fetchData: () => void;
-}
-
 interface Section {
   id: number;
 }
 
+interface CustomSocialMedia {
+  socialMediaType: string;
+  socialMediaUrl: string;
+  platformName: string;
+  username: string;
+}
+
 const EditProfile = () => {
+  const [nameSurname, setNameSurname] = useState<string>("");
   const [jobTitle, setJobTitle] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [headline, setHeadline] = useState<string>("");
@@ -51,9 +54,15 @@ const EditProfile = () => {
   const [sectionPopup, setSectionPopup] = useState<boolean>(false);
   const [popupType, setPopupType] = useState<string>("WorkExperience");
 
-  const closeTest = () => {
-    console.log("Close");
-  };
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [changeLogo, setChangeLogo] = useState<boolean>(false);
+
+  const [avatar, setAvatar] = useState<string>(defaultAvatarImage);
+  const [socialMedias, setSocialMedias] = useState<CustomSocialMedia[]>([]);
+  const [profileSections, setProfileSections] = useState<ProfileSection[]>([]);
+  const [editingSectionId, setEditingSectionId] = useState<number | null>(null);
+
+  const visibleSocialMediaCount = 3;
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -77,22 +86,6 @@ const EditProfile = () => {
 
     fetchData();
   }, []);
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    console.log(about);
-  });
-
-  async function fetchData() {
-    try {
-      const response = await fetch("/api/companyprofile/get/");
-      const data = await response.json();
-      console.log(data);
-      setProfile(data);
-    } catch (error) {
-      console.error("Veri getirme hatası:", error);
-    }
-  }
 
   const defaultSections = [
     { id: "WorkExperience", label: "Work Experience" },
@@ -104,31 +97,24 @@ const EditProfile = () => {
     { id: "Awards", label: "Awards" },
   ];
 
-  const [profileSections, setProfileSections] = useState(defaultSections);
+  const [sections, setSections] = useState(defaultSections);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await fetch("/api/profile/get/");
-        const data: Profile = await response.json();
+        const data = await response.json();
         console.log(data);
         setProfile(data);
+        setNameSurname(data.nameSurname);
         setJobTitle(data.jobTitle);
         setHeadline(data.headline);
         setLocation(data.location);
         setSite(data.siteUrl);
         setAbout(data.about);
-
-        // Parse and set the sections order
-        if (data.sectionsOrder) {
-          const orderArray = JSON.parse(data.sectionsOrder);
-          const orderedSections = orderArray
-            .map((id: string) =>
-              defaultSections.find((section) => section.id === id)
-            )
-            .filter(Boolean);
-          setProfileSections(orderedSections);
-        }
+        setSocialMedias(data.socialMedias);
+        setProfileSections(data.section);
+        setAvatar(data.logoURL);
       } catch (error) {
         console.error("Veri getirme hatası:", error);
       } finally {
@@ -138,6 +124,76 @@ const EditProfile = () => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (profile && profile.section) {
+      setProfileSections(profile.section);
+    }
+  }, [profile]);
+
+  const handleAddSection = (newSection: ProfileSection) => {
+    setProfileSections([...profileSections, newSection]);
+    console.log("Added");
+  };
+
+  const handleEditSection = (sectionId: number) => {
+    setEditingSectionId(sectionId);
+    setShowAddPopup(true);
+  };
+
+  const handleUpdateSection = (updatedSection: ProfileSection) => {
+    setProfileSections((prevSections) => {
+      const updatedSections = prevSections.map((section) =>
+        section.id === editingSectionId
+          ? { ...section, ...updatedSection }
+          : section
+      );
+      console.log("Updated sections:", updatedSections);
+      return updatedSections;
+    });
+    setEditingSectionId(null);
+    setShowAddPopup(false);
+  };
+
+  const handleDeleteSection = (sectionId: number) => {
+    setProfileSections(
+      profileSections.filter((section) => section.id !== sectionId)
+    );
+  };
+
+  const Done = async () => {
+    try {
+      const profileData = {
+        nameSurname,
+        jobTitle,
+        headline,
+        location,
+        siteUrl: site,
+        about,
+        socialMedias,
+        sections: profileSections,
+        avatar,
+      };
+
+      console.log(profile);
+
+      const response = await fetch("/api/profile/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(profileData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update profile");
+      }
+
+      console.log("Başarılı");
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
+  };
 
   const updateSectionOrder = useCallback(async (sections: Section[]) => {
     const newOrder = sections.map((section) => section.id);
@@ -180,6 +236,50 @@ const EditProfile = () => {
     setPopupType(type);
   };
 
+  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      setImageFile(file);
+
+      try {
+        const uploadedImageUrl = await uploadImageToS3(file);
+        setAvatar(uploadedImageUrl);
+        setChangeLogo(true);
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
+    }
+  };
+
+  const uploadImageToS3 = async (file: File): Promise<string> => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await fetch("/api/profileimage/", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to upload image");
+      }
+
+      const data = await response.json();
+      return data.url;
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      throw error;
+    }
+  };
+
+  const triggerFileInput = () => {
+    const fileInput = document.getElementById("avatarInput");
+    if (fileInput) {
+      fileInput.click();
+    }
+  };
+
   return (
     <>
       {loading ? (
@@ -187,8 +287,14 @@ const EditProfile = () => {
       ) : (
         <div className={styles.container}>
           <div className={styles.avatar}>
-            <Image src={avatarImage} width={140} height={140} alt="Avatar" />
-            <div className={styles.EditAvatar}>
+            <Image
+              src={avatar}
+              width={140}
+              height={140}
+              alt="Avatar"
+              className={styles.avatarImage}
+            />
+            <div className={styles.EditAvatar} onClick={triggerFileInput}>
               <svg
                 width="14"
                 height="14"
@@ -202,8 +308,24 @@ const EditProfile = () => {
                 />
               </svg>
             </div>
+            <input
+              type="file"
+              id="avatarInput"
+              style={{ display: "none" }}
+              accept="image/*"
+              onChange={handleAvatarChange}
+            />
           </div>
           <div className={styles.InputGroup} style={{ marginTop: "8px" }}>
+            <EditProfileInput
+              label="Name Surname"
+              placeholder="Erbil Can Artun"
+              value={nameSurname}
+              setValue={setNameSurname}
+            />
+          </div>
+
+          <div className={styles.InputGroup}>
             <EditProfileInput
               label="What do you do?"
               placeholder="Senior Solidity Developer"
@@ -238,6 +360,7 @@ const EditProfile = () => {
           </div>
 
           <div className={styles.About}>
+            <span className={styles.AboutText}>About</span>
             <EditProfileDraft
               ContentType="About"
               content={about}
@@ -246,24 +369,30 @@ const EditProfile = () => {
           </div>
 
           <div className={styles.SocialMedias}>
-            {socialPopup && profile?.id !== undefined && (
-              <>
-                <AddSocialMedia
-                  profileType="Job Seeker"
-                  profileId={Number(profile.id)}
-                  setPopup={setSocialPopup}
-                  fetchData={fetchData}
-                />
-              </>
+            {socialPopup && (
+              <AddSocialMedia
+                profileType="Job Seeker"
+                setPopup={setSocialPopup}
+                socialMedias={socialMedias}
+                setSocialMedias={setSocialMedias}
+              />
             )}
 
-            {profile?.socialMedias.map((item: SocialMedia, index: number) => (
-              <SocialMediaItem
-                key={index}
-                type={item.socialMediaType}
-                url={item.socialMediaUrl}
+            {socialMedias
+              .slice(0, visibleSocialMediaCount)
+              .map((item: CustomSocialMedia, index: number) => (
+                <SocialMediaItem
+                  key={index}
+                  type={item.socialMediaType}
+                  url={item.socialMediaUrl}
+                />
+              ))}
+
+            {socialMedias.length > visibleSocialMediaCount && (
+              <CollapsedSocialMedia
+                socialMedias={socialMedias.slice(visibleSocialMediaCount)}
               />
-            ))}
+            )}
 
             <Icon
               onClick={(e) => setSocialPopup(true)}
@@ -291,6 +420,15 @@ const EditProfile = () => {
             <div className={styles.Line}></div>
           </div>
 
+          <div className={styles.ProfileSections}>
+            <ProfileSections
+              profile={{ ...profile, section: profileSections }}
+              isEditing={true}
+              onEdit={handleEditSection}
+              onDelete={handleDeleteSection}
+            />
+          </div>
+
           <div className={styles.AddSection}>
             <Icon
               onClick={() => setSectionPopup(!sectionPopup)}
@@ -316,73 +454,52 @@ const EditProfile = () => {
               className={styles.SectionPopup}
               style={{ display: !sectionPopup ? "none" : "" }}
             >
-              <DragDropContext onDragEnd={onDragEnd}>
-                <Droppable droppableId="profileSections">
-                  {(provided) => (
-                    <div {...provided.droppableProps} ref={provided.innerRef}>
-                      {profileSections.map((item, index) => (
-                        <Draggable
-                          key={item.id}
-                          draggableId={item.id}
-                          index={index}
-                        >
-                          {(provided) => (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              className={styles.ElementDiv}
-                            >
-                              <Icon onClick={() => AddElement(item.id)}>
-                                <svg
-                                  width="20"
-                                  height="20"
-                                  viewBox="0 0 20 20"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  {/* ... (SVG path'leri aynı kalacak) */}
-                                </svg>
-                              </Icon>
-                              <div className={styles.SectionText}>
-                                {item.label}
-                              </div>
-                              <div className={styles.ChangeRow}>
-                                <svg
-                                  width="27"
-                                  height="10"
-                                  viewBox="0 0 27 10"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  {/* ... (SVG path'leri aynı kalacak) */}
-                                </svg>
-                              </div>
-                            </div>
-                          )}
-                        </Draggable>
-                      ))}
-                      {provided.placeholder}
-                    </div>
-                  )}
-                </Droppable>
-              </DragDropContext>
+              {sections.map((item, index) => (
+                <div className={styles.ElementDiv}>
+                  <Icon onClick={() => AddElement(item.id)}>
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M10.7216 11.1359L10.7218 19.0519C10.7217 19.2679 10.6411 19.459 10.4802 19.6251C10.3192 19.7911 10.1256 19.8741 9.89949 19.8742C9.67337 19.8741 9.47982 19.7935 9.31884 19.6326C9.15786 19.4716 9.0773 19.278 9.07717 19.0519L9.07737 11.1359L1.16132 11.136C0.945336 11.1359 0.754253 11.0554 0.588072 10.8944C0.422151 10.7334 0.339125 10.5398 0.338994 10.3137C0.339125 10.0876 0.41968 9.89404 0.58066 9.73306C0.74164 9.57208 0.935193 9.49153 1.16132 9.4914L9.07736 9.49159L9.07717 1.57555C9.0773 1.35956 9.15785 1.16848 9.31884 1.0023C9.47982 0.836376 9.67337 0.75335 9.89949 0.75322C10.1256 0.75335 10.3192 0.833906 10.4802 0.994886C10.6411 1.15587 10.7217 1.34942 10.7218 1.57555L10.7216 9.49159L18.6377 9.4914C18.8537 9.49153 19.0447 9.57208 19.2109 9.73306C19.3768 9.89404 19.4599 10.0876 19.46 10.3137C19.4599 10.5398 19.3793 10.7334 19.2183 10.8944C19.0573 11.0554 18.8638 11.1359 18.6377 11.136L10.7216 11.1359Z"
+                        fill="#999999"
+                        fill-opacity="0.6"
+                      />
+                    </svg>
+                  </Icon>
+                  <div className={styles.SectionText}>{item.label}</div>
+                </div>
+              ))}
             </div>
           </div>
 
           <div
-            className={styles.PopupContainer}
-            style={{ display: !showAddPopup ? "none" : "" }}
-          >
-            <AddProfileSectionPopup
-              type={popupType}
-              setShowAddPopup={setShowAddPopup}
-              profileId={Number(profile?.id)}
-            />
+              className={styles.PopupContainerDiv}>
+            <div
+              className={styles.PopupContainer}
+              style={{ display: !showAddPopup ? "none" : "" }}
+            >
+              <AddProfileSectionPopup
+                type={popupType}
+                setShowAddPopup={setShowAddPopup}
+                profileId={Number(profile?.id)}
+                onAdd={handleAddSection}
+                onUpdate={handleUpdateSection}
+                editingSection={
+                  editingSectionId
+                    ? profileSections.find((s) => s.id === editingSectionId)
+                    : undefined
+                }
+              />
+            </div>
           </div>
 
           <div className={styles.ButtonDiv}>
-            <Button text="Done" onClick={() => console.log("Done")} />
+            <Button text="Done" onClick={() => Done()} />
           </div>
         </div>
       )}

@@ -8,8 +8,9 @@ import Draft from "../general/Draft";
 import SocialMediaItem from "./SocialMediaItem";
 import EditProfile from "./EditProfile";
 import { SocialMedia } from "@prisma/client";
-import { JSONContent } from '@tiptap/react';
+import { JSONContent } from "@tiptap/react";
 import ProfileSections from "./ProfileSections";
+import { useProfile } from "@/hooks/useCompanyProfile";
 
 interface ProfileSection {
   id: number;
@@ -26,6 +27,7 @@ interface ProfileSection {
 interface ProfileData {
   id: number;
   userId: number;
+  logoURL?: string;
   jobTitle?: string;
   location?: string;
   headline?: string;
@@ -41,6 +43,8 @@ const Profile = () => {
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [editProfile, setEditProfile] = useState<boolean>(false);
+
+  const { setProfileType } = useProfile();
 
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -83,12 +87,8 @@ const Profile = () => {
     setShowDetail(false);
   };
 
-  const convertToJSONContent = (text: string | undefined): JSONContent => {
-    return { type: 'doc', content: [{ type: 'paragraph', content: [{ type: 'text', text: text || "" }] }] };
-  };
-
   return (
-    <div className={styles.container}>     
+    <div className={styles.container}>
       {loading ? (
         <div className={styles.loadingOverlay}></div>
       ) : (
@@ -115,15 +115,24 @@ const Profile = () => {
               className={styles.menu}
               style={{ display: showDetail ? "flex" : "none" }}
             >
-              <a onClick={EditProfileClick} className={styles.menuItem}>Edit profile</a>
-              <a className={styles.menuItem}>Export Profile</a>
-              <a className={styles.menuItem}>Company Profile</a>
+              <a onClick={EditProfileClick} className={styles.menuItem}>
+                Edit profile
+              </a>
+              <a onClick={() => setProfileType(1)} className={styles.menuItem}>
+                Company Profile
+              </a>
             </div>
           </div>
-          {editProfile === false ? (          
-            <>            
+          {editProfile === false ? (
+            <>
               <div className={styles.avatar}>
-                <Image className={styles.avatarImage} src={avatarImage} width={140} height={140} alt="Avatar" />
+                <Image
+                  className={styles.avatarImage}
+                  src={profile?.logoURL != "" ? profile?.logoURL : avatarImage}
+                  width={140}
+                  height={140}
+                  alt="Avatar"
+                />
               </div>
               <div className={styles.HeadLine}>{profile?.headline}</div>
               <div className={styles.HeadSite}>
@@ -133,13 +142,15 @@ const Profile = () => {
                 <Draft show border content={profile?.about} />
               </div>
               <div className={styles.SocialMedias}>
-                {profile?.socialMedias.map((item: SocialMedia, index: number) => (
-                  <SocialMediaItem
-                    key={index}
-                    type={item.socialMediaType}
-                    url={item.socialMediaUrl}
-                  />
-                ))}
+                {profile?.socialMedias.map(
+                  (item: SocialMedia, index: number) => (
+                    <SocialMediaItem
+                      key={index}
+                      type={item.socialMediaType}
+                      url={item.socialMediaUrl}
+                    />
+                  )
+                )}
               </div>
 
               <div className={styles.LineDiv}>
@@ -152,7 +163,7 @@ const Profile = () => {
             </>
           ) : (
             <EditProfile />
-          )}          
+          )}
         </>
       )}
     </div>

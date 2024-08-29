@@ -180,6 +180,7 @@ model Profile {
   userId        Int              @unique
   user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   logoURL       String
+  nameSurname   String
   jobTitle      String
   location      String
   headline      String
@@ -208,6 +209,8 @@ model SocialMedia {
   profile         Profile         @relation(fields: [profileId], references: [id], onDelete: Cascade)
   socialMediaType socialMediaType
   socialMediaUrl  String
+  platformName    String?
+  username        String?
 }
 
 model SocialMediaCompany {
@@ -216,14 +219,24 @@ model SocialMediaCompany {
   profile         CompanyProfile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
   socialMediaType socialMediaType
   socialMediaUrl  String
+  platformName    String?
+  username        String?
 }
 
 enum socialMediaType {
-  LinkedIn
-  X
+  Arena
   Facebook
+  Figma
+  Github
+  Gitlab
   Instagram
-  GitHub
+  Linkedin
+  Substack
+  Telegram
+  Tiktok
+  X
+  Youtube
+  Custom
 }
 
 model BuyedPackage {

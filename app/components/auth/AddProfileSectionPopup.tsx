@@ -7,17 +7,24 @@ import Dropdown from "../general/Dropdown";
 import EditProfileDraft from "./EditProfileDraft";
 import { JSONContent } from "@tiptap/react";
 import Button from "../general/Button";
+import { ProfileSection } from "@prisma/client";
 
 interface PopupProps {
   type: string;
   profileId: number;
   setShowAddPopup: React.Dispatch<React.SetStateAction<boolean>>;
+  onAdd: (newSection: ProfileSection) => void;
+  onUpdate: (updatedSection: ProfileSection) => void;
+  editingSection?: ProfileSection;
 }
 
 const AddProfileSectionPopup: React.FC<PopupProps> = ({
   type,
   setShowAddPopup,
   profileId,
+  onAdd,
+  onUpdate,
+  editingSection,
 }) => {
   const [titlePlace, setTitlePlace] = useState<string>("Title*");
   const [title, setTitle] = useState<string>("");
@@ -122,39 +129,41 @@ const AddProfileSectionPopup: React.FC<PopupProps> = ({
     );
   }, [type]);
 
+  useEffect(() => {
+    if (editingSection) {
+      setTitle(editingSection.title);
+      setInstitution(editingSection.institution);
+      setLocation(editingSection.location || "");
+      setFrom(editingSection.from);
+      setTo(editingSection.to);
+      // setUrl(editingSection.url || "");
+      setDescription(editingSection.description);
+    }
+  }, [editingSection]);
+
   const Cancel = () => {
     setShowAddPopup(false);
   };
 
-  const Save = async () => {
-    try {
-      const data = {
-        profileId,
-        sectionType: type,
-        title,
-        from,
-        to,
-        institution,
-        location,
-        url,
-        description,
-      };
+  const Save = () => {
+    const sectionData = {
+      profileId,
+      sectionType: type,
+      title,
+      from,
+      to,
+      institution,
+      location,
+      url,
+      description,
+    };
 
-      const response = await fetch("/api/profile/profilesection/", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (response.ok) {
-        setShowAddPopup(false);
-      } else {
-        console.error("Error Posting for job:", response.statusText);
-      }
-    } catch (error) {
-      console.error(error);
+    if (editingSection) {
+      onUpdate(sectionData);
+    } else {
+      onAdd(sectionData);
     }
+    setShowAddPopup(false);
   };
 
   return (
