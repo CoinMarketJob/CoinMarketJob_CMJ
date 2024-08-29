@@ -8,6 +8,15 @@
   letter-spacing: 0.03em;
   background-color: #242220;
   color: #FFFFFF;
+  transition: all 0.1s ease-in-out;
+}
+
+.form-button:hover:not(:disabled) {
+  transform: scale(1.04);
+}
+
+.form-button:active:not(:disabled) {
+  transform: scale(0.98);
 }
 
 
