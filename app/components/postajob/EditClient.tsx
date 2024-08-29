@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./EditClient.module.css";
 import JobTitle from "./JobTitle";
 import LocationSelector from "../location/LocationSelector";
@@ -99,10 +99,18 @@ const EditClient: React.FC<EditClientProps> = ({
     { value: "Master", label: "Master" },
     { value: "PhD", label: "PhD" },
   ];
+  const chooseLocationOptions = [
+    { value: 'Current Location', label: 'Current Location' },
+    { value: 'London', label: 'London' },
+    { value: 'New York', label: 'New York' },
+    { value: 'Papua New Guinea', label: 'Papua New Guinea' },
+    { value: 'San Fransisco', label: 'San Fransisco' },
+    { value: 'Las Vegas', label: 'Las Vegas' },
+  ];
 
   const [QuestionAddShow, setQuestionAddShow] = useState<boolean>(false);
   const [QuestionInput, setQuestionInput] = useState<string | undefined>();
-
+  const [isFormValid, setIsFormValid] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
   const handleEdit = (index: number) => {
@@ -141,6 +149,34 @@ const EditClient: React.FC<EditClientProps> = ({
     setPage(1);
   };
 
+  const validateForm = () => {
+    if (
+      jobTitle &&
+      jobType &&
+      experienceLevel &&
+      educationalDegree 
+      
+    ) {
+      setIsFormValid(true);
+    } else {
+      setIsFormValid(false);
+    }
+  };
+  useEffect(() => {
+    validateForm();
+  }, [
+    jobTitle,
+    locationType,
+    jobType,
+    experienceLevel,
+    educationalDegree,
+    min,
+    max,
+    single,
+    description,
+  ]);
+    
+
   return (
     <div className={styles.container}>
       <div className={`${styles.centerDiv} ${styles.logo}`}>
@@ -157,11 +193,13 @@ const EditClient: React.FC<EditClientProps> = ({
 
       <div className={`${styles.centerDiv}`}>
         <LocationSelector
-          selectedLocations={selectedLocations}
-          setSelectedLocations={setSelectedLocations}
-          locationType={locationType}
-          setLocationType={setLocationType}
-        />
+                      label="Choose Location"
+                      options={chooseLocationOptions}
+                      selectedLocation={selectedLocations}
+                      setSelectedLocation={setSelectedLocations}
+                      locationType={locationType}
+                      setLocationType={setLocationType}
+                    />
       </div>
 
       <div className={`${styles.centerDiv} ${styles.SelectionGroup}`}>
@@ -206,6 +244,7 @@ const EditClient: React.FC<EditClientProps> = ({
               <Input
                 id="min"
                 type="number"
+                required={false}
                 value={min}
                 onChange={(e) => setMin(e.target.value)}
                 placeholder="Min"
@@ -216,6 +255,7 @@ const EditClient: React.FC<EditClientProps> = ({
               <Input
                 id="max"
                 type="number"
+                required={false}
                 value={max}
                 onChange={(e) => setMax(e.target.value)}
                 placeholder="Max"
@@ -228,6 +268,7 @@ const EditClient: React.FC<EditClientProps> = ({
               <Input
                 id="single"
                 type="number"
+                required={false}
                 value={single}
                 onChange={(e) => setSingle(e.target.value)}
                 placeholder="Enter a single value"
@@ -321,7 +362,8 @@ const EditClient: React.FC<EditClientProps> = ({
             <Input
               id="Question"
               type="text"
-              value={QuestionInput}
+              value={QuestionInput || ""}
+              required={false}
               onChange={(e) => setQuestionInput(e.target.value)}
               placeholder="Type your question"
             />
@@ -367,6 +409,7 @@ const EditClient: React.FC<EditClientProps> = ({
           paddingLeft={27}
           paddingRight={28}
           fontSize={15}
+          disabled={!isFormValid}
         />
       </div>
     </div>

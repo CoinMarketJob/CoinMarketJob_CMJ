@@ -10,9 +10,11 @@ import React, { useEffect, useState } from 'react'
 
 interface DraftProps {
   show?: boolean;
-  content? : JSONContent;
+  content?: JSONContent;
   onChange?: (content: JSONContent) => void;
+  onContentChange?: () => void; // Yeni eklenen prop
   border?: boolean;
+  error?: boolean;
 }
 
 const MenuBar: React.FC<{ editor: Editor | null }> = ({ editor }) => {
@@ -72,7 +74,8 @@ const MenuBar: React.FC<{ editor: Editor | null }> = ({ editor }) => {
       </div>
   )
 }
-const Draft: React.FC<DraftProps> = ({show, content, onChange, border}) => {
+
+const Draft: React.FC<DraftProps> = ({show, content, onChange, onContentChange, border, error}) => {
   const editor = useEditor({
     extensions: [
       Color.configure({ /* Yapılandırma seçeneklerini buraya ekleyin, örneğin:  */}),
@@ -93,6 +96,9 @@ const Draft: React.FC<DraftProps> = ({show, content, onChange, border}) => {
       if (onChange) {
         onChange(editor.getJSON());
       }
+      if (onContentChange) {
+        onContentChange();
+      }
     },
     
     editable: !show
@@ -107,7 +113,7 @@ const Draft: React.FC<DraftProps> = ({show, content, onChange, border}) => {
   }
 
   return (
-    <div className="control-group" style={{border: border ? "none" : "1px solid #E7E5E4" }}>
+    <div className={`control-group ${error ? 'error-border' : ''}`} style={{border: border ? "none" : "1px solid #E7E5E4" }}>
       <MenuBar editor={editor} />
       <EditorContent className="editor-content" editor={editor} />
     </div>

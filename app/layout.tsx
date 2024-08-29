@@ -1,4 +1,3 @@
-/* eslint-disable */
 "use client";
 
 import "./globals.css";
@@ -9,6 +8,7 @@ import { CitiesProvider } from "@/hooks/useCity";
 import Footer from "./components/Footer/Footer";
 import { LayoutProvider } from "@/hooks/useLayout";
 import AuthWrapper from "./AuthWrapper";
+import { SessionProvider } from "next-auth/react"; // Add this import
 import { ProfileProvider } from "@/hooks/useCompanyProfile";
 
 export default function RootLayout({
@@ -29,23 +29,25 @@ export default function RootLayout({
         ></meta>
       </head>
       <body>
-        <LayoutProvider>
-          <ProfileProvider>
-            <JobsProvider>
-              <CitiesProvider>
-                <AuthWrapper>
-                  <div className="layout-container-div">
-                    <Searchbar />
-                    <main className="layout-main-div">
-                      <DefaultContainer>{children}</DefaultContainer>
-                    </main>
-                    <Footer />
-                  </div>
-                </AuthWrapper>
-              </CitiesProvider>
-            </JobsProvider>
-          </ProfileProvider>
-        </LayoutProvider>
+        <SessionProvider>
+          <LayoutProvider>
+            <ProfileProvider>
+              <JobsProvider>
+                <CitiesProvider>
+                  <AuthWrapper>
+                    <div className="layout-container-div">
+                      <Searchbar />
+                      <main className="layout-main-div">
+                        <DefaultContainer>{children}</DefaultContainer>
+                      </main>
+                      <Footer />
+                    </div>
+                  </AuthWrapper>
+                </CitiesProvider>
+              </JobsProvider>
+            </ProfileProvider>
+          </LayoutProvider>
+        </SessionProvider>
       </body>
     </html>
   );

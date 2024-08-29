@@ -215,3 +215,12 @@
   justify-content: flex-end;
   margin-top: 32px;
 }
+
+.errorSelect {
+  border-color: red !important;
+}
+
+/* Eğer Select bileşeni özel bir container kullanıyorsa, aşağıdaki stili de ekleyin */
+.errorSelect > div {
+  border-color: red !important;
+}

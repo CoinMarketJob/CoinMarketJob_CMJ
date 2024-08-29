@@ -103,18 +103,37 @@ const Page = () => {
         <div
           className={`${styles.indicator} ${styles.indicatorMargin} ${
             page === 0 ? styles.selectedIndicator : ""
-          }`} onClick={() =>  setPage(0)}
+          }`}
+          onClick={() => setPage(0)} // No restriction for going back to the first page
         ></div>
+          <div
+              className={`${styles.indicator} ${styles.indicatorMargin} ${
+                page === 1 ? styles.selectedIndicator : ""
+              }`}
+              onClick={() => {
+                if (jobTitle &&
+                  jobType &&
+                  experienceLevel &&
+                  educationalDegree ) {
+                  // Only allow advancing if fields are filled
+                  setPage(1);
+                }
+              }}
+            ></div>
         <div
-          className={`${styles.indicator} ${styles.indicatorMargin} ${
-            page === 1 ? styles.selectedIndicator : ""
-          }`} onClick={() =>  setPage(1)}
-        ></div>
-        <div
-          className={`${styles.indicator} ${
-            page === 2 ? styles.selectedIndicator : ""
-          }`} onClick={() =>  setPage(2)}
-        ></div>
+    className={`${styles.indicator} ${
+      page === 2 ? styles.selectedIndicator : ""
+    }`}
+    onClick={() => {
+      if (jobTitle &&
+        jobType &&
+        experienceLevel &&
+        educationalDegree ) {
+        // Only allow advancing if fields are filled
+        setPage(2);
+      }
+    }}
+  ></div>
       </div>
 
       {page === 0 ? (

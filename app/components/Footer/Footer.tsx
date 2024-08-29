@@ -6,12 +6,15 @@ import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark, faBell } from "@fortawesome/free-regular-svg-icons";
 import { useRouter } from "next/navigation";
 import { useLayout } from "@/hooks/useLayout";
+import { useSession } from "next-auth/react";
 
 const Footer = () => {
   const router = useRouter();
   const { layout, setLayout } = useLayout();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const optionsRef = useRef<HTMLDivElement>(null);
+  const { data: session } = useSession();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -31,11 +34,21 @@ const Footer = () => {
   };
 
   const Alert = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    router.push("/jobalert");
+    if (session) {
+      router.push("/jobalert");
+    } else {
+      setErrorMessage("Please log in to view job alerts");
+      setTimeout(() => setErrorMessage(null), 3000); // Clear error after 3 seconds
+    }
   };
 
   const SavedJobs = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    router.push("/savedjobs");
+    if (session) {
+      router.push("/savedjobs");
+    } else {
+      setErrorMessage("Please log in to view saved jobs");
+      setTimeout(() => setErrorMessage(null), 3000); // Clear error after 3 seconds
+    }
   };
 
   return (
@@ -318,6 +331,7 @@ const Footer = () => {
           />
         </svg>
       </Icon>
+      {errorMessage && <div className={styles.ErrorMessage}>{errorMessage}</div>}
     </div>
   );
 };

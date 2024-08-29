@@ -6,10 +6,14 @@ import SearchInput from "./SearchInput";
 import { useRouter } from "next/navigation";
 import JobFilterPopUp from "../jobfilter/Job";
 
+import { useSession } from "next-auth/react";
 const Searchbar = () => {
   const [tags, setTags] = useState<Array<string>>([]);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const router = useRouter();
+  const { data: session } = useSession();
+
   const back = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     router.back();
   };
@@ -24,11 +28,17 @@ const Searchbar = () => {
   };
 
   const postajob = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    router.push("/postajob");
+    if (session) {
+      router.push("/postajob");
+    } else {
+      setErrorMessage("Please log in to post a job");
+      setTimeout(() => setErrorMessage(null), 3000);
+    }
   };
 
   return (
     <div className="search-container-div">
+      {errorMessage && <div className="ErrorMessage">{errorMessage}</div>}
       <div className="home-button">
         <Icon onClick={home} marginLeft={60} hoverSize={51} hoverContent="Home">
           <svg
@@ -93,7 +103,6 @@ const Searchbar = () => {
             isFilterOpen={isFilterOpen}
             setIsFilterOpen={setIsFilterOpen}
         />
-
         </div>
         <Icon
           onClick={postajob}
