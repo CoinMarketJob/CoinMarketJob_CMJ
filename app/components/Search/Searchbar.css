@@ -5,6 +5,7 @@
     height: 96px;
     margin-bottom: 22px;
     margin-top: 16px;
+    position: relative;
 }
 
 .home-button{
@@ -17,4 +18,28 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.ErrorMessage {
+    position: absolute;
+    top: -15px; /* Üst kısımda görünmesi için */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ff6b6b;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    z-index: 1000; /* Diğer öğelerin üzerinde görünmesi için */
+    animation: fadeIn 0.3s, fadeOut 0.3s 2.7s;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
 }
