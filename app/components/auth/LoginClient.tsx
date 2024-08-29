@@ -172,8 +172,10 @@ const LoginClient = () => {
               </div>
             </div>
           ) : (
-            <div>
-              {error && <div className="error-message">{error}</div>}
+            <div className="login-form-container">
+              <div className="error-message-container">
+                {error && <div className="error-message">{error}</div>}
+              </div>
               <div style={{ display: "flex", width: "252px", marginBottom: "20px" }}>
                 <Input 
                   id="email" 

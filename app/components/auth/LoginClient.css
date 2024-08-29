@@ -126,9 +126,13 @@ input.checked::before {
   border-color: #ff0000 !important;
 }
 
+.error-message-container {
+  height: 20px; /* Adjust this value based on your needs */
+  margin-bottom: 10px;
+}
+
 .error-message {
   color: #ff0000;
   font-size: 14px;
-  margin-bottom: 10px;
   text-align: center;
 }
