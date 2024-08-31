@@ -16,10 +16,12 @@
 
 .icon-hover:hover {
     background-color: #2422200D;
+    cursor: pointer;
 }
 
 .icon-hover:active {
     background-color: white;
+    cursor: 
 }
 
 .icon-hover:active .svg-icon {
