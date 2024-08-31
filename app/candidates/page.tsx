@@ -81,9 +81,21 @@ const Page = () => {
             {selectedApplication?.name + " " + selectedApplication?.surname}{" "}
           </div>
 
-          <div>
-            <Draft show content={selectedApplication?.user.profile?.about} />
-          </div>
+          {selectedApplication?.resumeLink && <a href={selectedApplication?.resumeLink} target="_blank">CV</a>}
+
+          {selectedApplication?.resumeDraft && (
+            <div>
+              <Draft show content={selectedApplication?.resumeDraft} />
+            </div>
+          )}
+
+          {selectedApplication?.coverLetterLink && <a href={selectedApplication?.coverLetterLink} target="_blank">CL</a>}
+
+          {selectedApplication?.coverLetterDraft && (
+            <div>
+              <Draft show content={selectedApplication?.coverLetterDraft} />
+            </div>
+          )}
 
           <div className={styles.QuestionAndAnswerArea}>
             {selectedApplication.Answers.map((item: any, index: any) => {

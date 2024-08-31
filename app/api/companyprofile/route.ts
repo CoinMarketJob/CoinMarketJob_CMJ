@@ -5,24 +5,28 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { companyName, headline, siteUrl, about, logoLink } = body;
+  const { companyName, headline, siteUrl, about, logoLink, socialMedias } =
+    body;
 
   const currentUser = await getCurrentUser();
-  
+
   if (!currentUser) {
-    return NextResponse.json({ error: 'User not authenticated' }, { status: 401 });
+    return NextResponse.json(
+      { error: "User not authenticated" },
+      { status: 401 }
+    );
   }
 
   const profile = await prisma.companyProfile.upsert({
     where: {
-        userId: currentUser.id,
+      userId: currentUser.id,
     },
     update: {
-        logoURL: logoLink,
-        companyName,
-        headline,
-        siteUrl,
-        about
+      logoURL: logoLink,
+      companyName,
+      headline,
+      siteUrl,
+      about,
     },
     create: {
       userId: currentUser.id,
@@ -30,12 +34,19 @@ export async function POST(request: Request) {
       companyName,
       headline,
       siteUrl,
-      about
+      about,
     },
     include: {
-      socialMedias: true
-    }
-  })
+      socialMedias: true,
+    },
+  });
+
+  await prisma.socialMediaCompany.deleteMany({
+    where: { profileId: profile.id },
+  });
+  await prisma.socialMediaCompany.createMany({
+    data: socialMedias.map((sm: any) => ({ ...sm, profileId: profile.id })),
+  });
 
   return NextResponse.json(profile);
 }

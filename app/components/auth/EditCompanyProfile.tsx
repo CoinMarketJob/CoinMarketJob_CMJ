@@ -10,6 +10,7 @@ import SocialMediaItem from "./SocialMediaItem";
 import { SocialMedia } from "@prisma/client";
 import AddSocialMedia from "./AddSocialMedia";
 import Button from "../general/Button";
+import CollapsedSocialMedia from "./CollapsedSocialMedia";
 const defaultAvatarImage = "/PlaceholderCompanyProfile.png";
 
 interface Profile {
@@ -28,6 +29,13 @@ interface props {
   oldProfile: any;
 }
 
+interface CustomSocialMedia {
+  socialMediaType: string;
+  socialMediaUrl: string;
+  platformName: string;
+  username: string;
+}
+
 const EditCompanyProfile: React.FC<props> = ({
   setEditProfile,
   oldProfile,
@@ -44,6 +52,7 @@ const EditCompanyProfile: React.FC<props> = ({
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [oldLogo, setOldLogo] = useState("");
   const [changeLogo, setChangeLogo] = useState<boolean>(false);
+  const [socialMedias, setSocialMedias] = useState<CustomSocialMedia[]>([]);
 
   const closeTest = () => {
     console.log("Close");
@@ -128,6 +137,7 @@ const EditCompanyProfile: React.FC<props> = ({
         siteUrl: site,
         about,
         logoLink,
+        socialMedias,
       };
 
       const response = await fetch("/api/companyprofile/", {
@@ -212,29 +222,34 @@ const EditCompanyProfile: React.FC<props> = ({
       </div>
 
       <div className={styles.About}>
-        <EditProfileDraft
-          ContentType="About"
-          onChange={AboutChange}
-        />
+        <EditProfileDraft ContentType="About" onChange={AboutChange} />
       </div>
 
       <div className={styles.SocialMedias}>
-        {socialPopup && profile && (
+        {socialPopup && (
           <AddSocialMedia
-            profileType="Company"
-            profileId={profile.id} // ID'nin doğru türde olduğundan emin olun
+            profileType="Job Seeker"
             setPopup={setSocialPopup}
-            fetchData={fetchData}
+            socialMedias={socialMedias}
+            setSocialMedias={setSocialMedias}
           />
         )}
 
-        {profile?.socialMedias.map((item: SocialMedia, index: number) => (
-          <SocialMediaItem
-            key={index}
-            type={item.socialMediaType}
-            url={item.socialMediaUrl}
+        {socialMedias
+          .slice(0, 3)
+          .map((item: CustomSocialMedia, index: number) => (
+            <SocialMediaItem
+              key={index}
+              type={item.socialMediaType}
+              url={item.socialMediaUrl}
+            />
+          ))}
+
+        {socialMedias.length > 3 && (
+          <CollapsedSocialMedia
+            socialMedias={socialMedias.slice(3)}
           />
-        ))}
+        )}
 
         <Icon
           onClick={(e) => setSocialPopup(true)}
