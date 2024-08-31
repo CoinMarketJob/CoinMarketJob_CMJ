@@ -9,6 +9,7 @@ export async function GET(
   const job = await prisma.job.findUnique({
     where: { id: parseInt(params.id, 10) },
     cacheStrategy: { swr: 60, ttl: 60 },
+    include: {jobQuestions: true}
   });
 
   return NextResponse.json(job);

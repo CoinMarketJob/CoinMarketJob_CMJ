@@ -3,9 +3,11 @@ import React, { useEffect, useState } from "react";
 import styles from "./Dashboard.module.css";
 import JobCard from "../components/dashboard/JobCard";
 
+
+
 const page = () => {
-    const [loading, setLoading] = useState<boolean>();
-    const [jobs, setJobs] = useState<any>([]);
+  const [loading, setLoading] = useState<boolean>();
+  const [jobs, setJobs] = useState<Array<any>>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -30,7 +32,9 @@ const page = () => {
       <div className={styles.Line}></div>
 
       <div>
-        <JobCard />
+        {jobs.map((item: any, index: any) => {
+          return <JobCard job={item} />;
+        })}
       </div>
     </div>
   );

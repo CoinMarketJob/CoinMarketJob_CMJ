@@ -1,37 +1,9 @@
 .control-group {
-    border-radius: 15px;
-    width: 100%;
-  }
-  
-  .placeholder-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    border-bottom: 1.45px solid #E7E5E4;
-    font-family: Inter, sans-serif; /* Adding sans-serif as a fallback */
-    font-size: 18px;
-    font-weight: 400;
-    color: #999999;
-  }
+  border-radius: 15px;
+  width: 100%;
+}
 
-  .question-text{
-    color: #999999;
-  }
-  
-  .editor-content {
-    width: calc(100%);
-    max-width: calc(100%);
-    flex-grow: 1;
-    overflow: auto;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-    padding: 5px;
-    box-sizing: border-box;
-  }
-  
-  .ProseMirror-focused {
-    border: none !important;
-    outline: none !important;
-  }
-  
+.question-area {
+  padding: 16px;
+  border-bottom: 1px solid #E7E5E4;
+}

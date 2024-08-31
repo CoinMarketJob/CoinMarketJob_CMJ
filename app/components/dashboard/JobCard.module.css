@@ -1,7 +1,86 @@
-.Container{
-    width: calc(100% - 48px);
-    margin-top: 16px;
-    padding: 24px;
-    border: 1px solid #E7E5E4;
-    border-radius: 15px;
+.Container {
+  width: calc(100% - 48px);
+  margin-top: 16px;
+  padding: 24px;
+  border: 1px solid #e7e5e4;
+  border-radius: 15px;
+  transition: all 0.3s ease-out;
+  overflow: hidden;
+}
+
+.Table {
+  width: 100%;
+}
+
+.ColArrow {
+  width: 45px;
+  text-align: right;
+}
+
+.ColStatistic {
+  width: 120px;
+  text-align: center;
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19.36px;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: #242220b2;
+}
+
+.ColJobInfo {
+  text-align: left;
+}
+
+.JobTitle {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19.36px;
+  letter-spacing: 0.04em;
+  text-align: left;
+}
+
+.ActiveEndDate {
+  margin-top: 12px;
+  font-family: Inter;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 15.73px;
+  letter-spacing: 0.03em;
+  text-align: left;
+  color: #222420b2;
+}
+
+.LineDetail {
+  overflow: hidden;
+}
+
+.LineDetail.Expanded {
+  max-height: 100px; /* İçeriğinize göre ayarlayın */
+  opacity: 1;
+  margin-top: 16px;
+}
+
+
+
+.Location {
+  font-family: Inter;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 15.73px;
+  letter-spacing: 0.03em;
+  text-align: left;
+  color: #222420b2;
+}
+
+.CreationDate {
+  font-family: Inter;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 15.73px;
+  letter-spacing: 0.03em;
+  text-align: left;
+  color: #222420b2;
 }

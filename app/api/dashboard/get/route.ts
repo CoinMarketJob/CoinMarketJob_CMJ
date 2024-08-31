@@ -12,12 +12,34 @@ export async function GET() {
 
     const jobs = await prisma.job.findMany({
       where: { userId: currentUser?.id },
-      cacheStrategy: { swr: 60, ttl: 60 },
+      include: {
+        appliedJobs: {
+          include: {
+            user: {
+              include: {
+                profile: true
+              }
+            }
+          }
+        },
+        jobQuestions: true,
+      },
     });
 
-    return NextResponse.json(jobs);
+    // Hassas bilgileri filtreleme
+    const sanitizedJobs = jobs.map(job => ({
+      ...job,
+      appliedJobs: job.appliedJobs.map(appliedJob => ({
+        ...appliedJob,
+        user: {
+          profile: appliedJob.user.profile
+        }
+      }))
+    }));
+
+    return NextResponse.json(sanitizedJobs);
   } catch (e) {
     console.error(e);
-    return NextResponse.json({ error: "Server Error" }, { status: 404 });
+    return NextResponse.json({ error: "Server Error" }, { status: 500 });
   }
 }

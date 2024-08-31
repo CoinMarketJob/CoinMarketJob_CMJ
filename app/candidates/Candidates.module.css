@@ -1,0 +1,73 @@
+.Container {
+  width: 100%;
+  padding-top: 48px;
+  padding-bottom: 48px;
+  padding-left: 36px;
+  padding-right: 36px;
+  display: flex;
+}
+
+.JobsText {
+  font-family: Inter;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 31.75px;
+  letter-spacing: 0.03em;
+}
+
+.Line {
+  margin-top: 16px;
+  margin-bottom: 8px;
+  width: 100%;
+  height: 1px;
+  background: #e7e5e4;
+}
+
+.TopDetail {
+  display: flex;
+}
+
+.Options {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.ListContainer {
+  flex-grow: 1;
+}
+
+.DetailContainer {
+  width: 45%;
+  border-left: 1px solid #e7e5e4;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 36px;
+  padding-bottom: 36px;
+  margin-left: 12px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.ProfilePhoto {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.ProfileImage {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.NameSurname {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19.36px;
+  letter-spacing: 0.04em;
+  text-align: left;
+  margin-top: 24px;
+}

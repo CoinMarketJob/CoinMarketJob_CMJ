@@ -24,6 +24,12 @@ model User {
   companyProfile CompanyProfile?
   buyedPackages  BuyedPackage[]
   Settings       Settings[]
+
+  JobQuestions JobQuestions[]
+
+  applicationsState ApplicationsState[]
+
+  Answers Answers[]
 }
 
 model Job {
@@ -50,6 +56,8 @@ model Job {
   savedJobs         SavedJobs[]
   appliedJobs       AppliedJobs[]
   jobQuestions      JobQuestions[]
+
+  applicationsState ApplicationsState[]
 }
 
 enum SalaryUnit {
@@ -61,14 +69,14 @@ enum SalaryUnit {
 }
 
 model JobQuestions {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  jobId     Int
-  job       Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
-  question  String 
-  appliedJobs AppliedJobs[]  
-  
-  @@unique([userId, jobId])
+  id       Int    @id @default(autoincrement())
+  userId   Int
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobId    Int
+  job      Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  question String
+
+  Answers Answers[]
 }
 
 enum LocationType {
@@ -114,18 +122,12 @@ model SavedJobs {
   @@unique([userId, jobId])
 }
 
-
-
 model AppliedJobs {
   id               Int      @id @default(autoincrement())
   userId           Int
   user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   jobId            Int
   job              Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
-  answers          Json     // Job questionların answerları için
-  jobQuestionId    Int
-  answer           String? 
-  jobQuestion      JobQuestions @relation(fields: [jobQuestionId], references: [id], onDelete: Cascade)
   name             String
   surname          String
   email            String
@@ -138,17 +140,17 @@ model AppliedJobs {
   coverLetterDraft Json?
   visaSponsorship  Boolean
 
-  @@unique([userId, jobId, jobQuestionId])
-}
+  applicationsState ApplicationsState[]
 
+  @@unique([userId, jobId])
+  Answers Answers[]
+}
 
 model News {
   id      Int    @id @default(autoincrement())
   logo    String
   summary String
 }
-
-
 
 model Hacks {
   id          Int    @id @default(autoincrement())
@@ -189,7 +191,7 @@ model Profile {
   userId        Int              @unique
   user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   logoURL       String
-  nameSurname   String
+  nameSurname   String?
   jobTitle      String
   location      String
   headline      String
@@ -333,4 +335,35 @@ enum Frequency {
   Weekly
   Daily
   PrettyMuchEverything
+}
+
+model ApplicationsState {
+  id            Int         @id @default(autoincrement())
+  jobId         Int
+  job           Job         @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  userId        Int
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  applicationId Int
+  appliedJobs   AppliedJobs @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+
+  state State
+
+  @@unique([userId, applicationId])
+}
+
+enum State {
+  Approved
+  Saved
+  Declined
+}
+
+model Answers{
+  id            Int         @id @default(autoincrement())
+  userId        Int
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  applicationId Int
+  appliedJobs   AppliedJobs @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  questionId    Int
+  question      JobQuestions @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  answer        String
 }

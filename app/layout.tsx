@@ -10,6 +10,7 @@ import { LayoutProvider } from "@/hooks/useLayout";
 import AuthWrapper from "./AuthWrapper";
 import { SessionProvider } from "next-auth/react"; // Add this import
 import { ProfileProvider } from "@/hooks/useCompanyProfile";
+import { JobApplicationsProvider } from "@/hooks/useApplicationJob";
 
 export default function RootLayout({
   children,
@@ -35,13 +36,15 @@ export default function RootLayout({
               <JobsProvider>
                 <CitiesProvider>
                   <AuthWrapper>
-                    <div className="layout-container-div">
-                      <Searchbar />
-                      <main className="layout-main-div">
-                        <DefaultContainer>{children}</DefaultContainer>
-                      </main>
-                      <Footer />
-                    </div>
+                    <JobApplicationsProvider>
+                      <div className="layout-container-div">
+                        <Searchbar />
+                        <main className="layout-main-div">
+                          <DefaultContainer>{children}</DefaultContainer>
+                        </main>
+                        <Footer />
+                      </div>
+                    </JobApplicationsProvider>
                   </AuthWrapper>
                 </CitiesProvider>
               </JobsProvider>

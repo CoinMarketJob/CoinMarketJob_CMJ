@@ -42,7 +42,6 @@ CREATE TABLE `JobQuestions` (
     `jobId` INTEGER NOT NULL,
     `question` VARCHAR(191) NOT NULL,
 
-    UNIQUE INDEX `JobQuestions_userId_jobId_key`(`userId`, `jobId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -137,6 +136,7 @@ CREATE TABLE `Profile` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `userId` INTEGER NOT NULL,
     `logoURL` VARCHAR(191) NOT NULL,
+    `nameSurname` VARCHAR(191) NOT NULL,
     `jobTitle` VARCHAR(191) NOT NULL,
     `location` VARCHAR(191) NOT NULL,
     `headline` VARCHAR(191) NOT NULL,
@@ -166,8 +166,10 @@ CREATE TABLE `CompanyProfile` (
 CREATE TABLE `SocialMedia` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `profileId` INTEGER NOT NULL,
-    `socialMediaType` ENUM('LinkedIn', 'X', 'Facebook', 'Instagram', 'GitHub') NOT NULL,
+    `socialMediaType` ENUM('Arena', 'Facebook', 'Figma', 'Github', 'Gitlab', 'Instagram', 'Linkedin', 'Substack', 'Telegram', 'Tiktok', 'X', 'Youtube', 'Custom') NOT NULL,
     `socialMediaUrl` VARCHAR(191) NOT NULL,
+    `platformName` VARCHAR(191) NULL,
+    `username` VARCHAR(191) NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -176,8 +178,10 @@ CREATE TABLE `SocialMedia` (
 CREATE TABLE `SocialMediaCompany` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `profileId` INTEGER NOT NULL,
-    `socialMediaType` ENUM('LinkedIn', 'X', 'Facebook', 'Instagram', 'GitHub') NOT NULL,
+    `socialMediaType` ENUM('Arena', 'Facebook', 'Figma', 'Github', 'Gitlab', 'Instagram', 'Linkedin', 'Substack', 'Telegram', 'Tiktok', 'X', 'Youtube', 'Custom') NOT NULL,
     `socialMediaUrl` VARCHAR(191) NOT NULL,
+    `platformName` VARCHAR(191) NULL,
+    `username` VARCHAR(191) NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -248,6 +252,9 @@ ALTER TABLE `Job` ADD CONSTRAINT `Job_userId_fkey` FOREIGN KEY (`userId`) REFERE
 
 -- AddForeignKey
 ALTER TABLE `Job` ADD CONSTRAINT `Job_packageId_fkey` FOREIGN KEY (`packageId`) REFERENCES `BuyedPackage`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `JobQuestions` ADD CONSTRAINT `JobQuestions_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `JobQuestions` ADD CONSTRAINT `JobQuestions_jobId_fkey` FOREIGN KEY (`jobId`) REFERENCES `Job`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
