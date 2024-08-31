@@ -3,32 +3,36 @@
     margin: 0;
     border: none;
     pointer-events: auto;
+    position: relative;
 }
 
-.icon-hover{
+.icon-hover {
     display: flex;    
     border-radius: 50%;
     justify-content: center;
     align-items: center;
     pointer-events: auto;
 }
-.icon-hover:hover{
+
+.icon-hover:hover {
     background-color: #2422200D;
 }
-.icon-hover:active{
+
+.icon-hover:active {
     background-color: white;
 }
-.icon-hover:active .svg-icon{
+
+.icon-hover:active .svg-icon {
     fill-opacity: 1;
 }
 
 .hover-content {
-    display: none; 
     position: absolute; 
     width: auto;
-    top: -25px;
-    padding-left: 8px;
-    padding-right: 8px;
+    top: -32px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 8px;
     border-radius: 5px;
     background-color: #2422200D;
     color: #24222099;
@@ -38,8 +42,13 @@
     line-height: 21px;
     text-align: center;
     white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    pointer-events: none;
 }
 
-.icon-hover:hover .hover-content, .icon-hover:active .hover-content {
-    display: block; 
+.hover-content.show {
+    opacity: 1;
+    visibility: visible;
 }
