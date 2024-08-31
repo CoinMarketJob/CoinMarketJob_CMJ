@@ -25,6 +25,8 @@
   padding-bottom: 33px;
   flex-direction: column;
   z-index: 1000;
+  backdrop-filter: blur(10px); /* Buzlu cam efekti */
+  -webkit-backdrop-filter: blur(10px); /* Safari için destek */
 }
 
 
