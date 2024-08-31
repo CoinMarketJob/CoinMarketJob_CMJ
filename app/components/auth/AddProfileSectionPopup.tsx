@@ -7,7 +7,8 @@ import Dropdown from "../general/Dropdown";
 import EditProfileDraft from "./EditProfileDraft";
 import { JSONContent } from "@tiptap/react";
 import Button from "../general/Button";
-import { ProfileSection } from "@prisma/client";
+import { ProfileSection, SectionType } from "@prisma/client";
+import { JsonValue } from "@prisma/client/runtime/library";
 
 interface PopupProps {
   type: string;
@@ -131,13 +132,19 @@ const AddProfileSectionPopup: React.FC<PopupProps> = ({
 
   useEffect(() => {
     if (editingSection) {
-      setTitle(editingSection.title);
-      setInstitution(editingSection.institution);
+      setTitle(editingSection.title || "");
+      setInstitution(editingSection.institution || "");
       setLocation(editingSection.location || "");
-      setFrom(editingSection.from);
-      setTo(editingSection.to);
-      setUrl(editingSection.url || "");
-      setDescription(editingSection.description);
+      setFrom(editingSection.from || "");
+      setTo(editingSection.to || "");
+      // Remove the setUrl line as 'url' property doesn't exist on editingSection
+      setDescription(editingSection.description ? 
+        (typeof editingSection.description === 'string' ? 
+          JSON.parse(editingSection.description) : 
+          editingSection.description
+        ) : 
+        null
+      );
     }
   }, [editingSection]);
 
@@ -147,21 +154,35 @@ const AddProfileSectionPopup: React.FC<PopupProps> = ({
 
   const Save = () => {
     const sectionData = {
+      id: editingSection?.id ?? 0, // Add this line
       profileId,
-      sectionType: type,
-      title,
-      from,
-      to,
-      institution,
-      location,
-      url,
-      description,
+      sectionType: type as SectionType, // Cast to SectionType
+      title: title || null,
+      from: from || null,
+      to: to || null,
+      institution: institution || null,
+      location: location || null,
+      url: url || null,
+      description: description as JsonValue, // Cast description to JsonValue
     };
-
     if (editingSection) {
-      onUpdate(sectionData);
+      onUpdate({
+        ...sectionData,
+        title: sectionData.title || '',
+        from: sectionData.from || '',
+        to: sectionData.to || '',
+        institution: sectionData.institution || '',
+        location: sectionData.location || '',
+      });
     } else {
-      onAdd(sectionData);
+      onAdd({
+        ...sectionData,
+        title: sectionData.title || '',
+        from: sectionData.from || '',
+        to: sectionData.to || '',
+        institution: sectionData.institution || '',
+        location: sectionData.location || '',
+      });
     }
     setShowAddPopup(false);
     setTitle("");
@@ -262,7 +283,7 @@ const AddProfileSectionPopup: React.FC<PopupProps> = ({
           id="url"
           placeholder="URL*"
           type="text"
-          value={url}
+          value={url || ''}
           onChange={(e) => setUrl(e.target.value)}
         />
       </div>
@@ -270,7 +291,7 @@ const AddProfileSectionPopup: React.FC<PopupProps> = ({
       <div className={styles.Row}>
         <EditProfileDraft
           ContentType="About"
-          content={description}
+          content={description || undefined}
           onChange={(content: JSONContent) => setDescription(content)}
         />
       </div>

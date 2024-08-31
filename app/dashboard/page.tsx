@@ -3,9 +3,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./Dashboard.module.css";
 import JobCard from "../components/dashboard/JobCard";
 
-
-
-const page = () => {
+const Page = () => {
   const [loading, setLoading] = useState<boolean>();
   const [jobs, setJobs] = useState<Array<any>>([]);
 
@@ -32,12 +30,12 @@ const page = () => {
       <div className={styles.Line}></div>
 
       <div>
-        {jobs.map((item: any, index: any) => {
-          return <JobCard job={item} />;
-        })}
+        {jobs.map((item: any, index: number) => (
+          <JobCard key={item.id || index} job={item} />
+        ))}
       </div>
     </div>
   );
 };
 
-export default page;
+export default Page;
