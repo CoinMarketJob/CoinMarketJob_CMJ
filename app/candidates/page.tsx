@@ -50,16 +50,15 @@ const Page = () => {
         <div className={styles.Line}></div>
 
         <div>
-          {jobApplications.appliedJobs.map((item: any, index: any) => {
-            return (
-              <CandidatesCard
-                application={item}
-                setShowDetail={setShowDetail}
-                setSelectedApplication={setSelectedApplication}
-                showDetail={showDetail}
-              />
-            );
-          })}
+          {jobApplications.appliedJobs.map((item: any, index: number) => (
+            <CandidatesCard
+              key={item.id || `application-${index}`}
+              application={item}
+              setShowDetail={setShowDetail}
+              setSelectedApplication={setSelectedApplication}
+              showDetail={showDetail}
+            />
+          ))}
         </div>
       </div>
       {showDetail && (
@@ -98,16 +97,14 @@ const Page = () => {
           )}
 
           <div className={styles.QuestionAndAnswerArea}>
-            {selectedApplication.Answers.map((item: any, index: any) => {
-              return (
-                <div className={styles.QuestionAndAnswer}>
-                  <div className={styles.Question}>
-                    {item.question.question}
-                  </div>
-                  <div className={styles.Answer}>{item.answer}</div>
+            {selectedApplication.Answers.map((item: any, index: number) => (
+              <div key={item.id || `answer-${index}`} className={styles.QuestionAndAnswer}>
+                <div className={styles.Question}>
+                  {item.question.question}
                 </div>
-              );
-            })}
+                <div className={styles.Answer}>{item.answer}</div>
+              </div>
+            ))}
           </div>
 
           <div className={`${styles.ButtonArea}`}>
