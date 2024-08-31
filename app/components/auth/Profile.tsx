@@ -134,6 +134,7 @@ const Profile = () => {
                   alt="Avatar"
                 />
               </div>
+              <div className={styles.HeadLine}>{profile?.nameSurname}</div>
               <div className={styles.HeadLine}>{profile?.headline}</div>
               <div className={styles.HeadSite}>
                 <div className={styles.SiteText}>{profile?.siteUrl}</div>

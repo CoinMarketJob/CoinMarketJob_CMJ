@@ -44,24 +44,16 @@ const ProfileSections: React.FC<SectionProps> = ({
   onDelete,
 }) => {
   if (!profile) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
-  const sectionsOrder = "{1,2,3,4,5,6,7,8}".replace(/[{}]/g, "")
-    .split(",")
-    .map(Number);
+  const allSections = profile.section;
 
-  // Bölümleri sectionsOrder'a göre sıralama
-  const orderedSections = sectionsOrder
-    ?.map((order) => {
-      return profile.section.find((section) => section.id === order);
-    })
-    .filter((section): section is ProfileSection => section !== undefined);
-
-  const groupedSections = orderedSections?.reduce((acc, section) => {
+  const groupedSections = allSections.reduce((acc, section) => {
     (acc[section.sectionType] = acc[section.sectionType] || []).push(section);
     return acc;
   }, {} as { [key: string]: ProfileSection[] });
+
 
   return (
     <div className={styles.container}>

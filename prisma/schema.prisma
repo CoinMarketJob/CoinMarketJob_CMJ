@@ -271,11 +271,12 @@ model ProfileSection {
   profileId   Int
   profile     Profile       @relation(fields: [profileId], references: [id], onDelete: Cascade)
   sectionType SectionType
-  title       String
-  from        String
-  to          String
-  institution String
-  location    String
+  title       String?
+  from        String?
+  to          String?
+  url         String?
+  institution String?
+  location    String?
   description Json?
   attachments Attachments[]
 }

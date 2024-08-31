@@ -132,13 +132,16 @@ const EditProfile = () => {
   }, [profile]);
 
   const handleAddSection = (newSection: ProfileSection) => {
-    setProfileSections([...profileSections, newSection]);
+    setProfileSections((prevSections) => [...prevSections, newSection]);
     console.log("Added");
+    setShowAddPopup(false);
+    setSectionPopup(false);
   };
 
   const handleEditSection = (sectionId: number) => {
     setEditingSectionId(sectionId);
-    setShowAddPopup(true);
+    setShowAddPopup(false);
+    setSectionPopup(false);
   };
 
   const handleUpdateSection = (updatedSection: ProfileSection) => {
@@ -153,6 +156,7 @@ const EditProfile = () => {
     });
     setEditingSectionId(null);
     setShowAddPopup(false);
+    setSectionPopup(false);
   };
 
   const handleDeleteSection = (sectionId: number) => {
@@ -477,8 +481,7 @@ const EditProfile = () => {
             </div>
           </div>
 
-          <div
-              className={styles.PopupContainerDiv}>
+          <div className={styles.PopupContainerDiv}>
             <div
               className={styles.PopupContainer}
               style={{ display: !showAddPopup ? "none" : "" }}

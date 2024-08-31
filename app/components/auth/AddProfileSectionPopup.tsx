@@ -44,7 +44,7 @@ const AddProfileSectionPopup: React.FC<PopupProps> = ({
   const [toShow, setToShow] = useState<boolean>();
 
   const [url, setUrl] = useState<string>();
-  const [description, setDescription] = useState<JSONContent>();
+  const [description, setDescription] = useState<JSONContent | null>();
 
   const dateList = [
     { value: "2024", label: "2024" },
@@ -136,7 +136,7 @@ const AddProfileSectionPopup: React.FC<PopupProps> = ({
       setLocation(editingSection.location || "");
       setFrom(editingSection.from);
       setTo(editingSection.to);
-      // setUrl(editingSection.url || "");
+      setUrl(editingSection.url || "");
       setDescription(editingSection.description);
     }
   }, [editingSection]);
@@ -164,6 +164,12 @@ const AddProfileSectionPopup: React.FC<PopupProps> = ({
       onAdd(sectionData);
     }
     setShowAddPopup(false);
+    setTitle("");
+    setInstitution("");
+    setFrom("");
+    setTo("");
+    setUrl("");
+    setDescription(null);
   };
 
   return (
