@@ -7,7 +7,7 @@ import Image from "next/image";
 import Draft from "../components/auth/ShowDraft";
 import ButtonImage from "../components/dashboard/ButtonImage";
 
-const page = () => {
+const Page = () => {
   const { jobApplications } = useJobApplications();
   const [showDetail, setShowDetail] = useState<boolean>(false);
   const [selectedApplication, setSelectedApplication] = useState<any>();
@@ -151,4 +151,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
