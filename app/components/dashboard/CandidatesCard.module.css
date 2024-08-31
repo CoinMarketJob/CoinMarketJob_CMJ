@@ -47,6 +47,10 @@
   gap: 16px;
 }
 
+.Hidden {
+  display: none;
+}
+
 .Date {
   font-family: Inter;
   font-size: 14px;

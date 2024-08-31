@@ -5,12 +5,14 @@ import Image from "next/image";
 
 interface CardProps {
   application: any;
+  showDetail: boolean;
   setShowDetail: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedApplication: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const CandidatesCard: React.FC<CardProps> = ({
   application,
+  showDetail,
   setShowDetail,
   setSelectedApplication,
 }) => {
@@ -103,7 +105,7 @@ const CandidatesCard: React.FC<CardProps> = ({
         <div className={styles.Date}>
           {getApplicationDateText(application.date)}
         </div>
-        <div className={styles.ButtonArea}>
+        <div className={`${styles.ButtonArea} ${showDetail ? styles.Hidden : ''}`}>
           <ButtonImage onClick={() => changeState("Approved")}>
             <svg
               width="25"

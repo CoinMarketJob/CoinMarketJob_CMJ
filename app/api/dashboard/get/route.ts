@@ -19,6 +19,11 @@ export async function GET() {
               include: {
                 profile: true
               }
+            },
+            Answers: {
+              include: {
+                question: true
+              }
             }
           }
         },

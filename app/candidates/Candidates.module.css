@@ -1,5 +1,6 @@
 .Container {
   width: 100%;
+  max-width: 100%;
   padding-top: 48px;
   padding-bottom: 48px;
   padding-left: 36px;
@@ -35,10 +36,15 @@
 
 .ListContainer {
   flex-grow: 1;
+  transition: width 0.3s ease;
+}
+
+.FullWidth {
+  width: 100%;
 }
 
 .DetailContainer {
-  width: 45%;
+  width: 40%;
   border-left: 1px solid #e7e5e4;
   padding-left: 24px;
   padding-right: 24px;
@@ -48,6 +54,7 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  transition: width 0.3s ease;
 }
 
 .ProfilePhoto {
@@ -70,4 +77,44 @@
   letter-spacing: 0.04em;
   text-align: left;
   margin-top: 24px;
+}
+
+.ButtonArea {
+  margin-top: 36px;
+  display: flex;
+  gap: 16px;
+}
+
+.QuestionAndAnswerArea {
+  width: calc(100% - 48px);
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.QuestionAndAnswer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.Question {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19.36px;
+  letter-spacing: 0.04em;
+  text-align: left;
+}
+
+.Answer {
+  font-family: Inter;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 19.84px;
+  letter-spacing: 0.03em;
+  text-align: justified;
+  color: #999999;
 }
