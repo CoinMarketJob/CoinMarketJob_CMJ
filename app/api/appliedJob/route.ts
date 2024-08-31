@@ -4,46 +4,57 @@ import prisma from "@/libs/prismadb";
 import { uploadFile } from "@/utils/s3Operations";
 import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {  
+export async function POST(request: Request) {
   const body = await request.json();
-  const { 
+  const {
     jobId,
     name,
     surname,
     email,
     phoneCode,
     phone,
-    resumeDraft, 
+    resumeDraft,
     coverLetterDraft,
     resumeLink,
     coverLetterLink,
-    visaSponsorship 
+    visaSponsorship,
+    answers,
   } = body;
-
 
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
-    return NextResponse.json({ error: 'User not authenticated' }, { status: 401 });
+    return NextResponse.json(
+      { error: "User not authenticated" },
+      { status: 401 }
+    );
   }
 
   const appliedJob = await prisma.appliedJobs.create({
     data: {
-        userId: currentUser.id,
-        jobId: parseInt(jobId,10),
-        name,
-        surname,
-        email,
-        phoneCode,
-        phone,
-        resumeLink,     
-        resumeDraft,
-        coverLetterLink,
-        coverLetterDraft,   
-        visaSponsorship
+      userId: currentUser.id,
+      jobId: parseInt(jobId, 10),
+      name,
+      surname,
+      email,
+      phoneCode,
+      phone,
+      resumeLink,
+      resumeDraft,
+      coverLetterLink,
+      coverLetterDraft,
+      visaSponsorship,
+      Answers: {
+        create: answers.map(
+          (answer: { questionId: number; answer: string }) => ({
+            questionId: answer.questionId,
+            answer: answer.answer,
+            userId: currentUser.id,
+          })
+        ),
+      },
     },
   });
-
 
   return NextResponse.json(appliedJob);
 }

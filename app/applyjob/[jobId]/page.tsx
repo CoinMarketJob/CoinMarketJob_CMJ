@@ -40,9 +40,12 @@ const page = ({ params }: { params: JobProps }) => {
   const [panelWidth, setPanelWidth] = useState<number>(0); //for resizeability
   const [visaSelected, setVisaSelected] = useState<boolean>(false);
   const [jobQuestions, setJobQuestions] = useState<JobQuestions[]>([]);
-  const [jobAnswers, setJobAnswers] = useState<
-    Record<string, string | JSONContent>
-  >({});
+
+  const [answers, setAnswers] = useState<{ [key: number]: string }>({});
+
+  const handleAnswerChange = (questionId: number, answer: string) => {
+    setAnswers((prev) => ({ ...prev, [questionId]: answer }));
+  };
 
   const handleResize = () => {
     if (panelRef.current) {
@@ -116,13 +119,6 @@ const page = ({ params }: { params: JobProps }) => {
 
   const coverLetterDraftChange = (content: JSONContent) => {
     setCoverLetter(content);
-  };
-
-  const questionDraftChange = (content: string, questionId: string) => {
-    setJobAnswers((prevAnswers) => ({
-      ...prevAnswers,
-      [questionId]: content,
-    }));
   };
 
   const countryCodes = [
@@ -345,7 +341,10 @@ const page = ({ params }: { params: JobProps }) => {
         resumeLink: !cvManualState ? resumeLink : null,
         coverLetterLink: !letterManualState ? letterLink : null,
         visaSponsorship: true,
-        answers: jobAnswers,
+        answers: Object.entries(answers).map(([questionId, answer]) => ({
+          questionId: parseInt(questionId),
+          answer,
+        })),
       };
 
       const response = await fetch("/api/appliedJob/", {
@@ -438,7 +437,9 @@ const page = ({ params }: { params: JobProps }) => {
             jobQuestions.length > 0 ? (
               jobQuestions.map((question, index) => (
                 <QuestionDraft
-                  question={question} 
+                  key={question.id}
+                  question={question}
+                  onAnswerChange={handleAnswerChange}
                 />
               ))
             ) : (

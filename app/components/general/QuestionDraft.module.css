@@ -1,0 +1,28 @@
+.controlgroup {
+  border-radius: 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 150px;
+  margin-bottom: 32px;
+}
+
+.questionarea {
+  padding: 16px;
+  border-bottom: 1px solid #E7E5E4;
+  flex-shrink: 0;
+}
+
+.answerarea {
+  padding: 16px;
+  flex-grow: 1;
+  display: flex;
+}
+
+.answerbox {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+}
