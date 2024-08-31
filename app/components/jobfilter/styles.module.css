@@ -17,8 +17,8 @@
   align-items: center !important;
   width: 928px;
   height: 760px;
-  top: 108px;
-  left: 496px;
+  top: -50px;
+  left: 0px;
   z-index: 1;
 }
 
@@ -32,7 +32,9 @@
   top: 150px;
   left: 496px;
   border: 0.5px solid #E7E5E4; 
-  background-color: rgba(255, 255, 255, 0.94);
+  background-color: rgba(255, 255, 255, 0.9); /* Arkaplan saydamlığını artırdık */
+  backdrop-filter: blur(10px); /* Buzlu cam efekti */
+  -webkit-backdrop-filter: blur(10px); /* Safari için destek */
   border-radius: 30px;
   box-shadow: 0px 0px 11.3px 0px #00000033;
 }
