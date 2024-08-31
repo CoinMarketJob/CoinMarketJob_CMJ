@@ -37,11 +37,24 @@ const Dropdown: React.FC<DropdownProps> = ({
     };
   }, []);
 
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      setOpen(!open);
+    } else if (event.key === 'Escape') {
+      setOpen(false);
+    }
+  };
+
   return (
     <div ref={dropdownRef} style={{ position: "relative" }}>
       <div 
         className={`dropdown-input ${error ? 'error' : ''}`}
         onClick={() => setOpen(!open)} 
+        onKeyDown={handleKeyDown}
+        tabIndex={0}
+        role="button"
+        aria-haspopup="listbox"
+        aria-expanded={open}
         style={{
           borderColor: open ? "#242220" : error ? "red" : "#E7E5E4"
         }}

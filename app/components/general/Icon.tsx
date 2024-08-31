@@ -1,5 +1,5 @@
 import './Icon.css';
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 interface IconProps {
   onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
@@ -9,7 +9,7 @@ interface IconProps {
   marginBottom?: number;
   hoverSize?: number;
   hoverContent?: string;
-  width?: number; // Add width prop
+  width?: number;
   children: React.ReactNode;
 }
 
@@ -21,21 +21,46 @@ const Icon: React.FC<IconProps> = ({
   marginBottom,
   hoverSize,
   hoverContent,
-  width, // Destructure width
+  width,
   children
 }) => {
+  const [showHover, setShowHover] = useState(false);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleMouseEnter = () => {
+    timerRef.current = setTimeout(() => {
+      setShowHover(true);
+    }, 750); // Changed from 3000 to 1500 milliseconds (1.5 seconds)
+  };
+
+  const handleMouseLeave = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    setShowHover(false);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, []);
+
   return (
     <div
       className="icon-div"
       onClick={onClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       style={{
         marginRight,
         marginBottom,
         marginTop,
         marginLeft,
-        position: 'relative',
-        width: width, // Apply width style
-        height: width, // Apply height style based on width for square icons
+        width: width,
+        height: width,
       }}
     >
       <div
@@ -45,9 +70,9 @@ const Icon: React.FC<IconProps> = ({
           height: hoverSize,
         }}
       >
-        <div className="hover-content">{hoverContent}</div>
         {children}
       </div>
+      <div className={`hover-content ${showHover ? 'show' : ''}`}>{hoverContent}</div>
     </div>
   );
 };
