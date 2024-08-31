@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const result = await uploadFile(
-      process.env.S3_DOCUMENT_BUCKET_NAME,
+      "cmj-document",
       file,
       uuidv6()
     );

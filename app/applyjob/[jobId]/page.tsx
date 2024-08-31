@@ -493,48 +493,7 @@ const page = ({ params }: { params: JobProps }) => {
             </div>
             {/* Make the Draft container relative to position the button inside it */}
             <div style={{ position: "relative", marginTop: "24px" }}>
-              <button
-                onClick={() => setCvManualState(false)}
-                style={{
-                  position: "absolute",
-                  top: "12px", // Position button inside the Draft's top right corner
-                  right: "7px", // Position button inside the Draft's top right corner
-                  backgroundColor: "transparent",
-                  border: "none",
-                  cursor: "pointer",
-                  padding: 0,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "33px",
-                  height: "33px",
-                  borderRadius: "50%",
-                  transition: "background-color 0.2s ease-in-out",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor =
-                    "rgba(36, 34, 32, 0.05)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "transparent";
-                }}
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M8 9.32876L1.60303 15.7261C1.42838 15.9005 1.20886 15.9898 0.944477 15.994C0.680301 15.998 0.456792 15.9087 0.273949 15.7261C0.0913163 15.5432 0 15.3217 0 15.0615C0 14.8013 0.0913163 14.5798 0.273949 14.397L6.67124 8L0.273949 1.60303C0.0995127 1.42838 0.010193 1.20886 0.00598975 0.944478C0.00199664 0.680302 0.0913163 0.456792 0.273949 0.273949C0.456792 0.0913163 0.678305 0 0.938488 0C1.19867 0 1.42018 0.0913163 1.60303 0.273949L8 6.67124L14.397 0.273949C14.5716 0.0995127 14.7911 0.010193 15.0555 0.00598975C15.3197 0.00199664 15.5432 0.0913163 15.7261 0.273949C15.9087 0.456792 16 0.678305 16 0.938488C16 1.19867 15.9087 1.42018 15.7261 1.60303L9.32876 8L15.7261 14.397C15.9005 14.5716 15.9898 14.7911 15.994 15.0555C15.998 15.3197 15.9087 15.5432 15.7261 15.7261C15.5432 15.9087 15.3217 16 15.0615 16C14.8013 16 14.5798 15.9087 14.397 15.7261L8 9.32876Z"
-                    fill="#242220"
-                    fillOpacity="0.2"
-                  />
-                </svg>
-              </button>
-              {/* Draft component is inside this relatively positioned container */}
-              <Draft onChange={coverLetterDraftChange} />
+              <Draft onChange={cvDraftChange} />
             </div>
           </div>
         )}
@@ -580,49 +539,7 @@ const page = ({ params }: { params: JobProps }) => {
                 onChange={cvFileChange}
               />
             </div>
-            {/* Make the Draft container relative to position the button inside it */}
             <div style={{ position: "relative", marginTop: "24px" }}>
-              <button
-                onClick={() => setLetterManualState(false)}
-                style={{
-                  position: "absolute",
-                  top: "12px", // Position button inside the Draft's top right corner
-                  right: "7px", // Position button inside the Draft's top right corner
-                  backgroundColor: "transparent",
-                  border: "none",
-                  cursor: "pointer",
-                  padding: 0,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "33px",
-                  height: "33px",
-                  borderRadius: "50%",
-                  transition: "background-color 0.2s ease-in-out",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor =
-                    "rgba(36, 34, 32, 0.05)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "transparent";
-                }}
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M8 9.32876L1.60303 15.7261C1.42838 15.9005 1.20886 15.9898 0.944477 15.994C0.680301 15.998 0.456792 15.9087 0.273949 15.7261C0.0913163 15.5432 0 15.3217 0 15.0615C0 14.8013 0.0913163 14.5798 0.273949 14.397L6.67124 8L0.273949 1.60303C0.0995127 1.42838 0.010193 1.20886 0.00598975 0.944478C0.00199664 0.680302 0.0913163 0.456792 0.273949 0.273949C0.456792 0.0913163 0.678305 0 0.938488 0C1.19867 0 1.42018 0.0913163 1.60303 0.273949L8 6.67124L14.397 0.273949C14.5716 0.0995127 14.7911 0.010193 15.0555 0.00598975C15.3197 0.00199664 15.5432 0.0913163 15.7261 0.273949C15.9087 0.456792 16 0.678305 16 0.938488C16 1.19867 15.9087 1.42018 15.7261 1.60303L9.32876 8L15.7261 14.397C15.9005 14.5716 15.9898 14.7911 15.994 15.0555C15.998 15.3197 15.9087 15.5432 15.7261 15.7261C15.5432 15.9087 15.3217 16 15.0615 16C14.8013 16 14.5798 15.9087 14.397 15.7261L8 9.32876Z"
-                    fill="#242220"
-                    fillOpacity="0.2"
-                  />
-                </svg>
-              </button>
-              {/* Draft component is inside this relatively positioned container */}
               <Draft onChange={coverLetterDraftChange} />
             </div>
           </div>
