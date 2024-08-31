@@ -21,8 +21,10 @@ interface ButtonProps {
   hoverTextColor?: string;
   hoverBorderColor?: string;
   hoverUnderlineText?: boolean;
-  disabled?: boolean;  // Add disabled property here
-  changeColorOnPress?: boolean; // Add this new prop
+  disabled?: boolean;
+  changeColorOnPress?: boolean;
+  isWhite?: boolean;
+  isLoading?: boolean; // Yeni eklenen prop
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -45,8 +47,10 @@ const Button: React.FC<ButtonProps> = ({
   hoverTextColor,
   hoverBorderColor,
   hoverUnderlineText = false,
-  disabled = false,  // Add default value for disabled
-  changeColorOnPress = backgroundColor === "#242220", // Default to true for dark buttons
+  disabled = false,
+  changeColorOnPress = backgroundColor === "#242220",
+  isWhite = false,
+  isLoading = false, // Yeni eklenen prop
 }) => {
   const [isPressed, setIsPressed] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -102,16 +106,19 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
-      className="form-button"
+      className={`form-button ${isLoading ? 'loading' : ''} ${isWhite ? 'white-button' : ''}`}
       style={buttonStyle}
       onClick={onClick}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      disabled={disabled} // Pass disabled prop to button
+      disabled={disabled || isLoading}
     >
-      {text}
+      <span className={`button-content ${isLoading ? 'hidden' : ''}`}>
+        {text}
+      </span>
+      {isLoading && <div className="loading-spinner"></div>}
     </button>
   );
 };

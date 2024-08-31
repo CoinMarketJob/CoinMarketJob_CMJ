@@ -1,4 +1,5 @@
 .form-button {
+  position: relative;
   border: none;
   border-radius: 15px;
   font-family: Inter;
@@ -9,6 +10,17 @@
   background-color: #242220;
   color: #FFFFFF;
   transition: all 0.1s ease-in-out;
+  overflow: hidden;
+}
+
+.white-button {
+  background-color: #FFFFFF;
+  color: #242220;
+  border: 1px solid #E0E0E9;
+}
+
+.white-button.loading {
+  color: transparent;
 }
 
 .form-button:hover:not(:disabled) {
@@ -17,6 +29,46 @@
 
 .form-button:active:not(:disabled) {
   transform: scale(0.98);
+}
+
+.button-content {
+  display: inline-block;
+  transition: opacity 0.3s ease;
+}
+
+.button-content.hidden {
+  opacity: 0;
+}
+
+.loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  border-top-color: #000;
+  animation: spin 1s ease-in-out infinite;
+  transform: translate(-50%, -50%);
+}
+
+.form-button:not(.white-button) .loading-spinner {
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+}
+
+@keyframes spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Beyaz butonlar için özel stiller */
+.white-button.google-button,
+.white-button.apple-button {
+  padding: 19.7px 23px 19.7px 58px;
+  border-radius: 50px;
+  font-size: 19px;
+  line-height: 20px;
 }
 
 

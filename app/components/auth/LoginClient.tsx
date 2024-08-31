@@ -14,6 +14,7 @@ const LoginClient = () => {
   const [password, setPassword] = useState<string>("");
   const [remember, setRemember] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Add this useEffect hook
   useEffect(() => {
@@ -40,6 +41,7 @@ const LoginClient = () => {
 
   const complete = async () => {
     setError(null);
+    setIsLoading(true); // Login işlemi başladığında loading'i başlat
     const submitData = { email };
     console.log('Submitting data:', submitData);
   
@@ -114,6 +116,8 @@ const LoginClient = () => {
     } catch (error) {
       console.error('Error during complete:', error);
       setError('An error occurred. Please try again.');
+    } finally {
+      setIsLoading(false); // İşlem tamamlandığında veya hata oluştuğunda loading'i durdur
     }
   };
 
@@ -212,6 +216,7 @@ const LoginClient = () => {
                   paddingLeft={92}
                   paddingRight={91}
                   fontSize={15}
+                  isLoading={isLoading}
                 />
               </div>
             </div>
