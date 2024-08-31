@@ -37,6 +37,12 @@
 .ListContainer {
   flex-grow: 1;
   transition: width 0.3s ease;
+  max-height: 100%;
+  overflow-y: auto;  
+  scrollbar-width: none;
+  scrollbar-color: #E7E5E4 transparent;
+  -webkit-overflow-scrolling: touch;
+  padding: 2px;
 }
 
 .FullWidth {
@@ -45,6 +51,12 @@
 
 .DetailContainer {
   width: 40%;
+  max-height: 100%;
+  overflow-y: auto;  
+  scrollbar-width: none;
+  scrollbar-color: #E7E5E4 transparent;
+  -webkit-overflow-scrolling: touch;
+
   border-left: 1px solid #e7e5e4;
   padding-left: 24px;
   padding-right: 24px;
