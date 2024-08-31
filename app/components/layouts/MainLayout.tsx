@@ -24,6 +24,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ filteredJobs, layout }) => {
   const [leftCards, setLeftCards] = useState<Array<Job>>([]);
   const [rightCards, setRightCards] = useState<Array<Job>>([]);
   const [hasRightItems, setHasRightItems] = useState<boolean>(false);
+  const [showJobDetails, setShowJobDetails] = useState(false);
+  const [selectedJob, setSelectedJob] = useState<Job | null>(null);
 
   useEffect(() => {
     setLeftCards(filteredJobs);
@@ -73,6 +75,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({ filteredJobs, layout }) => {
     setIsDragging(false);
   };
 
+  const handleCloseJobDetails = () => {
+    setShowDetail(false);
+    setDetailJob(null);
+    setShowRightSide(false);
+  };
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div className={styles.container}>
@@ -91,7 +99,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ filteredJobs, layout }) => {
 
         {showDetail && (
           <div className={`${styles.DetailArea} ${styles.JobDetailArea}`}>
-            <JobDetails job={detailJob} />
+            <JobDetails job={detailJob} onClose={handleCloseJobDetails} />
           </div>
         )}
 
@@ -109,6 +117,10 @@ const MainLayout: React.FC<MainLayoutProps> = ({ filteredJobs, layout }) => {
               rightCards={rightCards}
             />
           </div>
+        )}
+
+        {showJobDetails && selectedJob && (
+          <JobDetails job={selectedJob} onClose={handleCloseJobDetails} />
         )}
       </div>
     </DndProvider>
