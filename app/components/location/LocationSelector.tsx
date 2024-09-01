@@ -1,22 +1,24 @@
+"use client";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect, useRef, Dispatch, SetStateAction } from 'react';
 import styles from './LocationSelector.module.css';
 import Selection from '../general/CheckboxSelection';
+import { Cities } from '@prisma/client';
 
 interface LocationSelectorProps {
   label: string;
-  options: { value: string; label: string }[];
   selectedLocation: string[];
   setSelectedLocation: Dispatch<SetStateAction<string[]>>;
   locationType: string; // Added this
   setLocationType: Dispatch<SetStateAction<string>>; // Added this
 }
 
-const LocationSelector: React.FC<LocationSelectorProps> = ({ label, options, selectedLocation, setSelectedLocation, locationType, setLocationType }) => {
+const LocationSelector: React.FC<LocationSelectorProps> = ({ label, selectedLocation, setSelectedLocation, locationType, setLocationType }) => {
   const [open, setOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [cities, setCities] = useState<Cities[]>([]);
 
   // Handle clicks outside of the dropdown
   useEffect(() => {
@@ -32,6 +34,21 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ label, options, sel
     };
   }, []);
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+          const response = await fetch('/api/cities/');
+          const data = await response.json();
+          console.log(data);
+          setCities(data);
+      } catch (error) {
+          console.error('Veri getirme hatası:', error);
+      }
+    }
+
+    fetchData();
+  },[])
+
   const handleLocationTypeChange = (newLocationType: string) => {
     setLocationType(newLocationType); // Use prop's setLocationType
     if (newLocationType === 'Remote') {
@@ -45,9 +62,9 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ label, options, sel
     setSelectedLocation(newSelectedLocations);
   };
 
-  const filteredOptions = options
-  .filter(option => option.label.toLowerCase().includes(searchTerm.toLowerCase())) // filter based on label
-  .map(option => option.value); 
+  const filteredOptions = cities
+  .filter(city => city.city.toLowerCase().includes(searchTerm.toLowerCase())) // filter based on label
+  .map(option => option.city); 
 
 
   return (

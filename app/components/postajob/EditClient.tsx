@@ -106,14 +106,6 @@ const EditClient: React.FC<EditClientProps> = ({
     { value: "Master", label: "Master" },
     { value: "PhD", label: "PhD" },
   ];
-  const chooseLocationOptions = [
-    { value: "Current Location", label: "Current Location" },
-    { value: "London", label: "London" },
-    { value: "New York", label: "New York" },
-    { value: "Papua New Guinea", label: "Papua New Guinea" },
-    { value: "San Fransisco", label: "San Fransisco" },
-    { value: "Las Vegas", label: "Las Vegas" },
-  ];
   const salaryUnit = [
     { value: "Year", label: "Year" },
     { value: "Month", label: "Month" },
@@ -230,7 +222,6 @@ const EditClient: React.FC<EditClientProps> = ({
       <div className={`${styles.centerDiv}`}>
         <LocationSelector
           label="Choose Location*"
-          options={chooseLocationOptions}
           selectedLocation={selectedLocations}
           setSelectedLocation={setSelectedLocations}
           locationType={locationType}
