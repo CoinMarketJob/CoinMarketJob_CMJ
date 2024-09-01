@@ -59,7 +59,7 @@ const Page = () => {
         showSalary,
         single,
         unitSalary,
-        locationType
+        locationType,
       };
 
       const response = await fetch("/api/job/", {
@@ -106,34 +106,28 @@ const Page = () => {
           }`}
           onClick={() => setPage(0)} // No restriction for going back to the first page
         ></div>
-          <div
-              className={`${styles.indicator} ${styles.indicatorMargin} ${
-                page === 1 ? styles.selectedIndicator : ""
-              }`}
-              onClick={() => {
-                if (jobTitle &&
-                  jobType &&
-                  experienceLevel &&
-                  educationalDegree ) {
-                  // Only allow advancing if fields are filled
-                  setPage(1);
-                }
-              }}
-            ></div>
         <div
-    className={`${styles.indicator} ${
-      page === 2 ? styles.selectedIndicator : ""
-    }`}
-    onClick={() => {
-      if (jobTitle &&
-        jobType &&
-        experienceLevel &&
-        educationalDegree ) {
-        // Only allow advancing if fields are filled
-        setPage(2);
-      }
-    }}
-  ></div>
+          className={`${styles.indicator} ${styles.indicatorMargin} ${
+            page === 1 ? styles.selectedIndicator : ""
+          }`}
+          onClick={() => {
+            if (jobTitle && jobType && experienceLevel && educationalDegree) {
+              // Only allow advancing if fields are filled
+              setPage(1);
+            }
+          }}
+        ></div>
+        <div
+          className={`${styles.indicator} ${
+            page === 2 ? styles.selectedIndicator : ""
+          }`}
+          onClick={() => {
+            if (jobTitle && jobType && experienceLevel && educationalDegree) {
+              // Only allow advancing if fields are filled
+              setPage(2);
+            }
+          }}
+        ></div>
       </div>
 
       {page === 0 ? (
@@ -156,6 +150,8 @@ const Page = () => {
           setMin={setMin}
           max={max}
           setMax={setMax}
+          unit={unitSalary}
+          setUnit={setUnitSalary}
           visa={visa}
           setVisa={setVisa}
           single={single}
