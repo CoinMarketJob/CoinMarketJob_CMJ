@@ -35,7 +35,7 @@ model User {
 model Job {
   id                Int               @id @default(autoincrement())
   userId            Int
-  user              User?             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   logo              String
   companyName       String
   jobTitle          String

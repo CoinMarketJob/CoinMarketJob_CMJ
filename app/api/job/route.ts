@@ -22,13 +22,16 @@ export async function POST(request: Request) {
     showSalary,
     single,
     unitSalary,
-    locationType
+    locationType,
   } = body;
 
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
-    return NextResponse.json({ error: 'User not authenticated' }, { status: 401 });
+    return NextResponse.json(
+      { error: "User not authenticated" },
+      { status: 401 }
+    );
   }
 
   var buyedPackage = null;
@@ -38,34 +41,39 @@ export async function POST(request: Request) {
       data: {
         userId: currentUser.id,
         packageType: PackageType,
-        expirationDate: new Date(Date.now()),        
+        expirationDate: new Date(Date.now()),
       },
     });
-  } else if(PackageType == "FiveJob") {
-    buyedPackage = await prisma.buyedPackage.create({
-      data: {
-        userId: currentUser.id,
-        packageType: PackageType       
-      },
-    });
-  }  else if(PackageType == "Monthly") {
-    const currentDate: Date = new Date();
-    const nextMonthDate: Date = new Date(currentDate.setMonth(currentDate.getMonth() + 1));
+  } else if (PackageType == "FiveJob") {
     buyedPackage = await prisma.buyedPackage.create({
       data: {
         userId: currentUser.id,
         packageType: PackageType,
-        expirationDate: nextMonthDate
+      },
+    });
+  } else if (PackageType == "Monthly") {
+    const currentDate: Date = new Date();
+    const nextMonthDate: Date = new Date(
+      currentDate.setMonth(currentDate.getMonth() + 1)
+    );
+    buyedPackage = await prisma.buyedPackage.create({
+      data: {
+        userId: currentUser.id,
+        packageType: PackageType,
+        expirationDate: nextMonthDate,
       },
     });
   }
 
   if (!buyedPackage) {
-    return NextResponse.json({ error: 'Package not authenticated' }, { status: 401 });
+    return NextResponse.json(
+      { error: "Package not authenticated" },
+      { status: 401 }
+    );
   }
 
   const job = await prisma.job.create({
-    data: { 
+    data: {
       userId: currentUser.id,
       logo,
       companyName,
@@ -83,12 +91,15 @@ export async function POST(request: Request) {
       visaSponsorship,
       packageId: buyedPackage.id,
       jobQuestions: {
-        create: questions.map((question: string) => ({ question }))
-      }
+        create: questions.map((question: string) => ({
+          question,
+          userId: currentUser.id,
+        })),
+      },
     },
     include: {
-      jobQuestions: true
-    }
+      jobQuestions: true,
+    },
   });
 
   return NextResponse.json(job);

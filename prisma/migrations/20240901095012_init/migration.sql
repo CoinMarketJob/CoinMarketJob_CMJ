@@ -136,7 +136,7 @@ CREATE TABLE `Profile` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `userId` INTEGER NOT NULL,
     `logoURL` VARCHAR(191) NOT NULL,
-    `nameSurname` VARCHAR(191) NOT NULL,
+    `nameSurname` VARCHAR(191) NULL,
     `jobTitle` VARCHAR(191) NOT NULL,
     `location` VARCHAR(191) NOT NULL,
     `headline` VARCHAR(191) NOT NULL,
@@ -202,11 +202,12 @@ CREATE TABLE `ProfileSection` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `profileId` INTEGER NOT NULL,
     `sectionType` ENUM('WorkExperience', 'Volunteering', 'Education', 'Certifications', 'Projects', 'Publications', 'Awards') NOT NULL,
-    `title` VARCHAR(191) NOT NULL,
-    `from` VARCHAR(191) NOT NULL,
-    `to` VARCHAR(191) NOT NULL,
-    `institution` VARCHAR(191) NOT NULL,
-    `location` VARCHAR(191) NOT NULL,
+    `title` VARCHAR(191) NULL,
+    `from` VARCHAR(191) NULL,
+    `to` VARCHAR(191) NULL,
+    `url` VARCHAR(191) NULL,
+    `institution` VARCHAR(191) NULL,
+    `location` VARCHAR(191) NULL,
     `description` JSON NULL,
 
     PRIMARY KEY (`id`)
@@ -244,6 +245,29 @@ CREATE TABLE `Settings` (
     `frequency` ENUM('AlmostNothing', 'Monthly', 'Weekly', 'Daily', 'PrettyMuchEverything') NOT NULL,
 
     UNIQUE INDEX `Settings_userId_key`(`userId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `ApplicationsState` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `jobId` INTEGER NOT NULL,
+    `userId` INTEGER NOT NULL,
+    `applicationId` INTEGER NOT NULL,
+    `state` ENUM('Approved', 'Saved', 'Declined') NOT NULL,
+
+    UNIQUE INDEX `ApplicationsState_userId_applicationId_key`(`userId`, `applicationId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Answers` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `userId` INTEGER NOT NULL,
+    `applicationId` INTEGER NOT NULL,
+    `questionId` INTEGER NOT NULL,
+    `answer` VARCHAR(191) NOT NULL,
+
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -297,3 +321,21 @@ ALTER TABLE `Attachments` ADD CONSTRAINT `Attachments_sectionId_fkey` FOREIGN KE
 
 -- AddForeignKey
 ALTER TABLE `Settings` ADD CONSTRAINT `Settings_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ApplicationsState` ADD CONSTRAINT `ApplicationsState_jobId_fkey` FOREIGN KEY (`jobId`) REFERENCES `Job`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ApplicationsState` ADD CONSTRAINT `ApplicationsState_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ApplicationsState` ADD CONSTRAINT `ApplicationsState_applicationId_fkey` FOREIGN KEY (`applicationId`) REFERENCES `AppliedJobs`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Answers` ADD CONSTRAINT `Answers_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Answers` ADD CONSTRAINT `Answers_applicationId_fkey` FOREIGN KEY (`applicationId`) REFERENCES `AppliedJobs`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Answers` ADD CONSTRAINT `Answers_questionId_fkey` FOREIGN KEY (`questionId`) REFERENCES `JobQuestions`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
