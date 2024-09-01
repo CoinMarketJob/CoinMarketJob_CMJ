@@ -1,5 +1,5 @@
 "use client";
-import styles from "./checkbox.module.css";
+import styles from "./Checkbox.module.css";
 import React from 'react';
 
 interface SelectionType {
