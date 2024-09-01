@@ -1,16 +1,48 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Candidates.module.css";
 import { useJobApplications } from "@/hooks/useApplicationJob";
 import CandidatesCard from "../components/dashboard/CandidatesCard";
 import Image from "next/image";
 import Draft from "../components/auth/ShowDraft";
 import ButtonImage from "../components/dashboard/ButtonImage";
+import Dropdown from "../components/general/Dropdown";
 
 const Page = () => {
   const { jobApplications } = useJobApplications();
   const [showDetail, setShowDetail] = useState<boolean>(false);
   const [selectedApplication, setSelectedApplication] = useState<any>();
+  const [option, setOption] = useState<string>("All");
+  const [optionType, setOptionType] = useState<string>("All");
+  const [filteredApplications, setFilteredApplications] = useState<any[]>(
+    jobApplications.appliedJobs
+  );
+
+  useEffect(() => {
+    console.log(option);
+    if (option === "All") {
+      setFilteredApplications(jobApplications.appliedJobs);
+      setOptionType("All");
+    } else {
+      fetchApplications();
+    }
+  }, [option]);
+
+  const fetchApplications = async () => {
+    try {
+      const response = await fetch(`/api/applicationState/${option}`);
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        setFilteredApplications(data.length > 0 ? data : []);
+        setOptionType(option);
+      } else {
+        console.error("Error fetching applications:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error fetching applications:", error);
+    }
+  };
 
   const changeState = async (state: string) => {
     try {
@@ -35,6 +67,13 @@ const Page = () => {
     } catch (error) {}
   };
 
+  const options = [
+    { value: "All", label: "All" },
+    { value: "Declined", label: "Declined" },
+    { value: "Saved", label: "Saved" },
+    { value: "Approved", label: "Approved" },
+  ];
+
   return (
     <div className={styles.Container}>
       <div
@@ -44,16 +83,24 @@ const Page = () => {
       >
         <div className={styles.TopDetail}>
           <div className={styles.JobsText}>Candidates</div>
-          <div className={styles.Options}>Options</div>
+          <div className={styles.Options}>
+            <Dropdown
+              id="Options"
+              list={options}
+              value={option}
+              setValue={setOption}
+              placeholder="Options"
+            />
+          </div>
         </div>
 
         <div className={styles.Line}></div>
 
         <div>
-          {jobApplications.appliedJobs.map((item: any, index: number) => (
+          {filteredApplications.map((item: any, index: number) => (
             <CandidatesCard
               key={item.id || `application-${index}`}
-              application={item}
+              application={optionType == "All" ? item : item.appliedJobs}
               setShowDetail={setShowDetail}
               setSelectedApplication={setSelectedApplication}
               showDetail={showDetail}
@@ -80,7 +127,11 @@ const Page = () => {
             {selectedApplication?.name + " " + selectedApplication?.surname}{" "}
           </div>
 
-          {selectedApplication?.resumeLink && <a href={selectedApplication?.resumeLink} target="_blank">CV</a>}
+          {selectedApplication?.resumeLink && (
+            <a href={selectedApplication?.resumeLink} target="_blank">
+              CV
+            </a>
+          )}
 
           {selectedApplication?.resumeDraft && (
             <div>
@@ -88,7 +139,11 @@ const Page = () => {
             </div>
           )}
 
-          {selectedApplication?.coverLetterLink && <a href={selectedApplication?.coverLetterLink} target="_blank">CL</a>}
+          {selectedApplication?.coverLetterLink && (
+            <a href={selectedApplication?.coverLetterLink} target="_blank">
+              CL
+            </a>
+          )}
 
           {selectedApplication?.coverLetterDraft && (
             <div>
@@ -98,10 +153,11 @@ const Page = () => {
 
           <div className={styles.QuestionAndAnswerArea}>
             {selectedApplication.Answers.map((item: any, index: number) => (
-              <div key={item.id || `answer-${index}`} className={styles.QuestionAndAnswer}>
-                <div className={styles.Question}>
-                  {item.question.question}
-                </div>
+              <div
+                key={item.id || `answer-${index}`}
+                className={styles.QuestionAndAnswer}
+              >
+                <div className={styles.Question}>{item.question.question}</div>
                 <div className={styles.Answer}>{item.answer}</div>
               </div>
             ))}
