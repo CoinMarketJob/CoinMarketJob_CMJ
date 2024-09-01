@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+"use client";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./EditClient.module.css";
 import JobTitle from "./JobTitle";
 import LocationSelector from "../location/LocationSelector";
@@ -31,6 +32,8 @@ interface EditClientProps {
   setMin: React.Dispatch<React.SetStateAction<string>>;
   max: string;
   setMax: React.Dispatch<React.SetStateAction<string>>;
+  unit: string;
+  setUnit: React.Dispatch<React.SetStateAction<string>>;
   single: string;
   setSingle: React.Dispatch<React.SetStateAction<string>>;
   showSalary: boolean;
@@ -63,6 +66,8 @@ const EditClient: React.FC<EditClientProps> = ({
   setMin,
   max,
   setMax,
+  unit,
+  setUnit,
   visa,
   setVisa,
   showSalary,
@@ -75,6 +80,8 @@ const EditClient: React.FC<EditClientProps> = ({
   questions,
   setQuestions,
 }) => {
+  const [isImageLoading, setIsImageLoading] = useState(true);
+
   const jobTypes = [
     { value: "Internship", label: "Internship" },
     { value: "PartTime", label: "Part-time" },
@@ -100,18 +107,54 @@ const EditClient: React.FC<EditClientProps> = ({
     { value: "PhD", label: "PhD" },
   ];
   const chooseLocationOptions = [
-    { value: 'Current Location', label: 'Current Location' },
-    { value: 'London', label: 'London' },
-    { value: 'New York', label: 'New York' },
-    { value: 'Papua New Guinea', label: 'Papua New Guinea' },
-    { value: 'San Fransisco', label: 'San Fransisco' },
-    { value: 'Las Vegas', label: 'Las Vegas' },
+    { value: "Current Location", label: "Current Location" },
+    { value: "London", label: "London" },
+    { value: "New York", label: "New York" },
+    { value: "Papua New Guinea", label: "Papua New Guinea" },
+    { value: "San Fransisco", label: "San Fransisco" },
+    { value: "Las Vegas", label: "Las Vegas" },
+  ];
+  const salaryUnit = [
+    { value: "Year", label: "Year" },
+    { value: "Month", label: "Month" },
+    { value: "Week", label: "Week" },
+    { value: "Day", label: "Day" },
+    { value: "Hour", label: "Hour" },
   ];
 
   const [QuestionAddShow, setQuestionAddShow] = useState<boolean>(false);
   const [QuestionInput, setQuestionInput] = useState<string | undefined>();
   const [isFormValid, setIsFormValid] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
+
+
+  const QuestionPopupRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (QuestionPopupRef.current && !QuestionPopupRef.current.contains(event.target as Node)) {
+        setQuestionAddShow(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (min || max) {
+      setSingle("");
+    }
+  }, [min, max]);
+
+  useEffect(() => {
+    if (single) {
+      setMin("");
+      setMax("");
+    }
+  }, [single]);
 
   const handleEdit = (index: number) => {
     setEditingIndex(index);
@@ -150,13 +193,7 @@ const EditClient: React.FC<EditClientProps> = ({
   };
 
   const validateForm = () => {
-    if (
-      jobTitle &&
-      jobType &&
-      experienceLevel &&
-      educationalDegree 
-      
-    ) {
+    if (jobTitle && jobType && experienceLevel && educationalDegree) {
       setIsFormValid(true);
     } else {
       setIsFormValid(false);
@@ -175,7 +212,6 @@ const EditClient: React.FC<EditClientProps> = ({
     single,
     description,
   ]);
-    
 
   return (
     <div className={styles.container}>
@@ -193,13 +229,13 @@ const EditClient: React.FC<EditClientProps> = ({
 
       <div className={`${styles.centerDiv}`}>
         <LocationSelector
-                      label="Choose Location"
-                      options={chooseLocationOptions}
-                      selectedLocation={selectedLocations}
-                      setSelectedLocation={setSelectedLocations}
-                      locationType={locationType}
-                      setLocationType={setLocationType}
-                    />
+          label="Choose Location*"
+          options={chooseLocationOptions}
+          selectedLocation={selectedLocations}
+          setSelectedLocation={setSelectedLocations}
+          locationType={locationType}
+          setLocationType={setLocationType}
+        />
       </div>
 
       <div className={`${styles.centerDiv} ${styles.SelectionGroup}`}>
@@ -262,7 +298,15 @@ const EditClient: React.FC<EditClientProps> = ({
               />
             </div>
             <span className={`${styles.SpaceUnit}`}>/</span>
-            <span className={`${styles.Unit}`}>Year</span>
+            <span className={`${styles.Unit}`}>
+              <Dropdown
+                id="salaryUnit"
+                value={unit}
+                setValue={setUnit}
+                placeholder="Unit"
+                list={salaryUnit}
+              />
+            </span>
             <span className={`${styles.Ortext}`}>or</span>
             <div className={`${styles.SingleSalary}`}>
               <Input
@@ -271,7 +315,7 @@ const EditClient: React.FC<EditClientProps> = ({
                 required={false}
                 value={single}
                 onChange={(e) => setSingle(e.target.value)}
-                placeholder="Enter a single value"
+                placeholder="Single value"
               />
             </div>
 
@@ -357,6 +401,7 @@ const EditClient: React.FC<EditClientProps> = ({
         <div
           style={{ display: !QuestionAddShow ? "none" : "" }}
           className={`${styles.QuestionPopup}`}
+          ref={QuestionPopupRef}
         >
           <div className={`${styles.QuestionDiv}`}>
             <Input
