@@ -39,7 +39,7 @@ const JobFilterPopUp: React.FC = () => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   interface Job {
-    location?: string;
+    location?: string | null;
     locationType?: string | null | undefined;
     jobType?: string;
     experienceLevel?: string;

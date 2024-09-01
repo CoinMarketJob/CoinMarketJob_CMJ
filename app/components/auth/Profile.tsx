@@ -40,7 +40,7 @@ interface ProfileData {
 
 const Profile = () => {
   const [showDetail, setShowDetail] = useState<boolean>(false);
-  const [profile, setProfile] = useState<ProfileData | null>(null);
+  const [profile, setProfile] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [editProfile, setEditProfile] = useState<boolean>(false);
 

@@ -45,7 +45,7 @@ const EditProfile = () => {
   const [headline, setHeadline] = useState<string>("");
   const [site, setSite] = useState<string>("");
   const [about, setAbout] = useState<JSONContent>();
-  const [profile, setProfile] = useState<Profile | undefined>(undefined);
+  const [profile, setProfile] = useState<any | undefined>(undefined);
 
   const [socialPopup, setSocialPopup] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
@@ -459,7 +459,7 @@ const EditProfile = () => {
               style={{ display: !sectionPopup ? "none" : "" }}
             >
               {sections.map((item, index) => (
-                <div className={styles.ElementDiv}>
+                <div className={styles.ElementDiv} key={index}>
                   <Icon onClick={() => AddElement(item.id)}>
                     <svg
                       width="20"

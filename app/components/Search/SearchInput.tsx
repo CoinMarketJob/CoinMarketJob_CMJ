@@ -11,7 +11,7 @@ import JobFilterPopUp from '../jobfilter/Job';
 interface Job {
     companyName: string;
     jobTitle: string;
-    location: string;
+    location: string | null;
     jobType: string;
     experienceLevel: string;
     jobDescription?: string | number | boolean | any[] | Record<string, any> | null;
@@ -54,7 +54,7 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags, isFilterOpen, setIs
             return lowerCaseTags.every(tag =>
                 job.companyName.toLowerCase().includes(tag) ||
                 job.jobTitle.toLowerCase().includes(tag) ||
-                job.location.toLowerCase().includes(tag) ||
+                (job.location && job.location.toLowerCase().includes(tag)) ||
                 job.jobType.toLowerCase().includes(tag) ||
                 job.experienceLevel.toLowerCase().includes(tag) ||
                 (typeof job.jobDescription === 'string' && job.jobDescription.toLowerCase().includes(tag))
