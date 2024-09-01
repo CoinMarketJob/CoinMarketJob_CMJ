@@ -245,7 +245,7 @@ const JobFilterPopUp: React.FC = () => {
                   </div>
                   <div
   className={`${styles.setAlert} ${isAlertSet ? styles.active : ''}`}
-  onClick={handleAlertClick}
+  
 >
   <span>Set Alert</span>
   {isAlertSet ? (
@@ -319,7 +319,7 @@ const JobFilterPopUp: React.FC = () => {
                       setSwitchState={setActivelyHiring}
                     /> */}
                     <ToggleSwitch
-                      title="Visa Sponsorship"
+                      title="Visa sponsorship"
                       sliderName="slider2"
                       switchState={visaSponsorship}
                       setSwitchState={(newValue) => {
