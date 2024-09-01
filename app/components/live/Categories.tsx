@@ -27,12 +27,6 @@ const Categories: React.FC<Props> = ({ onCategoryClick }) => {
         news
       </div>
       <div
-        className={`${styles.Element} ${activeCategory === 'EVENT' ? styles.active : ''}`}
-        onClick={() => handleCategoryClick('EVENT')}
-      >
-        event
-      </div>
-      <div
         className={`${styles.Element} ${activeCategory === 'HACKHATHONS' ? styles.active : ''}`}
         onClick={() => handleCategoryClick('HACKHATHONS')}
       >
