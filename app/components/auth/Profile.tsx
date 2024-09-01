@@ -38,10 +38,34 @@ interface ProfileData {
   socialMedias: SocialMedia[];
 }
 
+const LoadingPlaceholder = () => (
+  <div className={styles.placeholderContent}>
+    <div className={styles.placeholderContent_item}></div>
+    <div className={styles.placeholderContent_item}></div>
+    <div className={styles.placeholderContent_item}></div>
+    <div className={styles.placeholderContent_item}></div>
+    <div className={styles.placeholderContent_item}></div>
+    <div className={styles.placeholderContent_item}></div>
+    <div className={styles.placeholderContent_item}></div>
+    <div className={styles.placeholderContent_item}></div>
+    <div className={styles.placeholderContent_item}></div>
+    <div className={styles.placeholderContent_item}></div>
+    <div className={styles.placeholderContent_item}></div>
+  </div>
+);
+
 const Profile = () => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
+
   const [showDetail, setShowDetail] = useState<boolean>(false);
   const [profile, setProfile] = useState<any | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
   const [editProfile, setEditProfile] = useState<boolean>(false);
 
   const { setProfileType } = useProfile();
@@ -90,7 +114,13 @@ const Profile = () => {
   return (
     <div className={styles.container}>
       {loading ? (
-        <div className={styles.loadingOverlay}></div>
+        <div className={styles.loadingPlaceholder}>
+          <div className={`${styles.placeholder} ${styles.avatar}`}></div>
+          <div className={`${styles.placeholder} ${styles.text}`}></div>
+          <div className={`${styles.placeholder} ${styles.text} ${styles.short}`}></div>
+          <div className={`${styles.placeholder} ${styles.text}`}></div>
+          <div className={`${styles.placeholder} ${styles.text} ${styles.short}`}></div>
+        </div>
       ) : (
         <>
           <div className={styles.Detail}>
