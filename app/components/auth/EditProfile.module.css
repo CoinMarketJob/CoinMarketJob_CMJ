@@ -20,6 +20,7 @@
   padding-right: 24px;
   padding-bottom: 24px;
   width: calc(100% - 48px);
+  z-index: 1000;
 }
 
 .avatarImage {
@@ -143,6 +144,7 @@
   padding-right: 24px;
   padding-top: 26px;
   padding-bottom: 26px;
+  z-index: 1000;
 }
 
 .ElementDiv {
