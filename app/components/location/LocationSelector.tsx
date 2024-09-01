@@ -60,6 +60,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ label, selectedLoca
 
   const handleCheckboxChange = (newSelectedLocations: string[]) => {
     setSelectedLocation(newSelectedLocations);
+    setOpen(false);
   };
 
   const filteredOptions = cities
