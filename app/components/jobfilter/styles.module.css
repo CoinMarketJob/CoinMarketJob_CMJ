@@ -193,12 +193,13 @@
   align-items: center;
   cursor: pointer;
   gap: 5px;
+  color: rgba(36, 34, 32, 0.2);
 }
 
 .setAlertSpan { /* Change to BEM style for CSS Modules */
   font-size: 17px;
   font-weight: 500;
-  color: #242220CC;
+  color: #FFFFFFCC;
   font-family: Inter;
   opacity: 1;
 }
@@ -207,32 +208,11 @@
   margin-left: 10px;
   width: 20px;
   height: 20px;
-  color: #24222066;
+  color: rgba(36, 34, 32, 0.15);
   position: relative; /* Hover background */
 }
 
-.plusIconActive {
-  margin-left: 10px;
-  width: 20px;
-  height: 20px;
-  color: #242220;
-  position: relative; /* Hover background */
-}
 
-.setAlertHoverIcon:hover .plusIcon { /* Hover effect for plus icon */
-  background-color: #2422200D; /* Hover background color */
-  border-radius: 50%; /* Circle background */
-}
 
-.setAlertHoverIcon:hover .plusIcon::before { /* Hover effect for icon background */
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 46.55px; /* Circle size */
-  height: 46.55px; /* Circle size */
-  background-color: #2422200D; /* Circle color */
-  border-radius: 50%; /* Circle shape */
-  transform: translate(-50%, -50%); /* Center the circle */
-  z-index: -1; /* Behind the icon */
-}
+
+
