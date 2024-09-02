@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./AddSocialMedia.module.css";
 import EditProfileInput from "./EditProfileInput";
 import Button from "../general/Button";
@@ -19,18 +19,21 @@ interface Props {
   setPopup: React.Dispatch<React.SetStateAction<boolean>>;
   socialMedias: CustomSocialMedia[];
   setSocialMedias: React.Dispatch<React.SetStateAction<CustomSocialMedia[]>>;
+  modalRef?: React.RefObject<HTMLDivElement>;
 }
 
 const AddSocialMedia: React.FC<Props> = ({
   profileType,
   setPopup,
   socialMedias,
-  setSocialMedias
+  setSocialMedias,
+  modalRef = useRef<HTMLDivElement>(null)
 }) => {
   const [platform, setPlatform] = useState<string>("");
   const [url, setUrl] = useState<string>("");
   const [platformName, setPlatformName] = useState<string>("");
   const [username, setUsername] = useState<string>("");
+  
 
   const SocialTypes = [
     { value: "Arena", label: "Are.na" },
@@ -63,8 +66,24 @@ const AddSocialMedia: React.FC<Props> = ({
     setPopup(false);
   }
 
+  useEffect(() => {
+    if (!modalRef?.current) return; // Eğer modalRef mevcut değilse, herhangi bir işlem yapmadan çık
+  
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        setPopup(false);  // Dışarı tıklanınca modal kapanır
+      }
+    };
+  
+    document.addEventListener("mousedown", handleOutsideClick);
+  
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [modalRef, setPopup]);
+
   return (
-    <div className={styles.SocialPopup}>
+    <div className={styles.SocialPopup} ref={modalRef}>
       <div className={styles.line}>
         <div className={styles.Column}>
           <Dropdown

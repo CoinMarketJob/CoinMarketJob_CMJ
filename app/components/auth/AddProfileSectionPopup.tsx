@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import styles from "./AddProfileSectionPopup.module.css";
 import Icon from "../general/Icon";
 import Input from "../general/Input";
