@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import styles from "./EditProfile.module.css";
 import Image from "next/image";
@@ -54,6 +54,9 @@ const EditProfile = () => {
   const [sectionPopup, setSectionPopup] = useState<boolean>(false);
   const [popupType, setPopupType] = useState<string>("WorkExperience");
 
+  const popupRef = useRef<HTMLDivElement>(null);
+  const sectionPopupRef = useRef<HTMLDivElement>(null);
+
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [changeLogo, setChangeLogo] = useState<boolean>(false);
 
@@ -61,6 +64,7 @@ const EditProfile = () => {
   const [socialMedias, setSocialMedias] = useState<CustomSocialMedia[]>([]);
   const [profileSections, setProfileSections] = useState<ProfileSection[]>([]);
   const [editingSectionId, setEditingSectionId] = useState<number | null>(null);
+
 
   const visibleSocialMediaCount = 3;
 
@@ -284,6 +288,22 @@ const EditProfile = () => {
     }
   };
 
+  const handleClickOutside = (event: MouseEvent) => {
+    if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+      setShowAddPopup(false);
+    }
+    if (sectionPopupRef.current && !sectionPopupRef.current.contains(event.target as Node)) {
+      setSectionPopup(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
       {loading ? (
@@ -456,6 +476,7 @@ const EditProfile = () => {
 
             <div
               className={styles.SectionPopup}
+              ref={sectionPopupRef}
               style={{ display: !sectionPopup ? "none" : "" }}
             >
               {sections.map((item, index) => (
@@ -484,7 +505,9 @@ const EditProfile = () => {
           <div className={styles.PopupContainerDiv}>
             <div
               className={styles.PopupContainer}
-              style={{ display: !showAddPopup ? "none" : "" }}
+              ref={popupRef}
+              style={{ display: !showAddPopup ? "none" : "" }
+            }
             >
               <AddProfileSectionPopup
                 type={popupType}
@@ -492,6 +515,7 @@ const EditProfile = () => {
                 profileId={Number(profile?.id)}
                 onAdd={handleAddSection}
                 onUpdate={handleUpdateSection}
+                
                 editingSection={
                   editingSectionId
                     ? profileSections.find((s) => s.id === editingSectionId)

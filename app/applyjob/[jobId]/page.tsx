@@ -43,6 +43,8 @@ const page = ({ params }: { params: JobProps }) => {
 
   const [answers, setAnswers] = useState<{ [key: number]: string }>({});
 
+  const [isFormValid, setIsFormValid] = useState(false);
+
   const handleAnswerChange = (questionId: number, answer: string) => {
     setAnswers((prev) => ({ ...prev, [questionId]: answer }));
   };
@@ -280,6 +282,7 @@ const page = ({ params }: { params: JobProps }) => {
   ];
 
   const submit = async () => {
+    setIsFormValid(true);
     var resumeLink = "";
     var letterLink = "";
     try {
@@ -340,7 +343,7 @@ const page = ({ params }: { params: JobProps }) => {
         coverLetterDraft: letterManualState ? coverLetter : null,
         resumeLink: !cvManualState ? resumeLink : null,
         coverLetterLink: !letterManualState ? letterLink : null,
-        visaSponsorship: true,
+        visaSponsorship: visaSelected,
         answers: Object.entries(answers).map(([questionId, answer]) => ({
           questionId: parseInt(questionId),
           answer,
@@ -371,6 +374,27 @@ const page = ({ params }: { params: JobProps }) => {
     console.log("Selected value:", selectedValue);
   };
 
+
+  const validateForm = () => {
+    if (name && surname && email ) {
+      setIsFormValid(true);
+    } else {
+      setIsFormValid(false);
+    }
+  };
+  useEffect(() => {
+    validateForm();
+  }, [
+    jobId,
+        name,
+        surname,
+        email,
+        phone,
+        cvFile,
+        letterFile,
+        cv,
+        coverLetter
+  ]);
   return (
     <div ref={panelRef} className={styles.ContainerCard}>
       <div className={styles.ApplyCard}>
@@ -427,7 +451,7 @@ const page = ({ params }: { params: JobProps }) => {
             id="phone"
             placeholder="Phone"
             type="phone"
-            required
+            required={false}
             value={phone}
             onChange={phoneChange}
           />
@@ -549,7 +573,7 @@ const page = ({ params }: { params: JobProps }) => {
             name="Visa"
             id="1"
             value={visaSelected}
-            onChange={VisaHandleChange}
+            onChange={(selectedValue) => setVisaSelected(selectedValue)}
             label="Visa Sponsorship is Required"
           />
         </div>
@@ -565,6 +589,7 @@ const page = ({ params }: { params: JobProps }) => {
           paddingTop={15}
           paddingBottom={15}
           onClick={submit}
+          disabled={!isFormValid}
         />
       </div>
     </div>

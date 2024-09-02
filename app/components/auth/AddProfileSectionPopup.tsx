@@ -194,7 +194,7 @@ const AddProfileSectionPopup: React.FC<PopupProps> = ({
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} >
       <div className={styles.TopInfo}>
         <div className={styles.ExText}>{type == "WorkExperience" ? "Work Experience" : type}</div>
         <div className={styles.CloseIcon}>
