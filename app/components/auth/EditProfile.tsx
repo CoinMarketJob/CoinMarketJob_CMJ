@@ -65,6 +65,10 @@ const EditProfile = () => {
   const [profileSections, setProfileSections] = useState<ProfileSection[]>([]);
   const [editingSectionId, setEditingSectionId] = useState<number | null>(null);
 
+  const [isSocialPopupOpen, setIsSocialPopupOpen] = useState<boolean>(false);
+  const [isAddPopupOpen, setIsAddPopupOpen] = useState<boolean>(false);
+
+
 
   const visibleSocialMediaCount = 3;
 
@@ -289,13 +293,18 @@ const EditProfile = () => {
   };
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+    if (
+      popupRef.current && !popupRef.current.contains(event.target as Node)
+    ) {
       setShowAddPopup(false);
     }
-    if (sectionPopupRef.current && !sectionPopupRef.current.contains(event.target as Node)) {
+    if (
+      sectionPopupRef.current && !sectionPopupRef.current.contains(event.target as Node)
+    ) {
       setSectionPopup(false);
     }
   };
+  
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -304,6 +313,15 @@ const EditProfile = () => {
     };
   }, []);
 
+  const togglesetSectionPopup = () => {
+    setSectionPopup((prevState) => !prevState);
+  };
+
+  const togglesetSocialPopup = () => {
+    setSocialPopup((prevState) => !prevState);
+  };
+
+  
   return (
     <>
       {loading ? (
@@ -419,7 +437,7 @@ const EditProfile = () => {
             )}
 
             <Icon
-              onClick={(e) => setSocialPopup(true)}
+              onClick={togglesetSocialPopup}
               hoverSize={40}
               hoverContent="Add Social Media"
             >
@@ -455,7 +473,7 @@ const EditProfile = () => {
 
           <div className={styles.AddSection}>
             <Icon
-              onClick={() => setSectionPopup(!sectionPopup)}
+              onClick={togglesetSectionPopup}
               hoverSize={50}
               hoverContent="Add Profile Section"
             >
