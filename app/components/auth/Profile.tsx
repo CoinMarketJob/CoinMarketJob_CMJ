@@ -117,9 +117,13 @@ const Profile = () => {
         <div className={styles.loadingPlaceholder}>
           <div className={`${styles.placeholder} ${styles.avatar}`}></div>
           <div className={`${styles.placeholder} ${styles.text}`}></div>
-          <div className={`${styles.placeholder} ${styles.text} ${styles.short}`}></div>
+          <div
+            className={`${styles.placeholder} ${styles.text} ${styles.short}`}
+          ></div>
           <div className={`${styles.placeholder} ${styles.text}`}></div>
-          <div className={`${styles.placeholder} ${styles.text} ${styles.short}`}></div>
+          <div
+            className={`${styles.placeholder} ${styles.text} ${styles.short}`}
+          ></div>
         </div>
       ) : (
         <>
@@ -156,19 +160,31 @@ const Profile = () => {
           {editProfile === false ? (
             <>
               <div className={styles.avatar}>
-                <Image
-                  className={styles.avatarImage}
-                  src={profile?.logoURL != "" ? profile?.logoURL : avatarImage}
-                  width={140}
-                  height={140}
-                  alt="Avatar"
-                />
+                {profile.logoURL ? (
+                  <Image
+                    className={styles.avatarImage}
+                    src={profile?.logoURL}
+                    width={140}
+                    height={140}
+                    alt="Avatar"
+                  />
+                ) : (
+                  <Image
+                    className={styles.avatarImage}
+                    src={avatarImage}
+                    width={140}
+                    height={140}
+                    alt="Avatar"
+                  />
+                )}
               </div>
               <div className={styles.HeadLine}>{profile?.nameSurname}</div>
               <div className={styles.HeadLine}>{profile?.headline}</div>
-              <div className={styles.HeadSite}>
-                <div className={styles.SiteText}>{profile?.siteUrl}</div>
-              </div>
+              {profile.siteUrl ? (
+                <div className={styles.HeadSite}>
+                  <div className={styles.SiteText}>{profile?.siteUrl}</div>
+                </div>
+              ) : null}
               <div className={styles.About}>
                 <Draft show border content={profile?.about} />
               </div>

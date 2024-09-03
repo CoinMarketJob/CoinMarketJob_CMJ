@@ -9,6 +9,7 @@ interface DropdownProps {
   list: Array<{ value: string; label: string }>;
   placeholder?: string;
   error?: boolean;
+
 }
 
 const Dropdown: React.FC<DropdownProps> = ({

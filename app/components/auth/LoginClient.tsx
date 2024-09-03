@@ -21,6 +21,8 @@ const LoginClient = () => {
   const [phoneCode, setPhoneCode] = useState<string>("+1");
   const [phone, setPhone] = useState<string>("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [userId, setUserId] = useState(false);
+  const [registerError, setRegisterError] = useState<string | null>(null);
 
   const countryCodes = [
     { value: "+0", label: "+0" },
@@ -251,22 +253,9 @@ const LoginClient = () => {
 
         console.log("Register result:", registerResult);
 
+        setUserId(registerResult.id);
+
         setIsPopupOpen(true);
-
-        // const signInResult = await signIn('credentials', {
-        //   email: email,
-        //   password: password,
-        //   redirect: false
-        // });
-
-        // if (signInResult?.error) {
-        //   setError('Invalid email or password');
-        // } else if (signInResult?.ok) {
-        //   console.log('Sign in successful, reloading page...');
-        //   window.location.reload();
-        // } else {
-        //   console.error('Sign in failed:', signInResult);
-        // }
       } else {
         // User Login.
         console.log("Logging in user...");
@@ -296,7 +285,48 @@ const LoginClient = () => {
   const loginWithGoogle = async () => {};
 
   const ContinueWithProfile = async () => {
-    
+
+    if(name == "" || surname == "" || phone == ""){
+      setRegisterError("You must fill all field.");
+      return;
+    } 
+
+    const profileData = {
+      userId,
+      name,
+      surname,
+      phoneCode,
+      phoneNumber: phone,
+    };
+
+    const registerResponse = await fetch("/api/profile/firstRegister", {
+      method: "POST",
+      body: JSON.stringify(profileData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!registerResponse.ok) {
+      throw new Error(
+        `Register fetch error: ${registerResponse.status} ${registerResponse.statusText}`
+      );
+    }
+
+    const signInResult = await signIn("credentials", {
+      email: email,
+      password: password,
+      redirect: false,
+    });
+
+    if (signInResult?.error) {
+      setError("Invalid email or password");
+    } else if (signInResult?.ok) {
+      console.log("Sign in successful, reloading page...");
+      setIsPopupOpen(false);
+    } else {
+      console.error("Sign in failed:", signInResult);
+    }
   };
 
   return (
@@ -473,6 +503,9 @@ const LoginClient = () => {
         className="register-popup"
         style={{ display: !isPopupOpen ? "none" : "flex" }}
       >
+        <div className="error-message-container">
+          {registerError && <div className="error-message">{registerError}</div>}
+        </div>
         <div className="register-popup-line">
           <Input
             id="name"
@@ -481,6 +514,7 @@ const LoginClient = () => {
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
+            className={registerError ? "error-input" : ""}
           />
           <Input
             id="surname"
@@ -489,6 +523,7 @@ const LoginClient = () => {
             required
             value={surname}
             onChange={(e) => setSurname(e.target.value)}
+            className={registerError ? "error-input" : ""}
           />
         </div>
         <div className="register-popup-line">
@@ -499,6 +534,7 @@ const LoginClient = () => {
               placeholder="Phone Code"
               value={phoneCode}
               setValue={setPhoneCode}
+              error={registerError ? true: false}
             />
           </div>
           <div style={{ width: "193px" }}>
@@ -509,6 +545,7 @@ const LoginClient = () => {
               required
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
+              className={registerError ? "error-input" : ""}
             />
           </div>
         </div>
@@ -516,7 +553,7 @@ const LoginClient = () => {
           <div style={{ width: "100%" }}>
             <Button
               text="Continue"
-              onClick={() => "Continue"}
+              onClick={() => ContinueWithProfile()}
               paddingTop={15}
               paddingBottom={15}
               paddingLeft={117}
