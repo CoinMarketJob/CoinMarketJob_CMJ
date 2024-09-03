@@ -135,12 +135,12 @@ CREATE TABLE `JobAlerts` (
 CREATE TABLE `Profile` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `userId` INTEGER NOT NULL,
-    `logoURL` VARCHAR(191) NOT NULL,
+    `logoURL` VARCHAR(191) NULL,
     `nameSurname` VARCHAR(191) NULL,
-    `jobTitle` VARCHAR(191) NOT NULL,
-    `location` VARCHAR(191) NOT NULL,
-    `headline` VARCHAR(191) NOT NULL,
-    `siteUrl` VARCHAR(191) NOT NULL,
+    `jobTitle` VARCHAR(191) NULL,
+    `location` VARCHAR(191) NULL,
+    `headline` VARCHAR(191) NULL,
+    `siteUrl` VARCHAR(191) NULL,
     `about` JSON NULL,
     `sectionsOrder` VARCHAR(191) NULL,
 

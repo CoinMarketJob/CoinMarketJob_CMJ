@@ -190,12 +190,12 @@ model Profile {
   id            Int              @id @default(autoincrement())
   userId        Int              @unique
   user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  logoURL       String
+  logoURL       String?
   nameSurname   String?
-  jobTitle      String
-  location      String
-  headline      String
-  siteUrl       String
+  jobTitle      String?
+  location      String?
+  headline      String?
+  siteUrl       String?
   about         Json?
   sectionsOrder String?
   socialMedias  SocialMedia[]
