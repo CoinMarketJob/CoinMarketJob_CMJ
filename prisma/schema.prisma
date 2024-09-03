@@ -196,6 +196,8 @@ model Profile {
   location      String?
   headline      String?
   siteUrl       String?
+  phoneCode     String?
+  phone         String?
   about         Json?
   sectionsOrder String?
   socialMedias  SocialMedia[]
