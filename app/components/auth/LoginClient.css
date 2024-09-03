@@ -136,3 +136,22 @@ input.checked::before {
   font-size: 14px;
   text-align: center;
 }
+
+.register-popup{
+    position: absolute;
+    top: 50%;
+    left: calc(50vw - 150px);
+    box-shadow: 0px 0px 2px 0px #00000033;
+    box-shadow: 0px 0px 11.3px 0px #00000033;
+    background-color: #FFFFFF;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 300px;
+}
+
+.register-popup-line{
+    display: flex;
+    gap: 12px;
+}

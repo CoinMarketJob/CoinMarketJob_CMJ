@@ -46,7 +46,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   };
 
   return (
-    <div ref={dropdownRef} style={{ position: "relative" }}>
+    <div ref={dropdownRef} style={{ position: "relative", width: "100%" }}>
       <div 
         className={`dropdown-input ${error ? 'error' : ''}`}
         onClick={() => setOpen(!open)} 
