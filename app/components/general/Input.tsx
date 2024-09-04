@@ -12,7 +12,7 @@ interface InputProps {
     className?: string
     paddingRight?: number
     paddingLeft?: number
-    disabled?: boolean // Add this line
+    disabled?: boolean
 }
 
 const Input: React.FC<InputProps> = ({ 
@@ -25,9 +25,10 @@ const Input: React.FC<InputProps> = ({
     className, 
     paddingRight, 
     paddingLeft,
-    disabled // Add this line
+    disabled
 }) => {
     const spanRef = useRef<HTMLSpanElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const InputFocus = () => {
         if (spanRef.current) {
@@ -44,14 +45,19 @@ const Input: React.FC<InputProps> = ({
     }
 
     useEffect(() => {
-        if (spanRef.current && value) {
-            spanRef.current.classList.add('form-span-focused');
+        if (spanRef.current && inputRef.current) {
+            if (value) {
+                spanRef.current.classList.add('form-span-focused');
+            } else {
+                spanRef.current.classList.remove('form-span-focused');
+            }
         }
     }, [value]);
 
     return (
         <div style={{ position: 'relative', overflow: "visible", height: "100%" }}>
             <input
+                ref={inputRef}
                 className={`form-input ${className || ''}`}
                 id={id}
                 type={type}
