@@ -46,10 +46,6 @@ const ProfileSections: React.FC<SectionProps> = ({
   onDelete,
   onAdd
 }) => {
-  if (!profile) {
-    return <div></div>;
-  }
-
   const [showPopup, setShowPopup] = useState(false);
 
   const handleMouseEnter = () => {
@@ -59,6 +55,10 @@ const ProfileSections: React.FC<SectionProps> = ({
   const handleMouseLeave = () => {
     setShowPopup(false);
   };
+
+  if (!profile) {
+    return <div></div>;
+  }
 
   const allSections = profile.section;
 

@@ -28,13 +28,16 @@ const AddSocialMedia: React.FC<Props> = ({
   setPopup,
   socialMedias,
   setSocialMedias,
-  modalRef = useRef<HTMLDivElement>(null),
+  modalRef,
   editingIndex,
 }) => {
   const [platform, setPlatform] = useState<string>("");
   const [url, setUrl] = useState<string>("");
   const [platformName, setPlatformName] = useState<string>("");
   const [username, setUsername] = useState<string>("");
+
+  const internalModalRef = useRef<HTMLDivElement>(null);
+  const effectiveModalRef = modalRef || internalModalRef;
 
   useEffect(() => {
     if (editingIndex !== undefined && editingIndex !== null) {
@@ -84,12 +87,12 @@ const AddSocialMedia: React.FC<Props> = ({
   };
 
   useEffect(() => {
-    if (!modalRef?.current) return; // Eğer modalRef mevcut değilse, herhangi bir işlem yapmadan çık
+    if (!effectiveModalRef?.current) return; // Eğer modalRef mevcut değilse, herhangi bir işlem yapmadan çık
 
     const handleOutsideClick = (event: MouseEvent) => {
       if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
+        effectiveModalRef.current &&
+        !effectiveModalRef.current.contains(event.target as Node)
       ) {
         setPopup(false); // Dışarı tıklanınca modal kapanır
       }
@@ -100,10 +103,10 @@ const AddSocialMedia: React.FC<Props> = ({
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
-  }, [modalRef, setPopup]);
+  }, [effectiveModalRef, setPopup]);
 
   return (
-    <div className={styles.SocialPopup} ref={modalRef}>
+    <div className={styles.SocialPopup} ref={effectiveModalRef}>
       <div className={styles.line}>
         <div className={styles.Column}>
           <Dropdown

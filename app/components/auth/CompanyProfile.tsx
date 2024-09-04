@@ -71,6 +71,16 @@ const Profile = () => {
     setShowDetail(false);
   };
 
+  const handleDeleteSocialMedia = (index: number) => {
+    // Implement delete logic here
+    console.log(`Delete social media at index ${index}`);
+  };
+
+  const handleEditSocialMedia = (index: number) => {
+    // Implement edit logic here
+    console.log(`Edit social media at index ${index}`);
+  };
+
   return (
     <div className={styles.container}>
       {loading ? (
@@ -130,6 +140,8 @@ const Profile = () => {
                       key={index}
                       type={item.socialMediaType}
                       url={item.socialMediaUrl}
+                      onDelete={() => handleDeleteSocialMedia(index)}
+                      onEdit={() => handleEditSocialMedia(index)}
                     />
                   )
                 )}

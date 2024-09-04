@@ -11,10 +11,14 @@ interface CustomSocialMedia {
 
 interface CollapsedSocialMediaProps {
   socialMedias: CustomSocialMedia[];
+  onDelete?: (index: number) => void;
+  onEdit?: (index: number) => void;
 }
 
 const CollapsedSocialMedia: React.FC<CollapsedSocialMediaProps> = ({
   socialMedias,
+  onDelete,
+  onEdit,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -45,6 +49,8 @@ const CollapsedSocialMedia: React.FC<CollapsedSocialMediaProps> = ({
               key={index}
               type={item.socialMediaType}
               url={item.socialMediaUrl}
+              onDelete={() => onDelete && onDelete(index)}
+              onEdit={() => onEdit && onEdit(index)}
             />
           ))}
         </div>

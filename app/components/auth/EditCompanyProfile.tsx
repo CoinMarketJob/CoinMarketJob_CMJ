@@ -107,6 +107,18 @@ const EditCompanyProfile: React.FC<props> = ({
     }
   }
 
+  const handleDeleteSocialMedia = (index: number) => {
+    const updatedSocialMedias = socialMedias.filter((_, i) => i !== index);
+    setSocialMedias(updatedSocialMedias);
+  };
+
+  const handleEditSocialMedia = (index: number) => {
+    setSocialPopup(true);
+    // You might want to set some state here to indicate which item is being edited
+    // For example:
+    // setEditingSocialMediaIndex(index);
+  };
+
   const Done = async () => {
     let logoLink = "";
     try {
@@ -242,12 +254,16 @@ const EditCompanyProfile: React.FC<props> = ({
               key={index}
               type={item.socialMediaType}
               url={item.socialMediaUrl}
+              onDelete={() => handleDeleteSocialMedia(index)}
+              onEdit={() => handleEditSocialMedia(index)}
             />
           ))}
 
         {socialMedias.length > 3 && (
           <CollapsedSocialMedia
             socialMedias={socialMedias.slice(3)}
+            onDelete={(index) => handleDeleteSocialMedia(index + 3)}
+            onEdit={(index) => handleEditSocialMedia(index + 3)}
           />
         )}
 
