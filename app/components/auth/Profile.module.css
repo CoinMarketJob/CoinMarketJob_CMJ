@@ -145,6 +145,14 @@
     text-align: justified;    
 }
 
+.PhoneAndMail{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-right: 12px;
+    border-right: 1px solid #E7E5E4;
+}
+
 .SocialMedias{
     width: 100%;
     display: flex;
@@ -277,3 +285,4 @@
 .placeholder.text.short {
     width: 40%;
 }
+

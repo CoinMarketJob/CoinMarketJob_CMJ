@@ -14,17 +14,11 @@ import AddProfileSectionPopup from "./AddProfileSectionPopup";
 import CollapsedSocialMedia from "./CollapsedSocialMedia";
 import Button from "../general/Button";
 import ProfileSections from "./ProfileSections";
-const defaultAvatarImage = "/PlaceholderCompanyProfile.png";
+const defaultAvatarImage = "/PlaceHolderAvatar.png";
+import avatarImage from "./PlaceHolderAvatar.png";
 
-interface Profile {
-  id: string;
-  jobTitle: string;
-  headline: string;
-  location: string;
-  siteUrl: string;
-  about: JSONContent;
-  socialMedias: SocialMedia[];
-  sectionsOrder: string;
+interface EditProfileProps {
+  profile: any;
 }
 
 interface Section {
@@ -38,14 +32,13 @@ interface CustomSocialMedia {
   username: string;
 }
 
-const EditProfile = () => {
+const EditProfile: React.FC<EditProfileProps> = ({ profile }) => {
   const [nameSurname, setNameSurname] = useState<string>("");
   const [jobTitle, setJobTitle] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [headline, setHeadline] = useState<string>("");
   const [site, setSite] = useState<string>("");
   const [about, setAbout] = useState<JSONContent>();
-  const [profile, setProfile] = useState<any | undefined>(undefined);
 
   const [socialPopup, setSocialPopup] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
@@ -57,8 +50,8 @@ const EditProfile = () => {
   const popupRef = useRef<HTMLDivElement>(null);
   const sectionPopupRef = useRef<HTMLDivElement>(null);
 
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [changeLogo, setChangeLogo] = useState<boolean>(false);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const [avatar, setAvatar] = useState<string>(defaultAvatarImage);
   const [socialMedias, setSocialMedias] = useState<CustomSocialMedia[]>([]);
@@ -68,32 +61,9 @@ const EditProfile = () => {
   const [isSocialPopupOpen, setIsSocialPopupOpen] = useState<boolean>(false);
   const [isAddPopupOpen, setIsAddPopupOpen] = useState<boolean>(false);
 
-
+  const [editingSocialMediaIndex, setEditingSocialMediaIndex] = useState<number | null>(null);
 
   const visibleSocialMediaCount = 3;
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    async function fetchData() {
-      try {
-        const response = await fetch("/api/profile/get/");
-        const data: Profile = await response.json();
-        console.log(data);
-        setProfile(data);
-        setJobTitle(data.jobTitle);
-        setHeadline(data.headline);
-        setLocation(data.location);
-        setSite(data.siteUrl);
-        setAbout(data.about);
-      } catch (error) {
-        console.error("Veri getirme hatası:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchData();
-  }, []);
 
   const defaultSections = [
     { id: "WorkExperience", label: "Work Experience" },
@@ -110,19 +80,15 @@ const EditProfile = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("/api/profile/get/");
-        const data = await response.json();
-        console.log(data);
-        setProfile(data);
-        setNameSurname(data.nameSurname);
-        setJobTitle(data.jobTitle);
-        setHeadline(data.headline);
-        setLocation(data.location);
-        setSite(data.siteUrl);
-        setAbout(data.about);
-        setSocialMedias(data.socialMedias);
-        setProfileSections(data.section);
-        setAvatar(data.logoURL);
+        setNameSurname(profile.nameSurname);
+        setJobTitle(profile.jobTitle);
+        setHeadline(profile.headline);
+        setLocation(profile.location);
+        setSite(profile.siteUrl);
+        setAbout(profile.about);
+        setSocialMedias(profile.socialMedias);
+        setProfileSections(profile.section);
+        setAvatar(profile.logoURL);
       } catch (error) {
         console.error("Veri getirme hatası:", error);
       } finally {
@@ -175,6 +141,11 @@ const EditProfile = () => {
 
   const Done = async () => {
     try {
+      let avatarUrl = avatar;
+
+      if (selectedImage) {
+        avatarUrl = await uploadImageToS3(selectedImage);
+      }
       const profileData = {
         nameSurname,
         jobTitle,
@@ -184,11 +155,8 @@ const EditProfile = () => {
         about,
         socialMedias,
         sections: profileSections,
-        avatar,
+        avatar: avatarUrl,
       };
-
-      console.log(profile);
-
       const response = await fetch("/api/profile/", {
         method: "POST",
         headers: {
@@ -202,6 +170,8 @@ const EditProfile = () => {
       }
 
       console.log("Başarılı");
+      setSelectedImage(null);
+      setPreviewUrl(null);
     } catch (error) {
       console.error("Error updating profile:", error);
     }
@@ -248,18 +218,11 @@ const EditProfile = () => {
     setPopupType(type);
   };
 
-  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
-      setImageFile(file);
-
-      try {
-        const uploadedImageUrl = await uploadImageToS3(file);
-        setAvatar(uploadedImageUrl);
-        setChangeLogo(true);
-      } catch (error) {
-        console.error("Error uploading image:", error);
-      }
+      setSelectedImage(file);
+      setPreviewUrl(URL.createObjectURL(file));
     }
   };
 
@@ -293,18 +256,16 @@ const EditProfile = () => {
   };
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (
-      popupRef.current && !popupRef.current.contains(event.target as Node)
-    ) {
+    if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
       setShowAddPopup(false);
     }
     if (
-      sectionPopupRef.current && !sectionPopupRef.current.contains(event.target as Node)
+      sectionPopupRef.current &&
+      !sectionPopupRef.current.contains(event.target as Node)
     ) {
       setSectionPopup(false);
     }
   };
-  
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -321,7 +282,15 @@ const EditProfile = () => {
     setSocialPopup((prevState) => !prevState);
   };
 
-  
+  const handleDeleteSocialMedia = (index: number) => {
+    setSocialMedias(prevState => prevState.filter((_, i) => i !== index));
+  };
+
+  const handleEditSocialMedia = (index: number) => {    
+    setEditingSocialMediaIndex(index);
+    setSocialPopup(true);
+  };
+
   return (
     <>
       {loading ? (
@@ -329,13 +298,23 @@ const EditProfile = () => {
       ) : (
         <div className={styles.container}>
           <div className={styles.avatar}>
-            <Image
-              src={avatar}
-              width={140}
-              height={140}
-              alt="Avatar"
-              className={styles.avatarImage}
-            />
+            {profile?.logoURL ? (
+              <Image
+                className={styles.avatarImage}
+                src={previewUrl || avatar || avatarImage}
+                width={140}
+                height={140}
+                alt="Avatar"
+              />
+            ) : (
+              <Image
+                className={styles.avatarImage}
+                src={previewUrl || avatar || avatarImage}
+                width={140}
+                height={140}
+                alt="Avatar"
+              />
+            )}
             <div className={styles.EditAvatar} onClick={triggerFileInput}>
               <svg
                 width="14"
@@ -417,6 +396,7 @@ const EditProfile = () => {
                 setPopup={setSocialPopup}
                 socialMedias={socialMedias}
                 setSocialMedias={setSocialMedias}
+                editingIndex={editingSocialMediaIndex}
               />
             )}
 
@@ -427,6 +407,8 @@ const EditProfile = () => {
                   key={index}
                   type={item.socialMediaType}
                   url={item.socialMediaUrl}
+                  onDelete={() => handleDeleteSocialMedia(index)}
+                  onEdit={() => handleEditSocialMedia(index)}
                 />
               ))}
 
@@ -468,6 +450,7 @@ const EditProfile = () => {
               isEditing={true}
               onEdit={handleEditSection}
               onDelete={handleDeleteSection}
+              onAdd={AddElement}
             />
           </div>
 
@@ -524,8 +507,7 @@ const EditProfile = () => {
             <div
               className={styles.PopupContainer}
               ref={popupRef}
-              style={{ display: !showAddPopup ? "none" : "" }
-            }
+              style={{ display: !showAddPopup ? "none" : "" }}
             >
               <AddProfileSectionPopup
                 type={popupType}
@@ -533,7 +515,6 @@ const EditProfile = () => {
                 profileId={Number(profile?.id)}
                 onAdd={handleAddSection}
                 onUpdate={handleUpdateSection}
-                
                 editingSection={
                   editingSectionId
                     ? profileSections.find((s) => s.id === editingSectionId)

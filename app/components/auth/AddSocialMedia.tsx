@@ -20,6 +20,7 @@ interface Props {
   socialMedias: CustomSocialMedia[];
   setSocialMedias: React.Dispatch<React.SetStateAction<CustomSocialMedia[]>>;
   modalRef?: React.RefObject<HTMLDivElement>;
+  editingIndex?: number | null;
 }
 
 const AddSocialMedia: React.FC<Props> = ({
@@ -27,13 +28,23 @@ const AddSocialMedia: React.FC<Props> = ({
   setPopup,
   socialMedias,
   setSocialMedias,
-  modalRef = useRef<HTMLDivElement>(null)
+  modalRef = useRef<HTMLDivElement>(null),
+  editingIndex,
 }) => {
   const [platform, setPlatform] = useState<string>("");
   const [url, setUrl] = useState<string>("");
   const [platformName, setPlatformName] = useState<string>("");
   const [username, setUsername] = useState<string>("");
-  
+
+  useEffect(() => {
+    if (editingIndex !== undefined && editingIndex !== null) {
+      const editingItem = socialMedias[editingIndex];
+      setPlatform(editingItem.socialMediaType);
+      setUrl(editingItem.socialMediaUrl);
+      setPlatformName(editingItem.platformName);
+      setUsername(editingItem.username);
+    }
+  }, [editingIndex, socialMedias]);
 
   const SocialTypes = [
     { value: "Arena", label: "Are.na" },
@@ -56,27 +67,36 @@ const AddSocialMedia: React.FC<Props> = ({
       socialMediaType: platform,
       socialMediaUrl: url,
       platformName,
-      username
+      username,
+    };
+    if (editingIndex !== undefined && editingIndex !== null) {
+      const updatedSocialMedias = [...socialMedias];
+      updatedSocialMedias[editingIndex] = Item;
+      setSocialMedias(updatedSocialMedias);
+    } else {
+      setSocialMedias([...socialMedias, Item]);
     }
-    setSocialMedias([...socialMedias, Item]);
     setPlatform("");
     setPlatformName("");
     setUsername("");
     setUrl("");
     setPopup(false);
-  }
+  };
 
   useEffect(() => {
     if (!modalRef?.current) return; // Eğer modalRef mevcut değilse, herhangi bir işlem yapmadan çık
-  
+
     const handleOutsideClick = (event: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-        setPopup(false);  // Dışarı tıklanınca modal kapanır
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
+        setPopup(false); // Dışarı tıklanınca modal kapanır
       }
     };
-  
+
     document.addEventListener("mousedown", handleOutsideClick);
-  
+
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };

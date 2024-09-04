@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./SocialMediaItem.module.css";
 import { socialMediaType } from "@prisma/client";
 
@@ -6,11 +6,30 @@ interface ItemProps {
   type: string;
   url: string;
   isCollapsed?: boolean;
+  onDelete: () => void;
+  onEdit: () => void;
+  show?: boolean;
 }
 
-const SocialMediaItem: React.FC<ItemProps> = ({ type, url, isCollapsed }) => {
+const SocialMediaItem: React.FC<ItemProps> = ({
+  type,
+  url,
+  isCollapsed,
+  onDelete,
+  onEdit,
+  show,
+}) => {
+  const [showPopup, setShowPopup] = useState(false);
+
   const GoToUrl = () => {
     window.open(url, "_blank");
+  };
+  const handleMouseEnter = () => {
+    setShowPopup(!show ? true : false);
+  };
+
+  const handleMouseLeave = () => {
+    setShowPopup(false);
   };
 
   if (isCollapsed) {
@@ -33,7 +52,26 @@ const SocialMediaItem: React.FC<ItemProps> = ({ type, url, isCollapsed }) => {
   }
 
   return (
-    <div onClick={GoToUrl} className={styles.SocialLogo}>
+    <div
+      className={styles.SocialLogo}
+      onClick={GoToUrl}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div style={{display: showPopup ? "flex" : "none"}} className={styles.DeleteDiv} onClick={() => onDelete()}>
+        <svg
+          width="8"
+          height="8"
+          viewBox="0 0 8 8"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M4 4.58133L1.20132 7.38015C1.12492 7.45646 1.02888 7.49554 0.913209 7.49738C0.797632 7.49913 0.699846 7.46005 0.619853 7.38015C0.539951 7.30015 0.5 7.20324 0.5 7.08941C0.5 6.97558 0.539951 6.87867 0.619853 6.79868L3.41867 4L0.619853 1.20132C0.543537 1.12492 0.504459 1.02888 0.502621 0.913209C0.500874 0.797632 0.539951 0.699846 0.619853 0.619853C0.699846 0.539951 0.796758 0.5 0.910588 0.5C1.02442 0.5 1.12133 0.539951 1.20132 0.619853L4 3.41867L6.79868 0.619853C6.87508 0.543537 6.97112 0.504459 7.08679 0.502621C7.20237 0.500874 7.30015 0.539951 7.38015 0.619853C7.46005 0.699846 7.5 0.796758 7.5 0.910589C7.5 1.02442 7.46005 1.12133 7.38015 1.20132L4.58133 4L7.38015 6.79868C7.45646 6.87508 7.49554 6.97112 7.49738 7.08679C7.49913 7.20237 7.46005 7.30015 7.38015 7.38015C7.30015 7.46005 7.20324 7.5 7.08941 7.5C6.97558 7.5 6.87867 7.46005 6.79868 7.38015L4 4.58133Z"
+            fill="#999999"
+          />
+        </svg>
+      </div>
       {type == "LinkedIn" ? (
         <svg
           width="29"
@@ -279,6 +317,21 @@ const SocialMediaItem: React.FC<ItemProps> = ({ type, url, isCollapsed }) => {
           />
         </svg>
       )}
+
+      <div style={{display: showPopup ? "flex" : "none"}} className={styles.EditDiv} onClick={() => onEdit()}>
+        <svg
+          width="8"
+          height="8"
+          viewBox="0 0 8 8"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M5.46605 0.756729L4.80361 1.41912L6.58289 3.19826L7.24533 2.53587C7.5875 2.19373 7.5875 1.63946 7.24533 1.29731L6.70607 0.756729C6.3639 0.414586 5.80959 0.414586 5.46742 0.756729H5.46605ZM4.49429 1.72841L1.3039 4.91992C1.16156 5.06225 1.05754 5.2388 1.00006 5.43176L0.515545 7.07815C0.481328 7.19448 0.512808 7.31902 0.597666 7.40387C0.682524 7.48872 0.807073 7.5202 0.922042 7.48736L2.56856 7.00288C2.76154 6.9454 2.9381 6.84139 3.08044 6.69906L6.27357 3.50755L4.49429 1.72841Z"
+            fill="#999999"
+          />
+        </svg>
+      </div>
     </div>
   );
 };

@@ -15,6 +15,15 @@
   font-weight: 500;
   line-height: 23.81px;
   letter-spacing: 0.03em;
+  flex-grow: 1;
+}
+
+.Info{
+  display: flex;
+}
+
+.addIcon{
+  width: 20px;
 }
 
 .SameTypeSectionGroup {
@@ -26,6 +35,7 @@
 }
 
 .sectionCard {
+  position: relative;
   margin-bottom: 28px;
 }
 
@@ -79,4 +89,22 @@
   text-align: justified;
   color: #999999;
   margin-top: 8px;
+}
+
+.editButtons{
+  position: absolute;
+  right: 10px;
+  height: 100%;
+}
+
+.deleteIcon{
+  position: absolute;
+  right: 10px;
+  top: -30px;
+}
+
+.editIcon{
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
 }
