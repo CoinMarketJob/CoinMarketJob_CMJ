@@ -117,7 +117,7 @@ const JobCard: React.FC<JobCardProps> = ({
       </div>
       <div className={styles.actions}>
         <div>
-          <Icon onClick={JobClose} hoverSize={14} hoverContent="Close">
+          <Icon onClick={JobClose} hoverSize={45} hoverContent="Close">
             <svg
               width="16"
               height="16"
@@ -135,7 +135,7 @@ const JobCard: React.FC<JobCardProps> = ({
           </Icon>
         </div>
         <div>
-          <Icon onClick={JobSave} hoverSize={14} hoverContent="Save">
+          <Icon onClick={JobSave} hoverSize={45} hoverContent="Save">
             <svg
               width="18"
               height="24"

@@ -40,6 +40,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ filteredJobs, layout }) => {
         const newRightCards = rightCards.filter((card) => card.id !== id);
         setRightCards(newRightCards);
         setHasRightItems(newRightCards.length > 0);
+        setShowRightSide(newRightCards.length > 0);
       }
     } else {
       const movedCard = leftCards.find((card) => card.id === id);

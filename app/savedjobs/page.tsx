@@ -2,37 +2,16 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import styles from './page.module.css';
-
-// Define the JobType, ExperienceLevel, EducationalDegree, and other related types
-type JobType = 'Internship' | 'PartTime' | 'FullTime' | 'Contract' | 'Temporary' | 'other';
-type ExperienceLevel = 'EntryLevel' | 'Junior' | 'MidLevel' | 'Senior' | 'Lead' | 'Manager' | 'Executive';
-type EducationalDegree = 'HighSchool' |'Master' | 'PhD';
-
-interface Job {
-  id: number;
-  userId: number;
-  logo: string;
-  companyName: string;
-  jobTitle: string;
-  location: string;
-  jobType: JobType;
-  experienceLevel: ExperienceLevel;
-  educationalDegree: EducationalDegree;
-  salaryMin: number;
-  salaryMax: number;
-  packageId: number;
-  visaSponsorship: boolean;
-  jobDescription: string;
-}
+import MainLayout from '../components/layouts/MainLayout';
 
 const Page = () => {
-  const [savedJobs, setSavedJobs] = useState<Job[]>([]);
+  const [savedJobs, setSavedJobs] = useState<any[]>([]);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await fetch('/api/savedjobs/get');
-        const data: { job: Job }[] = await response.json();
+        const data: { job: any }[] = await response.json();
         console.log(data);
 
         // Map the data to extract jobs
@@ -50,7 +29,7 @@ const Page = () => {
     <div className={styles.Container}>
       <span className={styles.JobsText}>JOBS</span>
       <div>
-        
+        <MainLayout filteredJobs={savedJobs} layout={1} />
       </div>        
     </div>
   );

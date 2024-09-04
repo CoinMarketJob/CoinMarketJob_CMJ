@@ -17,7 +17,7 @@
 }
 
 .card:hover {
-    background-color: #2422200D;
+    background-color: #9997950d;
     border: 1px solid #2422200D;    
 }
 
@@ -92,9 +92,9 @@
     justify-content: space-between;
     gap: 10px;
     position: absolute;
-    right: 15px;
-    top: 10px;
-    height: 75%;
+    right: 6px;
+    top: 0px;
+    height: 98%;
 }
 
 .actions .faCircleCheck,
@@ -106,7 +106,7 @@
 
 .IconCircle {
     position: absolute;
-    right: 10px;
+    right: 40px;
     bottom: 20px;
 
 }
