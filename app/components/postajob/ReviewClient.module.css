@@ -110,3 +110,33 @@
     display: flex;
     justify-content: flex-end;
 }
+
+.Questions {
+    margin-bottom: 36px;
+    text-align: left;
+}
+
+.Questions h3 {
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24.2px;
+    letter-spacing: 0.04em;
+    color: #242220;
+    margin-bottom: 12px;
+}
+
+.Questions ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.Questions li {
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.36px;
+    letter-spacing: 0.04em;
+    color: #242220;
+    margin-bottom: 8px;
+}

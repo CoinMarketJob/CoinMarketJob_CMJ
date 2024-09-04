@@ -178,6 +178,11 @@ const Page = () => {
           visa={visa}
           description={description}
           setPage={setPage}
+          locationType={locationType}
+          unit={unitSalary}
+          single={single}
+          showSalary={showSalary}
+          questions={questions}
         />
       ) : (
         <CheckoutClient

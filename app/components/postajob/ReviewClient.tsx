@@ -18,6 +18,11 @@ interface ReviewClientProps {
   visa: boolean | undefined;
   description: JSONContent;
   setPage: React.Dispatch<React.SetStateAction<number>>;
+  locationType: string;
+  unit: string;
+  single: string;
+  showSalary: boolean;
+  questions: string[];
 }
 
 const ReviewClient: React.FC<ReviewClientProps> = ({
@@ -33,14 +38,18 @@ const ReviewClient: React.FC<ReviewClientProps> = ({
   visa,
   description,
   setPage,
+  locationType,
+  unit,
+  single,
+  showSalary,
+  questions,
 }) => {
   const Checkout = () => {
     setPage(2);
   };
 
   useEffect(() => {
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     console.log(description);
   }, [description]);
 
@@ -76,9 +85,34 @@ const ReviewClient: React.FC<ReviewClientProps> = ({
         {educationalDegree}
       </div>
 
-      <div className={`${styles.centerDiv} ${styles.Salary}`}>
-        Salary Min ${min} - Salary Max ${max}
+      <div className={`${styles.centerDiv} ${styles.DropdownGroup}`}>
+        Location Type: {locationType}
       </div>
+
+      <div className={`${styles.centerDiv} ${styles.DropdownGroup}`}>
+        Visa Sponsorship: {visa ? "Yes" : "No"}
+      </div>
+
+      <div className={`${styles.centerDiv} ${styles.Salary}`}>
+        {showSalary ? (
+          <>
+            Salary: {single ? `$${single}` : `$${min} - $${max}`} per {unit}
+          </>
+        ) : (
+          "Salary not displayed"
+        )}
+      </div>
+
+      {questions.length > 0 && (
+        <div className={`${styles.centerDiv} ${styles.Questions}`}>
+          <h3>Screening Questions:</h3>
+          <ul>
+            {questions.map((question, index) => (
+              <li key={index}>{question}</li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <div className={`${styles.centerDiv} ${styles.Description}`}>
         <Draft show content={description} />
