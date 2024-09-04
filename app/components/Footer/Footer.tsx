@@ -18,14 +18,17 @@ const Footer = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (optionsRef.current && !optionsRef.current.contains(event.target as Node)) {
+      if (
+        optionsRef.current &&
+        !optionsRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -54,8 +57,16 @@ const Footer = () => {
   return (
     <div className={styles.FooterContainer}>
       <div className={styles.LayoutChooseContainer}>
-        <div ref={optionsRef} className={`${styles.OptionsContainer} ${isOpen ? styles.open : ''}`}>
-          <div onClick={() => setLayout(0)} className={`${styles.layoutOption} ${layout === 0 ? styles.selected : ''}`}>
+        <div
+          ref={optionsRef}
+          className={`${styles.OptionsContainer} ${isOpen ? styles.open : ""}`}
+        >
+          <div
+            onClick={() => setLayout(0)}
+            className={`${styles.layoutOption} ${
+              layout === 0 ? styles.selected : ""
+            }`}
+          >
             <svg
               width="26"
               height="26"
@@ -106,7 +117,12 @@ const Footer = () => {
             </svg>
           </div>
 
-          <div onClick={() => setLayout(1)} className={`${styles.layoutOption} ${layout === 1 ? styles.selected : ''}`}>
+          <div
+            onClick={() => setLayout(1)}
+            className={`${styles.layoutOption} ${
+              layout === 1 ? styles.selected : ""
+            }`}
+          >
             <svg
               width="26"
               height="26"
@@ -137,7 +153,12 @@ const Footer = () => {
             </svg>
           </div>
 
-          <div onClick={() => setLayout(2)} className={`${styles.layoutOption} ${layout === 2 ? styles.selected : ''}`}>
+          <div
+            onClick={() => setLayout(2)}
+            className={`${styles.layoutOption} ${
+              layout === 2 ? styles.selected : ""
+            }`}
+          >
             <svg
               width="26"
               height="26"
@@ -178,7 +199,12 @@ const Footer = () => {
             </svg>
           </div>
 
-          <div onClick={() => setLayout(3)} className={`${styles.layoutOption} ${layout === 3 ? styles.selected : ''}`}>
+          <div
+            onClick={() => setLayout(3)}
+            className={`${styles.layoutOption} ${
+              layout === 3 ? styles.selected : ""
+            }`}
+          >
             <svg
               width="26"
               height="26"
@@ -230,54 +256,173 @@ const Footer = () => {
           </div>
         </div>
         <div className={styles.LayoutIcon} onClick={() => setIsOpen(!isOpen)}>
-          <svg
-            width="26"
-            height="26"
-            viewBox="0 0 26 26"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect
-              x="15"
-              y="1"
-              width="10"
-              height="10"
-              rx="3"
-              stroke="#242220"
-              stroke-opacity="0.2"
-              stroke-width="2"
-            />
-            <rect
-              x="15"
-              y="15"
-              width="10"
-              height="10"
-              rx="3"
-              stroke="#242220"
-              stroke-opacity="0.2"
-              stroke-width="2"
-            />
-            <rect
-              x="1"
-              y="1"
-              width="10"
-              height="10"
-              rx="3"
-              stroke="#242220"
-              stroke-opacity="0.2"
-              stroke-width="2"
-            />
-            <rect
-              x="1"
-              y="15"
-              width="10"
-              height="10"
-              rx="3"
-              stroke="#242220"
-              stroke-opacity="0.2"
-              stroke-width="2"
-            />
-          </svg>
+          {layout == 0 ? (
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 26 26"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="15"
+                y="1"
+                width="10"
+                height="10"
+                rx="3"
+                stroke="#242220"
+                stroke-opacity="0.2"
+                stroke-width="2"
+              />
+              <rect
+                x="15"
+                y="15"
+                width="10"
+                height="10"
+                rx="3"
+                stroke="#242220"
+                stroke-opacity="0.2"
+                stroke-width="2"
+              />
+              <rect
+                x="1"
+                y="1"
+                width="10"
+                height="10"
+                rx="3"
+                stroke="#242220"
+                stroke-opacity="0.2"
+                stroke-width="2"
+              />
+              <rect
+                x="1"
+                y="15"
+                width="10"
+                height="10"
+                rx="3"
+                stroke="#242220"
+                stroke-opacity="0.2"
+                stroke-width="2"
+              />
+            </svg>
+          ) : layout == 1 ? (
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 26 26"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="0.75"
+                y="0.75"
+                width="24.5"
+                height="9.5"
+                rx="1.25"
+                stroke="#242220"
+                stroke-opacity="0.2"
+                stroke-width="1.5"
+              />
+              <rect
+                x="0.75"
+                y="15.75"
+                width="24.5"
+                height="9.5"
+                rx="1.25"
+                stroke="#242220"
+                stroke-opacity="0.2"
+                stroke-width="1.5"
+              />
+            </svg>
+          ) : layout == 2 ? (
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 26 26"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="0.75"
+                y="0.75"
+                width="24.5"
+                height="4.5"
+                rx="1.25"
+                stroke="#242220"
+                stroke-opacity="0.2"
+                stroke-width="1.5"
+              />
+              <rect
+                x="0.75"
+                y="10.75"
+                width="24.5"
+                height="4.5"
+                rx="1.25"
+                stroke="#242220"
+                stroke-opacity="0.2"
+                stroke-width="1.5"
+              />
+              <rect
+                x="0.75"
+                y="20.75"
+                width="24.5"
+                height="4.5"
+                rx="1.25"
+                stroke="#242220"
+                stroke-opacity="0.2"
+                stroke-width="1.5"
+              />
+            </svg>
+          ) : (
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 26 26"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="0.75"
+                y="0.75"
+                width="24.5"
+                height="3.5"
+                rx="1.25"
+                stroke="#242220"
+                stroke-opacity="0.2"
+                stroke-width="1.5"
+              />
+              <rect
+                x="0.75"
+                y="7.75"
+                width="24.5"
+                height="3.5"
+                rx="1.25"
+                stroke="#242220"
+                stroke-opacity="0.2"
+                stroke-width="1.5"
+              />
+              <rect
+                x="0.75"
+                y="14.75"
+                width="24.5"
+                height="3.5"
+                rx="1.25"
+                stroke="#242220"
+                stroke-opacity="0.2"
+                stroke-width="1.5"
+              />
+              <rect
+                x="0.75"
+                y="21.75"
+                width="24.5"
+                height="3.5"
+                rx="1.25"
+                stroke="#242220"
+                stroke-opacity="0.2"
+                stroke-width="1.5"
+              />
+            </svg>
+          )}
         </div>
       </div>
 
@@ -331,7 +476,9 @@ const Footer = () => {
           />
         </svg>
       </Icon>
-      {errorMessage && <div className={styles.ErrorMessage}>{errorMessage}</div>}
+      {errorMessage && (
+        <div className={styles.ErrorMessage}>{errorMessage}</div>
+      )}
     </div>
   );
 };
