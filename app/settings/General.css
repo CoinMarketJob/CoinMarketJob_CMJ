@@ -19,6 +19,7 @@
     color: #999999;
     padding-left: 16px;
     margin-top: 0;
+    margin-bottom: 0; /* Remove bottom margin */
   }
   
   .general p {
@@ -26,10 +27,15 @@
   }
   
   .general-dropdown {
-    width: 133px; 
-    height: 50px; 
+    width: 191px; 
+    display: flex;
+    align-items: center; /* Center align dropdown vertically */
     text-align: right;
     margin-right: 0; /* Sağdan boşluk bırakmaz */
     margin-left: auto;
-}
+  }
   
+  /* Adjust dropdown styling if necessary */
+  .general-dropdown .dropdown {
+    width: 100%;
+  }
