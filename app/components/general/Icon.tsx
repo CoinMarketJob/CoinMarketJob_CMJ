@@ -11,6 +11,7 @@ interface IconProps {
   hoverContent?: string;
   width?: number;
   children: React.ReactNode;
+  disableHover?: boolean; // Yeni prop eklendi
 }
 
 const Icon: React.FC<IconProps> = ({
@@ -22,15 +23,18 @@ const Icon: React.FC<IconProps> = ({
   hoverSize,
   hoverContent,
   width,
-  children
+  children,
+  disableHover = false // Varsayılan değer false
 }) => {
   const [showHover, setShowHover] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleMouseEnter = () => {
-    timerRef.current = setTimeout(() => {
-      setShowHover(true);
-    }, 750); // Changed from 3000 to 1500 milliseconds (1.5 seconds)
+    if (!disableHover) {
+      timerRef.current = setTimeout(() => {
+        setShowHover(true);
+      }, 750);
+    }
   };
 
   const handleMouseLeave = () => {
@@ -64,7 +68,7 @@ const Icon: React.FC<IconProps> = ({
       }}
     >
       <div
-        className="icon-hover"
+        className={`icon-hover ${disableHover ? 'no-hover' : ''}`}
         style={{
           width: hoverSize,
           height: hoverSize,
@@ -72,7 +76,9 @@ const Icon: React.FC<IconProps> = ({
       >
         {children}
       </div>
-      <div className={`hover-content ${showHover ? 'show' : ''}`}>{hoverContent}</div>
+      {!disableHover && (
+        <div className={`hover-content ${showHover ? 'show' : ''}`}>{hoverContent}</div>
+      )}
     </div>
   );
 };

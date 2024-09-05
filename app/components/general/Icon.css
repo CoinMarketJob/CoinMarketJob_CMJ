@@ -53,3 +53,10 @@
     opacity: 1;
     visibility: visible;
 }
+
+.icon-hover.no-hover:hover {
+    background-color: transparent;
+    cursor: default;
+}
+
+/* ... diğer stiller ... */

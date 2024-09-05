@@ -9,7 +9,11 @@
 
 .LayoutChooseContainer {
   position: relative;
-  margin-right: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
 }
 
 .OptionsContainer {
@@ -44,11 +48,38 @@
   cursor: pointer;
   padding: 6px;
   border-radius: 7px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  position: relative;
+}
+
+.layoutOption:hover {
+  background-color: #2422200d;
+  transform: scale(1.1);
 }
 
 .layoutOption.selected {
-  background-color: #2422200d;
+  background-color: #2422201a;
+}
+
+.layoutOption::after {
+  content: attr(title);
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #2422200D;
+  color: #24222099;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.layoutOption:hover::after {
+  opacity: 1;
+  visibility: visible;
 }
 
 .ErrorMessage {
@@ -73,3 +104,9 @@
   from { opacity: 1; }
   to { opacity: 0; }
 }
+
+.LayoutIconWrapper {
+  position: relative;
+}
+
+/* ... diğer stiller ... */
