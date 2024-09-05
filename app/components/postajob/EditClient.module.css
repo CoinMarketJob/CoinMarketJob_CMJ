@@ -49,7 +49,7 @@
   font-weight: 400;
   line-height: 27.84px;
   letter-spacing: 0.04em;
-  color: #242220CC;
+  color: #242220cc;
 }
 
 .SelectionGroup {
@@ -66,7 +66,7 @@
 }
 
 .SalaryGroup {
-  width: 100%;
+  width: 307px;
   margin-top: 72px;
 }
 
@@ -79,71 +79,56 @@
   margin-right: 1.5rem;
 }
 
-.SalaryValueAndVisaGroup {
+.ChangeSalary {
   display: flex;
-  margin-top: 12px;
-  margin-bottom: 12px;
-}
-
-.MaxMinContainerDiv {
-  display: flex;
-  align-items: center;
-}
-
-.MinMaxContainer {
-  width: 15%;
-}
-
-.SpaceMinMax {
-  margin-left: 12px;
-  margin-right: 12px;
-  font-family: Inter;
-  font-size: 28px;
-  font-weight: 400;
-  line-height: 21px;
-  color: #24222066;
-}
-
-.SpaceUnit {
-  margin-left: 12px;
-  font-family: Inter;
-  font-size: 28px;
-  font-weight: 400;
-  line-height: 21px;
-  color: #24222066;
-}
-
-.Unit {
-  margin-left: 16px;
-  font-family: Inter;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 21px;
-  color: #999999;
-}
-
-.Ortext {
+  justify-content: flex-end;
+  width: 100%;
   font-family: Inter;
   font-size: 15px;
   font-weight: 400;
   line-height: 21px;
   text-align: left;
   color: #999999;
-  margin-left: 24px;
 }
 
-.SingleSalary{
-    width: 18%;
-    margin-left: 24px;
-    margin-right: 24px;
+.SalaryInfoGroup {
+  display: flex;
+  border-bottom: 1px solid #e7e5e4;
+  padding-bottom: 6px;
+  padding-right: 29px;
 }
 
-.QuestionsGroup{
+.SalarySeparator {
+  font-family: Inter;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 21px;
+  text-align: left;
+  color: #24222066;
+}
+
+.SalaryInputGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  width: 100%;
+}
+
+.SalaryUnitGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  width: 100%;
+}
+
+.QuestionsGroup {
   position: relative;
   margin-top: 62px;
 }
 
-.AddQuestionGroup{
+.AddQuestionGroup {
   display: flex;
   align-items: center;
 }
@@ -152,14 +137,45 @@
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+  padding-top: 15px;
+  padding-bottom: 14px;
+  padding-left: 24px;
+  font-family: Inter;
+  border: 1px solid #E7E5E4;
+  border-radius: 15px;
+  width: fit-content;
+  position: relative;
+}
+
+.QuestionText {
+  font-family: Inter;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 21px;
+  text-align: left;
+  color: #999999;
+  margin-right: 49px;;
 }
 
 .QuestionActions {
-  display: flex;
-  gap: 5px;
+  position: relative;
 }
 
-.AddQuestion{
+.DeleteIcon{
+  position: absolute;
+  bottom: -3px;
+  right: 3px;
+
+}
+
+.EditIcon{
+  position: absolute;
+  top: -3px;
+  right: 3px;
+
+}
+
+.AddQuestion {
   font-family: Inter;
   font-size: 15px;
   font-weight: 400;
@@ -168,10 +184,10 @@
   color: #999999;
 }
 
-.QuestionPopup{
+.QuestionPopup {
   position: absolute;
-  background: #FFFFFFCC;
-  border: 0.5px solid #E7E5E4;
+  background: #ffffffcc;
+  border: 0.5px solid #e7e5e4;
   box-shadow: 0px 0px 2px 0px #00000033;
   box-shadow: 0px 0px 11.3px 0px #00000033;
   padding-left: 24px;
@@ -179,14 +195,14 @@
   padding-top: 48px;
   padding-bottom: 24px;
   left: 240px;
-  border-radius: 15px;   
+  border-radius: 15px;
 }
 
-.QuestionDiv{
+.QuestionDiv {
   width: 397px;
 }
 
-.ButtonGroup{
+.ButtonGroup {
   display: flex;
   width: 100%;
   margin-top: 16px;

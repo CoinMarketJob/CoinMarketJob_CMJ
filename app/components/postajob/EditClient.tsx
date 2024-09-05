@@ -114,24 +114,30 @@ const EditClient: React.FC<EditClientProps> = ({
     { value: "Hour", label: "Hour" },
   ];
 
+  const salaryMoneyUnit = [{ value: "USD", label: "USD" }];
+
   const [QuestionAddShow, setQuestionAddShow] = useState<boolean>(false);
   const [QuestionInput, setQuestionInput] = useState<string | undefined>();
   const [isFormValid, setIsFormValid] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
-
   const QuestionPopupRef = useRef<HTMLDivElement>(null);
+
+  const [salaryType, setSalaryType] = useState<string>("Exact value");
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (QuestionPopupRef.current && !QuestionPopupRef.current.contains(event.target as Node)) {
+      if (
+        QuestionPopupRef.current &&
+        !QuestionPopupRef.current.contains(event.target as Node)
+      ) {
         setQuestionAddShow(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -264,73 +270,118 @@ const EditClient: React.FC<EditClientProps> = ({
       </div>
 
       <div className={`${styles.SalaryGroup}`}>
-        <span className={`${styles.SalaryText}`}>Salary</span>
-        <div className={`${styles.SalaryValueAndVisaGroup}`}>
-          <div className={`${styles.MaxMinContainerDiv}`}>
-            <div className={`${styles.MinMaxContainer}`}>
-              <Input
-                id="min"
-                type="number"
-                required={false}
-                value={min}
-                onChange={(e) => setMin(e.target.value)}
-                placeholder="Min"
-              />
-            </div>
-            <span className={`${styles.SpaceMinMax}`}>-</span>
-            <div className={`${styles.MinMaxContainer}`}>
-              <Input
-                id="max"
-                type="number"
-                required={false}
-                value={max}
-                onChange={(e) => setMax(e.target.value)}
-                placeholder="Max"
-              />
-            </div>
-            <span className={`${styles.SpaceUnit}`}>/</span>
-            <span className={`${styles.Unit}`}>
-              <Dropdown
-                id="salaryUnit"
-                value={unit}
-                setValue={setUnit}
-                placeholder="Unit"
-                list={salaryUnit}
-              />
-            </span>
-            <span className={`${styles.Ortext}`}>or</span>
-            <div className={`${styles.SingleSalary}`}>
+        <div className={`${styles.SalaryInfoGroup}`}>
+          <span className={`${styles.SalaryText}`}>Salary</span>
+          <span
+            className={`${styles.ChangeSalary}`}
+            onClick={() =>
+              setSalaryType(
+                salaryType === "Exact value" ? "Range" : "Exact value"
+              )
+            }
+          >
+            {salaryType}
+          </span>
+        </div>
+
+        {salaryType === "Exact value" ? (
+          <div className={`${styles.SalaryInputGroup}`}>
+            <Input
+              id="Min"
+              type="number"
+              value={min}
+              onChange={(e) => setMin(e.target.value)}
+              placeholder="Min"
+            />
+            <span className={`${styles.SalarySeparator}`}>-</span>
+            <Input
+              id="Max"
+              type="number"
+              value={max}
+              onChange={(e) => setMax(e.target.value)}
+              placeholder="Max"
+            />
+          </div>
+        ) : (
+          <div className={`${styles.SalaryInputGroup}`}>
+            <div style={{ width: "100%" }}>
               <Input
                 id="single"
                 type="number"
-                required={false}
                 value={single}
                 onChange={(e) => setSingle(e.target.value)}
-                placeholder="Single value"
-              />
-            </div>
-
-            <div>
-              <ToggleSwitch
-                title="Visa Sponsorship"
-                sliderName="visa"
-                switchState={visa}
-                setSwitchState={setVisa}
+                placeholder="Value"
               />
             </div>
           </div>
-        </div>
+        )}
 
-        <Selection
-          name="salaryShow"
-          id="salaryShow"
-          value={showSalary}
-          onChange={(selectedValue) => setShowSalary(selectedValue)}
-          label="Don’t show in job listing"
-        />
+        <div className={`${styles.SalaryUnitGroup}`}>
+          <Dropdown
+            id="SalaryMoneyUnit"
+            value={"USD"}
+            list={salaryMoneyUnit}
+            setValue={() => {}}
+            placeholder="USD"
+          />
+
+          <Dropdown
+            id="SalaryUnit"
+            value={unit}
+            list={salaryUnit}
+            setValue={setUnit}
+            placeholder="Salary Unit"
+          />
+        </div>
       </div>
 
       <div className={`${styles.QuestionsGroup}`}>
+        <div className={styles.QuestionsArea}>
+          {questions.map((question, index) => (
+            <div key={index} className={styles.QuestionItem}>
+              <span className={styles.QuestionText}>{question}</span>
+              <div className={styles.QuestionActions}>
+                <div className={styles.DeleteIcon}>
+                  <Icon onClick={() => handleDelete(index)} hoverSize={30}>
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="svg-icon"
+                    >
+                      <path
+                        d="M6 6.99657L1.20227 11.7945C1.07128 11.9254 0.906648 11.9924 0.708358 11.9955C0.510226 11.9985 0.342594 11.9315 0.205462 11.7945C0.0684873 11.6574 0 11.4913 0 11.2961C0 11.101 0.0684873 10.9349 0.205462 10.7977L5.00343 6L0.205462 1.20227C0.0746346 1.07129 0.00764477 0.906648 0.00449231 0.708358C0.00149748 0.510226 0.0684873 0.342594 0.205462 0.205462C0.342594 0.0684873 0.508728 0 0.703866 0C0.899003 0 1.06514 0.0684873 1.20227 0.205462L6 5.00343L10.7977 0.205462C10.9287 0.0746346 11.0934 0.00764477 11.2916 0.00449231C11.4898 0.00149748 11.6574 0.0684873 11.7945 0.205462C11.9315 0.342594 12 0.508729 12 0.703866C12 0.899003 11.9315 1.06514 11.7945 1.20227L6.99657 6L11.7945 10.7977C11.9254 10.9287 11.9924 11.0934 11.9955 11.2916C11.9985 11.4898 11.9315 11.6574 11.7945 11.7945C11.6574 11.9315 11.4913 12 11.2961 12C11.101 12 10.9349 11.9315 10.7977 11.7945L6 6.99657Z"
+                        fill="#999999"
+                        fill-opacity="0.6"
+                      />
+                    </svg>
+                  </Icon>
+                </div>
+                <div className={styles.EditIcon}>
+                  <Icon onClick={() => handleEdit(index)} hoverSize={30}>
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="svg-icon"
+                    >
+                      <path
+                        d="M8.50988 0.439897L7.37427 1.57542L10.4245 4.62537L11.5601 3.48985C12.1466 2.90332 12.1466 1.95314 11.5601 1.36661L10.6356 0.439897C10.049 -0.146632 9.0988 -0.146632 8.51222 0.439897H8.50988ZM6.844 2.10564L1.37477 7.57679C1.13075 7.82079 0.952436 8.12344 0.853891 8.45424L0.0233004 11.2766C-0.0353571 11.476 0.0186078 11.6895 0.164079 11.835C0.309549 11.9805 0.523063 12.0344 0.720152 11.9781L3.54275 11.1476C3.87358 11.0491 4.17626 10.8707 4.42027 10.6267L9.89419 5.1556L6.844 2.10564Z"
+                        fill="#999999"
+                        fill-opacity="0.6"
+                      />
+                    </svg>
+                  </Icon>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
         <div className={`${styles.AddQuestionGroup}`}>
           <span className={`${styles.AddQuestion}`}>Add custom question</span>
           <Icon onClick={(e) => setQuestionAddShow(true)} hoverSize={40}>
@@ -349,44 +400,6 @@ const EditClient: React.FC<EditClientProps> = ({
               />
             </svg>
           </Icon>
-        </div>
-
-        <div className={styles.QuestionsArea}>
-          {questions.map((question, index) => (
-            <div key={index} className={styles.QuestionItem}>
-              <span>{question}</span>
-              <div className={styles.QuestionActions}>
-                <Icon onClick={() => handleEdit(index)} hoverSize={30}>
-                  <svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 15 15"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M1.5 11.25V13.5H3.75L11.8125 5.4375L9.5625 3.1875L1.5 11.25ZM13.7812 3.46875C14.0625 3.1875 14.0625 2.8125 13.7812 2.53125L12.4688 1.21875C12.1875 0.9375 11.8125 0.9375 11.5312 1.21875L10.5 2.25L12.75 4.5L13.7812 3.46875Z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </Icon>
-                <Icon onClick={() => handleDelete(index)} hoverSize={30}>
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </Icon>
-              </div>
-            </div>
-          ))}
         </div>
 
         <div
