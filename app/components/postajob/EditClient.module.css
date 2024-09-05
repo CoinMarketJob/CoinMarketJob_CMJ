@@ -179,7 +179,8 @@
   padding-top: 48px;
   padding-bottom: 24px;
   left: 240px;
-  border-radius: 15px;   
+  border-radius: 15px;  
+  z-index: 1000; 
 }
 
 .QuestionDiv{
