@@ -10,7 +10,7 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    transition: width 0.3s ease;
+    transition: width 0.3s ease, filter 0.3s ease;
     cursor: pointer;
     max-width: 100%;
     border: #E7E5E4 1px solid;
@@ -21,6 +21,7 @@
 .card:hover {
     background-color: #2422200D;
     border: 1px solid #2422200D;    
+    filter: grayscale(0%);
 }
 
 .card:active {
@@ -120,4 +121,12 @@
     position: absolute;
     right: 10px;
     top: 10px;
+}
+
+.icon img {
+    transition: filter 0.3s ease;
+}
+
+.card:hover .icon img {
+    filter: grayscale(0%);
 }

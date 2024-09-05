@@ -14,11 +14,13 @@
     border: #E7E5E4 1px solid;
     margin-bottom: 30px;
     filter: grayscale(100%);
+    transition: filter 0.3s ease;
 }
 
 .card:hover {
     background-color: #9997950d;
     border: 1px solid #2422200D;    
+    filter: grayscale(0%);
 }
 
 .card:active {
@@ -38,6 +40,11 @@
     width: 60px;
     height: 60px;
     border-radius: 25%;
+    transition: filter 0.3s ease;
+}
+
+.card:hover .icon img {
+    filter: grayscale(0%);
 }
 
 .details {
