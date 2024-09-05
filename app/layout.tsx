@@ -4,13 +4,13 @@ import "./globals.css";
 import DefaultContainer from "./components/containers/DefaultContainer";
 import Searchbar from "./components/Search/Searchbar";
 import { JobsProvider } from "@/hooks/useJobs";
-import { CitiesProvider } from "@/hooks/useCity";
 import Footer from "./components/Footer/Footer";
 import { LayoutProvider } from "@/hooks/useLayout";
 import AuthWrapper from "./AuthWrapper";
 import { SessionProvider } from "next-auth/react"; // Add this import
 import { ProfileProvider } from "@/hooks/useCompanyProfile";
 import { JobApplicationsProvider } from "@/hooks/useApplicationJob";
+import { ProfileDataProvider } from "@/hooks/useProfileData";
 
 export default function RootLayout({
   children,
@@ -34,9 +34,9 @@ export default function RootLayout({
           <LayoutProvider>
             <ProfileProvider>
               <JobsProvider>
-                <CitiesProvider>
                   <AuthWrapper>
                     <JobApplicationsProvider>
+                      <ProfileDataProvider>
                       <div className="layout-container-div">
                         <Searchbar />
                         <main className="layout-main-div">
@@ -44,9 +44,9 @@ export default function RootLayout({
                         </main>
                         <Footer />
                       </div>
+                      </ProfileDataProvider>
                     </JobApplicationsProvider>
                   </AuthWrapper>
-                </CitiesProvider>
               </JobsProvider>
             </ProfileProvider>
           </LayoutProvider>

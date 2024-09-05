@@ -7,6 +7,7 @@ import { JSONContent } from "@tiptap/react";
 import ReviewClient from "../components/postajob/ReviewClient";
 import CheckoutClient from "../components/postajob/CheckoutClient";
 import { useRouter } from "next/navigation";
+import { useProfileData } from "@/hooks/useProfileData";
 
 const Page = () => {
   const [page, setPage] = useState<number>(0);
@@ -29,12 +30,12 @@ const Page = () => {
   const [locationType, setLocationType] = useState<string>("Remote");
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
 
-  const [profile, setProfile] = useState<any>(null);
-  const [loading, setLoading] = useState<boolean>(true);
 
   const [oneJobIsChecked, setOneJobIsChecked] = useState<boolean>(true);
   const [monthlyChecked, setMonthlyChecked] = useState<boolean>(false);
   const [fiveJobChecked, setFiveJobChecked] = useState<boolean>(false);
+
+  const { companyProfileData, setCompanyProfileData } = useProfileData();
 
   const Complete = async () => {
     try {
@@ -44,8 +45,8 @@ const Page = () => {
           : monthlyChecked
           ? "Monthly"
           : "FiveJob",
-        logo: profile?.logoURL || "",
-        companyName: profile?.headline || "",
+        logo: companyProfileData?.logoURL || "",
+        companyName: companyProfileData?.headline || "",
         jobTitle,
         location: selectedLocations[0],
         jobType,
@@ -79,23 +80,6 @@ const Page = () => {
       console.error("Error in submission process:", error);
     }
   };
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch("/api/companyprofile/get/");
-        const data = await response.json();
-        console.log(data);
-        setProfile(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchData();
-  }, []);
 
   return (
     <div className={styles.Container}>
@@ -132,8 +116,8 @@ const Page = () => {
 
       {page === 0 ? (
         <EditClient
-          image={profile?.logoURL || ""}
-          companyName={profile?.headline || ""}
+          image={companyProfileData?.logoURL || ""}
+          companyName={companyProfileData?.headline || ""}
           jobTitle={jobTitle}
           setJobTitle={setJobTitle}
           locationType={locationType}
@@ -166,8 +150,8 @@ const Page = () => {
         />
       ) : page === 1 ? (
         <ReviewClient
-          image={profile?.logoURL || ""}
-          companyName={profile?.headline || ""}
+          image={companyProfileData?.logoURL || ""}
+          companyName={companyProfileData?.headline || ""}
           jobTitle={jobTitle}
           selectedLocations={selectedLocations}
           jobType={jobType}

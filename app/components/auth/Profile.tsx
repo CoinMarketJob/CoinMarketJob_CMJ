@@ -11,6 +11,7 @@ import { SocialMedia } from "@prisma/client";
 import { JSONContent } from "@tiptap/react";
 import ProfileSections from "./ProfileSections";
 import { useProfile } from "@/hooks/useCompanyProfile";
+import { useProfileData } from "@/hooks/useProfileData";
 
 interface ProfileSection {
   id: number;
@@ -23,36 +24,6 @@ interface ProfileSection {
   location: string;
   description: JSONContent;
 }
-
-interface ProfileData {
-  id: number;
-  userId: number;
-  logoURL?: string;
-  jobTitle?: string;
-  location?: string;
-  headline?: string;
-  siteUrl?: string;
-  about?: JSONContent;
-  sectionsOrder: string;
-  section: ProfileSection[];
-  socialMedias: SocialMedia[];
-}
-
-const LoadingPlaceholder = () => (
-  <div className={styles.placeholderContent}>
-    <div className={styles.placeholderContent_item}></div>
-    <div className={styles.placeholderContent_item}></div>
-    <div className={styles.placeholderContent_item}></div>
-    <div className={styles.placeholderContent_item}></div>
-    <div className={styles.placeholderContent_item}></div>
-    <div className={styles.placeholderContent_item}></div>
-    <div className={styles.placeholderContent_item}></div>
-    <div className={styles.placeholderContent_item}></div>
-    <div className={styles.placeholderContent_item}></div>
-    <div className={styles.placeholderContent_item}></div>
-    <div className={styles.placeholderContent_item}></div>
-  </div>
-);
 
 const Profile = () => {
   const [loading, setLoading] = useState(true);
@@ -69,7 +40,8 @@ const Profile = () => {
   const [editProfile, setEditProfile] = useState<boolean>(false);
 
   const { setProfileType } = useProfile();
-
+  const { profileData, setProfileData, companyProfileData, setCompanyProfileData } = useProfileData();
+  
   const menuRef = useRef<HTMLDivElement>(null);
 
   const ShowDetail = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -94,8 +66,25 @@ const Profile = () => {
       try {
         const response = await fetch("/api/profile/get/");
         const data = await response.json();
-        console.log(data);
         setProfile(data);
+        setProfileData(data);
+      } catch (error) {
+        console.error("Veri getirme hatası:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch("/api/companyprofile/get/");
+        const data = await response.json();
+        console.log(data);
+        setCompanyProfileData(data);
       } catch (error) {
         console.error("Veri getirme hatası:", error);
       } finally {
@@ -153,7 +142,7 @@ const Profile = () => {
                 Edit profile
               </a>
               <a onClick={() => setProfileType(1)} className={styles.menuItem}>
-                Company Profile
+                {companyProfileData == null ? "Create Company Profile" : "Company Profile"}
               </a>
             </div>
           </div>
@@ -221,18 +210,19 @@ const Profile = () => {
                   </div>
                 </div>
 
-                {profile?.socialMedias.map(
-                  (item: SocialMedia, index: number) => (
-                    <SocialMediaItem
-                      key={index}
-                      type={item.socialMediaType}
-                      url={item.socialMediaUrl}
-                      show
-                      onDelete={() => {}}
-                      onEdit={() => {}} 
-                    />
-                  )
-                )}
+                {profile?.socialMedias.length > 0 &&
+                  profile?.socialMedias.map(
+                    (item: SocialMedia, index: number) => (
+                      <SocialMediaItem
+                        key={index}
+                        type={item.socialMediaType}
+                        url={item.socialMediaUrl}
+                        show
+                        onDelete={() => {}}
+                        onEdit={() => {}}
+                      />
+                    )
+                  )}
               </div>
 
               <div className={styles.LineDiv}>

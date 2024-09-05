@@ -18,8 +18,6 @@ export async function GET() {
   const profile = await prisma.companyProfile.findUnique({
     where: { userId: currentUser?.id },
     include: { socialMedias: true },
-
-    cacheStrategy: { swr: 60, ttl: 60 },
   });
 
   return NextResponse.json(profile);
