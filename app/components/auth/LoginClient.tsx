@@ -479,7 +479,7 @@ const LoginClient = () => {
                   <span className="remember-span">Remember</span>
                 </div>
                 <div>
-                  <span className="recovery-span">Password Recovery</span>
+                  <span className="recovery-span">Password recovery</span>
                 </div>
               </div>
               <div>

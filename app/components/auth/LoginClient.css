@@ -19,7 +19,7 @@
 }
 .google-button{
     padding: 19.7px 23px 19.7px 58px;
-    border-radius: 50px;
+    border-radius: 15px;
     background-color: #FFFFFF;
     border: 1px solid #E0E0E9;
     font-family: Inter;
@@ -31,7 +31,7 @@
 
 .apple-button{
     padding: 19.7px 33px 19.7px 58px;
-    border-radius: 50px;
+    border-radius: 15px;
     background-color: #FFFFFF;
     border: 1px solid #E0E0E9;
     font-family: Inter;
