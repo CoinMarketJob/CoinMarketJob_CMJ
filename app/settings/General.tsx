@@ -3,7 +3,7 @@ import "./General.css";
 import Dropdown from "../components/general/Dropdown";
 
 const General: React.FC = () => {
-  const [dropdownValue, setDropdownValue] = useState("option1");
+  const [dropdownValue, setDropdownValue] = useState("system");
 
   const dropdownOptions = [
     { value: "system", label: "System" },
@@ -15,7 +15,7 @@ const General: React.FC = () => {
     <div className="general">
       <div className="general-header">
         <h3>Appearance</h3>
-        <div style={{width: "191px"}}> 
+        <div className="general-dropdown"> 
           <Dropdown
             id="exampleDropdown"
             value={dropdownValue}

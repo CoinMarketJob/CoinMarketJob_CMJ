@@ -30,11 +30,22 @@
 }
 
 .account-item Button {
-  width: 123px;
+  width: 123px !important;
+  height: 50px !important;
+  border-radius: 15px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.account-item Button span {
+  font-weight: 500 !important;
+  font-size: 15px !important;
+  color: #999999 !important;
 }
 
 .account-subtext {
-  color: #999999;
+  color: rgba(153, 153, 153, 0.7); /* 70% of #999999 */
   margin-top: 5px;
   font-family: Inter;
   font-size: 15px;
