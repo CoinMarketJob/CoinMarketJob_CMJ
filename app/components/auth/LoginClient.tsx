@@ -206,9 +206,20 @@ const LoginClient = () => {
     setPassword(e.target.value);
   };
 
+  const isValidEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const complete = async () => {
     setError(null);
-    setIsLoading(true); // Login işlemi başladığında loading'i başlat
+    
+    if (!isValidEmail(email)) {
+      setError("Please enter a valid email address");
+      return;
+    }
+
+    setIsLoading(true);
     const submitData = { email };
     console.log("Submitting data:", submitData);
 
@@ -279,7 +290,7 @@ const LoginClient = () => {
       console.error("Error during complete:", error);
       setError("An error occurred. Please try again.");
     } finally {
-      setIsLoading(false); // İşlem tamamlandığında veya hata oluştuğunda loading'i durdur
+      setIsLoading(false);
     }
   };
 
