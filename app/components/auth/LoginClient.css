@@ -17,7 +17,11 @@
     text-align: center;   
     margin-bottom: 48px; 
 }
-.google-button{
+.google-button,
+.apple-button {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
     padding: 19.7px 23px 19.7px 58px;
     border-radius: 15px;
     background-color: #FFFFFF;
@@ -27,24 +31,39 @@
     font-weight: 500;
     line-height: 20px;
     text-align: left;
+    transition: all 0.1s ease-in-out;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
 }
 
-.apple-button{
-    padding: 19.7px 33px 19.7px 58px;
-    border-radius: 15px;
-    background-color: #FFFFFF;
-    border: 1px solid #E0E0E9;
-    font-family: Inter;
-    font-size: 19px;
-    font-weight: 500;
-    line-height: 20px;
-    text-align: left;
+.google-button:hover,
+.apple-button:hover {
+    transform: scale(1.04);
 }
 
-.svg-icon-login{
+.google-button:active,
+.apple-button:active {
+    transform: scale(0.98);
+}
+
+.svg-icon-login {
     position: absolute;
-    top: 19px;
     left: 22px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.1s ease-in-out;
+}
+
+.google-button:hover .svg-icon-login,
+.apple-button:hover .svg-icon-login {
+    transform: translateY(-50%) scale(1.04);
+}
+
+.google-button:active .svg-icon-login,
+.apple-button:active .svg-icon-login {
+    transform: translateY(-50%) scale(0.98);
 }
 
 .email-text{
@@ -56,6 +75,7 @@
     font-size: 17px;
     font-weight: 400;
     line-height: 20px;
+    cursor: pointer; /* Add this line */
 }
 
 .bottom-line{

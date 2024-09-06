@@ -69,6 +69,22 @@
   border-radius: 50px;
   font-size: 19px;
   line-height: 20px;
+  transition: transform 0.1s ease-in-out; /* Add transition for smooth scaling */
+}
+
+/* Add hover effect for Google and Apple buttons */
+.white-button.google-button:hover,
+.white-button.apple-button:hover {
+  transform: scale(1.04);
+}
+
+/* Beyaz butonlar için özel stiller */
+.white-button.google-button,
+.white-button.apple-button {
+  padding: 19.7px 23px 19.7px 58px;
+  border-radius: 50px;
+  font-size: 19px;
+  line-height: 20px;
 }
 
 
