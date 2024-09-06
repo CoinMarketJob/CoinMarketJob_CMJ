@@ -12,10 +12,9 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { nameSurname, jobTitle, headline, location, siteUrl, about, socialMedias, sections, avatar } = body;
 
-    // Update or create profile
-    const profile = await prisma.profile.upsert({
+    const updatedProfile = await prisma.profile.update({
       where: { userId: currentUser.id },
-      update: {
+      data: {
         nameSurname,
         jobTitle,
         headline,
@@ -24,32 +23,28 @@ export async function POST(request: Request) {
         about,
         logoURL: avatar,
       },
-      create: {
-        userId: currentUser.id,
-        nameSurname,
-        jobTitle,
-        headline,
-        location,
-        siteUrl,
-        about,
-        logoURL: avatar,
-        sectionsOrder: "{1,2,3,4,5,6,7,8}"
-      },
+      include: { socialMedias: true, section: true },  // Include related data
     });
 
     // Update social media
-    await prisma.socialMedia.deleteMany({ where: { profileId: profile.id } });
+    await prisma.socialMedia.deleteMany({ where: { profileId: updatedProfile.id } });
     await prisma.socialMedia.createMany({
-      data: socialMedias.map((sm: any) => ({ ...sm, profileId: profile.id })),
+      data: socialMedias.map((sm: any) => ({ ...sm, profileId: updatedProfile.id })),
     });
 
     // Update sections
-    await prisma.profileSection.deleteMany({ where: { profileId: profile.id } });
+    await prisma.profileSection.deleteMany({ where: { profileId: updatedProfile.id } });
     await prisma.profileSection.createMany({
-      data: sections.map((section: any) => ({ ...section, profileId: profile.id })),
+      data: sections.map((section: any) => ({ ...section, profileId: updatedProfile.id })),
     });
 
-    return NextResponse.json({ message: "Profile updated successfully" });
+    // Fetch the updated profile with all related data
+    const fullUpdatedProfile = await prisma.profile.findUnique({
+      where: { id: updatedProfile.id },
+      include: { socialMedias: true, section: true },
+    });
+
+    return NextResponse.json(fullUpdatedProfile);
   } catch (error) {
     console.error("Error updating profile:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });

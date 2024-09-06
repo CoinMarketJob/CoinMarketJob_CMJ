@@ -100,6 +100,11 @@ const Profile = () => {
     setShowDetail(false);
   };
 
+  const handleProfileUpdate = (updatedProfile: any) => {
+    setProfile(updatedProfile);
+    setEditProfile(false);
+  };
+
   return (
     <div className={styles.container}>
       {loading ? (
@@ -146,7 +151,9 @@ const Profile = () => {
               </a>
             </div>
           </div>
-          {editProfile === false ? (
+          {editProfile ? (
+            <EditProfile profile={profile} onUpdate={handleProfileUpdate} />
+          ) : (
             <>
               <div className={styles.avatar}>
                 {profile?.logoURL ? (
@@ -235,8 +242,6 @@ const Profile = () => {
                 <ProfileSections profile={profile} onAdd={() => {}} />
               </div>
             </>
-          ) : (
-            <EditProfile profile={profile} />
           )}
         </>
       )}

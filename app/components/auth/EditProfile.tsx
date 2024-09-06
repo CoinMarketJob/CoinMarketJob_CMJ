@@ -19,6 +19,7 @@ import avatarImage from "./PlaceHolderAvatar.png";
 
 interface EditProfileProps {
   profile: any;
+  onUpdate: (updatedProfile: any) => void;
 }
 
 interface Section {
@@ -32,13 +33,13 @@ interface CustomSocialMedia {
   username: string;
 }
 
-const EditProfile: React.FC<EditProfileProps> = ({ profile }) => {
-  const [nameSurname, setNameSurname] = useState<string>("");
-  const [jobTitle, setJobTitle] = useState<string>("");
-  const [location, setLocation] = useState<string>("");
-  const [headline, setHeadline] = useState<string>("");
-  const [site, setSite] = useState<string>("");
-  const [about, setAbout] = useState<JSONContent>();
+const EditProfile: React.FC<EditProfileProps> = ({ profile, onUpdate }) => {
+  const [nameSurname, setNameSurname] = useState<string>(profile.nameSurname);
+  const [jobTitle, setJobTitle] = useState<string>(profile.jobTitle);
+  const [location, setLocation] = useState<string>(profile.location);
+  const [headline, setHeadline] = useState<string>(profile.headline);
+  const [site, setSite] = useState<string>(profile.siteUrl);
+  const [about, setAbout] = useState<JSONContent>(profile.about);
 
   const [socialPopup, setSocialPopup] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
@@ -53,9 +54,9 @@ const EditProfile: React.FC<EditProfileProps> = ({ profile }) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-  const [avatar, setAvatar] = useState<string>(defaultAvatarImage);
-  const [socialMedias, setSocialMedias] = useState<CustomSocialMedia[]>([]);
-  const [profileSections, setProfileSections] = useState<ProfileSection[]>([]);
+  const [avatar, setAvatar] = useState<string>(profile.logoURL);
+  const [socialMedias, setSocialMedias] = useState<CustomSocialMedia[]>(profile.socialMedias);
+  const [profileSections, setProfileSections] = useState<ProfileSection[]>(profile.section);
   const [editingSectionId, setEditingSectionId] = useState<number | null>(null);
 
   const [isSocialPopupOpen, setIsSocialPopupOpen] = useState<boolean>(false);
@@ -139,7 +140,7 @@ const EditProfile: React.FC<EditProfileProps> = ({ profile }) => {
     );
   };
 
-  const Done = async () => {
+  const handleSave = async () => {
     try {
       let avatarUrl = avatar;
 
@@ -168,6 +169,9 @@ const EditProfile: React.FC<EditProfileProps> = ({ profile }) => {
       if (!response.ok) {
         throw new Error("Failed to update profile");
       }
+
+      const updatedProfile = await response.json();
+      onUpdate(updatedProfile);
 
       console.log("Başarılı");
       setSelectedImage(null);
@@ -525,7 +529,7 @@ const EditProfile: React.FC<EditProfileProps> = ({ profile }) => {
           </div>
 
           <div className={styles.ButtonDiv}>
-            <Button text="Done" onClick={() => Done()} />
+            <Button text="Save" onClick={handleSave} />
           </div>
         </div>
       )}
