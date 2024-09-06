@@ -6,6 +6,7 @@ import Dropdown from "../general/Dropdown";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import "./LoginClient.css";
+import Link from 'next/link';
 
 const LoginClient = () => {
   const router = useRouter();
@@ -421,10 +422,18 @@ const LoginClient = () => {
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <span className="information">
                   By continuing, you agree to the{" "}
-                  <span style={{ color: "#1D1C2B" }}>Terms of Service</span> and{" "}
-                  <span style={{ color: "#1D1C2B" }}>Privacy Policy</span>,
-                  including{" "}
-                  <span style={{ color: "#1D1C2B" }}>Cookie Use.</span>
+                  <Link href="https://beta.coinmarketjob.com/tos" className="policy-link">
+                    Terms of Service
+                  </Link>{" "}
+                  and{" "}
+                  <Link href="https://beta.coinmarketjob.com/privacy" className="policy-link">
+                    Privacy Policy
+                  </Link>
+                  , including{" "}
+                  <Link href="https://beta.coinmarketjob.com/cookies" className="policy-link">
+                    Cookie Use
+                  </Link>
+                  .
                 </span>
               </div>
             </div>

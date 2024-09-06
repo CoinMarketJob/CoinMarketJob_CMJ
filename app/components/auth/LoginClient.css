@@ -176,3 +176,14 @@ input.checked::before {
     display: flex;
     gap: 12px;
 }
+
+.policy-link {
+  color: #1D1C2B;
+  text-decoration: none;
+  font-weight: 300;
+}
+
+.policy-link:hover {
+  text-decoration: underline;
+  text-decoration-color: #1d1c2b81;
+}
