@@ -21,7 +21,7 @@ interface ButtonProps {
   hoverTextColor?: string;
   hoverBorderColor?: string;
   hoverUnderlineText?: boolean;
-  disabled?: boolean;
+  disabled?: boolean; // Yeni eklenen prop
   changeColorOnPress?: boolean;
   isWhite?: boolean;
   isLoading?: boolean; // Yeni eklenen prop
@@ -47,7 +47,7 @@ const Button: React.FC<ButtonProps> = ({
   hoverTextColor,
   hoverBorderColor,
   hoverUnderlineText = false,
-  disabled = false,
+  disabled = false, // Varsayılan değer false
   changeColorOnPress = backgroundColor === "#242220",
   isWhite = false,
   isLoading = false, // Yeni eklenen prop
@@ -80,17 +80,19 @@ const Button: React.FC<ButtonProps> = ({
     paddingLeft,
     paddingRight,
     backgroundColor: disabled 
-      ? '#d3d3d3' // Set a default disabled color
+      ? '#E0E0E0' // Disabled durumunda arka plan rengi
       : (isPressed && changeColorOnPress)
         ? clickedBackgroundColor 
         : isHovered 
           ? hoverBackgroundColor || backgroundColor 
           : backgroundColor,
-    color: disabled ? '#888888' : isPressed 
-      ? clickedTextColor || textColor 
-      : isHovered 
-        ? hoverTextColor || textColor 
-        : textColor,
+    color: disabled 
+      ? '#A0A0A0' // Disabled durumunda metin rengi
+      : (isPressed 
+        ? clickedTextColor || textColor 
+        : isHovered 
+          ? hoverTextColor || textColor 
+          : textColor),
     border: `${borderLine}px solid ${
       disabled ? '#cccccc' : isPressed 
       ? clickedBorderColor || borderColor 
@@ -102,17 +104,18 @@ const Button: React.FC<ButtonProps> = ({
     textDecoration: isHovered && hoverUnderlineText ? 'underline' : 'none',
     cursor: disabled ? 'not-allowed' : 'pointer', // Change cursor if disabled
     transition: 'all 0.1s ease-in-out',
+    opacity: disabled ? 0.6 : 1, // Disabled durumunda opaklık
   };
 
   return (
     <button
-      className={`form-button ${isLoading ? 'loading' : ''} ${isWhite ? 'white-button' : ''}`}
+      className={`form-button ${disabled ? 'disabled' : ''} ${isLoading ? 'loading' : ''} ${isWhite ? 'white-button' : ''}`}
       style={buttonStyle}
-      onClick={onClick}
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onClick={disabled ? undefined : onClick}
+      onMouseDown={disabled ? undefined : handleMouseDown}
+      onMouseUp={disabled ? undefined : handleMouseUp}
+      onMouseEnter={disabled ? undefined : handleMouseEnter}
+      onMouseLeave={disabled ? undefined : handleMouseLeave}
       disabled={disabled || isLoading}
     >
       <span className={`button-content ${isLoading ? 'hidden' : ''}`}>
