@@ -1,5 +1,5 @@
 "use client"
-import React, { createContext, ReactNode, useState } from 'react';
+import React, { createContext, ReactNode, useState, useEffect } from 'react';
 
 interface ProfileContextProps {
     profileType: number;
@@ -11,8 +11,20 @@ const ProfileContext = createContext<ProfileContextProps | undefined>(undefined)
 export const ProfileProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [profileType, setProfileType] = useState<number>(0);
     
+    useEffect(() => {
+        const storedProfileType = localStorage.getItem('profileType');
+        if (storedProfileType) {
+            setProfileType(Number(storedProfileType));
+        }
+    }, []);
+
+    const updateProfileType = (newProfileType: number) => {
+        setProfileType(newProfileType);
+        localStorage.setItem('profileType', newProfileType.toString());
+    };
+
     return (
-      <ProfileContext.Provider value={{ profileType, setProfileType }}>
+      <ProfileContext.Provider value={{ profileType, setProfileType: updateProfileType }}>
         {children}
       </ProfileContext.Provider>
     );
