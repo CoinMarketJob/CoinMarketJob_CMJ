@@ -159,7 +159,7 @@ input.checked::before {
 
 .register-popup{
     position: absolute;
-    top: 50%;
+    top: 36%;
     left: calc(50vw - 150px);
     box-shadow: 0px 0px 2px 0px #00000033;
     box-shadow: 0px 0px 11.3px 0px #00000033;
@@ -170,6 +170,7 @@ input.checked::before {
     gap: 12px;
     width: 300px;
     border-radius: 15px;
+    z-index: 100;
 }
 
 .register-popup-line{
