@@ -53,6 +53,7 @@ const EditCompanyProfile: React.FC<props> = ({
   const [oldLogo, setOldLogo] = useState("");
   const [changeLogo, setChangeLogo] = useState<boolean>(false);
   const [socialMedias, setSocialMedias] = useState<CustomSocialMedia[]>([]);
+  const [isSaving, setIsSaving] = useState(false);
 
   const closeTest = () => {
     console.log("Close");
@@ -120,6 +121,7 @@ const EditCompanyProfile: React.FC<props> = ({
   };
 
   const Done = async () => {
+    setIsSaving(true);
     let logoLink = "";
     try {
       const uploadLogo = async () => {
@@ -170,6 +172,8 @@ const EditCompanyProfile: React.FC<props> = ({
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -299,6 +303,7 @@ const EditCompanyProfile: React.FC<props> = ({
           paddingBottom={12}
           paddingLeft={26}
           paddingRight={26}
+          isLoading={isSaving}
         />
       </div>
     </div>

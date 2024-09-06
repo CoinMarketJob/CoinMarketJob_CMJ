@@ -79,6 +79,11 @@ const CompanyProfile = () => {
     console.log(`Edit social media at index ${index}`);
   };
 
+  const handleProfileUpdate = (updatedProfile: any) => {
+    setProfile(updatedProfile);
+    setEditProfile(false);
+  };
+
   return (
     <div className={styles.container}>
       {loading ? (
@@ -156,7 +161,11 @@ const CompanyProfile = () => {
               </div>
             </>
           ) : (
-            <EditCompanyProfile setEditProfile={setEditProfile} setProfile={setProfile} oldProfile={profile}/>
+            <EditCompanyProfile 
+              setEditProfile={setEditProfile} 
+              setProfile={handleProfileUpdate} 
+              oldProfile={profile}
+            />
           )}
         </>
       )}
