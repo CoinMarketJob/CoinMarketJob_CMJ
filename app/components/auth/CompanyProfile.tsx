@@ -84,6 +84,11 @@ const CompanyProfile = () => {
     setEditProfile(false);
   };
 
+  const handleProfileTypeChange = () => {
+    setProfileType(0); // 0, kişisel profil için
+    setShowDetail(false); // Menüyü kapat
+  };
+
   return (
     <div className={styles.container}>
       {loading ? (
@@ -121,10 +126,16 @@ const CompanyProfile = () => {
               <a onClick={EditProfileClick} className={styles.menuItem}>
                 Edit profile
               </a>
-              <a onClick={() => setProfileType(1)} className={styles.menuItem}>Profile</a>
+              <a onClick={handleProfileTypeChange} className={styles.menuItem}>Profile</a>
             </div>
           </div>
-          {editProfile == false ? (
+          {editProfile ? (
+            <EditCompanyProfile 
+              setEditProfile={setEditProfile} 
+              setProfile={handleProfileUpdate} 
+              oldProfile={profile}
+            />
+          ) : (
             <>
               <div className={styles.avatar}>
                 <Image
@@ -160,12 +171,6 @@ const CompanyProfile = () => {
                 <div className={styles.Line}></div>
               </div>
             </>
-          ) : (
-            <EditCompanyProfile 
-              setEditProfile={setEditProfile} 
-              setProfile={handleProfileUpdate} 
-              oldProfile={profile}
-            />
           )}
         </>
       )}
