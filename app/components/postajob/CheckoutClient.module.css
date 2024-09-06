@@ -70,6 +70,14 @@
     font-weight: 400;
 }
 
+.AddCol:hover{
+    color: #242220BF;
+}
+
+.AddCol:active{
+    color: #000000;
+}
+
 .FirstCol{
     color: #999999;
     font-family: 'Inter';

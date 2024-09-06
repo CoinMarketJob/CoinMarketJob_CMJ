@@ -45,6 +45,9 @@ const page = ({ params }: { params: JobProps }) => {
 
   const [isFormValid, setIsFormValid] = useState(false);
 
+  const [uploading, setUploading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const handleAnswerChange = (questionId: number, answer: string) => {
     setAnswers((prev) => ({ ...prev, [questionId]: answer }));
   };
@@ -282,6 +285,7 @@ const page = ({ params }: { params: JobProps }) => {
   ];
 
   const submit = async () => {
+    setUploading(true);
     setIsFormValid(true);
     var resumeLink = "";
     var letterLink = "";
@@ -362,6 +366,10 @@ const page = ({ params }: { params: JobProps }) => {
         console.log(jobData);
       } else {
         console.error("Error applying for job:", response.statusText);
+        setErrorMessage(
+          "An unexpected error has occurred. Please try again later."
+        );
+        setTimeout(() => setErrorMessage(null), 3000);
       }
     } catch (error) {
       console.error("Error in submission process:", error);
@@ -374,9 +382,8 @@ const page = ({ params }: { params: JobProps }) => {
     console.log("Selected value:", selectedValue);
   };
 
-
   const validateForm = () => {
-    if (name && surname && email ) {
+    if (name && surname && email) {
       setIsFormValid(true);
     } else {
       setIsFormValid(false);
@@ -384,19 +391,12 @@ const page = ({ params }: { params: JobProps }) => {
   };
   useEffect(() => {
     validateForm();
-  }, [
-    jobId,
-        name,
-        surname,
-        email,
-        phone,
-        cvFile,
-        letterFile,
-        cv,
-        coverLetter
-  ]);
+  }, [jobId, name, surname, email, phone, cvFile, letterFile, cv, coverLetter]);
   return (
     <div ref={panelRef} className={styles.ContainerCard}>
+      {errorMessage && (
+        <div className={styles.ErrorMessage}>{errorMessage}</div>
+      )}
       <div className={styles.ApplyCard}>
         <div style={{ display: "flex" }}>
           <div className={styles.ApplyText}>Apply</div>
@@ -590,6 +590,7 @@ const page = ({ params }: { params: JobProps }) => {
           paddingBottom={15}
           onClick={submit}
           disabled={!isFormValid}
+          isLoading={uploading}
         />
       </div>
     </div>

@@ -91,6 +91,16 @@
   color: #999999;
 }
 
+.ChangeSalary:hover {
+  color: #242220BF;
+}
+
+.ChangeSalary:active {
+  color: #000000;
+}
+
+
+
 .SalaryInfoGroup {
   display: flex;
   border-bottom: 1px solid #e7e5e4;
@@ -173,6 +183,11 @@
   top: -3px;
   right: 3px;
 
+}
+
+.QuestionsArea{
+  width: 100%;
+  max-width: 100%;
 }
 
 .AddQuestion {

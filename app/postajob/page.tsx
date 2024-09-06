@@ -30,14 +30,16 @@ const Page = () => {
   const [locationType, setLocationType] = useState<string>("Remote");
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
 
-
   const [oneJobIsChecked, setOneJobIsChecked] = useState<boolean>(true);
   const [monthlyChecked, setMonthlyChecked] = useState<boolean>(false);
   const [fiveJobChecked, setFiveJobChecked] = useState<boolean>(false);
 
   const { companyProfileData, setCompanyProfileData } = useProfileData();
+  const [uploading, setUploading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const Complete = async () => {
+    setUploading(true);
     try {
       const jobData = {
         PackageType: oneJobIsChecked
@@ -75,6 +77,11 @@ const Page = () => {
         router.push("/");
       } else {
         console.error("Error Posting for job:", response.statusText);
+
+        setErrorMessage(
+          "An unexpected error has occurred. Please try again later."
+        );
+        setTimeout(() => setErrorMessage(null), 3000);
       }
     } catch (error) {
       console.error("Error in submission process:", error);
@@ -83,6 +90,9 @@ const Page = () => {
 
   return (
     <div className={styles.Container}>
+      {errorMessage && (
+        <div className={styles.ErrorMessage}>{errorMessage}</div>
+      )}
       <div className={styles.indicatorContainer}>
         <div
           className={`${styles.indicator} ${styles.indicatorMargin} ${
@@ -177,6 +187,7 @@ const Page = () => {
           fiveJobChecked={fiveJobChecked}
           setFiveJobChecked={setFiveJobChecked}
           Complete={Complete}
+          uploading={uploading}
         />
       )}
     </div>

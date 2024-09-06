@@ -16,6 +16,7 @@ interface CheckoutProps {
   fiveJobChecked: boolean;
   setFiveJobChecked: React.Dispatch<React.SetStateAction<boolean>>;
   Complete: () => void;
+  uploading: boolean;
 }
 
 const CheckoutClient: React.FC<CheckoutProps> = ({
@@ -25,7 +26,8 @@ const CheckoutClient: React.FC<CheckoutProps> = ({
   setMonthlyChecked,
   fiveJobChecked,
   setFiveJobChecked,
-  Complete
+  Complete,
+  uploading
 }) => {
   const [creditCard, setCreditCard] = useState<boolean>(false);
   const [address, setAddress] = useState<boolean>(false);
@@ -123,6 +125,7 @@ const CheckoutClient: React.FC<CheckoutProps> = ({
           paddingLeft={19}
           paddingRight={19}
           fontSize={15}
+          isLoading={uploading}
         />
       </div>
     </div>
