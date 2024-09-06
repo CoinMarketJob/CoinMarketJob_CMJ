@@ -150,3 +150,54 @@
   line-height: 23.81px;
   letter-spacing: 0.03em;
 }
+
+.loadingPlaceholder {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.loadingPlaceholder .placeholder {
+  background-color: #e0e0e0;
+  border-radius: 15px;
+  margin: 10px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.loadingPlaceholder .placeholder::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.5) 50%, transparent 100%);
+  animation: loadingShimmer 1.5s infinite;
+}
+
+@keyframes loadingShimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.placeholder.avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 14px;
+}
+
+.placeholder.text {
+  width: 60%;
+  height: 20px;
+}
+
+.placeholder.text.short {
+  width: 40%;
+}

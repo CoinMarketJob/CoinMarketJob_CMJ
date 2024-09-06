@@ -20,7 +20,7 @@ interface Profile {
   socialMedias: SocialMedia[];
 }
 
-const Profile = () => {
+const CompanyProfile = () => {
   const [showDetail, setShowDetail] = useState<boolean>(false);
   const [profile, setProfile] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
@@ -64,8 +64,6 @@ const Profile = () => {
     fetchData();
   }, []);
 
-
-
   const EditProfileClick = () => {
     setEditProfile(true);
     setShowDetail(false);
@@ -84,7 +82,13 @@ const Profile = () => {
   return (
     <div className={styles.container}>
       {loading ? (
-        <div className={styles.loadingOverlay}></div>
+        <div className={styles.loadingPlaceholder}>
+          <div className={`${styles.placeholder} ${styles.avatar}`}></div>
+          <div className={`${styles.placeholder} ${styles.text}`}></div>
+          <div className={`${styles.placeholder} ${styles.text} ${styles.short}`}></div>
+          <div className={`${styles.placeholder} ${styles.text}`}></div>
+          <div className={`${styles.placeholder} ${styles.text} ${styles.short}`}></div>
+        </div>
       ) : (
         <>
           <div className={styles.Detail}>
@@ -160,4 +164,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default CompanyProfile;
