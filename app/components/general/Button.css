@@ -46,9 +46,9 @@
   left: 50%;
   width: 20px;
   height: 20px;
-  border: 2px solid rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
-  border-top-color: #000;
+  border-top-color: #fff;
   animation: spin 1s ease-in-out infinite;
   transform: translate(-50%, -50%);
 }
@@ -56,6 +56,11 @@
 .form-button:not(.white-button) .loading-spinner {
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-top-color: #fff;
+}
+
+.white-button .loading-spinner {
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  border-top-color: #000;
 }
 
 @keyframes spin {

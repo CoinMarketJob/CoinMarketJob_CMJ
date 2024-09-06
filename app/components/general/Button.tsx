@@ -74,27 +74,23 @@ const Button: React.FC<ButtonProps> = ({
     }
   };
 
-  const buttonStyle = {
+  const buttonStyle: React.CSSProperties = {
     paddingTop,
     paddingBottom,
     paddingLeft,
     paddingRight,
-    backgroundColor: disabled 
-      ? '#E0E0E0' // Disabled durumunda arka plan rengi
-      : (isPressed && changeColorOnPress)
-        ? clickedBackgroundColor 
-        : isHovered 
-          ? hoverBackgroundColor || backgroundColor 
-          : backgroundColor,
-    color: disabled 
-      ? '#A0A0A0' // Disabled durumunda metin rengi
-      : (isPressed 
-        ? clickedTextColor || textColor 
-        : isHovered 
-          ? hoverTextColor || textColor 
-          : textColor),
+    backgroundColor: isPressed && changeColorOnPress
+      ? clickedBackgroundColor 
+      : isHovered 
+        ? hoverBackgroundColor || backgroundColor 
+        : backgroundColor,
+    color: isPressed 
+      ? clickedTextColor || textColor 
+      : isHovered 
+        ? hoverTextColor || textColor 
+        : textColor,
     border: `${borderLine}px solid ${
-      disabled ? '#cccccc' : isPressed 
+      isPressed 
       ? clickedBorderColor || borderColor 
       : isHovered ? hoverBorderColor || borderColor 
       : borderColor
@@ -102,21 +98,20 @@ const Button: React.FC<ButtonProps> = ({
     fontSize,
     fontWeight,
     textDecoration: isHovered && hoverUnderlineText ? 'underline' : 'none',
-    cursor: disabled ? 'not-allowed' : 'pointer', // Change cursor if disabled
+    cursor: 'pointer',
     transition: 'all 0.1s ease-in-out',
-    opacity: disabled ? 0.6 : 1, // Disabled durumunda opaklık
+    position: 'relative' as const,
   };
 
   return (
     <button
-      className={`form-button ${disabled ? 'disabled' : ''} ${isLoading ? 'loading' : ''} ${isWhite ? 'white-button' : ''}`}
+      className={`form-button ${isWhite ? 'white-button' : ''}`}
       style={buttonStyle}
-      onClick={disabled ? undefined : onClick}
-      onMouseDown={disabled ? undefined : handleMouseDown}
-      onMouseUp={disabled ? undefined : handleMouseUp}
-      onMouseEnter={disabled ? undefined : handleMouseEnter}
-      onMouseLeave={disabled ? undefined : handleMouseLeave}
-      disabled={disabled || isLoading}
+      onClick={onClick}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <span className={`button-content ${isLoading ? 'hidden' : ''}`}>
         {text}
