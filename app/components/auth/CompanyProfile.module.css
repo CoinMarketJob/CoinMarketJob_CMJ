@@ -201,3 +201,11 @@
 .placeholder.text.short {
   width: 40%;
 }
+
+.menuContainer {
+  height: 40px; /* Menü tuşunun yüksekliği */
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px; /* İsteğe bağlı, diğer içerikle arasında boşluk bırakmak için */
+}
