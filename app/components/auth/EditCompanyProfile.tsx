@@ -177,6 +177,10 @@ const EditCompanyProfile: React.FC<props> = ({
     }
   };
 
+  const handleCancel = () => {
+    setEditProfile(false);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.avatar}>
@@ -293,7 +297,13 @@ const EditCompanyProfile: React.FC<props> = ({
         </Icon>
       </div>
 
-      <div className={styles.Done}>
+      <div className={styles.ButtonGroup}>
+        <span 
+          className={styles.CancelButton} 
+          onClick={handleCancel}
+        >
+          Cancel
+        </span>
         <Button
           text="Done"
           onClick={Done}

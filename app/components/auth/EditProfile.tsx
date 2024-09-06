@@ -299,6 +299,10 @@ const EditProfile: React.FC<EditProfileProps> = ({ profile, onUpdate }) => {
     setSocialPopup(true);
   };
 
+  const handleCancel = () => {
+    onUpdate(profile); // This will revert changes and exit edit mode
+  };
+
   return (
     <>
       {loading ? (
@@ -533,6 +537,12 @@ const EditProfile: React.FC<EditProfileProps> = ({ profile, onUpdate }) => {
           </div>
 
           <div className={styles.ButtonDiv}>
+            <span 
+              className={styles.CancelButton} 
+              onClick={handleCancel}
+            >
+              Cancel
+            </span>
             <Button 
               text="Done" 
               onClick={handleSave} 
