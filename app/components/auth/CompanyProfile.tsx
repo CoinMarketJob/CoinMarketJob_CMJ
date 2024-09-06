@@ -5,11 +5,11 @@ import Image from "next/image";
 import Draft from "../general/Draft";
 import SocialMediaItem from "./SocialMediaItem";
 import { SocialMedia } from "@prisma/client";
-import EditProfile from "./EditProfile";
-import avatarImage from "./PlaceholderCompanyProfile.png";
 import EditCompanyProfile from "./EditCompanyProfile";
+import avatarImage from "./PlaceholderCompanyProfile.png";
 import { JSONContent } from '@tiptap/react';
 import { useProfile } from "@/hooks/useCompanyProfile";
+import { useProfileData } from "@/hooks/useProfileData";
 
 interface Profile {
   logoURL?: string;
@@ -21,11 +21,11 @@ interface Profile {
 
 const CompanyProfile = () => {
   const [showDetail, setShowDetail] = useState<boolean>(false);
-  const [profile, setProfile] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
   const [editProfile, setEditProfile] = useState<boolean>(false);
 
   const { setProfileType } = useProfile();
+  const { companyProfileData, setCompanyProfileData } = useProfileData();
 
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -51,8 +51,7 @@ const CompanyProfile = () => {
       try {
         const response = await fetch("/api/companyprofile/get/");
         const data = await response.json();
-        console.log(data);
-        setProfile(data);
+        setCompanyProfileData(data);
       } catch (error) {
         console.error("Veri getirme hatası:", error);
       } finally {
@@ -60,8 +59,12 @@ const CompanyProfile = () => {
       }
     }
 
-    fetchData();
-  }, []);
+    if (!companyProfileData) {
+      fetchData();
+    } else {
+      setLoading(false);
+    }
+  }, [companyProfileData, setCompanyProfileData]);
 
   const EditProfileClick = () => {
     setEditProfile(true);
@@ -74,11 +77,6 @@ const CompanyProfile = () => {
 
   const handleEditSocialMedia = (index: number) => {
     console.log(`Edit social media at index ${index}`);
-  };
-
-  const handleProfileUpdate = (updatedProfile: any) => {
-    setProfile(updatedProfile);
-    setEditProfile(false);
   };
 
   const handleProfileTypeChange = () => {
@@ -133,29 +131,29 @@ const CompanyProfile = () => {
           {editProfile ? (
             <EditCompanyProfile 
               setEditProfile={setEditProfile} 
-              setProfile={handleProfileUpdate} 
-              oldProfile={profile}
+              setProfile={setCompanyProfileData} 
+              oldProfile={companyProfileData}
             />
           ) : (
             <>
               <div className={styles.avatar}>
                 <Image
-                  src={profile?.logoURL || avatarImage}
+                  src={companyProfileData?.logoURL || avatarImage}
                   width={140}
                   height={140}
                   alt="Avatar"
                   className={styles.LogoImage}
                 />
               </div>
-              <div className={styles.HeadLine}>{profile?.headline}</div>
+              <div className={styles.HeadLine}>{companyProfileData?.headline}</div>
               <div className={styles.HeadSite}>
-                <div className={styles.SiteText}>{profile?.siteUrl}</div>
+                <div className={styles.SiteText}>{companyProfileData?.siteUrl}</div>
               </div>
               <div className={styles.About}>
-                <Draft show border content={profile?.about} />
+                <Draft show border content={companyProfileData?.about} />
               </div>
               <div className={styles.SocialMedias}>
-                {profile?.socialMedias.map(
+                {companyProfileData?.socialMedias.map(
                   (item: SocialMedia, index: number) => (
                     <SocialMediaItem
                       key={index}
