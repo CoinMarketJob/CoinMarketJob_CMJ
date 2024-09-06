@@ -422,15 +422,15 @@ const LoginClient = () => {
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <span className="information">
                   By continuing, you agree to the{" "}
-                  <Link href="https://beta.coinmarketjob.com/tos" className="policy-link">
+                  <Link href="https://beta.coinmarketjob.com/tos" className="policy-link" target="_blank" rel="noopener noreferrer">
                     Terms of Service
                   </Link>{" "}
                   and{" "}
-                  <Link href="https://beta.coinmarketjob.com/privacy" className="policy-link">
+                  <Link href="https://beta.coinmarketjob.com/privacy" className="policy-link" target="_blank" rel="noopener noreferrer">
                     Privacy Policy
                   </Link>
                   , including{" "}
-                  <Link href="https://beta.coinmarketjob.com/cookies" className="policy-link">
+                  <Link href="https://beta.coinmarketjob.com/cookies" className="policy-link" target="_blank" rel="noopener noreferrer">
                     Cookie Use
                   </Link>
                   .
