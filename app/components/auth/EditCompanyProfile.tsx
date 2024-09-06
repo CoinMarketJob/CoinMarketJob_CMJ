@@ -11,6 +11,8 @@ import { SocialMedia } from "@prisma/client";
 import AddSocialMedia from "./AddSocialMedia";
 import Button from "../general/Button";
 import CollapsedSocialMedia from "./CollapsedSocialMedia";
+import { useProfileData } from "@/hooks/useProfileData";
+
 const defaultAvatarImage = "/PlaceholderCompanyProfile.png";
 
 interface Profile {
@@ -53,6 +55,9 @@ const EditCompanyProfile: React.FC<props> = ({
   const [oldLogo, setOldLogo] = useState("");
   const [changeLogo, setChangeLogo] = useState<boolean>(false);
   const [socialMedias, setSocialMedias] = useState<CustomSocialMedia[]>([]);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const { setCompanyProfileData } = useProfileData();
 
   const closeTest = () => {
     console.log("Close");
@@ -120,6 +125,7 @@ const EditCompanyProfile: React.FC<props> = ({
   };
 
   const Done = async () => {
+    setIsSaving(true);
     let logoLink = "";
     try {
       const uploadLogo = async () => {
@@ -148,7 +154,7 @@ const EditCompanyProfile: React.FC<props> = ({
         headline,
         siteUrl: site,
         about,
-        logoLink,
+        logoLink: logoLink || oldLogo, // Eğer yeni logo yüklenmediyse eski logoyu kullan
         socialMedias,
       };
 
@@ -163,14 +169,20 @@ const EditCompanyProfile: React.FC<props> = ({
       const data = await response.json();
 
       if (response.ok) {
-        setProfile(data);
+        setCompanyProfileData(data); // Güncellenmiş profil verilerini global state'e kaydet
         setEditProfile(false);
       } else {
-        console.error("Error applying for job:", response.statusText);
+        console.error("Error updating company profile:", response.statusText);
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsSaving(false);
     }
+  };
+
+  const handleCancel = () => {
+    setEditProfile(false);
   };
 
   return (
@@ -289,7 +301,13 @@ const EditCompanyProfile: React.FC<props> = ({
         </Icon>
       </div>
 
-      <div className={styles.Done}>
+      <div className={styles.ButtonGroup}>
+        <span 
+          className={styles.CancelButton} 
+          onClick={handleCancel}
+        >
+          Cancel
+        </span>
         <Button
           text="Done"
           onClick={Done}
@@ -299,6 +317,7 @@ const EditCompanyProfile: React.FC<props> = ({
           paddingBottom={12}
           paddingLeft={26}
           paddingRight={26}
+          isLoading={isSaving}
         />
       </div>
     </div>

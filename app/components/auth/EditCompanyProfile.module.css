@@ -88,3 +88,24 @@
     display: flex;
     justify-content: flex-end;
 }
+
+.ButtonGroup {
+    width: 100%;
+    margin-top: 23px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.CancelButton {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    color: #999999;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.CancelButton:hover {
+    text-decoration: underline;
+}

@@ -77,6 +77,7 @@ const EditProfile: React.FC<EditProfileProps> = ({ profile, onUpdate }) => {
   ];
 
   const [sections, setSections] = useState(defaultSections);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -141,6 +142,7 @@ const EditProfile: React.FC<EditProfileProps> = ({ profile, onUpdate }) => {
   };
 
   const handleSave = async () => {
+    setIsSaving(true);
     try {
       let avatarUrl = avatar;
 
@@ -178,6 +180,8 @@ const EditProfile: React.FC<EditProfileProps> = ({ profile, onUpdate }) => {
       setPreviewUrl(null);
     } catch (error) {
       console.error("Error updating profile:", error);
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -293,6 +297,10 @@ const EditProfile: React.FC<EditProfileProps> = ({ profile, onUpdate }) => {
   const handleEditSocialMedia = (index: number) => {    
     setEditingSocialMediaIndex(index);
     setSocialPopup(true);
+  };
+
+  const handleCancel = () => {
+    onUpdate(profile); // This will revert changes and exit edit mode
   };
 
   return (
@@ -472,7 +480,7 @@ const EditProfile: React.FC<EditProfileProps> = ({ profile, onUpdate }) => {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M18.3799 18.7231L18.3803 32.2935C18.38 32.6637 18.2419 32.9913 17.966 33.2762C17.69 33.5606 17.3582 33.7029 16.9706 33.7032C16.5829 33.7029 16.2511 33.5648 15.9751 33.2889C15.6992 33.0129 15.5611 32.6811 15.5609 32.2935L15.5612 18.7231L1.99083 18.7234C1.62058 18.7232 1.29301 18.5851 1.00812 18.3091C0.723687 18.0332 0.581356 17.7014 0.581133 17.3137C0.581356 16.9261 0.719451 16.5943 0.995416 16.3183C1.27138 16.0423 1.60319 15.9042 1.99083 15.904L15.5612 15.9044L15.5609 2.33399C15.5611 1.96373 15.6992 1.63616 15.9751 1.35128C16.2511 1.06684 16.5829 0.924515 16.9706 0.924291C17.3582 0.924514 17.69 1.06261 17.966 1.33858C18.2419 1.61454 18.38 1.94635 18.3803 2.33399L18.3799 15.9044L31.9503 15.904C32.3205 15.9042 32.6481 16.0423 32.933 16.3183C33.2174 16.5943 33.3598 16.9261 33.36 17.3137C33.3598 17.7014 33.2217 18.0332 32.9457 18.3091C32.6697 18.5851 32.3379 18.7232 31.9503 18.7234L18.3799 18.7231Z"
+                  d="M18.3799 18.7231L18.3803 32.2935C18.38 32.6637 18.2419 32.9913 17.966 33.2762C17.69 33.5606 17.3582 33.7029 16.9706 33.7032C16.5829 33.7029 16.2511 33.5648 15.9751 33.2889C15.6992 33.0129 15.5611 32.6811 15.5609 32.2935L15.5612 18.7231L1.99083 18.7234C1.62058 18.7232 1.29301 18.5851 1.00812 18.3091C0.723687 18.0332 0.581356 17.7014 0.581133 17.3137C0.581356 16.9261 0.719451 16.5943 0.995416 16.3183C1.27138 16.0423 1.60319 15.9042 1.99083 15.904L15.5612 15.9044L15.5609 2.33399C15.5611 1.96373 15.6992 1.63616 15.9751 1.35128C16.2511 1.06684 16.5829 0.924515 16.9706 0.924291C17.3582 0.924515 17.69 1.06261 17.966 1.33858C18.2419 1.61454 18.38 1.94635 18.3803 2.33399L18.3799 15.9044L31.9503 15.904C32.3205 15.9042 32.6481 16.0423 32.933 16.3183C33.2174 16.5943 33.3598 16.9261 33.36 17.3137C33.3598 17.7014 33.2217 18.0332 32.9457 18.3091C32.6697 18.5851 32.3379 18.7232 31.9503 18.7234L18.3799 18.7231Z"
                   fill="#999999"
                   fill-opacity="0.6"
                 />
@@ -529,7 +537,23 @@ const EditProfile: React.FC<EditProfileProps> = ({ profile, onUpdate }) => {
           </div>
 
           <div className={styles.ButtonDiv}>
-            <Button text="Save" onClick={handleSave} />
+            <span 
+              className={styles.CancelButton} 
+              onClick={handleCancel}
+            >
+              Cancel
+            </span>
+            <Button 
+              text="Done" 
+              onClick={handleSave} 
+              isLoading={isSaving}
+              paddingTop={15}
+              paddingBottom={15}
+              paddingLeft={26}
+              paddingRight={26}
+              fontSize={14}
+              fontWeight={500}
+            />
           </div>
         </div>
       )}
