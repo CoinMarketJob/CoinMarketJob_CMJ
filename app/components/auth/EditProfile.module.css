@@ -5,6 +5,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   position: relative;
+
 }
 
 .PopupContainer {
@@ -103,8 +104,6 @@
   font-weight: 600;
   line-height: 23.81px;
   letter-spacing: 0.03em;
-  margin-left: 24px;
-  margin-bottom: 4px;
 }
 
 .SocialMedias {
