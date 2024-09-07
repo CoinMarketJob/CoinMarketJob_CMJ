@@ -39,6 +39,8 @@ model Job {
   logo              String
   companyName       String
   jobTitle          String
+  //cityId            Int?
+  //city              City?             @relation(fields: [cityId], references: [id], onDelete: Cascade)
   location          String?
   locationType      LocationType
   jobType           JobType
@@ -168,9 +170,15 @@ model JobTitles {
 }
 
 model Cities {
-  id   Int    @id @default(autoincrement())
-  city String
+  id      Int     @id @default(autoincrement())
+  name    String  @unique
+  country String?
+  admin1  String?
+  lat     Float?
+  lon     Float?
+  pop     Int?
 }
+
 
 model JobAlerts {
   id                 Int      @id @default(autoincrement())
@@ -251,6 +259,8 @@ enum socialMediaType {
   Youtube
   Custom
 }
+
+
 
 model BuyedPackage {
   id               Int         @id @default(autoincrement())
