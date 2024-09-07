@@ -39,15 +39,13 @@ model Job {
   logo              String
   companyName       String
   jobTitle          String
-  //cityId            Int?
-  //city              City?             @relation(fields: [cityId], references: [id], onDelete: Cascade)
   location          String?
   locationType      LocationType
   jobType           JobType
   experienceLevel   ExperienceLevel
   educationalDegree EducationalDegree
-  salaryMin         Int
-  salaryMax         Int
+  salaryMin         Int?
+  salaryMax         Int?
   salaryShow        Boolean?
   salaryUnit        SalaryUnit?
   visaSponsorship   Boolean
