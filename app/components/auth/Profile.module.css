@@ -99,16 +99,29 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    margin-bottom: 16px; /* Profil fotoğrafı ile name surname arasında 16px boşluk */
 }
 
-.HeadLine{
+.NameSurname {
     width: 100%;
     display: flex;
     justify-content: center;
     font-family: Inter;
-    font-size: 15px;
+    font-size: 16px; /* Name surname yazı boyutu 16px olarak kalacak */
     font-weight: 400;
-    line-height: 18.15px;
+    line-height: 19.36px;
+    letter-spacing: 0.03em;
+    color: #999999;
+}
+
+.HeadLine {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-family: Inter;
+    font-size: 15px; /* Headline'ı orijinal boyutuna geri döndürdük */
+    font-weight: 400;
+    line-height: 18.15px; /* Line height'ı da orijinal oranına göre ayarladık */
     letter-spacing: 0.03em;
     color: #999999;
     margin-top: 8px;

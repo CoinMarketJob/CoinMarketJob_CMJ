@@ -178,7 +178,7 @@ const Profile = () => {
                   />
                 )}
               </div>
-              <div className={styles.HeadLine}>{profile?.nameSurname}</div>
+              <div className={styles.NameSurname}>{profile?.nameSurname}</div>
               <div className={styles.HeadLine}>{profile?.headline}</div>
               {profile?.siteUrl ? (
                 <div className={styles.HeadSite}>
