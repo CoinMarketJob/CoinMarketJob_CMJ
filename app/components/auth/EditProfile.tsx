@@ -35,8 +35,6 @@ interface CustomSocialMedia {
 
 const EditProfile: React.FC<EditProfileProps> = ({ profile, onUpdate }) => {
   const [nameSurname, setNameSurname] = useState<string>(profile.nameSurname);
-  const [jobTitle, setJobTitle] = useState<string>(profile.jobTitle);
-  const [location, setLocation] = useState<string>(profile.location);
   const [headline, setHeadline] = useState<string>(profile.headline);
   const [site, setSite] = useState<string>(profile.siteUrl);
   const [about, setAbout] = useState<JSONContent>(profile.about);
@@ -83,9 +81,7 @@ const EditProfile: React.FC<EditProfileProps> = ({ profile, onUpdate }) => {
     async function fetchData() {
       try {
         setNameSurname(profile.nameSurname);
-        setJobTitle(profile.jobTitle);
         setHeadline(profile.headline);
-        setLocation(profile.location);
         setSite(profile.siteUrl);
         setAbout(profile.about);
         setSocialMedias(profile.socialMedias);
@@ -151,9 +147,7 @@ const EditProfile: React.FC<EditProfileProps> = ({ profile, onUpdate }) => {
       }
       const profileData = {
         nameSurname,
-        jobTitle,
         headline,
-        location,
         siteUrl: site,
         about,
         socialMedias,
@@ -358,22 +352,6 @@ const EditProfile: React.FC<EditProfileProps> = ({ profile, onUpdate }) => {
             />
           </div>
 
-          <div className={styles.InputGroup}>
-            <EditProfileInput
-              label="What do you do?"
-              placeholder="Senior Solidity Developer"
-              value={jobTitle}
-              setValue={setJobTitle}
-            />
-          </div>
-          <div className={styles.InputGroup}>
-            <EditProfileInput
-              label="Location"
-              placeholder="Istanbul, Turkey"
-              value={location}
-              setValue={setLocation}
-            />
-          </div>
           <div className={styles.InputGroup}>
             <EditProfileInput
               label="Headline"
