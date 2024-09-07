@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  width: 99.5%;
+  width: 100%;
   align-items: flex-start;
   justify-content: flex-start;
   position: relative;
@@ -51,7 +51,9 @@
 }
 
 .InputGroup {
-  width: 100%;
+  width: calc(100% - 48px); /* 48px sol ve sağ boşluk için */
+  margin-left: 24px;
+  margin-right: 24px;
   margin-top: 4px;
 }
 

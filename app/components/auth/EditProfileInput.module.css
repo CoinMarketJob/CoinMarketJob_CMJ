@@ -1,6 +1,5 @@
 .InputGroup{
     width: 100%;
-    margin-left: 48px;
 }
 
 .InputLabel{
@@ -14,7 +13,7 @@
 }
 
 .Input{
-    width: calc(100% - 90px);
+    width: 100%;
     border: 1px solid #E7E5E4;
     border-radius: 39px;
     font-family: Inter;
@@ -22,10 +21,8 @@
     font-weight: 400;
     line-height: 21px;
     color: #999999;
-    padding-top: 4px;
-    padding-left: 16px;
-    padding-right: 16px;
-    padding-bottom: 4px;
+    padding: 4px 16px;
+    box-sizing: border-box;
 }
 
 .Input::placeholder {
