@@ -1,10 +1,11 @@
 .container {
   display: flex;
   flex-direction: column;
-  width: 99.5%;
+  width: 100%;
   align-items: flex-start;
   justify-content: flex-start;
   position: relative;
+
 }
 
 .PopupContainer {
@@ -51,12 +52,18 @@
 }
 
 .InputGroup {
-  width: 100%;
+  width: calc(100% - 48px); /* 48px sol ve sağ boşluk için */
+  margin-left: 24px;
+  margin-right: 24px;
   margin-top: 4px;
 }
 
+.InputGroup + .InputGroup {
+  margin-top: 12px; /* Name Surname ve Headline arasına 12px boşluk ekler */
+}
+
 .Site {
-  margin-top: 8px;
+  margin-top: 12px;
   margin-bottom: 24px;
   width: 100%;
   display: flex;
@@ -64,7 +71,7 @@
 }
 
 .SiteInput {
-  width: 124px;
+  width: 100px;
   max-width: 200px;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -76,7 +83,7 @@
   line-height: 21px;
   color: #999999;
   border: 1px solid #e7e5e4;
-  border-radius: 39px;
+  border-radius: 10px;
 }
 
 .SiteInput::placeholder {
@@ -97,8 +104,6 @@
   font-weight: 600;
   line-height: 23.81px;
   letter-spacing: 0.03em;
-  margin-left: 24px;
-  margin-bottom: 4px;
 }
 
 .SocialMedias {
