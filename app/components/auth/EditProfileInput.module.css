@@ -10,7 +10,7 @@
     line-height: 18.15px;
     letter-spacing: 0.03em;
     color: #999999;
-    margin-bottom: 4px;
+    margin-bottom: 8px; /* Etiket ile input arasındaki boşluğu 8px olarak ayarladık */
 }
 
 .Input{

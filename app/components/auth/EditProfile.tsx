@@ -343,7 +343,7 @@ const EditProfile: React.FC<EditProfileProps> = ({ profile, onUpdate }) => {
               onChange={handleAvatarChange}
             />
           </div>
-          <div className={styles.InputGroup} style={{ marginTop: "8px" }}>
+          <div className={styles.InputGroup} style={{ marginTop: "24px" }}>
             <EditProfileInput
               label="Name Surname"
               placeholder="Erbil Can Artun"

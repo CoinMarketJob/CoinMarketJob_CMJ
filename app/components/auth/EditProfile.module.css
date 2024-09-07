@@ -55,8 +55,12 @@
   margin-top: 4px;
 }
 
+.InputGroup + .InputGroup {
+  margin-top: 12px; /* Name Surname ve Headline arasına 12px boşluk ekler */
+}
+
 .Site {
-  margin-top: 8px;
+  margin-top: 12px;
   margin-bottom: 24px;
   width: 100%;
   display: flex;
