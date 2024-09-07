@@ -55,6 +55,11 @@ const ColumnRight: React.FC<ColumnProps> = ({
     [drop]
   );
 
+  const handleCloseJobDetails = () => {
+    setShowDetail(false);
+    setDetailJob(null);
+  };
+
   return (
     <div
       ref={dragRef}
@@ -65,7 +70,7 @@ const ColumnRight: React.FC<ColumnProps> = ({
         <div className={`${styles.DetailArea} ${
           cards.length > 0 ? styles.DetailAreaWithList : ""
         }`}>
-          <JobDetails job={detailJob} />
+          <JobDetails job={detailJob} onClose={handleCloseJobDetails} />
         </div>
       )}
 

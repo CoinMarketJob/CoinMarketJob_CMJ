@@ -127,26 +127,34 @@ const Page = () => {
             {selectedApplication?.name + " " + selectedApplication?.surname}{" "}
           </div>
 
-          {selectedApplication?.resumeLink && (
-            <a href={selectedApplication?.resumeLink} target="_blank">
-              CV
-            </a>
-          )}
+          <div className={styles.PhoneNumber}>
+            {selectedApplication?.phone}<span className={styles.Dot}>{" - "}</span>{selectedApplication?.email}
+          </div>
+
+          <div className={styles.CvCl}>
+            {selectedApplication?.resumeLink && (
+              <a href={selectedApplication?.resumeLink} className={styles.CvClButton} target="_blank">
+                CV
+              </a>
+            )}
+
+            {selectedApplication?.coverLetterLink && (
+              <a href={selectedApplication?.coverLetterLink} className={styles.CvClButton} target="_blank">
+                CL
+              </a>
+            )}
+          </div>
 
           {selectedApplication?.resumeDraft && (
             <div>
+              <div className={styles.CvClTitle}>Curriculum Vitae</div>
               <Draft show content={selectedApplication?.resumeDraft} />
             </div>
           )}
 
-          {selectedApplication?.coverLetterLink && (
-            <a href={selectedApplication?.coverLetterLink} target="_blank">
-              CL
-            </a>
-          )}
-
           {selectedApplication?.coverLetterDraft && (
             <div>
+              <div className={styles.CvClTitle}>Cover Letter</div>
               <Draft show content={selectedApplication?.coverLetterDraft} />
             </div>
           )}

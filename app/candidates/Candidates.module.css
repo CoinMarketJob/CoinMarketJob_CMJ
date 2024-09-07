@@ -14,6 +14,7 @@
   font-weight: 500;
   line-height: 31.75px;
   letter-spacing: 0.03em;
+  flex-grow: 1;
 }
 
 .Line {
@@ -31,16 +32,16 @@
 .Options {
   display: flex;
   justify-content: flex-end;
-  width: 100%;
+  width: 300px;
 }
 
 .ListContainer {
   flex-grow: 1;
   transition: width 0.3s ease;
   max-height: 100%;
-  overflow-y: auto;  
+  overflow-y: auto;
   scrollbar-width: none;
-  scrollbar-color: #E7E5E4 transparent;
+  scrollbar-color: #e7e5e4 transparent;
   -webkit-overflow-scrolling: touch;
   padding: 2px;
 }
@@ -52,9 +53,9 @@
 .DetailContainer {
   width: 40%;
   max-height: 100%;
-  overflow-y: auto;  
+  overflow-y: auto;
   scrollbar-width: none;
-  scrollbar-color: #E7E5E4 transparent;
+  scrollbar-color: #e7e5e4 transparent;
   -webkit-overflow-scrolling: touch;
 
   border-left: 1px solid #e7e5e4;
@@ -129,4 +130,46 @@
   letter-spacing: 0.03em;
   text-align: justified;
   color: #999999;
+}
+
+.CvCl {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.CvClButton {
+  border: 1px solid #e7e5e4;
+  border-radius: 15px;
+  padding: 24px;
+  text-decoration: none;
+}
+
+.PhoneNumber {
+  font-family: Inter;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 19.84px;
+  letter-spacing: 0.03em;
+  text-align: justified;
+  color: #999999;
+}
+
+.Dot {
+  color: #999999;
+  font-family: Inter;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.CvClTitle {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19.36px;
+  letter-spacing: 0.04em;
+  text-align: left;
+  color: #000;
+  margin-left: 31px;
 }

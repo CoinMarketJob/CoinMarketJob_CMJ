@@ -64,8 +64,8 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ label, selectedLoca
   };
 
   const filteredOptions = cities
-  .filter(city => city.city.toLowerCase().includes(searchTerm.toLowerCase())) // filter based on label
-  .map(option => option.city); 
+  .filter(city => city.name.toLowerCase().includes(searchTerm.toLowerCase())) // filter based on label
+  .map(option => option.name); 
 
 
   return (

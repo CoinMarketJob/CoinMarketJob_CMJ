@@ -30,32 +30,35 @@ const Grid: React.FC<JobCardProps> = ({
   onDragBegin,
   onDragEnd,
   isSelected,
-  onSelect
+  onSelect,
 }) => {
   const { filteredJobs, setFilteredJobs } = useJobs();
   const id = job.id;
   const cardType = "left";
 
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: ItemTypes.CARD,
-    item: () => {
-      onDragBegin();
-      return { id, cardType };
-    },
-    end: (item, monitor) => {
-      const dropResult = monitor.getDropResult<{ list: string }>();
-      console.log(item);
-      console.log(dropResult);
-      if (item && dropResult) {
-        onDrop(item.id, dropResult.list);
-      } else if (dropResult?.list == "left") {
-        onDragEnd();
-      }
-    },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
+  const [{ isDragging }, drag] = useDrag(
+    () => ({
+      type: ItemTypes.CARD,
+      item: () => {
+        onDragBegin();
+        return { id, cardType };
+      },
+      end: (item, monitor) => {
+        const dropResult = monitor.getDropResult<{ list: string }>();
+        console.log(item);
+        console.log(dropResult);
+        if (item && dropResult) {
+          onDrop(item.id, dropResult.list);
+        } else if (dropResult?.list == "left") {
+          onDragEnd();
+        }
+      },
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+      }),
     }),
-  }), [id, cardType, onDragBegin, onDrop, onDragEnd]);
+    [id, cardType, onDragBegin, onDrop, onDragEnd]
+  );
 
   const JobSave = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
@@ -85,11 +88,14 @@ const Grid: React.FC<JobCardProps> = ({
     onClick(job);
   };
 
-  const dragRef = useCallback((node: HTMLDivElement | null) => {
-    if (node) {
-      drag(node);
-    }
-  }, [drag]);
+  const dragRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (node) {
+        drag(node);
+      }
+    },
+    [drag]
+  );
 
   return (
     <div
@@ -103,12 +109,10 @@ const Grid: React.FC<JobCardProps> = ({
         <img src={job.logo} alt={`${job.companyName} Logo`} />
       </div>
 
-      <div className={styles.details}>
-        <div className={styles.company}>{job.companyName}</div>
-        <div className={styles.title}>{job.jobTitle}</div>
-        <div className={styles.type}>{formatJobType(job.jobType)}</div>
-        <div className={styles.location}>{job.location}</div>
-      </div>
+      <div className={styles.company}>{job.companyName}</div>
+      <div className={styles.title}>{job.jobTitle}</div>
+      <div className={styles.type}>{formatJobType(job.jobType)}</div>
+      <div className={styles.location}>{job.location}</div>
       <div className={styles.actions}>
         <div>
           <Icon onClick={JobClose} hoverSize={45} hoverContent="Close">
