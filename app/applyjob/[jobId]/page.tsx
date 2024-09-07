@@ -12,6 +12,7 @@ import LocationSelector from "@/app/components/location/LocationSelector";
 import Checkbox from "@/app/components/general/Checkbox";
 import QuestionDraft from "@/app/components/general/QuestionDraft";
 import { JobQuestions } from "@prisma/client";
+import { useRouter } from 'next/navigation'; // Add this import
 
 type JobProps = {
   jobId: string;
@@ -47,6 +48,9 @@ const page = ({ params }: { params: JobProps }) => {
 
   const [uploading, setUploading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  const router = useRouter(); // Add this line
 
   const handleAnswerChange = (questionId: number, answer: string) => {
     setAnswers((prev) => ({ ...prev, [questionId]: answer }));
@@ -364,6 +368,11 @@ const page = ({ params }: { params: JobProps }) => {
 
       if (response.ok) {
         console.log(jobData);
+        setSuccessMessage("Your application has been submitted successfully!");
+        setTimeout(() => {
+          setSuccessMessage(null);
+          router.push('/');
+        }, 3000);
       } else {
         console.error("Error applying for job:", response.statusText);
         setErrorMessage(
@@ -373,6 +382,10 @@ const page = ({ params }: { params: JobProps }) => {
       }
     } catch (error) {
       console.error("Error in submission process:", error);
+      setErrorMessage("An error occurred while submitting your application.");
+      setTimeout(() => setErrorMessage(null), 3000);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -396,6 +409,9 @@ const page = ({ params }: { params: JobProps }) => {
     <div ref={panelRef} className={styles.ContainerCard}>
       {errorMessage && (
         <div className={styles.ErrorMessage}>{errorMessage}</div>
+      )}
+      {successMessage && (
+        <div className={styles.SuccessMessage}>{successMessage}</div>
       )}
       <div className={styles.ApplyCard}>
         <div style={{ display: "flex" }}>
