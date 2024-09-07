@@ -12,6 +12,7 @@ import Button from "../general/Button";
 import ToggleSwitch from "../general/Toggle";
 import Selection from "../general/Checkbox";
 import Icon from "../general/Icon";
+import Checkbox from "../general/Checkbox";
 
 interface EditClientProps {
   image: string;
@@ -283,7 +284,6 @@ const EditClient: React.FC<EditClientProps> = ({
             {salaryType}
           </span>
         </div>
-
         {salaryType === "Exact value" ? (
           <div className={`${styles.SalaryInputGroup}`}>
             <Input
@@ -333,6 +333,25 @@ const EditClient: React.FC<EditClientProps> = ({
             placeholder="Salary Unit"
           />
         </div>
+
+        <div className={`${styles.SalaryShow}`}>
+          <Selection
+            name="salaryShow"
+            id="salaryShow"
+            value={showSalary}
+            onChange={(selectedValue) => setShowSalary(selectedValue)}
+            label="Don’t show in job listing"
+          />
+        </div>
+      </div>
+      
+      <div className={`${styles.VisaSponsorship}`}>
+        <ToggleSwitch
+          title="Visa Sponsorship"
+          sliderName="visa"
+          switchState={visa}
+          setSwitchState={setVisa}
+        />
       </div>
 
       <div className={`${styles.QuestionsGroup}`}>
