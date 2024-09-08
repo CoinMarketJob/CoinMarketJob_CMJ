@@ -4,6 +4,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    
 }
 
 .titleWrapper {
@@ -72,19 +73,21 @@
 .DropDown {
     position: absolute;
     top: 100%;
-    left: 60%;
+    left: 51%;
     transform: translateX(-50%);
     background-color: #FFFFFFCC;
-    box-shadow: 0px 0px 2px 0px #00000033;
-    box-shadow: 0px 0px 11.3px 0px #00000033;
+    box-shadow: 0px 0px 2px 0px #00000033, 0px 0px 11.3px 0px #00000033;
     z-index: 1000;
-    width: 199px;
-    max-width: 199px;
+    min-width: 400px; /* Minimum genişlik */
+    max-width: 400px; /* Maximum genişlik */
     border-radius: 15px;
     padding: 12px;
-    padding-bottom: 33px;
     flex-direction: column;
     margin-top: 10px;
+    max-height: 250px;
+    overflow-y: auto;
+    scrollbar-width: none; /* Firefox için kaydırma çubuğunu gizler */
+    -ms-overflow-style: none; /* IE ve Edge için kaydırma çubuğunu gizler */
 }
 
 .JobTitleContainer {
@@ -93,13 +96,13 @@
 }
 
 .JobTitleInput {
-    width: calc(100% - 50px);
+    width: 100%;
     margin: 0;
     border: 1px solid #E7E5E4;
     border-radius: 64px;
-    padding-top: 14px;
-    padding-bottom: 13px;
-    padding-left: 50px;
+    padding: 14px 12px 13px 50px;
+    box-sizing: border-box;
+    border-radius: 15px;
 }
 
 .SearchIcon {
@@ -112,26 +115,51 @@
     display: flex;
     flex-direction: column;
     margin-top: 8px;
+    max-height: 190px;
+    overflow-y: auto;
+    scrollbar-width: none; /* Firefox için kaydırma çubuğunu gizler */
+    -ms-overflow-style: none; /* IE ve Edge için kaydırma çubuğunu gizler */
+    width: 100%; /* Tam genişlik */
 }
 
 .option {
-    width: 187px;
-    height: 19px;
+    width: 94%;
+    min-height: 35px;
     font-family: Inter;
     font-size: 16px;
     font-weight: 400;
     line-height: 19.36px;
     letter-spacing: 0.04em;
     color: #999999;
-    padding-top: 8px;
-    padding-left: 12px;
-    padding-bottom: 8px;
+    padding: 8px 12px;
     border-radius: 64px;
-    white-space: nowrap; /* Prevent text from wrapping */
-    overflow: hidden; /* Hide overflowed text */
-    text-overflow: ellipsis; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s ease, color 0.2s ease; /* Geçiş efekti ekle */
+}
+
+.option:hover {
+    background-color: #F5F5F5; /* Hover durumunda arka plan rengi */
+    color: #242220; /* Hover durumunda metin rengi */
+    border-radius: 15px;
+}
+
+/* Seçili öğe için stil */
+.optionSelected {
+    background-color: #2422200D;
+    color: #242220;
+    border-radius: 15px;
+}
+
+.optionSelected:hover {
+    background-color: #24222033; /* Seçili öğe için hover durumunda daha koyu arka plan */
 }
 
 .required {
     color: red;
 }
+
+/* Kaydırma çubuğu ile ilgili diğer stilleri kaldırın */

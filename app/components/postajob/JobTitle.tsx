@@ -107,7 +107,11 @@ const JobTitle: React.FC<JobTitleProps> = ({ jobTitle, setJobTitle, isFormSubmit
 
           <div className={styles.TitlesMenu}>
             {filteredTitles.map((item,index) => (
-              <div style={{backgroundColor: jobTitle == item.jobTitle ? "#2422200D" : "#FFFFFF"}} className={styles.option} key={index} onClick={() => selectJob(item.jobTitle)}>
+              <div 
+                className={`${styles.option} ${jobTitle === item.jobTitle ? styles.optionSelected : ''}`} 
+                key={index} 
+                onClick={() => selectJob(item.jobTitle)}
+              >
                 <div>{item.jobTitle}</div>
               </div>
             ))}
