@@ -15,7 +15,8 @@
 .Input{
     width: 100%;
     border: 1px solid #E7E5E4;
-    border-radius: 10px;
+    border-radius: 15px;
+    height: 50px;
     font-family: Inter;
     font-size: 15px;
     font-weight: 400;

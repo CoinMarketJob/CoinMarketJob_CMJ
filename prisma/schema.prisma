@@ -36,20 +36,19 @@ model Job {
   id                Int               @id @default(autoincrement())
   userId            Int
   user              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  logo              String
-  companyName       String
+  logo              String?
+  companyName       String?
   jobTitle          String
   location          String?
-  locationType      LocationType
-  jobType           JobType
-  experienceLevel   ExperienceLevel
-  educationalDegree EducationalDegree
+  locationType      LocationType?
+  jobType           JobType?
+  experienceLevel   ExperienceLevel?
+  educationalDegree EducationalDegree?
   salaryMin         Int?
   salaryMax         Int?
   salaryShow        Boolean?
   salaryUnit        SalaryUnit?
-  visaSponsorship   Boolean
-  jobDescription    Json
+  jobDescription    Json?
   packageId         Int
   date              DateTime          @default(now())
   package           BuyedPackage      @relation(fields: [packageId], references: [id], onDelete: Cascade)
@@ -136,9 +135,6 @@ model AppliedJobs {
   date             DateTime @default(now())
   resumeLink       String?
   resumeDraft      Json?
-  coverLetterLink  String?
-  coverLetterDraft Json?
-  visaSponsorship  Boolean
 
   applicationsState ApplicationsState[]
 

@@ -191,13 +191,13 @@ const Profile = () => {
               </div>
               <div className={styles.NameSurname}>{profile?.nameSurname}</div>
               <div className={styles.HeadLine}>{profile?.headline}</div>
-              {profile?.siteUrl ? (
+              {/* {profile?.siteUrl ? (
                 <div className={styles.HeadSite}>
                   <div className={styles.SiteText} onClick={handleSiteClick}>
                     {profile?.siteUrl}
                   </div>
                 </div>
-              ) : null}
+              ) : null} */}
               <div className={styles.About}>
                 <Draft show border content={profile?.about} />
               </div>

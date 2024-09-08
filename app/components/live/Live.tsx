@@ -113,7 +113,7 @@ const Live: React.FC = () => {
                 <div className={styles.Title}>
                   {items[liveIndex].title}
                 </div>
-                <div className={styles.Type}>#news</div>
+                <div className={styles.Type}>News</div>
               </>
             ) : items[liveIndex].liveType === "EVENT" ? (
               <>
@@ -126,7 +126,7 @@ const Live: React.FC = () => {
                 <div className={styles.Headline}>
                   {items[liveIndex].headline}
                 </div>
-                <div className={styles.Type}>#event</div>
+                <div className={styles.Type}>Event</div>
               </>
             ) : (
               <>
@@ -139,7 +139,7 @@ const Live: React.FC = () => {
                 <div className={styles.Headline}>
                   {items[liveIndex].headline}
                 </div>
-                <div className={styles.Type}>#hackathon</div>
+                <div className={styles.Type}>Hackathon</div>
               </>
             )}
             <AnimatePresence>

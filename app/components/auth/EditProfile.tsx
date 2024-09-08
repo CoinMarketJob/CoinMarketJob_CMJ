@@ -16,6 +16,7 @@ import Button from "../general/Button";
 import ProfileSections from "./ProfileSections";
 const defaultAvatarImage = "/PlaceHolderAvatar.png";
 import avatarImage from "./PlaceHolderAvatar.png";
+import Input from "../general/Input";
 
 interface EditProfileProps {
   profile: any;
@@ -53,14 +54,20 @@ const EditProfile: React.FC<EditProfileProps> = ({ profile, onUpdate }) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const [avatar, setAvatar] = useState<string>(profile.logoURL);
-  const [socialMedias, setSocialMedias] = useState<CustomSocialMedia[]>(profile.socialMedias);
-  const [profileSections, setProfileSections] = useState<ProfileSection[]>(profile.section);
+  const [socialMedias, setSocialMedias] = useState<CustomSocialMedia[]>(
+    profile.socialMedias
+  );
+  const [profileSections, setProfileSections] = useState<ProfileSection[]>(
+    profile.section
+  );
   const [editingSectionId, setEditingSectionId] = useState<number | null>(null);
 
   const [isSocialPopupOpen, setIsSocialPopupOpen] = useState<boolean>(false);
   const [isAddPopupOpen, setIsAddPopupOpen] = useState<boolean>(false);
 
-  const [editingSocialMediaIndex, setEditingSocialMediaIndex] = useState<number | null>(null);
+  const [editingSocialMediaIndex, setEditingSocialMediaIndex] = useState<
+    number | null
+  >(null);
 
   const visibleSocialMediaCount = 3;
 
@@ -285,10 +292,10 @@ const EditProfile: React.FC<EditProfileProps> = ({ profile, onUpdate }) => {
   };
 
   const handleDeleteSocialMedia = (index: number) => {
-    setSocialMedias(prevState => prevState.filter((_, i) => i !== index));
+    setSocialMedias((prevState) => prevState.filter((_, i) => i !== index));
   };
 
-  const handleEditSocialMedia = (index: number) => {    
+  const handleEditSocialMedia = (index: number) => {
     setEditingSocialMediaIndex(index);
     setSocialPopup(true);
   };
@@ -344,23 +351,27 @@ const EditProfile: React.FC<EditProfileProps> = ({ profile, onUpdate }) => {
             />
           </div>
           <div className={styles.InputGroup} style={{ marginTop: "24px" }}>
-            <EditProfileInput
-              label="Name Surname"
-              placeholder="Erbil Can Artun"
+            <Input
+              id="NameSurname"
+              type="text"
+              required
+              placeholder="Name Surname"
               value={nameSurname}
-              setValue={setNameSurname}
+              onChange={(e) => setNameSurname(e.target.value)}
             />
           </div>
 
-          <div className={styles.InputGroup}>
-            <EditProfileInput
-              label="Headline"
-              placeholder="Senior Solidity Developer in Istanbul, Turkey "
+          <div className={styles.InputGroup} style={{ marginTop: "24px", marginBottom: "24px" }}>
+          <Input
+              id="Headline"
+              type="text"
+              required
+              placeholder="Headline"
               value={headline}
-              setValue={setHeadline}
+              onChange={(e) => setHeadline(e.target.value)}
             />
           </div>
-          <div className={styles.Site}>
+          {/* <div className={styles.Site}>
             <input
               className={styles.SiteInput}
               type="text"
@@ -368,7 +379,7 @@ const EditProfile: React.FC<EditProfileProps> = ({ profile, onUpdate }) => {
               value={site}
               onChange={(e) => setSite(e.target.value)}
             />
-          </div>
+          </div> */}
 
           <div className={styles.About}>
             <span className={styles.AboutText}>About</span>
@@ -515,15 +526,12 @@ const EditProfile: React.FC<EditProfileProps> = ({ profile, onUpdate }) => {
           </div>
 
           <div className={styles.ButtonDiv}>
-            <span 
-              className={styles.CancelButton} 
-              onClick={handleCancel}
-            >
+            <span className={styles.CancelButton} onClick={handleCancel}>
               Cancel
             </span>
-            <Button 
-              text="Done" 
-              onClick={handleSave} 
+            <Button
+              text="Done"
+              onClick={handleSave}
               isLoading={isSaving}
               paddingTop={15}
               paddingBottom={15}

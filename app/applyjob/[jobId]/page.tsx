@@ -490,7 +490,7 @@ const page = ({ params }: { params: JobProps }) => {
           )}
         </div>
 
-        {cvManualState == false ? (
+        {cvManualState == false && (
           <div
             style={{
               display: "flex",
@@ -506,93 +506,8 @@ const page = ({ params }: { params: JobProps }) => {
                 onChange={cvFileChange}
               />
             </div>
-            <span className={styles.orText}>or</span>
-            <span
-              className={styles.manuallyText}
-              onClick={() => setCvManualState(true)}
-            >
-              Enter Manually
-            </span>
           </div>
-        ) : (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              marginBottom: "1.5rem",
-              position: "relative",
-            }}
-          >
-            <div style={{ display: "flex", width: "38%" }}>
-              <InputFile
-                id="cv"
-                placeholder="Attach Resume / CV"
-                required
-                onChange={cvFileChange}
-              />
-            </div>
-            {/* Make the Draft container relative to position the button inside it */}
-            <div style={{ position: "relative", marginTop: "24px" }}>
-              <Draft onChange={cvDraftChange} />
-            </div>
-          </div>
-        )}
-
-        {letterManualState == false ? (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginBottom: "1.5rem",
-            }}
-          >
-            <div style={{ display: "flex", width: "38%" }}>
-              <InputFile
-                id="letter"
-                placeholder="Attach Cover Letter"
-                required
-                onChange={letterFileChange}
-              />
-            </div>
-            <span className={styles.orText}>or</span>
-            <span
-              className={styles.manuallyText}
-              onClick={() => setLetterManualState(true)}
-            >
-              Enter Manually
-            </span>
-          </div>
-        ) : (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              marginBottom: "1.5rem",
-              position: "relative",
-            }}
-          >
-            <div style={{ display: "flex", width: "38%" }}>
-              <InputFile
-                id="cv"
-                placeholder="Attach Resume / CV"
-                required
-                onChange={cvFileChange}
-              />
-            </div>
-            <div style={{ position: "relative", marginTop: "24px" }}>
-              <Draft onChange={coverLetterDraftChange} />
-            </div>
-          </div>
-        )}
-        <div>
-          <Checkbox
-            name="Visa"
-            id="1"
-            value={visaSelected}
-            onChange={(selectedValue) => setVisaSelected(selectedValue)}
-            label="Visa Sponsorship is Required"
-          />
-        </div>
+        )}        
       </div>
 
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
