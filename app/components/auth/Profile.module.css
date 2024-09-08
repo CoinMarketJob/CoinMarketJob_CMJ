@@ -307,7 +307,7 @@
     width: 100%;
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 10px; /* İsteğe bağlı, diğer içerikle arasında boşluk bırakmak için */
+    
 }
 
 /* Diğer stiller aynı kalacak */
