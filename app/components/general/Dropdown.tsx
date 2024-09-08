@@ -9,7 +9,8 @@ interface DropdownProps {
   list: Array<{ value: string; label: string }>;
   placeholder?: string;
   error?: boolean;
-
+  width?: number;  // Add this line
+  height?: number; // Add this line
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
@@ -19,6 +20,8 @@ const Dropdown: React.FC<DropdownProps> = ({
   list,
   placeholder,
   error,
+  width,  // Add this line
+  height, // Add this line
 }) => {
   const [open, setOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -47,7 +50,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   };
 
   return (
-    <div ref={dropdownRef} style={{ position: "relative", width: "100%" }}>
+    <div ref={dropdownRef} style={{ position: "relative", width: width ? `${width}px` : "100%", height: height ? `${height}px` : "auto" }}>
       <div 
         className={`dropdown-input ${error ? 'error' : ''}`}
         onClick={() => setOpen(!open)} 
@@ -57,7 +60,8 @@ const Dropdown: React.FC<DropdownProps> = ({
         aria-haspopup="listbox"
         aria-expanded={open}
         style={{
-          borderColor: open ? "#242220" : error ? "red" : "#E7E5E4"
+          borderColor: open ? "#242220" : error ? "red" : "#E7E5E4",
+          height: "100%"
         }}
       >
         <div className="dropdown-label">
