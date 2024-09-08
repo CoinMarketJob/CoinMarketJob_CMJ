@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import styles from './Categories.module.css';
+import React, { useState } from "react";
+import styles from "./Categories.module.css";
 
 interface Props {
   onCategoryClick: (category: string) => void;
@@ -11,7 +11,7 @@ const Categories: React.FC<Props> = ({ onCategoryClick }) => {
   const handleCategoryClick = (category: string) => {
     if (activeCategory === category) {
       setActiveCategory(null);
-      onCategoryClick(''); // Filtreyi kaldırmak için boş bir değer gönderiyoruz
+      onCategoryClick(""); // Filtreyi kaldırmak için boş bir değer gönderiyoruz
     } else {
       setActiveCategory(category);
       onCategoryClick(category);
@@ -21,22 +21,53 @@ const Categories: React.FC<Props> = ({ onCategoryClick }) => {
   return (
     <div className={styles.Container}>
       <div
-        className={`${styles.Element} ${activeCategory === 'News' ? styles.active : ''}`}
-        onClick={() => handleCategoryClick('News')}
+        className={`${styles.Element} ${
+          activeCategory === "News" ? styles.active : ""
+        }`}
+        onClick={() => handleCategoryClick("News")}
       >
-        news
+        News
       </div>
+
       <div
-        className={`${styles.Element} ${activeCategory === 'HACKHATHONS' ? styles.active : ''}`}
-        onClick={() => handleCategoryClick('HACKHATHONS')}
+        className={`${styles.Element} ${
+          activeCategory === "HACKHATHONS" ? styles.active : ""
+        }`}
+        onClick={() => handleCategoryClick("HACKHATHONS")}
       >
-        hackathon
+        Hackathon
       </div>
+
+      <div
+        className={`${styles.Element} ${
+          activeCategory === "HACKHATHONS" ? styles.active : ""
+        }`}
+        onClick={() => handleCategoryClick("HACKHATHONS")}
+      >
+        Event
+      </div>
+
+      <div
+        className={`${styles.Element} ${
+          activeCategory === "HACKHATHONS" ? styles.active : ""
+        }`}
+        onClick={() => handleCategoryClick("HACKHATHONS")}
+      >
+        Blog
+      </div>
+
       <div
         className={styles.Element}
-        onClick={() => window.open('https://coinmarketjob.com/blog', '_blank')}
+        onClick={() => window.open("https://coinmarketjob.com/blog", "_blank")}
       >
-        blog
+        Academy
+      </div>
+
+      <div
+        className={styles.Element}
+        onClick={() => window.open("https://coinmarketjob.com/blog", "_blank")}
+      >
+        Live
       </div>
     </div>
   );

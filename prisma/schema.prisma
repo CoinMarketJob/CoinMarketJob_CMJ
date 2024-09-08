@@ -314,7 +314,7 @@ model Live {
   liveType     LiveType
   organisation String
   headline     String
-  content      String
+  content      String @db.VarChar(65535)
 }
 
 enum LiveType {

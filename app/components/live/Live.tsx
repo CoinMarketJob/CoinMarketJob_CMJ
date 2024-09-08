@@ -172,7 +172,7 @@ const Live: React.FC = () => {
               key={`blog-${blogIndex}-${j}`}
               className={`${styles.blogItem}`}
             >
-              <div className={styles.blogTitle}>{blog[blogIndex].title}</div>
+              <div className={styles.blogTitle}>{blog[blogIndex]?.title}</div>
               <div className={styles.blogArrow}>
                 <svg
                   width="12"
