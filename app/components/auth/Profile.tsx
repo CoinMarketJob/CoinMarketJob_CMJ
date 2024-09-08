@@ -105,6 +105,17 @@ const Profile = () => {
     setEditProfile(false);
   };
 
+  const handleSiteClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.preventDefault();
+    let url = profile?.siteUrl;
+    if (url) {
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        url = 'https://' + url;
+      }
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  };
+
   return (
     <div className={styles.container}>
       {loading ? (
@@ -182,7 +193,9 @@ const Profile = () => {
               <div className={styles.HeadLine}>{profile?.headline}</div>
               {profile?.siteUrl ? (
                 <div className={styles.HeadSite}>
-                  <div className={styles.SiteText}>{profile?.siteUrl}</div>
+                  <div className={styles.SiteText} onClick={handleSiteClick}>
+                    {profile?.siteUrl}
+                  </div>
                 </div>
               ) : null}
               <div className={styles.About}>
