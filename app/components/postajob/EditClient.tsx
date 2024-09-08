@@ -317,21 +317,25 @@ const EditClient: React.FC<EditClientProps> = ({
         )}
 
         <div className={`${styles.SalaryUnitGroup}`}>
-          <Dropdown
-            id="SalaryMoneyUnit"
-            value={"USD"}
-            list={salaryMoneyUnit}
-            setValue={() => {}}
-            placeholder="USD"
-          />
+          <div className={styles.salaryDropdown}>
+            <Dropdown
+              id="SalaryMoneyUnit"
+              value={"USD"}
+              list={salaryMoneyUnit}
+              setValue={() => {}}
+              placeholder="USD"
+            />
+          </div>
 
-          <Dropdown
-            id="SalaryUnit"
-            value={unit}
-            list={salaryUnit}
-            setValue={setUnit}
-            placeholder="Salary Unit"
-          />
+          <div className={styles.salaryDropdown}>
+            <Dropdown
+              id="SalaryUnit"
+              value={unit}
+              list={salaryUnit}
+              setValue={setUnit}
+              placeholder="Salary Unit"
+            />
+          </div>
         </div>
 
         <div className={`${styles.SalaryShow}`}>
