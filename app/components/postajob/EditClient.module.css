@@ -108,6 +108,7 @@
 
 .ChangeSalary:hover {
   color: #242220BF;
+  cursor: pointer;
 }
 
 .ChangeSalary:active {

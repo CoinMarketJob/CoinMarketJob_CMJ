@@ -187,24 +187,16 @@
 }
 
 
-.text-size-label{
-    font-family: Inter;
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 21px;
-    color: #999999;
-    margin-right: 5px; 
-}
-
 .text-size-select{
-    border: none;
-    outline: none;
+    display: flex;
+    align-items: center;
     font-family: Inter;
     font-size: 15px;
     font-weight: 650;
     line-height: 21px;
     color: #999999;
     margin-right: 26px;    
+    cursor: pointer;
 }
 
 .text-size-select:active{
@@ -227,5 +219,54 @@
 
 .error-border {
     border-color: #ff0000 !important;
+}
+
+.text-size-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-right: 16px;
+}
+
+.text-size-label {
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 21px;
+    color: #999999;
+    margin-right: 16px;
+}
+
+.text-size-value {
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 650;
+    line-height: 21px;
+    color: #999999;
+    cursor: pointer;
+}
+
+.text-size-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 40px;
+    background-color: #FFFFFFCC;
+    box-shadow: 0px 0px 2px 0px #00000033, 0px 0px 11.3px 0px #00000033;
+    border-radius: 15px;
+    z-index: 1000;
+    width: 100%;
+}
+
+.dropdown-item {
+    padding: 8px 12px;
+    font-family: Inter;
+    font-size: 15px;
+    color: #999999;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #F5F5F5;
 }
 
