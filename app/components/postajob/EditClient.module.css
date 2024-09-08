@@ -141,7 +141,7 @@
 .SalaryUnitGroup {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 48px;
   margin-top: 12px;
   width: 100%;
 }
@@ -274,7 +274,7 @@
 .SalaryUnitGroup {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 37px;
   margin-top: 12px;
   width: 100%;
 }

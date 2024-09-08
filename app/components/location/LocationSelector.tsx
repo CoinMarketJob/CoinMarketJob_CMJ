@@ -68,15 +68,18 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ label, selectedLoca
   .map(option => option.name); 
 
 
+  const toggleDropdown = () => {
+    setOpen(!open);
+  };
+
   return (
     <div ref={dropdownRef} style={{ position: 'relative' }}>
-      <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => setOpen(!open)}>
+      <div className={styles.locationContainer}>
         <label className={styles.label}>{label}</label>
         <FontAwesomeIcon
           icon={faChevronDown}
-          style={{ width: 23, height: 23 }}
-          className={styles.arrow}
-          rotation={open ? 180 : undefined}
+          className={`${styles.arrow} ${open ? styles.arrowRotated : ''}`}
+          onClick={toggleDropdown}
         />
       </div>
 
