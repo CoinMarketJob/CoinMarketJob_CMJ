@@ -56,11 +56,11 @@ const ReviewClient: React.FC<ReviewClientProps> = ({
   return (
     <div className={styles.container}>
       <div className={`${styles.centerDiv} ${styles.logo}`}>
-        <img src={image} className={styles.companyLogo}  alt="Description"/>
+        <img src={image} className={styles.companyLogo} alt="Company Logo" />
       </div>
 
       <div className={`${styles.centerDiv} ${styles.companyName}`}>
-        {companyName}
+        {companyName}  // headline yerine companyName kullanın
       </div>
       
       <div className={`${styles.centerDiv} ${styles.JobTitle}`}>{jobTitle}</div>

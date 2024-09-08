@@ -340,7 +340,7 @@ const EditClient: React.FC<EditClientProps> = ({
             id="salaryShow"
             value={showSalary}
             onChange={(selectedValue) => setShowSalary(selectedValue)}
-            label="Don’t show in job listing"
+            label="Don't show in job listing"
           />
         </div>
       </div>

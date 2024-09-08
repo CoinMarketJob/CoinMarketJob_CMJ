@@ -127,7 +127,7 @@ const Page = () => {
       {page === 0 ? (
         <EditClient
           image={companyProfileData?.logoURL || ""}
-          companyName={companyProfileData?.headline || ""}
+          companyName={companyProfileData?.companyName || ""}
           jobTitle={jobTitle}
           setJobTitle={setJobTitle}
           locationType={locationType}
@@ -161,7 +161,7 @@ const Page = () => {
       ) : page === 1 ? (
         <ReviewClient
           image={companyProfileData?.logoURL || ""}
-          companyName={companyProfileData?.headline || ""}
+          companyName={companyProfileData?.companyName || ""}
           jobTitle={jobTitle}
           selectedLocations={selectedLocations}
           jobType={jobType}
