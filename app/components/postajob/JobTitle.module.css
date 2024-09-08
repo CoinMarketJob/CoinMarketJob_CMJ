@@ -1,3 +1,17 @@
+.jobTitleContainer {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.titleWrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
 .title {
     font-family: Inter;
     font-size: 35px;
@@ -5,8 +19,40 @@
     line-height: 42.36px;
     letter-spacing: 0.04em;
     color: #242220CC;
-    position: relative; /* Add this line */
+    position: relative;
 }
+
+.arrowWrapper {
+    position: absolute;
+    right: -31px; /* 8px sağa + icon genişliği (23px) */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.arrow {
+    width: 23px;
+    height: 23px;
+    overflow: visible;
+    vertical-align: -0.125em;
+    transition: transform 0.3s ease;
+}
+
+.rotated {
+    transform: rotate(180deg);
+}
+
+.asterisk {
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 42.36px;
+    color: #242220BF;
+    position: absolute;
+    top: 0;
+    right: -7px;
+}
+
+/* ... (diğer stiller aynı kalacak) */
 
 .asterisk {
     font-family: Inter;
@@ -19,13 +65,15 @@
     right: -7px; /* Adjust as needed */
 }
 
-
 .Arrow{
     margin-left: 7px;
 }
 
-.DropDown{
+.DropDown {
     position: absolute;
+    top: 100%;
+    left: 60%;
+    transform: translateX(-50%);
     background-color: #FFFFFFCC;
     box-shadow: 0px 0px 2px 0px #00000033;
     box-shadow: 0px 0px 11.3px 0px #00000033;
@@ -33,20 +81,18 @@
     width: 199px;
     max-width: 199px;
     border-radius: 15px;
-    left: 67px;
     padding: 12px;
     padding-bottom: 33px;
     flex-direction: column;
+    margin-top: 10px;
 }
 
-
-
-.JobTitleContainer{
+.JobTitleContainer {
     position: relative;
     width: 100%;
 }
 
-.JobTitleInput{
+.JobTitleInput {
     width: calc(100% - 50px);
     margin: 0;
     border: 1px solid #E7E5E4;
@@ -56,19 +102,19 @@
     padding-left: 50px;
 }
 
-.SearchIcon{
+.SearchIcon {
     position: absolute;
     top: 9px;
     left: 12px;
 }
 
-.TitlesMenu{
+.TitlesMenu {
     display: flex;
     flex-direction: column;
     margin-top: 8px;
 }
 
-.option{
+.option {
     width: 187px;
     height: 19px;
     font-family: Inter;
@@ -85,8 +131,6 @@
     overflow: hidden; /* Hide overflowed text */
     text-overflow: ellipsis; 
 }
-
-  
 
 .required {
     color: red;
