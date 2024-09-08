@@ -60,7 +60,7 @@ const Account: React.FC = () => {
             paddingBottom={15}
             paddingLeft={35}
             paddingRight={35}
-            disabled={true} // Disabled prop'u eklendi
+            disabled={true}
           />
         </div>
         <div className="account-item">
@@ -83,7 +83,7 @@ const Account: React.FC = () => {
             paddingBottom={15}
             paddingLeft={35}
             paddingRight={35}
-            disabled={true} // Disabled prop'u eklendi
+            disabled={true}
           />
         </div>
         <div className="account-item">
@@ -103,7 +103,7 @@ const Account: React.FC = () => {
             paddingBottom={15}
             paddingLeft={35}
             paddingRight={35}
-            disabled={true} // Disabled prop'u eklendi
+            disabled={true}
           />
         </div>
       </div>

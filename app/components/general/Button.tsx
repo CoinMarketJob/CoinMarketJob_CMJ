@@ -98,20 +98,22 @@ const Button: React.FC<ButtonProps> = ({
     fontSize,
     fontWeight,
     textDecoration: isHovered && hoverUnderlineText ? 'underline' : 'none',
-    cursor: 'pointer',
+    cursor: disabled ? 'not-allowed' : 'pointer',
+    opacity: disabled ? 0.5 : 1,
     transition: 'all 0.1s ease-in-out',
     position: 'relative' as const,
   };
 
   return (
     <button
-      className={`form-button ${isWhite ? 'white-button' : ''}`}
+      className={`form-button ${isWhite ? 'white-button' : ''} ${disabled ? 'disabled' : ''}`}
       style={buttonStyle}
-      onClick={onClick}
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onClick={disabled ? undefined : onClick}
+      onMouseDown={disabled ? undefined : handleMouseDown}
+      onMouseUp={disabled ? undefined : handleMouseUp}
+      onMouseEnter={disabled ? undefined : handleMouseEnter}
+      onMouseLeave={disabled ? undefined : handleMouseLeave}
+      disabled={disabled}
     >
       <span className={`button-content ${isLoading ? 'hidden' : ''}`}>
         {text}

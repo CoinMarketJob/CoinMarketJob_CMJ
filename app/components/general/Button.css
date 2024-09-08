@@ -92,4 +92,13 @@
   line-height: 20px;
 }
 
+.form-button.disabled {
+  cursor: not-allowed;
+  
+}
+
+.form-button.disabled:hover {
+  transform: none;
+}
+
 
