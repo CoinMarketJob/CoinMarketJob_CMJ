@@ -44,8 +44,8 @@ const JobFilterPopUp: React.FC = () => {
     jobType?: string;
     experienceLevel?: string;
     packageId?: number;
-    salaryMin?: number;
-    salaryMax?: number;
+    salaryMin?: number | null;
+    salaryMax?: number | null;
     datePosted?: string;
     visaSponsorship?: boolean;
     // activelyHiring?: boolean;
@@ -172,8 +172,8 @@ const JobFilterPopUp: React.FC = () => {
       const matchesDatePosted = datePosted.length === 0 || datePosted.includes((job.datePosted ?? '').toLowerCase());
       const matchesLocationType = locationType.length === 0 || locationType.some(loc => job.locationType?.toLowerCase().includes(loc.toLowerCase()));
       const matchesSalaryRange = 
-      (job.salaryMin ?? 0) >= salaryRange[0] &&
-      (job.salaryMax !== undefined ? job.salaryMax <= salaryRange[1] : salaryRange[1] === Number.MAX_VALUE);
+        (job.salaryMin ?? 0) >= salaryRange[0] &&
+        (job.salaryMax !== null && job.salaryMax !== undefined ? job.salaryMax <= salaryRange[1] : salaryRange[1] === Number.MAX_VALUE);
 
       const matchesVisaSponsorship = !visaSponsorship || job.visaSponsorship === visaSponsorship;
       // const matchesActivelyHiring = !activelyHiring || job.activelyHiring === activelyHiring;
