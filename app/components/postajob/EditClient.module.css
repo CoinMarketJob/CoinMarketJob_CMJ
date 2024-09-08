@@ -269,21 +269,3 @@
 .errorSelect > div {
   border-color: red !important;
 }
-
-.SalaryUnitGroup {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 12px;
-  width: 100%;
-}
-
-.salaryUnitDropdown {
-  width: 135px;
-  height: 50px;
-}
-
-.salaryUnitDropdown > div {
-  width: 100%;
-  height: 100%;
-}
