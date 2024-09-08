@@ -222,11 +222,11 @@ const EditClient: React.FC<EditClientProps> = ({
         {companyName}
       </div>
 
-      <div className={`${styles.centerDiv}`}>
+      <div className={`${styles.centerDiv} ${styles.jobTitleContainer}`}>
         <JobTitle jobTitle={jobTitle} setJobTitle={setJobTitle} />
       </div>
 
-      <div className={`${styles.centerDiv}`}>
+      <div className={`${styles.centerDiv} ${styles.locationContainer}`}>
         <LocationSelector
           label="Choose Location*"
           selectedLocation={selectedLocations}
