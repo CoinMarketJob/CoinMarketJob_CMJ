@@ -32,13 +32,14 @@
 .searchContainer {
   position: relative;
   width: 100%;
+  margin-top: 8px;
 }
 
 .searchInput {
-  width: calc(100% - 50px);
+  width: calc(100% - 55px);
   margin: 0;
   border: 1px solid #E7E5E4;
-  border-radius: 64px;
+  border-radius: 15px;
   padding-top: 14px;
   padding-bottom: 13px;
   padding-left: 50px;
