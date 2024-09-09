@@ -114,7 +114,7 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags, isFilterOpen, setIs
         <div className="search-container">
             <svg 
                 className="search-bar-icon search-icon" 
-                width="37" 
+                width="24" 
                 height="36" 
                 viewBox="0 0 37 36" 
                 fill="none" 
@@ -155,7 +155,7 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags, isFilterOpen, setIs
                 ref={inputRef}
             />
             <div className="filter-div" onClick={toggleFilter}>
-            <svg width="37" height="24" viewBox="0 0 37 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="28" height="35" viewBox="0 0 37 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0 5C0 4.44772 0.447715 4 1 4H8V6H1C0.447715 6 0 5.55228 0 5Z" fill="#242220" fill-opacity="0.4"/>
                 <path d="M37 5C37 5.55228 36.5523 6 36 6L16 6V5V4L36 4C36.5523 4 37 4.44772 37 5Z" fill="#242220" fill-opacity="0.4"/>
                 <path d="M17 5C17 7.76142 14.7614 10 12 10C9.23858 10 7 7.76142 7 5C7 2.23858 9.23858 0 12 0C14.7614 0 17 2.23858 17 5Z" fill="#A7A7A6"/>

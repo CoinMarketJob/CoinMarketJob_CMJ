@@ -7,10 +7,10 @@
     background-color: white;
     border-radius: 49px;
     width: 100%;
-    height: 72px;
+    height: 48px;
     border: 1px solid #E7E5E4;
     font-family: Inter;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 400;
     line-height: 21px;
     text-align: left;
@@ -19,9 +19,9 @@
     appearance: none;
     box-sizing: border-box;
     vertical-align: middle;
-    padding-left: 92.35px;
-    padding-right: 92.35px;
-    padding-top: 28px;
+    padding-left: 50.35px;
+    padding-right: 56.35px;
+    padding-top: 25px;
     padding-bottom: 23px;
     margin: 0;
     transition: border-color 0.3s ease, color 0.3s ease;
@@ -30,7 +30,7 @@
 
 .search-input::placeholder {
     font-family: Inter; 
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 400; 
     color: #24222066; 
     line-height: 21px; 
@@ -58,8 +58,8 @@
 }
 
 .search-icon {
-    left: 36px;
-    top: 19px;
+    left: 16px;
+    top: 8px;
 }
 
 .search-icon path {
@@ -81,8 +81,8 @@
     position: absolute;
     width: 37px;
     height: 24px;
-    right: 42.35px;
-    top: 25px;
+    right: 12px;
+    top: 9px;
 }
 
 .buble-field {

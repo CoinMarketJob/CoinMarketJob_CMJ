@@ -14,14 +14,7 @@ const Searchbar = () => {
   const router = useRouter();
   const { data: session } = useSession();
 
-  const back = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    router.back();
-  };
-
-  const forward = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    router.forward();
-  };
-
+  
   const home = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     router.push("/");
     setIsFilterOpen(false);
@@ -35,7 +28,7 @@ const Searchbar = () => {
     <div className="search-container-div">
       {errorMessage && <div className="ErrorMessage">{errorMessage}</div>}
       <div className="home-button">
-        <Icon onClick={home} marginLeft={60} hoverSize={51} hoverContent="Home">
+        <Icon onClick={home} hoverSize={51} hoverContent="Home">
           <svg
             width="31"
             height="35"
@@ -53,45 +46,7 @@ const Searchbar = () => {
         </Icon>
       </div>
       <div className="main-container">
-        <Icon onClick={back} hoverSize={45} hoverContent="Back">
-          <svg
-            width="16"
-            height="29"
-            viewBox="0 0 16 29"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M2.29487 14.4688L14.8961 27.0707C15.1398 27.3144 15.2709 27.5515 15.2894 27.7819C15.3074 28.0128 15.177 28.2704 14.8983 28.5549C14.619 28.8393 14.3718 28.9875 14.1565 28.9993C13.9418 29.0112 13.6749 28.8668 13.3558 28.5663L0.60167 15.8114C0.424835 15.5976 0.280236 15.3838 0.167877 15.17C0.0559922 14.9561 5.15829e-05 14.7177 5.15829e-05 14.4546C5.15829e-05 14.1914 0.0564681 13.952 0.169301 13.7363C0.282134 13.5211 0.42768 13.3241 0.605936 13.1454L13.3515 0.403317C13.6369 0.117916 13.8844 -0.0160118 14.094 0.00152814C14.3035 0.018597 14.5479 0.169358 14.8271 0.45381C15.1059 0.738263 15.2453 0.986683 15.2453 1.19907C15.2453 1.41147 15.1052 1.65776 14.825 1.93794L2.29487 14.4688Z"
-              fill="#242220"
-              className="svg-icon"
-              fill-opacity="0.4"
-            />
-          </svg>
-        </Icon>
-        <Icon
-          onClick={forward}
-          marginRight={15}
-          marginLeft={15}
-          hoverSize={45}
-          hoverContent="Forward"
-        >
-          <svg
-            width="16"
-            height="29"
-            viewBox="0 0 16 29"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M12.9961 14.5312L0.394896 1.92926C0.151215 1.68558 0.0201298 1.44853 0.00164037 1.21813C-0.016375 0.987246 0.113999 0.72958 0.392763 0.445128C0.672 0.160675 0.919236 0.0125228 1.13447 0.000670619C1.34923 -0.0111816 1.61615 0.13318 1.93521 0.433751L14.6893 13.1886C14.8662 13.4024 15.0108 13.6162 15.1231 13.83C15.235 14.0439 15.291 14.2823 15.291 14.5454C15.291 14.8086 15.2345 15.048 15.1217 15.2637C15.0089 15.4789 14.8633 15.6759 14.6851 15.8546L1.93947 28.5967C1.65407 28.8821 1.4066 29.016 1.19705 28.9985C0.987505 28.9814 0.743113 28.8306 0.463876 28.5462C0.185112 28.2617 0.0457302 28.0133 0.0457302 27.8009C0.0457302 27.5885 0.185823 27.3422 0.466009 27.0621L12.9961 14.5312Z"
-              fill="#242220"
-              className="svg-icon"
-              fill-opacity="0.4"
-            />
-          </svg>
-        </Icon>
-        <div style={{ width: "34.34vw" }}>
+        <div className="searchbar-wrapper">
           <SearchInput
             tags={tags}
             setTags={setTags}
@@ -99,9 +54,10 @@ const Searchbar = () => {
             setIsFilterOpen={setIsFilterOpen}
           />
         </div>
+      </div>
+      <div className="post-job-button">
         <Icon
           onClick={postajob}
-          marginLeft={35}
           hoverSize={45}
           hoverContent="Post a job"
         >
