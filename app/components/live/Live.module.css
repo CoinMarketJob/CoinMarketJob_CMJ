@@ -137,3 +137,14 @@
     transform: translateX(0);
   }
 }
+
+.AuthorDate {
+  font-family: Inter;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 15.73px;
+  letter-spacing: 0.04em;
+  color: #999999;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}

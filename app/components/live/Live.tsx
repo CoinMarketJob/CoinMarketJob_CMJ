@@ -10,6 +10,8 @@ interface LiveItem {
   organisation?: string;
   headline?: string;
   content?: string;
+  author?: string; // Yeni eklenen
+  date?: string; // Yeni eklenen
 }
 
 const Live: React.FC = () => {
@@ -117,6 +119,9 @@ const Live: React.FC = () => {
               <>
                 <div className={styles.Title}>
                   {items[liveIndex].title}
+                </div>
+                <div className={styles.AuthorDate}>
+                  By {items[liveIndex].author} {items[liveIndex].date}
                 </div>
                 <div className={styles.Type}>News</div>
               </>
