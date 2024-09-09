@@ -14,22 +14,20 @@ CREATE TABLE `User` (
 -- CreateTable
 CREATE TABLE `Job` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `userId` INTEGER NOT NULL,
-    `logo` VARCHAR(191) NOT NULL,
-    `companyName` VARCHAR(191) NOT NULL,
+    `userId` INTEGER NULL,
+    `logo` VARCHAR(191) NULL,
+    `companyName` VARCHAR(191) NULL,
     `jobTitle` VARCHAR(191) NOT NULL,
     `location` VARCHAR(191) NULL,
-    `locationType` ENUM('Remote', 'Hybrid', 'OnSite') NOT NULL,
-    `jobType` ENUM('Internship', 'PartTime', 'FullTime', 'Contract', 'Temporary', 'Other') NOT NULL,
-    `experienceLevel` ENUM('EntryLevel', 'Junior', 'MidLevel', 'Senior', 'Lead', 'Manager', 'Executive') NOT NULL,
-    `educationalDegree` ENUM('HighSchool', 'University', 'Master', 'PhD') NOT NULL,
-    `salaryMin` INTEGER NOT NULL,
-    `salaryMax` INTEGER NOT NULL,
+    `locationType` ENUM('Remote', 'Hybrid', 'OnSite') NULL,
+    `jobType` ENUM('Internship', 'PartTime', 'FullTime', 'Contract', 'Temporary', 'Other') NULL,
+    `experienceLevel` ENUM('EntryLevel', 'Junior', 'MidLevel', 'Senior', 'Lead', 'Manager', 'Executive') NULL,
+    `educationalDegree` ENUM('HighSchool', 'University', 'Master', 'PhD') NULL,
+    `salaryMin` INTEGER NULL,
+    `salaryMax` INTEGER NULL,
     `salaryShow` BOOLEAN NULL,
     `salaryUnit` ENUM('Year', 'Month', 'Week', 'Day', 'Hour') NULL,
-    `visaSponsorship` BOOLEAN NOT NULL,
-    `jobDescription` JSON NOT NULL,
-    `packageId` INTEGER NOT NULL,
+    `jobDescription` JSON NULL,
     `date` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     PRIMARY KEY (`id`)
@@ -38,7 +36,7 @@ CREATE TABLE `Job` (
 -- CreateTable
 CREATE TABLE `JobQuestions` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `userId` INTEGER NOT NULL,
+    `userId` INTEGER NULL,
     `jobId` INTEGER NOT NULL,
     `question` VARCHAR(191) NOT NULL,
 
@@ -69,9 +67,6 @@ CREATE TABLE `AppliedJobs` (
     `date` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `resumeLink` VARCHAR(191) NULL,
     `resumeDraft` JSON NULL,
-    `coverLetterLink` VARCHAR(191) NULL,
-    `coverLetterDraft` JSON NULL,
-    `visaSponsorship` BOOLEAN NOT NULL,
 
     UNIQUE INDEX `AppliedJobs_userId_jobId_key`(`userId`, `jobId`),
     PRIMARY KEY (`id`)
@@ -110,8 +105,14 @@ CREATE TABLE `JobTitles` (
 -- CreateTable
 CREATE TABLE `Cities` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `city` VARCHAR(191) NOT NULL,
+    `name` VARCHAR(191) NOT NULL,
+    `country` VARCHAR(191) NULL,
+    `admin1` VARCHAR(191) NULL,
+    `lat` DOUBLE NULL,
+    `lon` DOUBLE NULL,
+    `pop` INTEGER NULL,
 
+    UNIQUE INDEX `Cities_name_key`(`name`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -141,6 +142,8 @@ CREATE TABLE `Profile` (
     `location` VARCHAR(191) NULL,
     `headline` VARCHAR(191) NULL,
     `siteUrl` VARCHAR(191) NULL,
+    `phoneCode` VARCHAR(191) NULL,
+    `phone` VARCHAR(191) NULL,
     `about` JSON NULL,
     `sectionsOrder` VARCHAR(191) NULL,
 
@@ -229,7 +232,7 @@ CREATE TABLE `Live` (
     `liveType` ENUM('News', 'HACKHATHONS', 'BLOG') NOT NULL,
     `organisation` VARCHAR(191) NOT NULL,
     `headline` VARCHAR(191) NOT NULL,
-    `content` VARCHAR(191) NOT NULL,
+    `content` VARCHAR(65535) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -273,9 +276,6 @@ CREATE TABLE `Answers` (
 
 -- AddForeignKey
 ALTER TABLE `Job` ADD CONSTRAINT `Job_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Job` ADD CONSTRAINT `Job_packageId_fkey` FOREIGN KEY (`packageId`) REFERENCES `BuyedPackage`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `JobQuestions` ADD CONSTRAINT `JobQuestions_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

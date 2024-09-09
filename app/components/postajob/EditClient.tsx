@@ -5,7 +5,7 @@ import JobTitle from "./JobTitle";
 import LocationSelector from "../location/LocationSelector";
 import Dropdown from "../general/Dropdown";
 import Input from "../general/Input";
-import Draft from "@/app/components/general/Draft";
+import Draft from "../general/Draft";
 import { motion } from "framer-motion";
 import { JSONContent } from "@tiptap/react";
 import Button from "../general/Button";
@@ -17,6 +17,7 @@ import Checkbox from "../general/Checkbox";
 interface EditClientProps {
   image: string;
   companyName: string;
+  setCompanyName: React.Dispatch<React.SetStateAction<string>>;
   jobTitle: string;
   setJobTitle: React.Dispatch<React.SetStateAction<string>>;
   locationType: string;
@@ -46,11 +47,14 @@ interface EditClientProps {
   setPage: React.Dispatch<React.SetStateAction<number>>;
   questions: string[];
   setQuestions: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedImage: File | null;
+  setSelectedImage: React.Dispatch<React.SetStateAction<File | null>>;
 }
 
 const EditClient: React.FC<EditClientProps> = ({
   image,
   companyName,
+  setCompanyName,
   jobTitle,
   setJobTitle,
   locationType,
@@ -80,8 +84,14 @@ const EditClient: React.FC<EditClientProps> = ({
   setSingle,
   questions,
   setQuestions,
+  selectedImage,
+  setSelectedImage,
 }) => {
-  const [isImageLoading, setIsImageLoading] = useState(true);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const triggerFileInput = () => {
+    fileInputRef.current?.click();
+  };
 
   const jobTypes = [
     { value: "Internship", label: "Internship" },
@@ -116,6 +126,12 @@ const EditClient: React.FC<EditClientProps> = ({
   ];
 
   const salaryMoneyUnit = [{ value: "USD", label: "USD" }];
+
+  const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setSelectedImage(event.target.files[0]);
+    }
+  };
 
   const [QuestionAddShow, setQuestionAddShow] = useState<boolean>(false);
   const [QuestionInput, setQuestionInput] = useState<string | undefined>();
@@ -192,7 +208,7 @@ const EditClient: React.FC<EditClientProps> = ({
   };
 
   const validateForm = () => {
-    if (jobTitle && jobType && experienceLevel && educationalDegree) {
+    if (jobTitle) {
       setIsFormValid(true);
     } else {
       setIsFormValid(false);
@@ -214,21 +230,47 @@ const EditClient: React.FC<EditClientProps> = ({
 
   return (
     <div className={styles.container}>
-      <div className={`${styles.centerDiv} ${styles.logo}`}>
-        <img src={image} className={styles.companyLogo} alt="Description" />
+      <div
+        className={`${styles.centerDiv} ${styles.logo}`}
+        onClick={triggerFileInput}
+      >
+        <img
+          src={selectedImage ? URL.createObjectURL(selectedImage) : image}
+          className={styles.companyLogo}
+          alt="Description"
+        />
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleImageSelect}
+          style={{ display: "none" }}
+          accept="image/*"
+        />
       </div>
 
       <div className={`${styles.centerDiv} ${styles.companyName}`}>
-        {companyName}
+        <Input
+          id="CompanyName"
+          type="text"
+          value={companyName}
+          onChange={(e) => setCompanyName(e.target.value)}
+          placeholder="Company Name"
+        />
       </div>
 
       <div className={`${styles.centerDiv} ${styles.jobTitleContainer}`}>
-        <JobTitle jobTitle={jobTitle} setJobTitle={setJobTitle} />
+        <Input
+          id="JobTitle"
+          type="text"
+          value={jobTitle}
+          onChange={(e) => setJobTitle(e.target.value)}
+          placeholder="Job Title*"
+        />
       </div>
 
       <div className={`${styles.centerDiv} ${styles.locationContainer}`}>
         <LocationSelector
-          label="Choose Location*"
+          label="Choose Location"
           selectedLocation={selectedLocations}
           setSelectedLocation={setSelectedLocations}
           locationType={locationType}
@@ -245,7 +287,7 @@ const EditClient: React.FC<EditClientProps> = ({
             value={jobType}
             list={jobTypes}
             setValue={setJobType}
-            placeholder="Job Type*"
+            placeholder="Job Type"
           />
         </div>
         <div
@@ -256,7 +298,7 @@ const EditClient: React.FC<EditClientProps> = ({
             value={experienceLevel}
             list={experienceLevels}
             setValue={setExperienceLevel}
-            placeholder="Experience Level*"
+            placeholder="Experience Level"
           />
         </div>
         <div className={`${styles.DropDownContainerDiv}`}>
@@ -265,7 +307,7 @@ const EditClient: React.FC<EditClientProps> = ({
             value={educationalDegree}
             list={educationalDegrees}
             setValue={setEducationalDegree}
-            placeholder="Educational Degree*"
+            placeholder="Educational Degree"
           />
         </div>
       </div>
@@ -347,15 +389,6 @@ const EditClient: React.FC<EditClientProps> = ({
             label="Don't show in job listing"
           />
         </div>
-      </div>
-      
-      <div className={`${styles.VisaSponsorship}`}>
-        <ToggleSwitch
-          title="Visa Sponsorship"
-          sliderName="visa"
-          switchState={visa}
-          setSwitchState={setVisa}
-        />
       </div>
 
       <div className={`${styles.QuestionsGroup}`}>

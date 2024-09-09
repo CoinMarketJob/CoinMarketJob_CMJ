@@ -8,11 +8,14 @@ import ReviewClient from "../components/postajob/ReviewClient";
 import CheckoutClient from "../components/postajob/CheckoutClient";
 import { useRouter } from "next/navigation";
 import { useProfileData } from "@/hooks/useProfileData";
+import { uploadFile } from "@/utils/s3Operations"; // S3 yükleme fonksiyonunu import edin
 
 const Page = () => {
   const [page, setPage] = useState<number>(0);
 
   const router = useRouter();
+  const [companyName, setCompanyName] = useState<string>("");
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
   const [jobType, setJobType] = useState<string>("");
   const [experienceLevel, setExperienceLevel] = useState<string>("");
@@ -41,19 +44,43 @@ const Page = () => {
   const Complete = async () => {
     setUploading(true);
     try {
+      let logoURL = "";
+
+      // Eğer yeni bir logo seçildiyse, S3'e yükle
+      if (selectedImage) {
+        const formData = new FormData();
+        formData.append("file", selectedImage);
+        formData.append("Content-Type", selectedImage.type);
+
+        const response = await fetch("/api/profileimage/", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          logoURL = data.url;
+        } else {
+          setErrorMessage(
+            "An unexpected error has occurred. Please try again later."
+          );
+          setUploading(false);
+        }
+      }
+
       const jobData = {
         PackageType: oneJobIsChecked
           ? "OneJob"
           : monthlyChecked
           ? "Monthly"
           : "FiveJob",
-        logo: companyProfileData?.logoURL || "",
-        companyName: companyProfileData?.headline || "",
+        logo: selectedImage ? logoURL : "",
+        companyName: companyName,
         jobTitle,
         location: selectedLocations[0],
-        jobType,
-        experienceLevel,
-        educationalDegree,
+        jobType: jobType ? jobType : null,
+        experienceLevel: experienceLevel ? experienceLevel : null,
+        educationalDegree: educationalDegree ? educationalDegree : null,
         visaSponsorship: visa,
         salaryMin: min,
         salaryMax: max,
@@ -105,7 +132,7 @@ const Page = () => {
             page === 1 ? styles.selectedIndicator : ""
           }`}
           onClick={() => {
-            if (jobTitle && jobType && experienceLevel && educationalDegree) {
+            if (jobTitle) {
               // Only allow advancing if fields are filled
               setPage(1);
             }
@@ -116,7 +143,7 @@ const Page = () => {
             page === 2 ? styles.selectedIndicator : ""
           }`}
           onClick={() => {
-            if (jobTitle && jobType && experienceLevel && educationalDegree) {
+            if (jobTitle) {
               // Only allow advancing if fields are filled
               setPage(2);
             }
@@ -126,8 +153,9 @@ const Page = () => {
 
       {page === 0 ? (
         <EditClient
-          image={companyProfileData?.logoURL || ""}
-          companyName={companyProfileData?.companyName || ""}
+          image={"/image.png"}
+          companyName={companyName}
+          setCompanyName={setCompanyName}
           jobTitle={jobTitle}
           setJobTitle={setJobTitle}
           locationType={locationType}
@@ -157,11 +185,13 @@ const Page = () => {
           description={description}
           setDescription={setDescription}
           setPage={setPage}
+          selectedImage={selectedImage}
+          setSelectedImage={setSelectedImage}
         />
       ) : page === 1 ? (
         <ReviewClient
-          image={companyProfileData?.logoURL || ""}
-          companyName={companyProfileData?.companyName || ""}
+          image={selectedImage}
+          companyName={companyName}
           jobTitle={jobTitle}
           selectedLocations={selectedLocations}
           jobType={jobType}

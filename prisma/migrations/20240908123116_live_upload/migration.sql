@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE `Live` MODIFY `content` VARCHAR(65535) NOT NULL;

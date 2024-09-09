@@ -1,12 +1,12 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./ReviewClient.module.css";
 import { JSONContent } from "@tiptap/react";
-import Draft from "@/app/components/general/Draft";
+import Draft from "../general/Draft";
 import Button from "../general/Button";
 
 interface ReviewClientProps {
-  image: string;
+  image: File | null;
   companyName: string;
   jobTitle: string;
   selectedLocations: string[];
@@ -48,6 +48,18 @@ const ReviewClient: React.FC<ReviewClientProps> = ({
     setPage(2);
   };
 
+  const [displayImage, setDisplayImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (image) {
+      setDisplayImage(URL.createObjectURL(image));
+    } else if (companyName) {
+      setDisplayImage(null);
+    } else {
+      setDisplayImage("/image.png"); // Default image from EditClient
+    }
+  }, [image, companyName]);
+
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     console.log(description);
@@ -56,13 +68,23 @@ const ReviewClient: React.FC<ReviewClientProps> = ({
   return (
     <div className={styles.container}>
       <div className={`${styles.centerDiv} ${styles.logo}`}>
-        <img src={image} className={styles.companyLogo} alt="Company Logo" />
+        {displayImage ? (
+          <img
+            src={displayImage}
+            className={styles.companyLogo}
+            alt="Company Logo"
+          />
+        ) : companyName ? (
+          <div className={styles.companyInitial}>
+            {companyName.charAt(0).toUpperCase()}
+          </div>
+        ) : null}
       </div>
 
       <div className={`${styles.centerDiv} ${styles.companyName}`}>
         {companyName}
       </div>
-      
+
       <div className={`${styles.centerDiv} ${styles.JobTitle}`}>{jobTitle}</div>
 
       <div className={`${styles.centerDiv} ${styles.Location}`}>

@@ -345,7 +345,8 @@ const LoginClient = () => {
     <div className="login-client-container">
       {process === 0 ? (
         <Button
-          text="Login"
+          text="Enter"
+          disabled={true}
           onClick={login}
           paddingTop={21.2}
           paddingBottom={21.2}

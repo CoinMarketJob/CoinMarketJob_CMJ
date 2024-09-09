@@ -24,16 +24,11 @@ const Searchbar = () => {
 
   const home = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     router.push("/");
-    setIsFilterOpen(false); 
+    setIsFilterOpen(false);
   };
 
   const postajob = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (session) {
-      router.push("/postajob");
-    } else {
-      setErrorMessage("Please log in to post a job");
-      setTimeout(() => setErrorMessage(null), 3000);
-    }
+    router.push("/postajob");
   };
 
   return (
@@ -97,12 +92,12 @@ const Searchbar = () => {
           </svg>
         </Icon>
         <div style={{ width: "34.34vw" }}>
-        <SearchInput
+          <SearchInput
             tags={tags}
             setTags={setTags}
             isFilterOpen={isFilterOpen}
             setIsFilterOpen={setIsFilterOpen}
-        />
+          />
         </div>
         <Icon
           onClick={postajob}

@@ -49,9 +49,7 @@ model Job {
   salaryShow        Boolean?
   salaryUnit        SalaryUnit?
   jobDescription    Json?
-  packageId         Int
   date              DateTime          @default(now())
-  package           BuyedPackage      @relation(fields: [packageId], references: [id], onDelete: Cascade)
   savedJobs         SavedJobs[]
   appliedJobs       AppliedJobs[]
   jobQuestions      JobQuestions[]
@@ -263,7 +261,6 @@ model BuyedPackage {
   packageType      PackageType
   subscriptionDate DateTime    @default(now())
   expirationDate   DateTime?
-  jobs             Job[]
 }
 
 enum PackageType {

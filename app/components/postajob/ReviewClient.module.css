@@ -1,142 +1,158 @@
-.container{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 4px;
-    margin: 0;
-    flex-grow: 1;
-    
-    overflow-x: hidden;
-    overflow-y: auto;
-    scrollbar-width: none;
-    scrollbar-color: #E7E5E4 transparent;
-    -webkit-overflow-scrolling: touch; 
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+  margin: 0;
+  flex-grow: 1;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: none;
+  scrollbar-color: #e7e5e4 transparent;
+  -webkit-overflow-scrolling: touch;
 }
 
-.centerDiv{
-    width: 100%;
-    display: flex;
-    justify-content: center;
+.centerDiv {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-.logo{
-    position: relative;
-    border: none;
+.logo {
+  position: relative;
+  border: none;
 }
 
-.companyLogo{
-    width: 131px;
-    height: 131px;
-    padding: 0;
-    margin: 0;
-    border-radius: 14px;
+.companyLogo {
+  width: 131px;
+  height: 131px;
+  padding: 0;
+  margin: 0;
+  border-radius: 14px;
 }
 
-.logoText{
-    position: absolute;
-    top: 52px;
-    font-family: Inter;
-    font-size: 23px;
-    font-weight: 400;
-    line-height: 27.84px;
-    letter-spacing: 0.04em;
+.logoText {
+  position: absolute;
+  top: 52px;
+  font-family: Inter;
+  font-size: 23px;
+  font-weight: 400;
+  line-height: 27.84px;
+  letter-spacing: 0.04em;
 }
 
-.companyName{
-    margin-top: 8px;
-    font-family: Inter;
-    font-size: 23px;
-    font-weight: 400;
-    line-height: 27.84px;
-    letter-spacing: 0.04em;
+.companyName {
+  margin-top: 8px;
+  font-family: Inter;
+  font-size: 23px;
+  font-weight: 400;
+  line-height: 27.84px;
+  letter-spacing: 0.04em;
 }
 
-.lineDiv{
-    margin-top: 36px;
-    margin-bottom: 36px;
-    width: 100%;
+.lineDiv {
+  margin-top: 36px;
+  margin-bottom: 36px;
+  width: 100%;
 }
 
-.line{
-    background-color: #ADACAE33;
-    width: 431px;
-    height: 2px;
+.line {
+  background-color: #adacae33;
+  width: 431px;
+  height: 2px;
 }
 
-.DropdownGroup{
-    font-family: Inter;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 24.2px;
-    letter-spacing: 0.04em;
-    color: #242220;
-    margin-bottom: 24px;
+.DropdownGroup {
+  font-family: Inter;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24.2px;
+  letter-spacing: 0.04em;
+  color: #242220;
+  margin-bottom: 24px;
 }
 
-.Salary{
-    font-family: Inter;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 24.2px;
-    letter-spacing: 0.04em;
-    color: #242220;
-    margin-bottom: 36px;
+.Salary {
+  font-family: Inter;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24.2px;
+  letter-spacing: 0.04em;
+  color: #242220;
+  margin-bottom: 36px;
 }
 
-.JobTitle{
-    font-family: Inter;
-    font-size: 35px;
-    font-weight: 500;
-    line-height: 42.36px;
-    letter-spacing: 0.04em;
-    color: #000000;
+.JobTitle {
+  font-family: Inter;
+  font-size: 35px;
+  font-weight: 500;
+  line-height: 42.36px;
+  letter-spacing: 0.04em;
+  color: #000000;
 }
 
-.Location{
-    font-family: Inter;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 24.2px;
-    letter-spacing: 0.04em;
-    color: #999999;
+.Location {
+  font-family: Inter;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24.2px;
+  letter-spacing: 0.04em;
+  color: #999999;
 }
 
-.Description{
-    margin-bottom: 36px;
+.Description {
+  margin-bottom: 36px;
 }
 
-.Continue{
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
+.Continue {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .Questions {
-    margin-bottom: 36px;
-    text-align: left;
+  margin-bottom: 36px;
+  text-align: left;
 }
 
 .Questions h3 {
-    font-family: Inter;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 24.2px;
-    letter-spacing: 0.04em;
-    color: #242220;
-    margin-bottom: 12px;
+  font-family: Inter;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24.2px;
+  letter-spacing: 0.04em;
+  color: #242220;
+  margin-bottom: 12px;
 }
 
 .Questions ul {
-    list-style-type: none;
-    padding-left: 0;
+  list-style-type: none;
+  padding-left: 0;
 }
 
 .Questions li {
-    font-family: Inter;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 19.36px;
-    letter-spacing: 0.04em;
-    color: #242220;
-    margin-bottom: 8px;
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19.36px;
+  letter-spacing: 0.04em;
+  color: #242220;
+  margin-bottom: 8px;
+}
+
+.companyInitial {
+  width: 131px;
+  height: 131px;
+  background: #2422200d;
+  color: #242220;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Inter;
+  font-size: 64px;
+  font-weight: 400;
+  line-height: 27.84px;
+  letter-spacing: 0.04em;
+  border-radius: 15px;
 }
