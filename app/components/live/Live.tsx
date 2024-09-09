@@ -84,6 +84,13 @@ const Live: React.FC = () => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
+  const formatDate = (dateString: string | undefined) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return `${months[date.getMonth()]} ${date.getDate()}`;
+  };
+
   const getAlternatingRows = (items: LiveItem[]) => {
     const combined: JSX.Element[] = [];
     let liveIndex = 0;
@@ -121,7 +128,7 @@ const Live: React.FC = () => {
                   {items[liveIndex].title}
                 </div>
                 <div className={styles.AuthorDate}>
-                  {items[liveIndex].author && `By ${items[liveIndex].author}`} {items[liveIndex].date}
+                  {items[liveIndex].author && `By ${items[liveIndex].author}`} {formatDate(items[liveIndex].date)}
                 </div>
                 <div className={styles.Type}>News</div>
               </>
