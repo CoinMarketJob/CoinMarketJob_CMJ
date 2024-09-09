@@ -307,7 +307,9 @@ model Live {
   liveType     LiveType
   organisation String
   headline     String
-  content      String @db.VarChar(65535)
+  content      String   @db.VarChar(65535)
+  author       String?  // Yeni eklenen alan
+  date         DateTime? // Yeni eklenen alan
 }
 
 enum LiveType {

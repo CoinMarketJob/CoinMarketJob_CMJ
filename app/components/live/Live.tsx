@@ -10,8 +10,8 @@ interface LiveItem {
   organisation?: string;
   headline?: string;
   content?: string;
-  author?: string; // Yeni eklenen
-  date?: string; // Yeni eklenen
+  author?: string;
+  date?: string;
 }
 
 const Live: React.FC = () => {
@@ -121,7 +121,7 @@ const Live: React.FC = () => {
                   {items[liveIndex].title}
                 </div>
                 <div className={styles.AuthorDate}>
-                  By {items[liveIndex].author} {items[liveIndex].date}
+                  {items[liveIndex].author && `By ${items[liveIndex].author}`} {items[liveIndex].date}
                 </div>
                 <div className={styles.Type}>News</div>
               </>
@@ -220,7 +220,12 @@ const Live: React.FC = () => {
     <div className={styles.LiveContainer}>
       <Search keyword={keyword} ChangeFunction={ChangeFunction} handleKeyDown={handleKeyDown} />
       <Categories onCategoryClick={handleCategoryClick} />
-      <div className={styles.Content}>{getAlternatingRows(filteredLive)}</div>
+      <div className={styles.Content}>
+        {getAlternatingRows(filteredLive.map(item => ({
+          ...item,
+          date: item.date ? new Date(item.date).toLocaleDateString() : undefined
+        })))}
+      </div>
     </div>
   );
 };
