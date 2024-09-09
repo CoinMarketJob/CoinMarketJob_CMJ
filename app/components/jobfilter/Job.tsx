@@ -39,9 +39,14 @@ const JobFilterPopUp: React.FC = () => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   interface Job {
-    location?: string | null;
-    locationType?: string | null | undefined;
-    jobType?: string;
+    id: number;
+    userId: number | null;
+    logo: string | null;
+    companyName: string | null;
+    jobTitle: string;
+    location: string | null;
+    locationType: LocationType | null;
+    jobType: JobType | null;
     experienceLevel?: string;
     packageId?: number;
     salaryMin?: number | null;
@@ -49,7 +54,18 @@ const JobFilterPopUp: React.FC = () => {
     datePosted?: string;
     visaSponsorship?: boolean;
     // activelyHiring?: boolean;
+    date: Date;
   }
+
+  enum JobType {
+    Internship = 'Internship',
+    PartTime = 'PartTime',
+    FullTime = 'FullTime',
+    Contract = 'Contract',
+    Temporary = 'Temporary',
+    Other = 'Other'
+  }
+
   const toggleLocationSelector = () => {
     setIsLocationSelectorOpen(!isLocationSelectorOpen);
     
@@ -164,7 +180,7 @@ const JobFilterPopUp: React.FC = () => {
 
   function filterJobs() {
     const fjobs = jobs.filter((job: Job) => {
-      const jobTypeLower = (job.jobType ?? '').toLowerCase();
+      const jobTypeLower = (job.jobType?.toString() ?? '').toLowerCase();
       const experienceLevelLower = (job.experienceLevel ?? '').toLowerCase();
       const matchesJobType = jobType.length === 0 || jobType.some(type => type.toLowerCase() === jobTypeLower);
       const matchesExperienceLevel = experienceLevel.length === 0 || experienceLevel.some(level => level.toLowerCase() === experienceLevelLower);

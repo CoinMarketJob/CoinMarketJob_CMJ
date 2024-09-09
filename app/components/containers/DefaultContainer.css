@@ -57,6 +57,7 @@
 .container-div{
   display: flex;
   flex-grow: 1;
+  max-height: calc(100vh - 170px);
 }
 
 .panel-profile{
