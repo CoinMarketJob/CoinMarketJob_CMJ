@@ -9,6 +9,9 @@ const Categories: React.FC<Props> = ({ onCategoryClick }) => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   const handleCategoryClick = (category: string) => {
+    if (["Academy", "Live"].includes(category)) {
+      return; // Bu kategoriler için tıklama işlemi yapma
+    }
     if (activeCategory === category) {
       setActiveCategory(null);
       onCategoryClick(""); // Filtreyi kaldırmak için boş bir değer gönderiyoruz
@@ -18,57 +21,21 @@ const Categories: React.FC<Props> = ({ onCategoryClick }) => {
     }
   };
 
+  const categories = ["News", "Hackathon", "Event", "Blog", "Academy", "Live"];
+
   return (
     <div className={styles.Container}>
-      <div
-        className={`${styles.Element} ${
-          activeCategory === "News" ? styles.active : ""
-        }`}
-        onClick={() => handleCategoryClick("News")}
-      >
-        News
-      </div>
-
-      <div
-        className={`${styles.Element} ${
-          activeCategory === "HACKHATHONS" ? styles.active : ""
-        }`}
-        onClick={() => handleCategoryClick("HACKHATHONS")}
-      >
-        Hackathon
-      </div>
-
-      <div
-        className={`${styles.Element} ${
-          activeCategory === "HACKHATHONS" ? styles.active : ""
-        }`}
-        onClick={() => handleCategoryClick("HACKHATHONS")}
-      >
-        Event
-      </div>
-
-      <div
-        className={`${styles.Element} ${
-          activeCategory === "HACKHATHONS" ? styles.active : ""
-        }`}
-        onClick={() => handleCategoryClick("HACKHATHONS")}
-      >
-        Blog
-      </div>
-
-      <div
-        className={styles.Element}
-        onClick={() => window.open("https://coinmarketjob.com/blog", "_blank")}
-      >
-        Academy
-      </div>
-
-      <div
-        className={styles.Element}
-        onClick={() => window.open("https://coinmarketjob.com/blog", "_blank")}
-      >
-        Live
-      </div>
+      {categories.map((category) => (
+        <div
+          key={category}
+          className={`${styles.Element} 
+            ${activeCategory === category ? styles.active : ""}
+            ${["Academy", "Live"].includes(category) ? styles.disabled : ""}`}
+          onClick={() => handleCategoryClick(category)}
+        >
+          {category}
+        </div>
+      ))}
     </div>
   );
 };

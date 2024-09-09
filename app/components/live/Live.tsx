@@ -61,7 +61,12 @@ const Live: React.FC = () => {
     let filteredItems = live;
 
     if (category) {
-      filteredItems = filteredItems.filter(item => item.liveType === category);
+      filteredItems = filteredItems.filter(item => {
+        if (category === "Hackathon") {
+          return item.liveType === "HACKHATHONS";
+        }
+        return item.liveType === category;
+      });
     }
 
     if (lowerCaseKeyword) {

@@ -19,7 +19,6 @@
     transition: color 0.3s ease;
 }
 
-
 .Element:hover {
     color: #666666;
 }
@@ -32,7 +31,7 @@
     content: '';
     position: absolute;
     bottom: 6px;
-    left: 24px;
+    left: 2px;
     width: 0;
     height: 2px;
     background-color: #999999;
@@ -40,7 +39,20 @@
 }
 
 .Element.active::after {
-    width: calc(100% - 46px);
+    width: calc(100% - 2px); /* 2px sağdan boşluk bırakmak için */
+}
+
+.Element.disabled {
+    color: #CCCCCC;
+    cursor: not-allowed;
+}
+
+.Element.disabled:hover {
+    color: #CCCCCC;
+}
+
+.Element.disabled::after {
+    display: none;
 }
 
 @media (max-width: 768px) {
