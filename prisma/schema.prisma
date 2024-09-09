@@ -34,8 +34,8 @@ model User {
 
 model Job {
   id                Int               @id @default(autoincrement())
-  userId            Int
-  user              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            Int?
+  user              User?             @relation(fields: [userId], references: [id], onDelete: Cascade)
   logo              String?
   companyName       String?
   jobTitle          String
@@ -69,8 +69,8 @@ enum SalaryUnit {
 
 model JobQuestions {
   id       Int    @id @default(autoincrement())
-  userId   Int
-  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   Int?
+  user     User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
   jobId    Int
   job      Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
   question String

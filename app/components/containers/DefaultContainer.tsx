@@ -1,6 +1,5 @@
 "use client"
-import React, { useState, useEffect, useCallback } from "react";
-import { Resizable, ResizeCallbackData } from "react-resizable";
+import React, { useState, useEffect } from "react";
 import './DefaultContainer.css'
 import AuthContainer from "./AuthContainer";
 import Live from "../live/Live";
@@ -11,85 +10,28 @@ interface ContainerProps {
 
 const DefaultContainer: React.FC<ContainerProps> = ({ children }) => {
     const [totalWidth, setTotalWidth] = useState<number>(window.innerWidth);
-    const [profileRatio, setProfileRatio] = useState<number>(() => {
-        const savedRatio = localStorage.getItem('profileRatio');
-        return savedRatio ? parseFloat(savedRatio) : 0.25; // Default to 25% of total width
-    });
-    const [liveRatio, setLiveRatio] = useState<number>(() => {
-        const savedRatio = localStorage.getItem('liveRatio');
-        return savedRatio ? parseFloat(savedRatio) : 0.25; // Default to 25% of total width
-    });
 
     useEffect(() => {
-
-        localStorage.setItem('profileRatio', profileRatio.toString());
-    }, [profileRatio]);
-
-    useEffect(() => {
-        localStorage.setItem('liveRatio', liveRatio.toString());
-    }, [liveRatio]);
-
-    const handleResize = useCallback(() => {
-        setTotalWidth(window.innerWidth);
-    }, []);
-
-    useEffect(() => {
+        const handleResize = () => setTotalWidth(window.innerWidth);
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
-    }, [handleResize]);
+    }, []);
 
-    const handleProfileResize = (event: React.SyntheticEvent, data: ResizeCallbackData) => {
-        const newRatio = data.size.width / totalWidth;
-        setProfileRatio(newRatio);
-    };
-    
-    const handleLiveResize = (event: React.SyntheticEvent, data: ResizeCallbackData) => {
-        const newRatio = data.size.width / totalWidth;
-        setLiveRatio(newRatio);
-    };
-
-    const isSmallScreen = totalWidth <= 1024;
-
-    const calculateWidth = (ratio: number) => {
-        if (isSmallScreen) {
-            return totalWidth * (ratio / 1);
-        }
-        return totalWidth * ratio;
-    };
-
-    const profileWidth = calculateWidth(profileRatio);
-    const liveWidth = calculateWidth(liveRatio);
-    const childWidth = totalWidth - profileWidth - liveWidth;
+    const profileWidth = totalWidth * (1 / 4.5);
+    const liveWidth = totalWidth * (1 / 4.5);
+    const childWidth = totalWidth * (2.5 / 4.5);
 
     return (
-        <div className="container-div" style={{ width: totalWidth }}>
-            <Resizable
-                width={profileWidth}
-                height={200}
-                onResize={handleProfileResize}
-                axis="x"
-                handleSize={[16, 16]}
-                resizeHandles={["e"]}
-            >
-                <div className="resizable-panel-profile" style={{ width: profileWidth }}>
-                    <AuthContainer />
-                </div>
-            </Resizable>
+        <div className="container-div" style={{ width: totalWidth, display: 'flex' }}>
+            <div className="panel-profile" style={{ width: profileWidth }}>
+                <AuthContainer />
+            </div>
             
             <div className="child-panel" style={{ width: childWidth }}>{children}</div>
             
-            <Resizable
-                width={liveWidth}
-                height={200}
-                onResize={handleLiveResize}
-                axis="x"
-                handleSize={[16, 16]}
-                resizeHandles={["w"]}
-            >
-                <div className="resizable-panel-live" style={{ width: liveWidth }}>
-                    <Live />
-                </div>
-            </Resizable>
+            <div className="panel-live" style={{ width: liveWidth }}>
+                <Live />
+            </div>
         </div>
     )
 }
