@@ -121,15 +121,15 @@ model SavedJobs {
 
 model AppliedJobs {
   id               Int      @id @default(autoincrement())
-  userId           Int
-  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId           Int?
+  user             User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   jobId            Int
   job              Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
-  name             String
-  surname          String
-  email            String
-  phoneCode        String
-  phone            String
+  name             String?
+  surname          String?
+  email            String?
+  phoneCode        String?
+  phone            String?
   date             DateTime @default(now())
   resumeLink       String?
   resumeDraft      Json?

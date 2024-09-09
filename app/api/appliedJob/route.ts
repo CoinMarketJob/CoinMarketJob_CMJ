@@ -21,18 +21,8 @@ export async function POST(request: Request) {
     answers,
   } = body;
 
-  const currentUser = await getCurrentUser();
-
-  if (!currentUser) {
-    return NextResponse.json(
-      { error: "User not authenticated" },
-      { status: 401 }
-    );
-  }
-
   const appliedJob = await prisma.appliedJobs.create({
     data: {
-      userId: currentUser.id,
       jobId: parseInt(jobId, 10),
       name,
       surname,
@@ -41,15 +31,11 @@ export async function POST(request: Request) {
       phone,
       resumeLink,
       resumeDraft,
-      coverLetterLink,
-      coverLetterDraft,
-      visaSponsorship,
       Answers: {
         create: answers.map(
           (answer: { questionId: number; answer: string }) => ({
             questionId: answer.questionId,
             answer: answer.answer,
-            userId: currentUser.id,
           })
         ),
       },

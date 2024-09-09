@@ -12,7 +12,7 @@ import LocationSelector from "@/app/components/location/LocationSelector";
 import Checkbox from "@/app/components/general/Checkbox";
 import QuestionDraft from "@/app/components/general/QuestionDraft";
 import { JobQuestions } from "@prisma/client";
-import { useRouter } from 'next/navigation'; // Add this import
+import { useRouter } from "next/navigation"; // Add this import
 
 type JobProps = {
   jobId: string;
@@ -371,7 +371,7 @@ const page = ({ params }: { params: JobProps }) => {
         setSuccessMessage("Your application has been submitted successfully!");
         setTimeout(() => {
           setSuccessMessage(null);
-          router.push('/');
+          router.push("/");
         }, 3000);
       } else {
         console.error("Error applying for job:", response.statusText);
@@ -396,11 +396,7 @@ const page = ({ params }: { params: JobProps }) => {
   };
 
   const validateForm = () => {
-    if (name && surname && email) {
-      setIsFormValid(true);
-    } else {
-      setIsFormValid(false);
-    }
+    setIsFormValid(true);
   };
   useEffect(() => {
     validateForm();
@@ -425,7 +421,7 @@ const page = ({ params }: { params: JobProps }) => {
         <div className={styles.doubleRow}>
           <Input
             id="name"
-            placeholder="Name*"
+            placeholder="Name"
             type="text"
             required
             value={name}
@@ -434,7 +430,7 @@ const page = ({ params }: { params: JobProps }) => {
           <div style={{ width: "2.25rem" }}></div>
           <Input
             id="surname"
-            placeholder="Surname*"
+            placeholder="Surname"
             type="text"
             required
             value={surname}
@@ -444,7 +440,7 @@ const page = ({ params }: { params: JobProps }) => {
         <div className={styles.singleRow}>
           <Input
             id="email"
-            placeholder="Email*"
+            placeholder="Email"
             type="email"
             required
             value={email}
@@ -507,7 +503,7 @@ const page = ({ params }: { params: JobProps }) => {
               />
             </div>
           </div>
-        )}        
+        )}
       </div>
 
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
