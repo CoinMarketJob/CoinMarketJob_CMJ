@@ -11,6 +11,7 @@ import { SessionProvider } from "next-auth/react"; // Add this import
 import { ProfileProvider } from "@/hooks/useCompanyProfile";
 import { JobApplicationsProvider } from "@/hooks/useApplicationJob";
 import { ProfileDataProvider } from "@/hooks/useProfileData";
+import { LiveVisibilityProvider } from "@/hooks/useLiveVisibility";
 
 export default function RootLayout({
   children,
@@ -37,13 +38,15 @@ export default function RootLayout({
                   <AuthWrapper>
                     <JobApplicationsProvider>
                       <ProfileDataProvider>
-                      <div className="layout-container-div">
-                        <Searchbar />
-                        <main className="layout-main-div">
-                          <DefaultContainer>{children}</DefaultContainer>
-                        </main>
-                        <Footer />
-                      </div>
+                      <LiveVisibilityProvider>
+                        <div className="layout-container-div">
+                          <Searchbar />
+                          <main className="layout-main-div">
+                            <DefaultContainer>{children}</DefaultContainer>
+                          </main>
+                          <Footer />
+                        </div>
+                      </LiveVisibilityProvider>
                       </ProfileDataProvider>
                     </JobApplicationsProvider>
                   </AuthWrapper>
