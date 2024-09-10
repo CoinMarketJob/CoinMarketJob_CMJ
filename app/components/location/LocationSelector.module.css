@@ -30,7 +30,8 @@
   max-height: none;
   overflow-y: auto; /* Add a scrollbar when content exceeds the height */
   border-radius: 15px;
-  left: -27px;
+  top: 34px;
+  left: -43px;
   padding: 12px;
   padding-bottom: 33px;
   flex-direction: column;

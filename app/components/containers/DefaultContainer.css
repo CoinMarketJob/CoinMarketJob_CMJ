@@ -95,4 +95,15 @@
   margin: 2px;
   margin-right: 20px;
   padding: 20px; 
+  overflow-y: hidden; /* Live panelinde scrollbar'ı gizle */
+}
+
+/* Webkit tarayıcılar için scrollbar'ı gizle */
+.panel-live::-webkit-scrollbar {
+  display: none;
+}
+
+/* Firefox için scrollbar'ı gizle */
+.panel-live {
+  scrollbar-width: none;
 }

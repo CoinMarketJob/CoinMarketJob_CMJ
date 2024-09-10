@@ -22,7 +22,7 @@
 .logo {
   position: relative;
   border: none;
-  margin-bottom: 16px; /* Profil fotoğrafı ve company name arasında 16px boşluk */
+  margin-bottom: 24px; /* Profil fotoğrafı ve company name arasında 16px boşluk */
 }
 
 .companyLogo {
@@ -44,7 +44,7 @@
 }
 
 .companyName {
-  margin-bottom: 12px; /* Company name ve Job title arasında 12px boşluk */
+  margin-bottom: 16px; /* Company name ve Job title arasında 12px boşluk */
   font-family: Inter;
   font-size: 23px;
   font-weight: 400;
@@ -291,5 +291,5 @@
 }
 
 .jobTitleContainer {
-  margin-bottom: 12px; /* Job title ve location arasında 12px boşluk */
+  margin-bottom: 16px; /* Job title ve location arasında 12px boşluk */
 }
