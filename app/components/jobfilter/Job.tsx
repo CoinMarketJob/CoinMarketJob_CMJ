@@ -30,8 +30,6 @@ const JobFilterPopUp: React.FC = () => {
   const [salary, setSalary] = useState<string[]>([]);
   const [salaryRange, setSalaryRange] = useState<[number, number]>([0,8000]);
   const [experienceLevel, setExperienceLevel] = useState<string[]>([]);
-  const [visaSponsorship, setVisaSponsorship] = useState<boolean | undefined>(false);
-  const [isAlertSet, setIsAlertSet] = useState(false);
   const [location, setlocation] = useState<string[]>([]);
   const [isResetDisabled, setIsResetDisabled] = useState(true);
   const [isPopupVisible, setIsPopupVisible] = useState(true);
@@ -124,10 +122,6 @@ const JobFilterPopUp: React.FC = () => {
     toggleFilter(); // Close the modal
   };
 
-  const handleAlertClick = () => {
-    setIsAlertSet(!isAlertSet);
-  };
-
   const handleOutsideClick = (event: MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
       setIsPopupVisible(false);  // Close the modal if the click is outside
@@ -197,8 +191,6 @@ const JobFilterPopUp: React.FC = () => {
     salary: [],
     salaryRange: [100, 800],
     experienceLevel: [],
-    visaSponsorship: false,
-    isAlertSet: false
   });
 
   const checkIfFiltersChanged = useCallback(() => {
@@ -210,15 +202,13 @@ const JobFilterPopUp: React.FC = () => {
       salary.length !== initialFilters.salary.length ||
       salaryRange[0] !== initialFilters.salaryRange[0] ||
       salaryRange[1] !== initialFilters.salaryRange[1] ||
-      experienceLevel.length !== initialFilters.experienceLevel.length ||
-      visaSponsorship !== initialFilters.visaSponsorship ||
-      isAlertSet !== initialFilters.isAlertSet;
+      experienceLevel.length !== initialFilters.experienceLevel.length;
     setIsResetDisabled(!filtersChanged);
-  }, [datePosted, location, jobType, salary, salaryRange, experienceLevel, visaSponsorship, isAlertSet]);
+  }, [datePosted, location, jobType, salary, salaryRange, experienceLevel]);
 
   useEffect(() => {
     checkIfFiltersChanged();
-  }, [datePosted, location, jobType, salary, salaryRange, experienceLevel, visaSponsorship, checkIfFiltersChanged]);
+  }, [datePosted, location, jobType, salary, salaryRange, experienceLevel, checkIfFiltersChanged]);
 
   return (
     <>
@@ -247,26 +237,6 @@ const JobFilterPopUp: React.FC = () => {
                     multiple={true}
                   />
                   </div>
-                  <div
-  className={`${styles.setAlert} ${isAlertSet ? styles.active : ''}`}
-  
->
-  <span>Set Alert</span>
-  {isAlertSet ? (
-    <svg className={styles.plusIconActive} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
-      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none" />
-      <line x1="12" y1="8" x2="12" y2="16" stroke="currentColor" strokeWidth="2" />
-      <line x1="8" y1="12" x2="16" y2="12" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  ) : (
-    <svg className={styles.plusIcon} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
-      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none" />
-      <line x1="12" y1="8" x2="12" y2="16" stroke="currentColor" strokeWidth="2" />
-      <line x1="8" y1="12" x2="16" y2="12" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  )}
-</div>
-
                 </div>
                 <div className={styles.centeredGroup}>
                 <div className={styles.locationSelection}>
@@ -315,17 +285,6 @@ const JobFilterPopUp: React.FC = () => {
                     list={jobTypeOptions}
                     multiple={true}
                   />
-                  <div className={styles.toggles}>
-                    <ToggleSwitch
-                      title="Visa sponsorship"
-                      sliderName="slider2"
-                      switchState={visaSponsorship}
-                      setSwitchState={(newValue) => {
-                        console.log("Visa Sponsorship toggled:", newValue); // Add this line
-                        setVisaSponsorship(newValue);
-                      }}
-                    />
-                  </div>
                   <div className={styles.buttonContainer}>
                     <Button
                       text="Reset"
@@ -336,8 +295,6 @@ const JobFilterPopUp: React.FC = () => {
                         setSalary([]);
                         setSalaryRange([100, 800]);
                         setExperienceLevel([]);
-                        setVisaSponsorship(false);
-                        setIsAlertSet(false);
                         setlocation([]);
                       }}
                       backgroundColor="#FFFFFF00"
@@ -348,9 +305,7 @@ const JobFilterPopUp: React.FC = () => {
                     />
                     <Button
                       text="Apply"
-                      onClick={() => {
-                        handleApply()
-                      }}
+                      onClick={handleApply}
                       backgroundColor="#242220"
                       textColor="#FFFFFF"
                       clickedBackgroundColor="#242220CC"
