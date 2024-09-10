@@ -17,12 +17,9 @@ const Footer = () => {
   };
 
   const SavedJobs = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (session) {
+  
       router.push("/savedjobs");
-    } else {
-      setErrorMessage("Please log in to view saved jobs");
-      setTimeout(() => setErrorMessage(null), 3000);
-    }
+   
   };
 
   return (

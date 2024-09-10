@@ -209,7 +209,7 @@ const JobFilterPopUp: React.FC = () => {
       salaryRange[1] !== initialFilters.salaryRange[1] ||
       experienceLevel.length !== initialFilters.experienceLevel.length;
     setIsResetDisabled(!filtersChanged);
-  }, [datePosted, location, jobType, salary, salaryRange, experienceLevel]);
+  }, [datePosted, locationType.length, jobType.length, salary.length, salaryRange, experienceLevel.length]);
 
   useEffect(() => {
     checkIfFiltersChanged();
