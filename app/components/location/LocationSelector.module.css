@@ -1,3 +1,15 @@
+.locationContainer{
+  border-radius: 15px;
+  border: 1px solid #E7E5E4;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  padding-left: 24px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
 .label {
   color: #24222099;
   font-size: 20px;
@@ -5,10 +17,14 @@
   margin-right: auto;
 }
 
+.arrowContainer{  
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  height: 100%;
+}
+
 .arrow {
-  position: absolute;
-  right: -24px;
-  top: 50%;
   transform: translateY(-50%);
   color: #24222066;
   width: 16px;
