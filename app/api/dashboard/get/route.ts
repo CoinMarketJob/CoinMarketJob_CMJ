@@ -38,9 +38,9 @@ export async function GET() {
       ...job,
       appliedJobs: job.appliedJobs.map(appliedJob => ({
         ...appliedJob,
-        user: {
+        user: appliedJob.user ? {
           profile: appliedJob.user.profile
-        }
+        } : null
       }))
     }));
 

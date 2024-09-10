@@ -105,14 +105,17 @@ const JobCard: React.FC<JobCardProps> = ({
       key={job.id}
     >
       <div className={styles.icon}>
-        <img src={job.logo} alt={`${job.companyName} Logo`} />
+        <img 
+          src={job.logo || '/default-logo.png'} 
+          alt={`${job.companyName || 'Company'} Logo`} 
+        />
       </div>
       <div className={styles.details}>
         <h2 className={styles.title}>{job.jobTitle}</h2>
-        <p className={styles.company}>{job.companyName}</p>
+        <p className={styles.company}>{job.companyName || 'Unknown Company'}</p>
         <p className={styles.meta}>
           <span className={styles.type}>{formatJobType(job.jobType)}</span>
-          <span className={styles.location}>{job.location}</span>
+          <span className={styles.location}>{job.location || 'Unknown Location'}</span>
         </p>
       </div>
       <div className={styles.actions}>

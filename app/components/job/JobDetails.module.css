@@ -46,7 +46,7 @@
 .logo img {
     width: 83px;
     height: 83px;
-    border-radius: 50%;
+    border-radius: 15px;
     opacity: 0.94;
     
 }
@@ -54,7 +54,7 @@
 .logo {
     width: 83px;
     height: 83px;
-    border-radius: 50%;
+    border-radius: 15px;
     margin-bottom: 8px;
     margin-top: 32px;
 }

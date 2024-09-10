@@ -106,13 +106,16 @@ const Grid: React.FC<JobCardProps> = ({
       onClick={JobSelect}
     >
       <div className={styles.icon}>
-        <img src={job.logo} alt={`${job.companyName} Logo`} />
+        <img 
+          src={job.logo || '/default-logo.png'} 
+          alt={`${job.companyName || 'Company'} Logo`} 
+        />
       </div>
 
-      <div className={styles.company}>{job.companyName}</div>
+      <div className={styles.company}>{job.companyName || 'Unknown Company'}</div>
       <div className={styles.title}>{job.jobTitle}</div>
       <div className={styles.type}>{formatJobType(job.jobType)}</div>
-      <div className={styles.location}>{job.location}</div>
+      <div className={styles.location}>{job.location || 'Unknown Location'}</div>
       <div className={styles.actions}>
         <div>
           <Icon onClick={JobClose} hoverSize={45} hoverContent="Close">

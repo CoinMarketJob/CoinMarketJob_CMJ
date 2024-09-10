@@ -62,7 +62,7 @@
 .Logo {
   width: 5.625rem;
   height: 5.625rem;
-  border-radius: 50%;
+  border-radius: 15px;
   opacity: 0.94;
   margin-right: 2.25rem;
   border: 1px solid #adacae1a;
