@@ -8,6 +8,7 @@
   flex-direction: column;
   justify-content: space-between; /* Add this line to distribute space between children */
   height: 95%;
+  z-index: 0;
 }
 
 .ErrorMessage {
