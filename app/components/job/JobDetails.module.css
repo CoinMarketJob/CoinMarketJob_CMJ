@@ -16,13 +16,11 @@
 }
 
 .section{
-    border: 1px solid #E7E5E4;
-    width: 85%;
+    width: 100%;
     border-radius: 15px;
-    padding: 24px;
     padding-bottom: 25px;
     margin-bottom: 17px;
-    margin-top: 67px;
+    margin-top: 28px;
 }
 
 .containerJobDetails {
