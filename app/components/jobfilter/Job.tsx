@@ -28,7 +28,7 @@ const JobFilterPopUp: React.FC = () => {
   const [locationType, setLocationType] = useState<string[]>([]);
   const [jobType, setJobType] = useState<string[]>([]);
   const [salary, setSalary] = useState<string[]>([]);
-  const [salaryRange, setSalaryRange] = useState<[number, number]>([0,8000]);
+  const [salaryRange, setSalaryRange] = useState<[number, number]>([0,99999999999]);
   const [experienceLevel, setExperienceLevel] = useState<string[]>([]);
   const [location, setlocation] = useState<string[]>([]);
   const [isResetDisabled, setIsResetDisabled] = useState(true);
@@ -157,7 +157,7 @@ const JobFilterPopUp: React.FC = () => {
         const now = new Date();
         const diffTime = Math.abs(now.getTime() - jobDate.getTime());
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
+  
         switch (postedDate.toLowerCase()) {
           case 'last 24 hours':
             return diffDays <= 1;
@@ -173,17 +173,21 @@ const JobFilterPopUp: React.FC = () => {
             return false;
         }
       });
+      
       const matchesLocationType = locationType.length === 0 || locationType.some(loc => job.locationType?.toLowerCase().includes(loc.toLowerCase()));
-      const matchesSalaryRange = 
-        (job.salaryMin ?? 0) >= salaryRange[0] &&
-        (job.salaryMax !== null && job.salaryMax !== undefined ? job.salaryMax <= salaryRange[1] : salaryRange[1] === Number.MAX_VALUE);
-
+  
+      // Filter by salary range only if the job has salary data
+      const matchesSalaryRange = job.salaryMin !== null && job.salaryMax !== null
+        ? (job.salaryMin >= salaryRange[0] && job.salaryMax <= salaryRange[1])
+        : true; // If no salary, ignore the filter
+  
       return matchesLocationType && matchesDatePosted && matchesJobType && matchesExperienceLevel && matchesLocation && matchesSalaryRange;
     });
-
+  
     console.log("Filtered Jobs:", fjobs);
     setFilteredJobs(fjobs);
   }
+  
 
   const initialFiltersRef = useRef({
     datePosted: [],
