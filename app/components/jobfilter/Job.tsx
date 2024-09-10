@@ -8,6 +8,7 @@ import ToggleSwitch from '../general/Toggle';
 import Button from '../general/Button';
 import Dropdown from '../general/Dropdown';
 import LocationSelector from './LocationSelectorComponent';
+import { Job, JobType, LocationType, ExperienceLevel } from '@prisma/client';
 
 const JobFilterModal: React.FC<{ children: ReactNode, modalRef: React.RefObject<HTMLDivElement> }> = ({ children, modalRef }) => {
   return (
@@ -30,41 +31,12 @@ const JobFilterPopUp: React.FC = () => {
   const [salaryRange, setSalaryRange] = useState<[number, number]>([0,8000]);
   const [experienceLevel, setExperienceLevel] = useState<string[]>([]);
   const [visaSponsorship, setVisaSponsorship] = useState<boolean | undefined>(false);
-  // const [activelyHiring, setActivelyHiring] = useState<boolean | undefined>(false);
   const [isAlertSet, setIsAlertSet] = useState(false);
   const [location, setlocation] = useState<string[]>([]);
   const [isResetDisabled, setIsResetDisabled] = useState(true);
   const [isPopupVisible, setIsPopupVisible] = useState(true);
   const [isLocationSelectorOpen, setIsLocationSelectorOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
-
-  interface Job {
-    id: number;
-    userId: number | null;
-    logo: string | null;
-    companyName: string | null;
-    jobTitle: string;
-    location: string | null;
-    locationType: LocationType | null;
-    jobType: JobType | null;
-    experienceLevel?: string;
-    packageId?: number;
-    salaryMin?: number | null;
-    salaryMax?: number | null;
-    datePosted?: string;
-    visaSponsorship?: boolean;
-    // activelyHiring?: boolean;
-    date: Date;
-  }
-
-  enum JobType {
-    Internship = 'Internship',
-    PartTime = 'PartTime',
-    FullTime = 'FullTime',
-    Contract = 'Contract',
-    Temporary = 'Temporary',
-    Other = 'Other'
-  }
 
   const toggleLocationSelector = () => {
     setIsLocationSelectorOpen(!isLocationSelectorOpen);
@@ -181,19 +153,37 @@ const JobFilterPopUp: React.FC = () => {
   function filterJobs() {
     const fjobs = jobs.filter((job: Job) => {
       const jobTypeLower = (job.jobType?.toString() ?? '').toLowerCase();
-      const experienceLevelLower = (job.experienceLevel ?? '').toLowerCase();
+      const experienceLevelLower = (job.experienceLevel?.toString() ?? '').toLowerCase();
       const matchesJobType = jobType.length === 0 || jobType.some(type => type.toLowerCase() === jobTypeLower);
       const matchesExperienceLevel = experienceLevel.length === 0 || experienceLevel.some(level => level.toLowerCase() === experienceLevelLower);
       const matchesLocation = location.length === 0 || location.some(loc => job.location?.toLowerCase() === loc.toLowerCase());
-      const matchesDatePosted = datePosted.length === 0 || datePosted.includes((job.datePosted ?? '').toLowerCase());
+      const matchesDatePosted = datePosted.length === 0 || datePosted.some(postedDate => {
+        const jobDate = new Date(job.date);
+        const now = new Date();
+        const diffTime = Math.abs(now.getTime() - jobDate.getTime());
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        switch (postedDate.toLowerCase()) {
+          case 'last 24 hours':
+            return diffDays <= 1;
+          case 'last 3 days':
+            return diffDays <= 3;
+          case 'last week':
+            return diffDays <= 7;
+          case 'last 2 weeks':
+            return diffDays <= 14;
+          case 'last month':
+            return diffDays <= 30;
+          default:
+            return false;
+        }
+      });
       const matchesLocationType = locationType.length === 0 || locationType.some(loc => job.locationType?.toLowerCase().includes(loc.toLowerCase()));
       const matchesSalaryRange = 
         (job.salaryMin ?? 0) >= salaryRange[0] &&
         (job.salaryMax !== null && job.salaryMax !== undefined ? job.salaryMax <= salaryRange[1] : salaryRange[1] === Number.MAX_VALUE);
 
-      const matchesVisaSponsorship = !visaSponsorship || job.visaSponsorship === visaSponsorship;
-      // const matchesActivelyHiring = !activelyHiring || job.activelyHiring === activelyHiring;
-      return matchesLocationType && matchesDatePosted && matchesJobType && matchesExperienceLevel  && matchesVisaSponsorship && matchesLocation && matchesSalaryRange;
+      return matchesLocationType && matchesDatePosted && matchesJobType && matchesExperienceLevel && matchesLocation && matchesSalaryRange;
     });
 
     console.log("Filtered Jobs:", fjobs);
@@ -208,7 +198,6 @@ const JobFilterPopUp: React.FC = () => {
     salaryRange: [100, 800],
     experienceLevel: [],
     visaSponsorship: false,
-    activelyHiring: false,
     isAlertSet: false
   });
 
@@ -223,7 +212,6 @@ const JobFilterPopUp: React.FC = () => {
       salaryRange[1] !== initialFilters.salaryRange[1] ||
       experienceLevel.length !== initialFilters.experienceLevel.length ||
       visaSponsorship !== initialFilters.visaSponsorship ||
-      // activelyHiring !== initialFilters.activelyHiring ||
       isAlertSet !== initialFilters.isAlertSet;
     setIsResetDisabled(!filtersChanged);
   }, [datePosted, location, jobType, salary, salaryRange, experienceLevel, visaSponsorship, isAlertSet]);
@@ -328,12 +316,6 @@ const JobFilterPopUp: React.FC = () => {
                     multiple={true}
                   />
                   <div className={styles.toggles}>
-                    {/* <ToggleSwitch
-                      title="Actively Hiring"
-                      sliderName="slider1"
-                      switchState={activelyHiring}
-                      setSwitchState={setActivelyHiring}
-                    /> */}
                     <ToggleSwitch
                       title="Visa sponsorship"
                       sliderName="slider2"
@@ -355,7 +337,6 @@ const JobFilterPopUp: React.FC = () => {
                         setSalaryRange([100, 800]);
                         setExperienceLevel([]);
                         setVisaSponsorship(false);
-                        //setActivelyHiring(false);
                         setIsAlertSet(false);
                         setlocation([]);
                       }}

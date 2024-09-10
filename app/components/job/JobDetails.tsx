@@ -39,13 +39,16 @@ const JobDetails: React.FC<JobDetailsProps> = ({ job, onClose = () => {} }) => {
                         </Icon>
                     </div>
                     <div className={styles.logo}>
-                        <img src={job.logo} alt={`${job.jobTitle} logo`} />
+                        <img 
+                            src={job.logo || '/default-logo.png'} 
+                            alt={`${job.jobTitle || 'Job'} logo`} 
+                        />
                     </div>
 
                     <div className={styles.jobDetails}>
-                        <p className={styles.CompanyJobDetails}>{job.companyName}</p>
-                        <p className={styles.TitleJobDetails}>{job.jobTitle}</p>
-                        <p className={styles.LocationDetails}>{job.location}</p>
+                        <p className={styles.CompanyJobDetails}>{job.companyName || 'Unknown Company'}</p>
+                        <p className={styles.TitleJobDetails}>{job.jobTitle || 'Untitled Job'}</p>
+                        <p className={styles.LocationDetails}>{job.location || 'Unknown Location'}</p>
                     </div>
 
                     <div className={styles.applyButton}>

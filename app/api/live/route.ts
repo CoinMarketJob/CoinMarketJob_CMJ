@@ -11,8 +11,8 @@ export async function GET() {
       organisation: true,
       headline: true,
       content: true,
-      author: true,
-      date: true,
+      // author: true, // Removed this line
+      // date: true, // Removed this line
     },
     cacheStrategy: { swr: 60, ttl: 60 },
   });

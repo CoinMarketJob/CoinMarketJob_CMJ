@@ -7,14 +7,11 @@ import Image from 'next/image';
 import { useJobs } from '@/hooks/useJobs';
 import { useRouter } from 'next/navigation';
 import JobFilterPopUp from '../jobfilter/Job';
+import { Job as PrismaJob, JobType, LocationType, ExperienceLevel } from '@prisma/client';
 
-interface Job {
-    companyName: string;
-    jobTitle: string;
-    location: string | null;
-    jobType: string;
-    experienceLevel: string;
-    jobDescription?: string | number | boolean | any[] | Record<string, any> | null;
+// Update the Job interface to match the Prisma Job type
+interface Job extends Omit<PrismaJob, 'date'> {
+    date: Date;
 }
 
 interface SearchProps {
@@ -52,11 +49,11 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags, isFilterOpen, setIs
         const fjobs = jobs.filter((job: Job) => {
             const lowerCaseTags = tags.map(tag => tag.toLowerCase());
             return lowerCaseTags.every(tag =>
-                job.companyName.toLowerCase().includes(tag) ||
+                (job.companyName?.toLowerCase().includes(tag) || false) ||
                 job.jobTitle.toLowerCase().includes(tag) ||
-                (job.location && job.location.toLowerCase().includes(tag)) ||
-                job.jobType.toLowerCase().includes(tag) ||
-                job.experienceLevel.toLowerCase().includes(tag) ||
+                (job.location?.toLowerCase().includes(tag) || false) ||
+                (job.jobType?.toLowerCase().includes(tag) || false) ||
+                (job.experienceLevel?.toLowerCase().includes(tag) || false) ||
                 (typeof job.jobDescription === 'string' && job.jobDescription.toLowerCase().includes(tag))
             );
         });
