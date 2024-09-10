@@ -29,7 +29,12 @@ const DefaultContainer: React.FC<ContainerProps> = ({ children }) => {
                 <AuthContainer />
             </div>
             
-            <div className="child-panel" style={{ width: childWidth }}>{children}</div>
+            <div className="child-panel" style={{ 
+                width: childWidth, 
+                marginRight: isLiveVisible ? '8px' : '20px'
+            }}>
+                {children}
+            </div>
             
             {isLiveVisible && (
                 <div className="panel-live" style={{ width: liveWidth }}>
