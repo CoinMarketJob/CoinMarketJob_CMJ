@@ -122,58 +122,39 @@ const Live: React.FC = () => {
                 />
               </motion.svg>
             </div>
-            {items[liveIndex].liveType === "News" ? (
-              <>
-                <div className={styles.Title}>
-                  {items[liveIndex].title}
-                </div>
-                <div className={styles.AuthorDate}>
-                  {items[liveIndex].author && `By ${items[liveIndex].author}`} {formatDate(items[liveIndex].date)}
-                </div>
-                <div className={styles.Type}>News</div>
-              </>
-            ) : items[liveIndex].liveType === "EVENT" ? (
-              <>
-                <div className={styles.Title}>
-                  {items[liveIndex].title} by
-                </div>
-                <div className={styles.Organisation}>
-                  {items[liveIndex].organisation}
-                </div>
-                <div className={styles.Headline}>
-                  {items[liveIndex].headline}
-                </div>
-                <div className={styles.Type}>Event</div>
-              </>
-            ) : (
-              <>
-                <div className={styles.Title}>
-                  {items[liveIndex].title} by
-                </div>
-                <div className={styles.Organisation}>
-                  {items[liveIndex].organisation}
-                </div>
-                <div className={styles.Headline}>
-                  {items[liveIndex].headline}
-                </div>
-                <div className={styles.Type}>Hackathon</div>
-              </>
-            )}
+            <div className={styles.Title}>
+              {items[liveIndex].title}
+            </div>
             <AnimatePresence>
               {isExpanded && (
                 <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.3 }}
+                  initial={{ opacity: 0, height: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, height: "auto", scale: 1 }}
+                  exit={{ opacity: 0, height: 0, scale: 0.95 }}
+                  transition={{ 
+                    duration: 0.5, 
+                    ease: [0.04, 0.62, 0.23, 0.98],
+                    scale: { duration: 0.3 }
+                  }}
                   className={styles.Details}
                 >
-                  <div className={styles.NewsDetails}>
+                  <motion.div 
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: 20, opacity: 0 }}
+                    transition={{ delay: 0.1, duration: 0.3 }}
+                    className={styles.NewsDetails}
+                  >
                     {items[liveIndex].content}
-                  </div>
+                  </motion.div>
                 </motion.div>
               )}
             </AnimatePresence>
+            <div className={styles.NewsMetadata}>
+              {items[liveIndex].author && <span className={styles.Author}>By {items[liveIndex].author}</span>}
+              {items[liveIndex].date && <span className={styles.Date}>{formatDate(items[liveIndex].date)}</span>}
+            </div>
+            <div className={styles.Type}>{items[liveIndex].liveType}</div>
           </div>
         );
       }

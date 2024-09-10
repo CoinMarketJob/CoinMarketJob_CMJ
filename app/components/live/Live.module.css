@@ -46,7 +46,10 @@
 
 .Type {
   margin-top: 4px;
-  color:#999999CC;
+  color: #999999CC;
+  font-size: 16px;
+  font-family: Inter;
+  font-weight: 400;
 }
 
 .Organisation {
@@ -146,5 +149,34 @@
   letter-spacing: 0.04em;
   color: #999999;
   margin-top: 12px;
-  
+}
+
+.NewsMetadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  font-family: Inter;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 15.73px;
+  letter-spacing: 0.04em;
+  color: #999999;
+}
+
+.Author, .Date {
+  display: inline-block;
+}
+
+.Details {
+  overflow: hidden;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.NewsDetails {
+  font-family: Inter;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #242220;
 }
