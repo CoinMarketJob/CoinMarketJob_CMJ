@@ -30,7 +30,6 @@
 .hover-content {
     position: absolute; 
     width: auto;
-    top: -32px;
     left: 50%;
     transform: translateX(-50%);
     padding: 4px 8px;
@@ -47,6 +46,14 @@
     visibility: hidden;
     transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
     pointer-events: none;
+}
+
+.hover-content.top {
+    top: -32px;
+}
+
+.hover-content.bottom {
+    bottom: -32px;
 }
 
 .hover-content.show {

@@ -11,7 +11,8 @@ interface IconProps {
   hoverContent?: string;
   width?: number;
   children: React.ReactNode;
-  disableHover?: boolean; // Yeni prop eklendi
+  disableHover?: boolean;
+  tooltipPosition?: 'top' | 'bottom'; // Yeni prop eklendi
 }
 
 const Icon: React.FC<IconProps> = ({
@@ -24,7 +25,8 @@ const Icon: React.FC<IconProps> = ({
   hoverContent,
   width,
   children,
-  disableHover = false // Varsayılan değer false
+  disableHover = false,
+  tooltipPosition = 'top' // Varsayılan değer 'top'
 }) => {
   const [showHover, setShowHover] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -77,7 +79,7 @@ const Icon: React.FC<IconProps> = ({
         {children}
       </div>
       {!disableHover && (
-        <div className={`hover-content ${showHover ? 'show' : ''}`}>{hoverContent}</div>
+        <div className={`hover-content ${showHover ? 'show' : ''} ${tooltipPosition}`}>{hoverContent}</div>
       )}
     </div>
   );

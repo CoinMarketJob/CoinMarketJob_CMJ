@@ -158,6 +158,7 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags, isFilterOpen, setIs
                     hoverSize={45}
                     hoverContent="Filter"
                     width={28}
+                    tooltipPosition="bottom"
                 >
                     <svg width="28" height="35" viewBox="0 0 37 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M0 5C0 4.44772 0.447715 4 1 4H8V6H1C0.447715 6 0 5.55228 0 5Z" fill="#242220" fill-opacity="0.4"/>

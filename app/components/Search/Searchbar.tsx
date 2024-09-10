@@ -28,7 +28,12 @@ const Searchbar = () => {
     <div className="search-container-div">
       {errorMessage && <div className="ErrorMessage">{errorMessage}</div>}
       <div className="home-button">
-        <Icon onClick={home} hoverSize={51} hoverContent="Home">
+        <Icon 
+          onClick={home} 
+          hoverSize={51} 
+          hoverContent="Home"
+          tooltipPosition="bottom"
+        >
           <svg
             width="31"
             height="35"
@@ -60,6 +65,7 @@ const Searchbar = () => {
           onClick={postajob}
           hoverSize={45}
           hoverContent="Post a job"
+          tooltipPosition="bottom"
         >
           <svg
             width="29"
