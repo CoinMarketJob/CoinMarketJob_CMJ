@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE `Live` ADD COLUMN `author` VARCHAR(191) NULL,
+    ADD COLUMN `date` DATETIME(3) NULL,
+    MODIFY `content` VARCHAR(65535) NOT NULL;
