@@ -82,6 +82,7 @@
     right: 30px;
     top: 35%;
     transform: translateY(-50%);
+    cursor: pointer; /* Bu satırı ekledik */
 }
 
 /* Remove or comment out the following styles as they're no longer needed */
