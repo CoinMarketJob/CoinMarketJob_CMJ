@@ -125,10 +125,12 @@
     opacity: 1;
   }
 
+
   .button-group {
     display: flex;
     align-items: center;
     gap: 10px; /* İkonlar arasındaki boşluk */
+    height: 50px;
   }
   
   .text-size-select {
@@ -182,7 +184,7 @@
     overflow: auto; 
     word-wrap: break-word; 
     white-space: pre-wrap; 
-    padding: 5px; 
+    padding: 24px; 
     box-sizing: border-box; 
 }
 
