@@ -13,7 +13,8 @@
 
 .dropdown {
   position: absolute;
-  background-color: #FFFFFFCC;
+  background-color: rgba(255, 255, 255, 0.7); /* Arkaplan saydamlığını artırdık */
+  backdrop-filter: blur(20px); /* Buzlu cam efekti */
   box-shadow: 0px 0px 2px 0px #00000033, 0px 0px 11.3px 0px #00000033;
   width: 223px;
   max-width: 223px;

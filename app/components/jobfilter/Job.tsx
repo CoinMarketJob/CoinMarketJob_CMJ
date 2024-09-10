@@ -72,7 +72,7 @@ const JobFilterPopUp: React.FC = () => {
   const locationTypeOptions = [
     { id: 'Remote', label: 'Remote' },
     { id: 'Hybrid', label: 'Hybrid' },
-    { id: 'OnSite', label: 'Onsite' }
+    { id: 'Office', label: 'Office' }
   ];
 
   const jobTypeOptions = [
@@ -85,9 +85,9 @@ const JobFilterPopUp: React.FC = () => {
   ];
 
   const salaryOptions = [
-    { id: 'value', label: 'Value', sublabel: 'Under $100' },
-    { id: 'midRange', label: 'Mid-range', sublabel: '$100-$200' },
-    { id: 'highEnd', label: 'High-end', sublabel: 'Above $200' }
+    { id: 'value', label: 'Value'},
+    { id: 'midRange', label: 'Mid-range' },
+    { id: 'highEnd', label: 'High-end' }
   ];
 
   const experienceLevelOptions = [
@@ -120,6 +120,7 @@ const JobFilterPopUp: React.FC = () => {
   const handleApply = () => {
     filterJobs();
     toggleFilter(); // Close the modal
+    console.log()
   };
 
   const handleOutsideClick = (event: MouseEvent) => {
@@ -253,7 +254,7 @@ const JobFilterPopUp: React.FC = () => {
                   <div
                     className={`${styles.chooseLocation} ${locationType.some(
                       (type) =>
-                        type.toLowerCase() === 'hybrid' || type.toLowerCase() === 'onsite'
+                        type.toLowerCase() === 'hybrid' || type.toLowerCase() === 'office'
                     ) ? styles.visible : ''}`}
                     onClick={toggleLocationSelector}
                   >

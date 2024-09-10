@@ -343,10 +343,9 @@ const LoginClient = () => {
 
   return (
     <div className="login-client-container">
-      {process === 0 ? (
-        <Button
-          text="Enter"
-          disabled={true}
+      <Button
+          text="Login"
+          disabled={false}
           onClick={login}
           paddingTop={21.2}
           paddingBottom={21.2}
@@ -359,11 +358,14 @@ const LoginClient = () => {
           fontSize={19}
           fontWeight={600}
         />
+    </div>
+     /*  {process === 0 ? (
+        
       ) : (
         <div>
           {loginProcess === 0 ? (
             <div>
-              {/* Diğer içerikler */}
+              
               <div style={{ display: "flex" }}>
                 <span className="header-text">Join the Job Market</span>
               </div>
@@ -586,7 +588,7 @@ const LoginClient = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div> */
   );
 };
 

@@ -79,7 +79,7 @@ model JobQuestions {
 enum LocationType {
   Remote
   Hybrid
-  OnSite
+  Office
 }
 
 enum JobType {
