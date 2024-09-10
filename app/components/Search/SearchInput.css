@@ -77,6 +77,15 @@
     cursor: pointer;
 }
 
+.filter-icon-container {
+    position: absolute;
+    right: 30px;
+    top: 35%;
+    transform: translateY(-50%);
+}
+
+/* Remove or comment out the following styles as they're no longer needed */
+/*
 .filter-div {
     position: absolute;
     width: 37px;
@@ -84,6 +93,7 @@
     right: 12px;
     top: 9px;
 }
+*/
 
 .buble-field {
     position: absolute;
