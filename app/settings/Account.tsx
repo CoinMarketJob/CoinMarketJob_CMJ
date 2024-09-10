@@ -40,6 +40,7 @@ const Account: React.FC = () => {
             paddingBottom={15}
             paddingLeft={35}
             paddingRight={35}
+            disabled={true} // Add this line to enable the logout button
           />
         </div>
         <div className="account-item">
@@ -128,6 +129,7 @@ const Account: React.FC = () => {
             paddingBottom={15}
             paddingLeft={35}
             paddingRight={35}
+            disabled={true}
           />
         </div>
       </div>

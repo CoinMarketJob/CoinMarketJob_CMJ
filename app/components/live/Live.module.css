@@ -4,6 +4,7 @@
   height: 100%;
   max-height: 100%;
   overflow-y: auto;  
+  overflow-x: hidden; /* Add this line to hide horizontal scrollbar */
   scrollbar-width: none;
   scrollbar-color: #E7E5E4 transparent;
   -webkit-overflow-scrolling: touch;
@@ -19,6 +20,7 @@
   box-sizing: border-box; 
   cursor: pointer;
   color: #242220D9;
+  overflow-x: hidden; /* Add this line to hide horizontal scrollbar for each item */
 }
 
 @media (max-width: 768px) {

@@ -56,7 +56,7 @@
   margin-top: 1.75rem;
   margin-right: 2.25rem;
   font-size: calc(16px + 1vw); /* Minimum 16px, ekran genişliğine göre artar */
-  max-font-size: 35px; /* Maksimum font boyutu */
+  
 }
 
 .Logo {
@@ -71,7 +71,6 @@
 .TitleText {
   font-family: Inter;
   font-size: calc(16px + 1vw); /* Minimum 16px, ekran genişliğine göre artar */
-  max-font-size: 35px; /* Maksimum font boyutu */
   font-weight: 500;
   line-height: 42.36px;
   letter-spacing: 0.04em;
@@ -138,32 +137,3 @@
   width: 100%; /* Ensure it takes the full width up to the maximum */
 }
 
-@media (min-width: 375px) {
-  .singleRow,
-  .doubleRow,
-  .InputFileContainer{
-    width: 100%;
-  }
-}
-@media (min-width: 768px) {
-  .singleRow,
-  .doubleRow,
-  .InputFileContainer {
-    width: 100%;
-  }
-}
-@media (min-width: 1000px) {
-  .singleRow,
-  .doubleRow,
-  .InputFileContainer {
-    width: 75%;
-  }
-}
-
-@media (min-width: 1200px) {
-    .singleRow,
-    .doubleRow,
-    .InputFileContainer {
-      width: 50%;
-    }
-  }
