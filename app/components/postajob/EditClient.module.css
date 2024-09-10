@@ -56,14 +56,15 @@
 .SelectionGroup {
   display: flex;
   margin-top: 6rem;
+  justify-content: space-between;
 }
 
 .DropDownContainerDiv {
-  width: 27%;
+  width: 248px;
 }
 
 .DropDownContainerDivMargin {
-  margin-right: 9.5%;
+  margin-right: calc(100% - 1000px);  /* 744px is 3 * 248px */
 }
 
 .SalaryGroup {

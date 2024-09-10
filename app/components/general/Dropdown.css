@@ -35,6 +35,7 @@
   justify-content: flex-end;
   align-items: center;
 }
+
 .arrow-icon{
   transition: transform 0.3s ease;
 }
@@ -43,7 +44,7 @@
   transform: rotate(180deg);
 }
 
-.list-container{
+.list-container {
   width: calc(100% - 44px);
   top: 70px;
   left: 10px;
@@ -54,37 +55,40 @@
   scrollbar-width: none;
   scrollbar-color: #E7E5E4 transparent;
   -webkit-overflow-scrolling: touch;
-  background-color: #FFFFFFCC;
-  box-shadow: 0px 0px 2px 0px #00000033;
-  box-shadow: 0px 0px 11.3px 0px #00000033; 
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0px 0px 2px 0px #00000033, 0px 0px 11.3px 0px #00000033; 
   z-index: 1000; 
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-top: 12px;
-  padding-bottom: 12px;
+  padding: 12px;
 }
 
-.list-item{
-  width: calc(100% - 12px);
+.list-item {
+  width: calc(100% - 24px);
   border-radius: 15px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 12px;
+  padding: 8px 12px;
   cursor: pointer;
-  transition: background-color 0.2s ease; /* Add smooth transition */
-
+  transition: background-color 0.2s ease, color 0.2s ease;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19.36px;
+  letter-spacing: 0.04em;
+  color: #999999;
 }
 
 .list-item:hover {
-  background-color: #F5F5F5; /* Light grey background on hover */
+  background-color: #F5F5F5;
+  color: #242220;
 }
 
-.item-selected{
+.item-selected {
   background: #2422200D;
+  color: #242220;
 }
 
 .item-selected:hover {
-  background: #24222033; /* Darker background for selected item on hover */
+  background: #24222033;
 }
 
 .dropdown-input.error {

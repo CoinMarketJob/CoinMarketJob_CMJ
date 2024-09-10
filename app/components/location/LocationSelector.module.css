@@ -1,18 +1,20 @@
 .locationContainer{
+  width: 224px;
+  height: 50px;
   border-radius: 15px;
   border: 1px solid #E7E5E4;
   display: flex;
-  gap: 20px;
   align-items: center;
   justify-content: center;
   padding-left: 24px;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  cursor: pointer; /* Add this line to make the entire container a pointer */
+  position: relative; /* Add this line */
 }
 
 .label {
-  color: #24222099;
-  font-size: 20px;
+  color: #999999;
+  font-size: 15px;
+  font-weight: 400;
   text-align: center;
   margin-right: auto;
 }
@@ -25,16 +27,16 @@
 }
 
 .arrow {
-  transform: translateY(-50%);
+  margin-right: 15px;
   color: #24222066;
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
+  width: 23px;
+  height: 12px;
   transition: transform 0.3s ease;
+  /* Remove the cursor: pointer; from here as it's now on the container */
 }
 
 .arrowRotated {
-  transform: translateY(-50%) rotate(180deg);
+  transform: rotate(180deg);
 }
 
 .dropdown {
@@ -42,20 +44,20 @@
   background-color: rgba(255, 255, 255, 0.1); /* Arkaplan saydamlığını artırdık */
   backdrop-filter: blur(10px); /* Buzlu cam efekti */
   box-shadow: 0px 0px 2px 0px #00000033, 0px 0px 11.3px 0px #00000033;
-  width: 223px;
+  width: 223px; /* Container genişliğine eşit */
   max-width: 223px;
   max-height: none;
   overflow-y: auto; /* Add a scrollbar when content exceeds the height */
   border-radius: 15px;
-  top: 34px;
-  left: -43px;
+  top: 100%; /* Position it right below the container */
+  left: 50%; /* Yeni eklenen satır */
+  transform: translateX(-50%); /* Yeni eklenen satır */
   padding: 12px;
   padding-bottom: 33px;
   flex-direction: column;
   z-index: 1000;
+  margin-top: 8px; /* Add some space between the container and dropdown */
 }
-
-
 
 .searchContainer {
   position: relative;
