@@ -95,6 +95,7 @@ const Live: React.FC = () => {
   const handleShareClick = (e: React.MouseEvent, item: LiveItem) => {
     e.stopPropagation(); // Prevent the card from expanding when clicking the share icon
     // Implement share functionality here
+    console.log("Share clicked for:", item.title);
   };
 
   const getAlternatingRows = (items: LiveItem[]) => {
