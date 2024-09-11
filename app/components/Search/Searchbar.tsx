@@ -73,7 +73,7 @@ const Searchbar = () => {
           <div className="burger-dropdown">
             <div className="burger-dropdown-item" onClick={handleSavedJobs}>Saved jobs</div>
             <div className="burger-dropdown-item" onClick={handleSettings}>Settings</div>
-            <div className="burger-dropdown-item" onClick={handleLogout}>Logout</div>
+            <div className="burger-dropdown-item" onClick={handleLogout}>Log out</div>
           </div>
         )}
       </div>
