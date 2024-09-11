@@ -8,7 +8,7 @@ type JobProps = {
   jobId: string;
 };
 
-const page = ({ params }: { params: JobProps }) => {
+const Page = ({ params }: { params: JobProps }) => {
   const { jobs, setJobs, filteredJobs, setFilteredJobs } = useJobs();
 
   const { layout } = useLayout();
@@ -37,4 +37,4 @@ const page = ({ params }: { params: JobProps }) => {
   );
 };
 
-export default page;
+export default Page;
