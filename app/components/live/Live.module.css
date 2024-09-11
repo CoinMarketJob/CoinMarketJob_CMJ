@@ -182,3 +182,24 @@
   line-height: 1.5;
   color: #242220;
 }
+
+.bottomRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 18px;
+  margin-top: 4px;
+  margin-bottom: 14px;
+}
+
+.Type {
+  color: #999999CC;
+  font-size: 16px;
+  font-family: Inter;
+  font-weight: 400;
+}
+
+/* Add this new class */
+.shareIcon {
+  margin-right: -70px; /* Move the icon 12px to the right */
+}
