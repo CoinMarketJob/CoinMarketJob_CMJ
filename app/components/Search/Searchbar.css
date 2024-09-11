@@ -49,3 +49,42 @@
     from { opacity: 1; }
     to { opacity: 0; }
 }
+
+.burger-menu {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.burger-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 5px;
+    background-color: #ffffffcc;
+    backdrop-filter: blur(10px);
+    box-shadow: 0px 0px 2px 0px #00000033, 0px 0px 11.3px 0px #00000033;
+    border-radius: 15px;
+    padding: 12px;
+    z-index: 1000;
+    min-width: 150px;
+}
+
+.burger-dropdown-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.36px;
+    letter-spacing: 0.04em;
+    color: #999999;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    border-radius: 15px;
+}
+
+.burger-dropdown-item:hover {
+    background-color: #F5F5F5;
+    color: #242220;
+}
