@@ -35,6 +35,7 @@ const JobCard: React.FC<JobCardProps> = ({
   const { filteredJobs, setFilteredJobs } = useJobs();
   const id = job.id;
   const cardType = "left";
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const [{ isDragging }, drag] = useDrag(
     () => ({
@@ -83,6 +84,10 @@ const JobCard: React.FC<JobCardProps> = ({
     e.stopPropagation();
     const shareUrl = `localhost:3000/jobs/view/${job.id}`;
     navigator.clipboard.writeText(shareUrl);
+    setSuccessMessage("Link Copied to Clipboard");
+    setTimeout(() => {
+      setSuccessMessage(null);
+    }, 3000);
   };
   const JobSelect = () => {
     onSelect(job.id);
@@ -107,6 +112,9 @@ const JobCard: React.FC<JobCardProps> = ({
       onClick={JobSelect}
       key={job.id}
     >
+      {successMessage && (
+        <div className={styles.SuccessMessage}>{successMessage}</div>
+      )}
       <div className={styles.icon}>
         <img
           src={job.logo || "/default-logo.png"}
