@@ -17,8 +17,8 @@ const Search: React.FC<props> = ({ keyword, ChangeFunction, handleKeyDown }) => 
   return (
     <div className={styles.container} onClick={handleContainerClick}>
       <svg
-        width="27"
-        height="26"
+        width="24"
+        height="36"
         viewBox="0 0 27 26"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

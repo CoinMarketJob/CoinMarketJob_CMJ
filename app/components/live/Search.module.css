@@ -5,16 +5,17 @@
 }
 
 .input {
-  width: calc(100% - 70px);
-  padding: 14px 14px 14px 70px;
+  width: calc(100% - 60px);
+  padding: 0 8px 0 56px;
+  height: 40px; /* Sabit bir yükseklik belirliyoruz */
   font-family: Inter;
   font-size: 16px;
   font-weight: 400;
-  line-height: 21px;
   color: #999999; /* Default text color */
   border-radius: 64px;
   border: 1px solid #E7E5E4;
   transition: border-color 0.3s ease, color 0.3s ease;
+  line-height: 40px; /* Dikey ortalama için line-height'ı height ile aynı yapıyoruz */
 }
 
 .input::placeholder {
@@ -22,10 +23,10 @@
   font-size: 16px;
   font-weight: 400; 
   color: #24222066; 
-  line-height: 21px; 
   text-align: left; 
   font-style: normal;
   transition: opacity 0.3s ease, color 0.3s ease;
+  line-height: 40px; /* Placeholder'ı da dikey ortalıyoruz */
 }
 
 .input:focus::placeholder {
@@ -49,7 +50,7 @@
 
 .searchIcon {
   position: absolute;
-  left: 24px;
+  left: 16px;
   top: 50%;
   transform: translateY(-50%);
   transition: opacity 0.3s ease;

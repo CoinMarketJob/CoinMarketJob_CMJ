@@ -21,7 +21,7 @@ const Categories: React.FC<Props> = ({ onCategoryClick }) => {
     }
   };
 
-  const categories = ["News", "Hackathon", "Event", "Blog", "Academy", "Live"];
+  const categories = ["NEWS", "HACKATHON", "EVENT", "BLOG", "ACADEMY", "LIVE"];
 
   return (
     <div className={styles.Container}>
@@ -30,7 +30,7 @@ const Categories: React.FC<Props> = ({ onCategoryClick }) => {
           key={category}
           className={`${styles.Element} 
             ${activeCategory === category ? styles.active : ""}
-            ${["Academy", "Live"].includes(category) ? styles.disabled : ""}`}
+            ${["ACADEMY", "LIVE"].includes(category) ? styles.disabled : ""}`}
           onClick={() => handleCategoryClick(category)}
         >
           {category}
