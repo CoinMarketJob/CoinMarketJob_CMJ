@@ -1,20 +1,32 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./Searchbar.css";
 import Icon from "../general/Icon";
 import SearchInput from "./SearchInput";
 import { useRouter } from "next/navigation";
-import JobFilterPopUp from "../jobfilter/Job";
+import { useSession, signOut } from "next-auth/react";
 
-import { useSession } from "next-auth/react";
 const Searchbar = () => {
   const [tags, setTags] = useState<Array<string>>([]);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   const router = useRouter();
   const { data: session } = useSession();
+  const burgerRef = useRef<HTMLDivElement>(null);
 
-  
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (burgerRef.current && !burgerRef.current.contains(event.target as Node)) {
+        setIsBurgerOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const home = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     router.push("/");
     setIsFilterOpen(false);
@@ -24,9 +36,47 @@ const Searchbar = () => {
     router.push("/postajob");
   };
 
+  const handleBurgerClick = () => {
+    setIsBurgerOpen(!isBurgerOpen);
+  };
+
+  const handleSavedJobs = () => {
+    router.push("/savedjobs");
+    setIsBurgerOpen(false);
+  };
+
+  const handleSettings = () => {
+    router.push("/settings");
+    setIsBurgerOpen(false);
+  };
+
+  const handleLogout = async () => {
+    await signOut();
+    setIsBurgerOpen(false);
+  };
+
   return (
     <div className="search-container-div">
       {errorMessage && <div className="ErrorMessage">{errorMessage}</div>}
+      <div className="burger-menu" ref={burgerRef}>
+        <Icon
+          onClick={handleBurgerClick}
+          hoverSize={45}
+          hoverContent="Menu"
+          tooltipPosition="bottom"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#999999">
+            <path d="M170-254.62q-12.75 0-21.37-8.63-8.63-8.62-8.63-21.38 0-12.75 8.63-21.37 8.62-8.61 21.37-8.61h620q12.75 0 21.37 8.62 8.63 8.63 8.63 21.39 0 12.75-8.63 21.37-8.62 8.61-21.37 8.61H170ZM170-450q-12.75 0-21.37-8.63-8.63-8.63-8.63-21.38 0-12.76 8.63-21.37Q157.25-510 170-510h620q12.75 0 21.37 8.63 8.63 8.63 8.63 21.38 0 12.76-8.63 21.37Q802.75-450 790-450H170Zm0-195.39q-12.75 0-21.37-8.62-8.63-8.63-8.63-21.39 0-12.75 8.63-21.37 8.62-8.61 21.37-8.61h620q12.75 0 21.37 8.63 8.63 8.62 8.63 21.38 0 12.75-8.63 21.37-8.62 8.61-21.37 8.61H170Z"/>
+          </svg>
+        </Icon>
+        {isBurgerOpen && (
+          <div className="burger-dropdown">
+            <div className="burger-dropdown-item" onClick={handleSavedJobs}>Saved jobs</div>
+            <div className="burger-dropdown-item" onClick={handleSettings}>Settings</div>
+            <div className="burger-dropdown-item" onClick={handleLogout}>Logout</div>
+          </div>
+        )}
+      </div>
       <div className="home-button">
         <Icon 
           onClick={home} 
