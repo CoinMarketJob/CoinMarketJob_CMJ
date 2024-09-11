@@ -68,13 +68,23 @@
 .checkbox-item input[type="checkbox"]:checked + .square-checkbox::before {
     background-color: #999999;
     border: 1px solid #E7E5E4;
-    content: '✓';
-    font-size: 18px; 
-    color: white;
+    content: '';
     display: flex;
     align-items: center;
-    text-align: center;
     justify-content: center;
+}
+
+.checkbox-item input[type="checkbox"]:checked + .square-checkbox::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px;
+    height: 11px;
+    background-image: url("data:image/svg+xml,%3Csvg width='15' height='11' viewBox='0 0 15 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12.8876 0L14.7101 1.82248L10.1213 6.41124L5.53254 11L0 5.46746L1.82249 3.64497L5.53254 7.35503L9.21006 3.67751L12.8876 0Z' fill='white'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .checkbox-item input[type="checkbox"]:checked + .circle-checkbox::before {
