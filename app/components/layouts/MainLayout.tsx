@@ -12,9 +12,14 @@ import { useLayout } from "@/hooks/useLayout";
 interface MainLayoutProps {
   layout: number;
   filteredJobs: Array<Job>;
+  selectedJobId?: string | null;
 }
 
-const MainLayout: React.FC<MainLayoutProps> = ({ filteredJobs, layout }) => {
+const MainLayout: React.FC<MainLayoutProps> = ({
+  filteredJobs,
+  layout,
+  selectedJobId,
+}) => {
   const [showDetail, setShowDetail] = useState<boolean>(false);
   const [showDetailInRightSide, setShowDetailInRightSide] =
     useState<boolean>(false);
@@ -30,6 +35,15 @@ const MainLayout: React.FC<MainLayoutProps> = ({ filteredJobs, layout }) => {
   useEffect(() => {
     setLeftCards(filteredJobs);
   }, [filteredJobs]);
+
+  useEffect(() => {
+    if (selectedJobId) {
+      const foundJob =
+        filteredJobs.find((job) => job.id === parseInt(selectedJobId)) || null;
+      setDetailJob(foundJob);
+      setShowDetail(true);
+    }
+  }, [selectedJobId, filteredJobs]);
 
   const handleDrop = (id: number, list: string) => {
     if (list === "left") {

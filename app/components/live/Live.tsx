@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Icon from "../general/Icon";
 
 interface LiveItem {
+  id: number;
   liveType: string;
   title: string;
   organisation?: string;
@@ -16,9 +17,9 @@ interface LiveItem {
 }
 
 const Live: React.FC = () => {
-  const [live, setLive] = useState<LiveItem[]>([]);
-  const [filteredLive, setFilteredLive] = useState<LiveItem[]>([]);
-  const [blog, setBlog] = useState<LiveItem[]>([]);
+  const [live, setLive] = useState<any[]>([]);
+  const [filteredLive, setFilteredLive] = useState<any[]>([]);
+  const [blog, setBlog] = useState<any[]>([]);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [keyword, setKeyword] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -92,13 +93,12 @@ const Live: React.FC = () => {
     return `${months[date.getMonth()]} ${date.getDate()}`;
   };
 
-  const handleShareClick = (e: React.MouseEvent, item: LiveItem) => {
-    e.stopPropagation(); // Prevent the card from expanding when clicking the share icon
-    // Implement share functionality here
-    console.log("Share clicked for:", item.title);
+  const handleShareClick = (e: React.MouseEvent, id: any) => {
+    e.stopPropagation(); 
+    console.log("Share clicked for:", id);
   };
 
-  const getAlternatingRows = (items: LiveItem[]) => {
+  const getAlternatingRows = (items: any[]) => {
     const combined: JSX.Element[] = [];
     let liveIndex = 0;
     let blogIndex = 0;
@@ -164,7 +164,7 @@ const Live: React.FC = () => {
             <div className={styles.bottomRow}>
               <div className={styles.Type}>{items[liveIndex].liveType}</div>
               <Icon
-                onClick={(e) => handleShareClick(e, items[liveIndex])}
+                onClick={(e) => handleShareClick(e, items[liveIndex].id)}
                 hoverSize={40}
                 hoverContent="Share"
                 tooltipPosition="top"

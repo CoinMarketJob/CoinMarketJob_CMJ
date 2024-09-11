@@ -30,33 +30,36 @@ const JobCard: React.FC<JobCardProps> = ({
   onDragBegin,
   onDragEnd,
   isSelected,
-  onSelect
+  onSelect,
 }) => {
   const { filteredJobs, setFilteredJobs } = useJobs();
   const id = job.id;
   const cardType = "left";
 
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: ItemTypes.CARD,
-    item: () => {
-      onDragBegin();
-      return { id, cardType };
-    },
-    end: (item, monitor) => {
-      const dropResult = monitor.getDropResult<{ list: string }>();
-      console.log(monitor);
-      if (item && dropResult) {
-        onDrop(item.id, dropResult.list);
-      }
-      
-      if (!monitor.didDrop() || dropResult?.list === "left") {
-        onDragEnd();
-      }
-    },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
+  const [{ isDragging }, drag] = useDrag(
+    () => ({
+      type: ItemTypes.CARD,
+      item: () => {
+        onDragBegin();
+        return { id, cardType };
+      },
+      end: (item, monitor) => {
+        const dropResult = monitor.getDropResult<{ list: string }>();
+        console.log(monitor);
+        if (item && dropResult) {
+          onDrop(item.id, dropResult.list);
+        }
+
+        if (!monitor.didDrop() || dropResult?.list === "left") {
+          onDragEnd();
+        }
+      },
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+      }),
     }),
-  }), [id, cardType, onDragBegin, onDrop, onDragEnd]);
+    [id, cardType, onDragBegin, onDrop, onDragEnd]
+  );
 
   const JobSave = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
@@ -76,10 +79,10 @@ const JobCard: React.FC<JobCardProps> = ({
       }
     } catch (error) {}
   };
-  const JobClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const JobShare = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
-    const filter = filteredJobs.filter((x) => x.id !== job.id);
-    setFilteredJobs(filter);
+    const shareUrl = `localhost:3000/jobs/view/${job.id}`;
+    navigator.clipboard.writeText(shareUrl);
   };
   const JobSelect = () => {
     onSelect(job.id);
@@ -105,34 +108,35 @@ const JobCard: React.FC<JobCardProps> = ({
       key={job.id}
     >
       <div className={styles.icon}>
-        <img 
-          src={job.logo || '/default-logo.png'} 
-          alt={`${job.companyName || 'Company'} Logo`} 
+        <img
+          src={job.logo || "/default-logo.png"}
+          alt={`${job.companyName || "Company"} Logo`}
         />
       </div>
       <div className={styles.details}>
         <h2 className={styles.title}>{job.jobTitle}</h2>
-        <p className={styles.company}>{job.companyName || 'Unknown Company'}</p>
+        <p className={styles.company}>{job.companyName || "Unknown Company"}</p>
         <p className={styles.meta}>
           <span className={styles.type}>{formatJobType(job.jobType)}</span>
-          <span className={styles.location}>{job.location || 'Unknown Location'}</span>
+          <span className={styles.location}>
+            {job.location || "Unknown Location"}
+          </span>
         </p>
       </div>
       <div className={styles.actions}>
         <div>
-          <Icon onClick={JobClose} hoverSize={45} hoverContent="Close">
+          <Icon onClick={JobShare} hoverSize={45} hoverContent="Share">
             <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
+              width="19"
+              height="20"
+              viewBox="0 0 19 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M8 9.32876L1.60303 15.7261C1.42838 15.9005 1.20886 15.9898 0.944477 15.994C0.680301 15.998 0.456792 15.9087 0.273949 15.7261C0.0913163 15.5432 0 15.3217 0 15.0615C0 14.8013 0.0913163 14.5798 0.273949 14.397L6.67124 8L0.273949 1.60303C0.0995127 1.42838 0.010193 1.20886 0.00598975 0.944478C0.00199664 0.680302 0.0913163 0.456792 0.273949 0.273949C0.456792 0.0913163 0.678305 0 0.938488 0C1.19867 0 1.42018 0.0913163 1.60303 0.273949L8 6.67124L14.397 0.273949C14.5716 0.0995127 14.7911 0.010193 15.0555 0.00598975C15.3197 0.00199664 15.5432 0.0913163 15.7261 0.273949C15.9087 0.456792 16 0.678305 16 0.938488C16 1.19867 15.9087 1.42018 15.7261 1.60303L9.32876 8L15.7261 14.397C15.9005 14.5716 15.9898 14.7911 15.994 15.0555C15.998 15.3197 15.9087 15.5432 15.7261 15.7261C15.5432 15.9087 15.3217 16 15.0615 16C14.8013 16 14.5798 15.9087 14.397 15.7261L8 9.32876Z"
+                d="M14.9088 20C14.0399 20 13.3015 19.696 12.6936 19.0879C12.0857 18.4798 11.7817 17.7414 11.7817 16.8727C11.7817 16.7544 11.7899 16.6319 11.8063 16.5052C11.8227 16.3784 11.8472 16.262 11.8799 16.156L5.24558 12.295C4.95578 12.5561 4.62957 12.7601 4.26695 12.9069C3.90434 13.0538 3.52446 13.1273 3.12732 13.1273C2.25858 13.1273 1.52017 12.8233 0.912103 12.2152C0.304035 11.607 0 10.8685 0 9.99975C0 9.13085 0.304035 8.39245 0.912103 7.78454C1.52017 7.17664 2.25858 6.87268 3.12732 6.87268C3.52446 6.87268 3.90434 6.94616 4.26695 7.0931C4.62957 7.23988 4.95578 7.44385 5.24558 7.70501L11.8799 3.84404C11.8472 3.738 11.8227 3.62158 11.8063 3.49476C11.7899 3.3681 11.7817 3.24562 11.7817 3.12732C11.7817 2.25858 12.0858 1.52017 12.6938 0.912103C13.3021 0.304034 14.0406 0 14.9093 0C15.7782 0 16.5166 0.304034 17.1245 0.912103C17.7324 1.52034 18.0364 2.25882 18.0364 3.12756C18.0364 3.99647 17.7323 4.73487 17.1243 5.34278C16.5162 5.95068 15.7778 6.25463 14.9091 6.25463C14.5119 6.25463 14.132 6.18312 13.7694 6.04011C13.4068 5.89709 13.0806 5.69508 12.7908 5.43408L6.15645 9.28328C6.18918 9.38931 6.21372 9.50574 6.23009 9.63256C6.24645 9.75921 6.25463 9.88169 6.25463 10C6.25463 10.1183 6.24645 10.2408 6.23009 10.3674C6.21372 10.4943 6.18918 10.6107 6.15645 10.7167L12.7908 14.5659C13.0806 14.3049 13.4068 14.1029 13.7694 13.9599C14.132 13.8169 14.5119 13.7454 14.9091 13.7454C15.7778 13.7454 16.5162 14.0494 17.1243 14.6575C17.7323 15.2657 18.0364 16.0042 18.0364 16.8729C18.0364 17.7418 17.7323 18.4802 17.1243 19.0881C16.516 19.696 15.7776 20 14.9088 20Z"
                 fill="#242220"
-                className="svg-icon"
-                fill-opacity="0.2"
+                fill-opacity="0.4"
               />
             </svg>
           </Icon>

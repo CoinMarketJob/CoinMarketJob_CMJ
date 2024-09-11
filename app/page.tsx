@@ -25,7 +25,7 @@ const Home = () => {
     }
   
     fetchData();
-  }, [setJobs, setFilteredJobs, layout]);
+  }, [setJobs, setFilteredJobs]);
   
 
   return (
