@@ -1,9 +1,26 @@
+.CategoriesWrapper {
+    position: relative;
+    overflow: hidden;
+}
+
 .Container {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin-top: 16px;
     margin-bottom: 24px;
     gap: 22px;
+    transition: transform 0.3s ease;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.Container::-webkit-scrollbar {
+    display: none;
+}
+
+.Container.shifted {
+    transform: translateX(-100px); /* Adjust this value based on your needs */
 }
 
 .Element {
@@ -19,6 +36,7 @@
     position: relative;
     transition: color 0.3s ease;
     font-style: italic;
+    flex-shrink: 0;
 }
 
 .Element:hover {
@@ -57,14 +75,41 @@
     display: none;
 }
 
+.ShiftArrow {
+    position: absolute;
+    right: 0;
+    top: 35%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.CategoriesWrapper:hover .ShiftArrow {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.ShiftArrow:hover {
+    opacity: 0.8;
+}
+
 @media (max-width: 768px) {
     .Container {
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         justify-content: flex-start;
+        overflow-x: auto;
     }
 
     .Element {
-        flex: 1 1 auto;
-        margin-bottom: 8px;
+        flex: 0 0 auto;
     }
 }
