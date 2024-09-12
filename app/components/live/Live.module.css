@@ -200,7 +200,9 @@
   font-weight: 400;
 }
 
-/* Add this new class */
-.shareIcon {
-  margin-right: -70px; /* Move the icon 12px to the right */
+.iconContainer {
+  display: flex;
+  gap: 8px; /* Adjust this value to control the space between icons */
 }
+
+/* Remove the .shareIcon class if it's no longer needed */
