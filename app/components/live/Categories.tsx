@@ -23,7 +23,7 @@ const Categories: React.FC<Props> = ({ onCategoryClick }) => {
     }
   };
 
-  const categories = ["NEWS", "HACKATHON", "EVENT", "BLOG", "ACADEMY", "LIVE"];
+  const categories = ["News", "Hackathon", "Event", "Blog", "Academy", "Live"];
 
   const handleShift = () => {
     setIsShifted(!isShifted);
@@ -43,7 +43,7 @@ const Categories: React.FC<Props> = ({ onCategoryClick }) => {
             key={category}
             className={`${styles.Element} 
               ${activeCategory === category ? styles.active : ""}
-              ${["ACADEMY", "LIVE"].includes(category) ? styles.disabled : ""}`}
+              ${["Academy", "Live"].includes(category) ? styles.disabled : ""}`}
             onClick={() => handleCategoryClick(category)}
           >
             {category}
