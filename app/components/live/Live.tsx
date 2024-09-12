@@ -161,7 +161,7 @@ const Live: React.FC = () => {
               {items[liveIndex].author && <span className={styles.Author}>By {items[liveIndex].author}</span>}
               {items[liveIndex].date && <span className={styles.Date}>{formatDate(items[liveIndex].date)}</span>}
             </div>
-            <div className={styles.bottomRow}>
+            <div className={`${styles.bottomRow} ${isExpanded ? styles.expanded : ''}`}>
               <div className={styles.Type}>{items[liveIndex].liveType}</div>
 
               <div className={styles.iconContainer}>

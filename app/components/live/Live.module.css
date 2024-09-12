@@ -193,6 +193,15 @@
   margin-bottom: 14px;
 }
 
+.bottomRow .iconContainer {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.bottomRow.expanded .iconContainer {
+  opacity: 1;
+}
+
 .Type {
   color: #999999CC;
   font-size: 16px;
