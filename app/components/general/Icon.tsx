@@ -29,30 +29,19 @@ const Icon: React.FC<IconProps> = ({
   tooltipPosition = 'top' // Varsayılan değer 'top'
 }) => {
   const [showHover, setShowHover] = useState(false);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  // timerRef'i kaldırıyoruz çünkü artık gecikme olmayacak
 
   const handleMouseEnter = () => {
     if (!disableHover) {
-      timerRef.current = setTimeout(() => {
-        setShowHover(true);
-      }, 750);
+      setShowHover(true); // Gecikme olmadan direkt göster
     }
   };
 
   const handleMouseLeave = () => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
     setShowHover(false);
   };
 
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-      }
-    };
-  }, []);
+  // useEffect hook'unu kaldırıyoruz çünkü artık timer kullanmıyoruz
 
   return (
     <div

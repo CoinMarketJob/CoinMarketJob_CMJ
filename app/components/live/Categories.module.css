@@ -89,17 +89,11 @@
     align-items: center;
     cursor: pointer;
     transition: opacity 0.3s ease;
-    opacity: 0;
-    pointer-events: none;
-}
-
-.CategoriesWrapper:hover .ShiftArrow {
-    opacity: 1;
-    pointer-events: auto;
+    opacity: 0.7; /* Başlangıçta soluk görünüm için */
 }
 
 .ShiftArrow:hover {
-    opacity: 0.8;
+    opacity: 1; /* Sadece ok'un üzerine geldiğinde tam opaklık */
 }
 
 @media (max-width: 768px) {
