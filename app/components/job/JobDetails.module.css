@@ -106,13 +106,9 @@
 
 .shareButton {
     position: absolute;
-    top: 0;
-    right: -20px;
-    margin-right: 35.96px;
-    margin-top: 2%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    right: -45px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .closeIcon {
@@ -121,4 +117,40 @@
     right: 10px;
     cursor: pointer;
     z-index: 0;
+}
+
+.actionButtons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    position: relative;
+}
+
+.shareButton {
+    margin-left: 10px;
+}
+
+.successMessage {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #999999;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    z-index: 1000;
+    animation: fadeIn 0.3s, fadeOut 0.3s 2.7s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
 }

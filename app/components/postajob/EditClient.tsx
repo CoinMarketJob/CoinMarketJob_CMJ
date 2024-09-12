@@ -439,7 +439,7 @@ const EditClient: React.FC<EditClientProps> = ({
         </div>
 
         <div className={`${styles.AddQuestionGroup}`}>
-          <span className={`${styles.AddQuestion}`}>Add custom question</span>
+          <span className={`${styles.AddQuestion}`}>Add question</span>
           <Icon onClick={(e) => setQuestionAddShow(true)} hoverSize={40}>
             <svg
               width="17"
