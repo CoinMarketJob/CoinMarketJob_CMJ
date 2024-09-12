@@ -26,3 +26,10 @@
   outline: none;
   resize: none;
 }
+
+.customQuestionPopup {
+  /* Mevcut stiller */
+  background-color: rgba(255, 255, 255, 0.1); /* Yarı saydam arka plan */
+  backdrop-filter: blur(10px); /* Arka planı bulanıklaştır */
+  -webkit-backdrop-filter: blur(10px); /* Safari için destek */
+}

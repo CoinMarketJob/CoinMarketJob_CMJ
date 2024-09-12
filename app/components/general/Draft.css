@@ -179,12 +179,13 @@
 .editor-content {
     width: calc(100%); 
     max-width: calc(100%);
-     
     flex-grow: 1; 
     overflow: auto; 
     word-wrap: break-word; 
     white-space: pre-wrap; 
     padding: 24px; 
+    padding-top: 30px;
+    padding-bottom: 30px;
     box-sizing: border-box; 
 }
 
