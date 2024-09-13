@@ -25,8 +25,11 @@
   margin-bottom: 24px; /* Profil fotoğrafı ve company name arasında 16px boşluk */
 }
 .companyLogo {
-  width: 100px; /* Resmin genişliği, ihtiyacınıza göre ayarlayın */
+  width: 130px; /* Resmin genişliği, ihtiyacınıza göre ayarlayın */
   height: auto; /* Resmin yüksekliği otomatik */
+  z-index: 1; /* Resmin z-index'i ikondan düşük olmalı */
+  border-radius: 15px;
+  cursor: pointer;
 }
 
 .companyLogoWrapper {
@@ -65,8 +68,6 @@
   cursor: pointer;
 }
 
-
-
 .iconWrapper {
   position: absolute;
   bottom: 10px; /* İkonun alt konumunu ayarlayın */
@@ -91,6 +92,7 @@
   margin-bottom: 16px; /* Company name ve Job title arasında 12px boşluk */
   font-family: Inter;
   font-size: 23px;
+  margin-top: 10px;
   font-weight: 400;
   line-height: 27.84px;
   letter-spacing: 0.04em;
@@ -149,6 +151,7 @@
   line-height: 21px;
   text-align: left;
   color: #999999;
+  cursor: pointer;
 }
 
 .ChangeSalary:hover {
@@ -262,7 +265,6 @@
   color: #999999;
   cursor: pointer;
 }
-
 
 /*
 .AddQuestion:hover {
