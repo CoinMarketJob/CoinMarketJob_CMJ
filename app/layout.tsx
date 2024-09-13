@@ -23,14 +23,19 @@ export default function RootLayout({
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 768);
+    const checkDeviceSize = () => {
+      const dpi = window.devicePixelRatio || 1;
+      const width = window.screen.width * dpi;
+      const height = window.screen.height * dpi;
+      const diagonalSize = Math.sqrt(width * width + height * height) / dpi / 96; // 96 DPI is a common reference point
+
+      setIsMobile(diagonalSize < 7); // Assuming devices smaller than 7 inches are mobile
     };
 
-    checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
+    checkDeviceSize();
+    window.addEventListener("resize", checkDeviceSize);
 
-    return () => window.removeEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkDeviceSize);
   }, []);
 
   return (
