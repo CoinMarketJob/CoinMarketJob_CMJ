@@ -65,20 +65,21 @@ const Page = () => {
       console.error("Error uploading logo:", error);
       setErrorMessage("Failed to upload logo. Please try again.");
     }
-  }, []);
+  }, []); // Boş dependency array
 
   useEffect(() => {
     const handleLogoUpload = async () => {
       if (selectedImage) {
         await uploadLogo(selectedImage, selectedImage.name);
-      } else if (companyName && !logoURL) {
+      } else if (companyName) {
+        // Her seferinde yeni logo oluştur
         const logoBlob = await generateLogoFromCompanyName(companyName);
         await uploadLogo(logoBlob, "company-logo.png");
       }
     };
 
     handleLogoUpload();
-  }, [selectedImage, companyName, uploadLogo, logoURL]);
+  }, [selectedImage, companyName, uploadLogo]);
 
   const generateLogoFromCompanyName = (companyName: string): Promise<Blob> => {
     return new Promise((resolve) => {
