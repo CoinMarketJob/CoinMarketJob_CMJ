@@ -6,14 +6,31 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
-.layout-container-div{
+#scale-wrapper {
+  width: 1920px;
+  height: 100vh;
+  transform-origin: top left;
+}
+
+.layout-container-div {
   display: flex;
   flex-direction: column;
   max-height: 100vh;
   min-height: 100vh;
 }
 
-.layout-main-div{
+.layout-main-div {
   flex-grow: 1;
   display: flex;
+}
+
+@media (max-width: 1100px) {
+  body {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  #scale-wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
 }

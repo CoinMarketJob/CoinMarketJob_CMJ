@@ -12,12 +12,35 @@ import { ProfileProvider } from "@/hooks/useCompanyProfile";
 import { JobApplicationsProvider } from "@/hooks/useApplicationJob";
 import { ProfileDataProvider } from "@/hooks/useProfileData";
 import { LiveVisibilityProvider } from "@/hooks/useLiveVisibility";
+import { useEffect } from "react";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
+  useEffect(() => {
+    function handleResize() {
+      const wrapper = document.getElementById("scale-wrapper");
+      if (wrapper) {
+        const scaleWidth = Math.min(window.innerWidth / 1920, 1);
+        wrapper.style.transform = `scaleX(${scaleWidth})`;
+
+        if (window.innerWidth <= 1100) {
+          document.body.style.width = "1920px";
+        } else {
+          document.body.style.width = "100vw";
+        }
+        document.body.style.height = "100vh";
+      }
+    }
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <html lang="en">
       <head>
@@ -35,21 +58,23 @@ export default function RootLayout({
           <LayoutProvider>
             <ProfileProvider>
               <JobsProvider>
-                  <AuthWrapper>
-                    <JobApplicationsProvider>
-                      <ProfileDataProvider>
+                <AuthWrapper>
+                  <JobApplicationsProvider>
+                    <ProfileDataProvider>
                       <LiveVisibilityProvider>
-                        <div className="layout-container-div">
-                          <Searchbar />
-                          <main className="layout-main-div">
-                            <DefaultContainer>{children}</DefaultContainer>
-                          </main>
-                          <Footer />
+                        <div id="scale-wrapper">
+                          <div className="layout-container-div">
+                            <Searchbar />
+                            <main className="layout-main-div">
+                              <DefaultContainer>{children}</DefaultContainer>
+                            </main>
+                            <Footer />
+                          </div>
                         </div>
                       </LiveVisibilityProvider>
-                      </ProfileDataProvider>
-                    </JobApplicationsProvider>
-                  </AuthWrapper>
+                    </ProfileDataProvider>
+                  </JobApplicationsProvider>
+                </AuthWrapper>
               </JobsProvider>
             </ProfileProvider>
           </LayoutProvider>
