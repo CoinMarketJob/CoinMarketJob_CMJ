@@ -145,7 +145,10 @@ const ReviewClient: React.FC<ReviewClientProps> = ({
       )}
 
       <div className={`${styles.centerDiv} ${styles.Description}`}>
-        <Draft show content={description} />
+        <h3 className={styles.descriptionTitle}>Job Description:</h3>
+        <div className={styles.descriptionContent}>
+          <Draft show content={description} />
+        </div>
       </div>
 
       <div className={`${styles.Continue}`}>
