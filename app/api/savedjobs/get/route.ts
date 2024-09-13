@@ -1,25 +1,18 @@
 /* eslint-disable */
-import { getCurrentUser } from "@/app/actions/getCurrentUser";
 import prisma from "@/libs/prismadb";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic"; // Dinamik içeriği zorlamak için
 
 export async function GET() {
-  const currentUser = await getCurrentUser();
+  try {
+    const jobs = await prisma.job.findMany({
+      cacheStrategy: { swr: 60, ttl: 60 },
+    });
 
-  if (!currentUser) {
-    return NextResponse.json(
-      { error: "User not authenticated" },
-      { status: 401 }
-    );
+    return NextResponse.json(jobs);
+  } catch (error) {
+    console.error("Error fetching jobs:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
-
-  const jobs = await prisma.savedJobs.findMany({
-    where: { userId: currentUser.id },
-    include: { job: true },
-    cacheStrategy: { swr: 60, ttl: 60 },
-  });
-
-  return NextResponse.json(jobs);
 }

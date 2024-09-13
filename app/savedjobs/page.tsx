@@ -11,12 +11,16 @@ const Page = () => {
     async function fetchData() {
       try {
         const response = await fetch('/api/savedjobs/get');
-        const data: { job: any }[] = await response.json();
-        console.log(data);
-
-        // Map the data to extract jobs
-        const jobArray = data.map(item => item.job);
-        setSavedJobs(jobArray);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const allJobs = await response.json();
+        
+        const savedJobIds = JSON.parse(localStorage.getItem('savedJobs') || '[]');
+        
+        const filteredJobs = allJobs.filter((job: any) => savedJobIds.includes(job.id));
+        
+        setSavedJobs(filteredJobs);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -27,9 +31,13 @@ const Page = () => {
 
   return (
     <div className={styles.Container}>
-      <span className={styles.JobsText}>JOBS</span>
+      <span className={styles.JobsText}>SAVED JOBS</span>
       <div>
-        <MainLayout filteredJobs={savedJobs} layout={1} />
+        {savedJobs.length > 0 ? (
+          <MainLayout filteredJobs={savedJobs} layout={1} />
+        ) : (
+          <p>No saved jobs found.</p>
+        )}
       </div>        
     </div>
   );
