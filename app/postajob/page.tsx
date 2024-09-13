@@ -44,6 +44,47 @@ const Page = () => {
 
   const [logoURL, setLogoURL] = useState<string>("");
 
+  const generateDefaultLogo = (): Promise<Blob> => {
+    return new Promise((resolve) => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 200;
+      canvas.height = 200;
+      const ctx = canvas.getContext('2d');
+
+      if (ctx) {
+        // Siyah arka plan
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(0, 0, 200, 200);
+
+        // "UPLOAD" yazısı
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = 'bold 36px Inter';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('UPLOAD', 100, 100);
+
+        canvas.toBlob(blob => {
+          if (blob) {
+            resolve(blob);
+          } else {
+            resolve(new Blob());
+          }
+        }, 'image/png');
+      } else {
+        resolve(new Blob());
+      }
+    });
+  };
+
+  useEffect(() => {
+    const initDefaultLogo = async () => {
+      const defaultLogoBlob = await generateDefaultLogo();
+      await uploadLogo(defaultLogoBlob, "default-logo.png");
+    };
+
+    initDefaultLogo();
+  }, []); // Sadece bir kez çalışacak
+
   const uploadLogo = useCallback(async (file: File | Blob, fileName: string) => {
     const formData = new FormData();
     formData.append("file", file, fileName);
@@ -72,7 +113,6 @@ const Page = () => {
       if (selectedImage) {
         await uploadLogo(selectedImage, selectedImage.name);
       } else if (companyName) {
-        // Her seferinde yeni logo oluştur
         const logoBlob = await generateLogoFromCompanyName(companyName);
         await uploadLogo(logoBlob, "company-logo.png");
       }
@@ -235,7 +275,7 @@ const Page = () => {
       {page === 0 ? (
 
         <EditClient
-          image={logoURL || "/path/to/default-logo.png"}
+          image={logoURL}
           companyName={companyName}
           setCompanyName={setCompanyName}
           jobTitle={jobTitle}
