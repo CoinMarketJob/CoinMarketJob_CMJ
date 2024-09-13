@@ -28,20 +28,13 @@ export default function RootLayout({
     const dpi = window.devicePixelRatio || 1;
     const width = screen.width * dpi;
     const height = screen.height * dpi;
-    const diagonalSize = Math.sqrt(width * width + height * height) / dpi / 96;
-    const hasTouchScreen =
-      navigator.maxTouchPoints > 0 || "ontouchstart" in window;
-    const isPortrait = window.innerHeight > window.innerWidth;
-    const isSmallScreen = window.innerWidth < 768;
 
     const uaCheck =
       /android|webos|iphone|ipod|blackberry|iemobile|opera mini/i.test(
         userAgent.toLowerCase()
       );
-    const sizeCheck = diagonalSize < 7 && hasTouchScreen;
-    const orientationCheck = hasTouchScreen && isPortrait;
 
-    return (uaCheck || sizeCheck || orientationCheck) && isSmallScreen;
+    return uaCheck;
   }
 
   useEffect(() => {
