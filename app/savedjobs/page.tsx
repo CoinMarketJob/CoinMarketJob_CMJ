@@ -31,12 +31,12 @@ const Page = () => {
 
   return (
     <div className={styles.Container}>
-      <span className={styles.JobsText}>SAVED JOBS</span>
+      <span className={styles.JobsText}>JOBS</span>
       <div>
         {savedJobs.length > 0 ? (
           <MainLayout filteredJobs={savedJobs} layout={1} />
         ) : (
-          <p>No saved jobs found.</p>
+          <p>Nothing Saved.</p>
         )}
       </div>        
     </div>
