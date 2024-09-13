@@ -230,23 +230,29 @@ const EditClient: React.FC<EditClientProps> = ({
 
   return (
     <div className={styles.container}>
-      <div
-        className={`${styles.centerDiv} ${styles.logo}`}
-        onClick={triggerFileInput}
-      >
-        <img
-          src={selectedImage ? URL.createObjectURL(selectedImage) : image}
-          className={styles.companyLogo}
-          alt="Description"
-        />
-        <input
-          type="file"
-          ref={fileInputRef}
-          onChange={handleImageSelect}
-          style={{ display: "none" }}
-          accept="image/*"
-        />
-      </div>
+<div className={styles.companyLogoSection}>
+<div className={styles.companyLogoWrapper}>
+  <img
+    src={selectedImage ? URL.createObjectURL(selectedImage) : image}
+    className={styles.companyLogo}
+    alt="Description"
+  />
+  <input
+    type="file"
+    ref={fileInputRef}
+    onChange={handleImageSelect}
+    style={{ display: "none" }}
+    accept="image/*"
+  />
+  <div className={styles.circleIcon} onClick={triggerFileInput}>
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M9.92819 0.513214L8.60331 1.83799L12.1619 5.39627L13.4867 4.07149C14.1711 3.38721 14.1711 2.27867 13.4867 1.59438L12.4082 0.513214C11.7239 -0.171071 10.6153 -0.171071 9.93092 0.513214H9.92819ZM7.98467 2.45658L1.6039 8.83959C1.31921 9.12425 1.11118 9.47735 0.996207 9.86328L0.0271838 13.1561C-0.04125 13.3887 0.0217091 13.6378 0.191425 13.8075C0.361141 13.9772 0.61024 14.0402 0.840177 13.9745L4.13321 13.0055C4.51918 12.8906 4.8723 12.6825 5.15698 12.3979L11.5432 6.01486L7.98467 2.45658Z" fill="#999999"/>
+    </svg>
+  </div>
+  </div>
+</div>
+
+
 
       <div className={`${styles.centerDiv} ${styles.companyName}`}>
         <Input
