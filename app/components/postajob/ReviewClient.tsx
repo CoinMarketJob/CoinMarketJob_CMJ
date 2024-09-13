@@ -119,10 +119,6 @@ const ReviewClient: React.FC<ReviewClientProps> = ({
         Location Type: {locationType}
       </div>
 
-      <div className={`${styles.centerDiv} ${styles.DropdownGroup}`}>
-        Visa Sponsorship: {visa ? "Yes" : "No"}
-      </div>
-
       <div className={`${styles.centerDiv} ${styles.Salary}`}>
         {showSalary ? (
           <>
