@@ -12,35 +12,27 @@ import { ProfileProvider } from "@/hooks/useCompanyProfile";
 import { JobApplicationsProvider } from "@/hooks/useApplicationJob";
 import { ProfileDataProvider } from "@/hooks/useProfileData";
 import { LiveVisibilityProvider } from "@/hooks/useLiveVisibility";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Home from "./components/MobilePage/Home";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
-    function handleResize() {
-      const wrapper = document.getElementById("scale-wrapper");
-      if (wrapper) {
-        const scaleWidth = Math.min(window.innerWidth / 1920, 1);
-        wrapper.style.transform = `scaleX(${scaleWidth})`;
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
 
-        if (window.innerWidth <= 1100) {
-          document.body.style.width = "1920px";
-        } else {
-          document.body.style.width = "100vw";
-        }
-        document.body.style.height = "100vh";
-      }
-    }
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
 
-    window.addEventListener("resize", handleResize);
-    handleResize();
-
-    return () => window.removeEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
+
   return (
     <html lang="en">
       <head>
@@ -54,15 +46,17 @@ export default function RootLayout({
         ></meta>
       </head>
       <body>
-        <SessionProvider>
-          <LayoutProvider>
-            <ProfileProvider>
-              <JobsProvider>
-                <AuthWrapper>
-                  <JobApplicationsProvider>
-                    <ProfileDataProvider>
-                      <LiveVisibilityProvider>
-                        <div id="scale-wrapper">
+        {isMobile ? (
+          <Home />
+        ) : (
+          <SessionProvider>
+            <LayoutProvider>
+              <ProfileProvider>
+                <JobsProvider>
+                  <AuthWrapper>
+                    <JobApplicationsProvider>
+                      <ProfileDataProvider>
+                        <LiveVisibilityProvider>
                           <div className="layout-container-div">
                             <Searchbar />
                             <main className="layout-main-div">
@@ -70,15 +64,15 @@ export default function RootLayout({
                             </main>
                             <Footer />
                           </div>
-                        </div>
-                      </LiveVisibilityProvider>
-                    </ProfileDataProvider>
-                  </JobApplicationsProvider>
-                </AuthWrapper>
-              </JobsProvider>
-            </ProfileProvider>
-          </LayoutProvider>
-        </SessionProvider>
+                        </LiveVisibilityProvider>
+                      </ProfileDataProvider>
+                    </JobApplicationsProvider>
+                  </AuthWrapper>
+                </JobsProvider>
+              </ProfileProvider>
+            </LayoutProvider>
+          </SessionProvider>
+        )}
       </body>
     </html>
   );

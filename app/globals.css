@@ -1,36 +1,22 @@
 html,
 body {
-  max-width: 100vw;
+  width: 1900px;
+  min-width: 1900px;
+  overflow-x: auto;
   max-height: 100vh;
-  overflow: hidden;
+  overflow-y: hidden;
   font-family: 'Inter', sans-serif;
 }
 
-#scale-wrapper {
-  width: 1920px;
-  height: 100vh;
-  transform-origin: top left;
-}
-
-.layout-container-div {
+.layout-container-div{
   display: flex;
   flex-direction: column;
-  max-height: 100vh;
+  width: 100%;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
-.layout-main-div {
+.layout-main-div{
   flex-grow: 1;
   display: flex;
-}
-
-@media (max-width: 1100px) {
-  body {
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
-  #scale-wrapper {
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
 }
