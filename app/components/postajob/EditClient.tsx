@@ -232,13 +232,18 @@ const EditClient: React.FC<EditClientProps> = ({
     <div className={styles.container}>
       <div
         className={`${styles.centerDiv} ${styles.logo}`}
-        onClick={triggerFileInput}
       >
+        
+
         <img
+          onClick={triggerFileInput}
           src={selectedImage ? URL.createObjectURL(selectedImage) : image}
           className={styles.companyLogo}
           alt="Description"
         />
+
+        
+
         <input
           type="file"
           ref={fileInputRef}
@@ -508,7 +513,7 @@ const EditClient: React.FC<EditClientProps> = ({
       <div className={`${styles.Continue}`}>
         <Button
           onClick={Review}
-          text="Save and Review"
+          text="Review"
           paddingTop={16}
           paddingBottom={16}
           paddingLeft={27}
