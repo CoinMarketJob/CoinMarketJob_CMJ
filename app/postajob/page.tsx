@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useProfileData } from "@/hooks/useProfileData";
 import Icon from "@/app/components/general/Icon";
 import { uploadFile } from "@/utils/s3Operations"; // S3 yükleme fonksiyonunu import edin
+import NextImage from 'next/image'; // Next.js Image bileşenini yeniden adlandırıyoruz
 
 const Page = () => {
   const [page, setPage] = useState<number>(0);
@@ -42,37 +43,34 @@ const Page = () => {
   const [uploading, setUploading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const [logoURL, setLogoURL] = useState<string>("");
+  const defaultLogoPath = '/upload.png'; // Varsayılan logo yolu
+  const [logoURL, setLogoURL] = useState<string>(defaultLogoPath);
 
   const generateDefaultLogo = (): Promise<Blob> => {
     return new Promise((resolve) => {
-      const canvas = document.createElement('canvas');
-      canvas.width = 200;
-      canvas.height = 200;
-      const ctx = canvas.getContext('2d');
-
-      if (ctx) {
-        // Siyah arka plan
-        ctx.fillStyle = '#000000';
-        ctx.fillRect(0, 0, 200, 200);
-
-        // "UPLOAD" yazısı
-        ctx.fillStyle = '#FFFFFF';
-        ctx.font = 'bold 36px Inter';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('UPLOAD', 100, 100);
-
-        canvas.toBlob(blob => {
-          if (blob) {
-            resolve(blob);
-          } else {
-            resolve(new Blob());
-          }
-        }, 'image/png');
-      } else {
+      const img = new window.Image(); // window.Image kullanarak yerleşik Image constructor'ını belirtiyoruz
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0);
+          canvas.toBlob(blob => {
+            if (blob) {
+              resolve(blob);
+            } else {
+              resolve(new Blob());
+            }
+          }, 'image/png');
+        } else {
+          resolve(new Blob());
+        }
+      };
+      img.onerror = () => {
         resolve(new Blob());
-      }
+      };
+      img.src = defaultLogoPath;
     });
   };
 
