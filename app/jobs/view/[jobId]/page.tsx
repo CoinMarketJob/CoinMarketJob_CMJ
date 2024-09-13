@@ -10,7 +10,6 @@ type JobProps = {
 
 const Page = ({ params }: { params: JobProps }) => {
   const { jobs, setJobs, filteredJobs, setFilteredJobs } = useJobs();
-
   const { layout } = useLayout();
 
   useEffect(() => {
@@ -18,10 +17,9 @@ const Page = ({ params }: { params: JobProps }) => {
       try {
         const response = await fetch("/api/job/get");
         const data = await response.json();
-        console.log(data);
+        // API'den gelen veriler zaten sıralı olduğu için burada sıralama yapmaya gerek yok
         setJobs(data);
         setFilteredJobs(data);
-        console.log(layout);
       } catch (error) {
         console.error("Veri getirme hatası:", error);
       }

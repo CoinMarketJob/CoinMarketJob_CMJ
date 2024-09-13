@@ -196,6 +196,9 @@
 .AddQuestionGroup {
   display: flex;
   align-items: center;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  margin-left: -10px;
 }
 
 .QuestionItem {
@@ -253,9 +256,22 @@
   line-height: 21px;
   text-align: left;
   color: #999999;
+  cursor: pointer;
 }
 
+
+/*
+.AddQuestion:hover {
+  color: #242220BF;
+}
+
+.AddQuestion:active {
+  color: #000000;
+}
+*/
+
 .QuestionPopup {
+  top: 100%;
   position: absolute;
   background: #ffffffcc;
   border: 0.5px solid #e7e5e4;
