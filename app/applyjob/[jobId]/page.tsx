@@ -525,7 +525,7 @@ const page = ({ params }: { params: JobProps }) => {
               marginBottom: "1.5rem",
             }}
           >
-            <div style={{ display: "flex", width: "38%" }}>
+            <div style={{ display: "flex", width: "47%" }}>
               <InputFile
                 id="cv"
                 placeholder="Attach Resume / CV"

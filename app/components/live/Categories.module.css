@@ -77,10 +77,10 @@
 
 .ShiftArrow {
     position: absolute;
-    right: 0;
     top: 35%;
     transform: translateY(-50%);
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.767);
+    backdrop-filter: blur(5px);
     border-radius: 50%;
     width: 32px;
     height: 32px;
@@ -89,11 +89,20 @@
     align-items: center;
     cursor: pointer;
     transition: opacity 0.3s ease;
-    opacity: 0.7; /* Başlangıçta soluk görünüm için */
+    opacity: 0.9;
+    z-index: 10; /* Ensure arrows are above the content */
 }
 
 .ShiftArrow:hover {
-    opacity: 1; /* Sadece ok'un üzerine geldiğinde tam opaklık */
+    opacity: 1;
+}
+
+.ShiftArrow {
+    right: 0px; /* Adjust the right arrow position */
+}
+
+.ShiftArrowLeft {
+    left: 0px; /* Adjust the left arrow position */
 }
 
 @media (max-width: 768px) {
