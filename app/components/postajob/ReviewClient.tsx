@@ -143,7 +143,7 @@ const ReviewClient: React.FC<ReviewClientProps> = ({
       <div className={`${styles.Continue}`}>
         <Button
           onClick={Checkout}
-          text="Save and Checkout"
+          text="Checkout"
           paddingTop={16}
           paddingBottom={16}
           paddingLeft={27}

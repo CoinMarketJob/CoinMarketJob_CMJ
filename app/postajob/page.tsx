@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import styles from "./page.module.css";
 import EditClient from "../components/postajob/EditClient";
 import { JSONContent } from "@tiptap/react";
@@ -42,46 +42,103 @@ const Page = () => {
   const [uploading, setUploading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  const [logoURL, setLogoURL] = useState<string>("");
+
+  const uploadLogo = useCallback(async (file: File | Blob, fileName: string) => {
+    const formData = new FormData();
+    formData.append("file", file, fileName);
+    formData.append("Content-Type", file instanceof File ? file.type : "image/png");
+
+    try {
+      const response = await fetch("/api/profileimage/", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setLogoURL(data.url);
+      } else {
+        throw new Error("Logo upload failed");
+      }
+    } catch (error) {
+      console.error("Error uploading logo:", error);
+      setErrorMessage("Failed to upload logo. Please try again.");
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleLogoUpload = async () => {
+      if (selectedImage) {
+        await uploadLogo(selectedImage, selectedImage.name);
+      } else if (companyName && !logoURL) {
+        const logoBlob = await generateLogoFromCompanyName(companyName);
+        await uploadLogo(logoBlob, "company-logo.png");
+      }
+    };
+
+    handleLogoUpload();
+  }, [selectedImage, companyName, uploadLogo, logoURL]);
+
+  const generateLogoFromCompanyName = (companyName: string): Promise<Blob> => {
+    return new Promise((resolve) => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 200;
+      canvas.height = 200;
+      const ctx = canvas.getContext('2d');
+
+      if (ctx) {
+        // Logo arka planı - siyah olarak değiştirildi
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(0, 0, 200, 200);
+
+        // Şirket adının baş harfleri
+        const initials = companyName
+          .split(' ')
+          .map(word => word[0])
+          .join('')
+          .toUpperCase()
+          .slice(0, 2);
+
+        // Yazı rengini beyaz olarak değiştirdik
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = 'bold 80px Inter';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(initials, 100, 100);
+
+        // Canvas'ı blob'a çevir
+        canvas.toBlob(blob => {
+          if (blob) {
+            resolve(blob);
+          } else {
+            // Eğer blob oluşturulamazsa, boş bir blob döndür
+            resolve(new Blob());
+          }
+        }, 'image/png');
+      } else {
+        // Canvas context oluşturulamazsa, boş bir blob döndür
+        resolve(new Blob());
+      }
+    });
+  };
+
   const Complete = async () => {
     setUploading(true);
     try {
-      let logoURL = "";
-
-      // Eğer yeni bir logo seçildiyse, S3'e yükle
-      if (selectedImage) {
-        const formData = new FormData();
-        formData.append("file", selectedImage);
-        formData.append("Content-Type", selectedImage.type);
-
-        const response = await fetch("/api/profileimage/", {
-          method: "POST",
-          body: formData,
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          logoURL = data.url;
-        } else {
-          setErrorMessage(
-            "An unexpected error has occurred. Please try again later."
-          );
-          setUploading(false);
-        }
-      }
-
       const jobData = {
         PackageType: oneJobIsChecked
           ? "OneJob"
           : monthlyChecked
           ? "Monthly"
           : "FiveJob",
-        logo: selectedImage ? logoURL : "",
+        logo: logoURL,
         companyName: companyName,
         jobTitle,
         location: selectedLocations[0],
-        jobType: jobType ? jobType : null,
-        experienceLevel: experienceLevel ? experienceLevel : null,
-        educationalDegree: educationalDegree ? educationalDegree : null,
+        jobType: jobType || null,
+        experienceLevel: experienceLevel || null,
+        educationalDegree: educationalDegree || null,
         visaSponsorship: visa,
         salaryMin: min,
         salaryMax: max,
@@ -104,17 +161,16 @@ const Page = () => {
       if (response.ok) {
         router.push("/");
       } else {
-        console.error("Error Posting for job:", response.statusText);
-
-        setErrorMessage(
-          "An unexpected error has occurred. Please try again later."
-        );
-        setTimeout(() => setErrorMessage(null), 3000);
+        throw new Error("Failed to post job");
       }
     } catch (error) {
       console.error("Error in submission process:", error);
+      setErrorMessage("Failed to post job. Please check your inputs and try again.");
+    } finally {
+      setUploading(false);
     }
   };
+
   const ArrowIcon = () => {
     return (
       <svg width="16" height="29" viewBox="0 0 16 29" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -178,7 +234,7 @@ const Page = () => {
       {page === 0 ? (
 
         <EditClient
-          image={"/image.png"}
+          image={logoURL || "/path/to/default-logo.png"}
           companyName={companyName}
           setCompanyName={setCompanyName}
           jobTitle={jobTitle}
