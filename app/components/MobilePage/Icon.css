@@ -1,0 +1,63 @@
+.icon-div {
+    padding: 0;
+    margin: 0;
+    border: none;
+    pointer-events: auto;
+}
+
+.icon-hover{
+    display: flex;    
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    pointer-events: auto;
+}
+.icon-hover:hover{
+    background-color: #2422200D;
+    cursor: pointer;
+}
+.icon-hover:active{
+    background-color: transparent;
+}
+.icon-hover:active .svg-icon{
+    stroke: #24222099;
+}
+
+.icon-hover:active .svg-icon-social {
+    fill: #24222099;
+    fill-opacity: 1;
+}
+
+.svg-icon-mail {
+    color: #242220;
+    opacity: 0.4;
+}
+
+
+.icon-hover:active .svg-icon-mail {
+    color: #24222099;
+    opacity: 1;
+}
+
+
+.hover-content {
+    display: none; 
+    position: absolute; 
+    width: auto;
+    top: -25px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 5px;
+    background-color: #2422200D;
+    color: #24222099;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.icon-hover:hover .hover-content, .icon-hover:active .hover-content {
+    display: block; 
+}

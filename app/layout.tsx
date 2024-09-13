@@ -50,7 +50,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <head>
+      <head style={{ width: isMobile ? "100vw" : "1900px" }}>
         <link
           href="https://fonts.googleapis.com/css?family=Inter"
           rel="stylesheet"
