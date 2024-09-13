@@ -29,7 +29,7 @@ const JobDetails: React.FC<JobDetailsProps> = ({ job, onClose = () => {} }) => {
     const JobShare = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.stopPropagation();
         if (job) {
-            const shareUrl = `localhost:3000/jobs/view/${job.id}`;
+            const shareUrl = `https://beta.coinmarketjob.com/jobs/view/${job.id}`;
             navigator.clipboard.writeText(shareUrl);
             setSuccessMessage("Link Copied to Clipboard");
             setTimeout(() => {

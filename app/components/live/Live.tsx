@@ -16,13 +16,18 @@ interface LiveItem {
   date?: string;
 }
 
-const Live: React.FC = () => {
+interface LiveProps {
+  initialExpandedId?: number | null;
+}
+
+const Live: React.FC<LiveProps> = ({ initialExpandedId }) => {
   const [live, setLive] = useState<LiveItem[]>([]);
   const [filteredLive, setFilteredLive] = useState<LiveItem[]>([]);
   const [blog, setBlog] = useState<LiveItem[]>([]);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [keyword, setKeyword] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   let globalIndex = 0;
 
@@ -34,6 +39,13 @@ const Live: React.FC = () => {
         setLive(data.filter((x) => x.liveType !== "BLOG"));
         setFilteredLive(data.filter((x) => x.liveType !== "BLOG"));
         setBlog(data.filter((x) => x.liveType === "BLOG"));
+
+        if (initialExpandedId) {
+          const index = data.findIndex(item => item.id === initialExpandedId);
+          if (index !== -1) {
+            setExpandedIndex(index);
+          }
+        }
       } catch (error) {
         console.error("Veri getirme hatası:", error);
       }
@@ -41,6 +53,29 @@ const Live: React.FC = () => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch("/api/live/");
+        const data: LiveItem[] = await response.json();
+        setLive(data.filter((x) => x.liveType !== "BLOG"));
+        setFilteredLive(data.filter((x) => x.liveType !== "BLOG"));
+        setBlog(data.filter((x) => x.liveType === "BLOG"));
+
+        if (initialExpandedId) {
+          const index = data.findIndex(item => item.id === initialExpandedId);
+          if (index !== -1) {
+            setExpandedIndex(index);
+          }
+        }
+      } catch (error) {
+        console.error("Veri getirme hatası:", error);
+      }
+    }
+
+    fetchData();
+  }, [initialExpandedId]);
 
   const ChangeFunction = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
@@ -65,7 +100,7 @@ const Live: React.FC = () => {
     let filteredItems = live;
 
     if (category) {
-      filteredItems = filteredItems.filter(item => {
+      filteredItems = filteredItems.filter((item) => {
         if (category === "Hackathon") {
           return item.liveType === "HACKHATHONS";
         }
@@ -74,7 +109,7 @@ const Live: React.FC = () => {
     }
 
     if (lowerCaseKeyword) {
-      filteredItems = filteredItems.filter(item =>
+      filteredItems = filteredItems.filter((item) =>
         item.title.toLowerCase().includes(lowerCaseKeyword)
       );
     }
@@ -87,16 +122,38 @@ const Live: React.FC = () => {
   };
 
   const formatDate = (dateString: string | undefined) => {
-    if (!dateString) return '';
+    if (!dateString) return "";
     const date = new Date(dateString);
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
     return `${months[date.getMonth()]} ${date.getDate()}`;
   };
 
-  const handleShareClick = (e: React.MouseEvent, item: LiveItem | undefined) => {
-    e.stopPropagation(); 
+  const handleShareClick = (
+    e: React.MouseEvent,
+    item: LiveItem | undefined
+  ) => {
+    e.stopPropagation();
     if (item && item.id) {
       console.log("Share clicked for item with ID:", item.id);
+      const shareUrl = `https://beta.coinmarketjob.com?lives=${item.id}`;
+      navigator.clipboard.writeText(shareUrl);
+      setSuccessMessage("Link Copied to Clipboard");
+      setTimeout(() => {
+        setSuccessMessage(null);
+      }, 3000);
     } else {
       console.log("Share clicked, but item or item ID is undefined");
     }
@@ -108,7 +165,11 @@ const Live: React.FC = () => {
     let blogIndex = 0;
 
     while (liveIndex < items.length || blogIndex < blog.length) {
-      for (let i = 0; i < 2 && liveIndex < items.length; i++, liveIndex++, globalIndex++) {
+      for (
+        let i = 0;
+        i < 2 && liveIndex < items.length;
+        i++, liveIndex++, globalIndex++
+      ) {
         const isExpanded = expandedIndex === globalIndex;
         const index = globalIndex;
         const currentItem = items[liveIndex];
@@ -134,23 +195,21 @@ const Live: React.FC = () => {
                 />
               </motion.svg>
             </div>
-            <div className={styles.Title}>
-              {currentItem.title}
-            </div>
+            <div className={styles.Title}>{currentItem.title}</div>
             <AnimatePresence>
               {isExpanded && (
                 <motion.div
                   initial={{ opacity: 0, height: 0, scale: 0.95 }}
                   animate={{ opacity: 1, height: "auto", scale: 1 }}
                   exit={{ opacity: 0, height: 0, scale: 0.95 }}
-                  transition={{ 
-                    duration: 0.5, 
+                  transition={{
+                    duration: 0.5,
                     ease: [0.04, 0.62, 0.23, 0.98],
-                    scale: { duration: 0.3 }
+                    scale: { duration: 0.3 },
                   }}
                   className={styles.Details}
                 >
-                  <motion.div 
+                  <motion.div
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: 20, opacity: 0 }}
@@ -163,10 +222,20 @@ const Live: React.FC = () => {
               )}
             </AnimatePresence>
             <div className={styles.NewsMetadata}>
-              {currentItem.author && <span className={styles.Author}>By {currentItem.author}</span>}
-              {currentItem.date && <span className={styles.Date}>{formatDate(currentItem.date)}</span>}
+              {currentItem.author && (
+                <span className={styles.Author}>By {currentItem.author}</span>
+              )}
+              {currentItem.date && (
+                <span className={styles.Date}>
+                  {formatDate(currentItem.date)}
+                </span>
+              )}
             </div>
-            <div className={`${styles.bottomRow} ${isExpanded ? styles.expanded : ''}`}>
+            <div
+              className={`${styles.bottomRow} ${
+                isExpanded ? styles.expanded : ""
+              }`}
+            >
               <div className={styles.Type}>{currentItem.liveType}</div>
 
               <div className={styles.iconContainer}>
@@ -176,8 +245,18 @@ const Live: React.FC = () => {
                   hoverContent="Share"
                   tooltipPosition="top"
                 >
-                  <svg width="18" height="24" viewBox="0 0 18 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0 2.25C0 1.00781 1.00781 0 2.25 0V2.25V20.6906L8.34844 16.3359C8.7375 16.0547 9.26719 16.0547 9.65625 16.3359L15.75 20.6906V2.25H2.25V0H15.75C16.9922 0 18 1.00781 18 2.25V22.875C18 23.2969 17.7656 23.6812 17.3906 23.8734C17.0156 24.0656 16.5656 24.0328 16.2234 23.789L9 18.6328L1.77656 23.789C1.43438 24.0328 0.984375 24.0656 0.609375 23.8734C0.234375 23.6812 0 23.2969 0 22.875V2.25Z" fill="#242220" fill-opacity="0.2"/>
+                  <svg
+                    width="18"
+                    height="24"
+                    viewBox="0 0 18 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 2.25C0 1.00781 1.00781 0 2.25 0V2.25V20.6906L8.34844 16.3359C8.7375 16.0547 9.26719 16.0547 9.65625 16.3359L15.75 20.6906V2.25H2.25V0H15.75C16.9922 0 18 1.00781 18 2.25V22.875C18 23.2969 17.7656 23.6812 17.3906 23.8734C17.0156 24.0656 16.5656 24.0328 16.2234 23.789L9 18.6328L1.77656 23.789C1.43438 24.0328 0.984375 24.0656 0.609375 23.8734C0.234375 23.6812 0 23.2969 0 22.875V2.25Z"
+                      fill="#242220"
+                      fill-opacity="0.2"
+                    />
                   </svg>
                 </Icon>
 
@@ -187,15 +266,45 @@ const Live: React.FC = () => {
                   hoverContent="Share"
                   tooltipPosition="top"
                 >
-                  <svg width="18" height="29" viewBox="0 0 27 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17.1484 24.5C17.1484 22.0147 19.1632 20 21.6484 20C24.1337 20 26.1484 22.0147 26.1484 24.5C26.1484 26.9853 24.1337 29 21.6484 29C19.1632 29 17.1484 26.9853 17.1484 24.5Z" fill="#A7A7A6"/>
-                    <path d="M18.1484 24.5C18.1484 22.567 19.7154 21 21.6484 21C23.5814 21 25.1484 22.567 25.1484 24.5C25.1484 26.433 23.5814 28 21.6484 28C19.7154 28 18.1484 26.433 18.1484 24.5Z" fill="white"/>
-                    <path d="M0 14.5C0 12.0147 2.01472 10 4.5 10C6.98528 10 9 12.0147 9 14.5C9 16.9853 6.98528 19 4.5 19C2.01472 19 0 16.9853 0 14.5Z" fill="#A7A7A6"/>
-                    <path d="M1 14.5C1 12.567 2.567 11 4.5 11C6.433 11 8 12.567 8 14.5C8 16.433 6.433 18 4.5 18C2.567 18 1 16.433 1 14.5Z" fill="white"/>
-                    <path d="M17.1484 4.5C17.1484 2.01472 19.1632 0 21.6484 0C24.1337 0 26.1484 2.01472 26.1484 4.5C26.1484 6.98528 24.1337 9 21.6484 9C19.1632 9 17.1484 6.98528 17.1484 4.5Z" fill="#A7A7A6"/>
-                    <path d="M18.1484 4.5C18.1484 2.567 19.7154 1 21.6484 1C23.5814 1 25.1484 2.567 25.1484 4.5C25.1484 6.433 23.5814 8 21.6484 8C19.7154 8 18.1484 6.433 18.1484 4.5Z" fill="white"/>
-                    <path d="M7.64844 12.093L18.0022 6.04275L18.5068 6.90615L8.15297 12.9564L7.64844 12.093Z" fill="#A7A7A6"/>
-                    <path d="M18.006 22.8531L7.61021 16.8753L8.1087 16.0084L18.5045 21.9863L18.006 22.8531Z" fill="#A7A7A6"/>
+                  <svg
+                    width="18"
+                    height="29"
+                    viewBox="0 0 27 29"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M17.1484 24.5C17.1484 22.0147 19.1632 20 21.6484 20C24.1337 20 26.1484 22.0147 26.1484 24.5C26.1484 26.9853 24.1337 29 21.6484 29C19.1632 29 17.1484 26.9853 17.1484 24.5Z"
+                      fill="#A7A7A6"
+                    />
+                    <path
+                      d="M18.1484 24.5C18.1484 22.567 19.7154 21 21.6484 21C23.5814 21 25.1484 22.567 25.1484 24.5C25.1484 26.433 23.5814 28 21.6484 28C19.7154 28 18.1484 26.433 18.1484 24.5Z"
+                      fill="white"
+                    />
+                    <path
+                      d="M0 14.5C0 12.0147 2.01472 10 4.5 10C6.98528 10 9 12.0147 9 14.5C9 16.9853 6.98528 19 4.5 19C2.01472 19 0 16.9853 0 14.5Z"
+                      fill="#A7A7A6"
+                    />
+                    <path
+                      d="M1 14.5C1 12.567 2.567 11 4.5 11C6.433 11 8 12.567 8 14.5C8 16.433 6.433 18 4.5 18C2.567 18 1 16.433 1 14.5Z"
+                      fill="white"
+                    />
+                    <path
+                      d="M17.1484 4.5C17.1484 2.01472 19.1632 0 21.6484 0C24.1337 0 26.1484 2.01472 26.1484 4.5C26.1484 6.98528 24.1337 9 21.6484 9C19.1632 9 17.1484 6.98528 17.1484 4.5Z"
+                      fill="#A7A7A6"
+                    />
+                    <path
+                      d="M18.1484 4.5C18.1484 2.567 19.7154 1 21.6484 1C23.5814 1 25.1484 2.567 25.1484 4.5C25.1484 6.433 23.5814 8 21.6484 8C19.7154 8 18.1484 6.433 18.1484 4.5Z"
+                      fill="white"
+                    />
+                    <path
+                      d="M7.64844 12.093L18.0022 6.04275L18.5068 6.90615L8.15297 12.9564L7.64844 12.093Z"
+                      fill="#A7A7A6"
+                    />
+                    <path
+                      d="M18.006 22.8531L7.61021 16.8753L8.1087 16.0084L18.5045 21.9863L18.006 22.8531Z"
+                      fill="#A7A7A6"
+                    />
                   </svg>
                 </Icon>
               </div>
@@ -206,7 +315,8 @@ const Live: React.FC = () => {
 
       for (let i = 0; i < 2; i++) {
         const rowItems = [];
-        for (let j = 0; j < 10; j++, blogIndex++, globalIndex++) { // 20'den 10'a düşürüldü
+        for (let j = 0; j < 10; j++, blogIndex++, globalIndex++) {
+          // 20'den 10'a düşürüldü
           if (blogIndex >= blog.length) {
             blogIndex = 0;
           }
@@ -234,9 +344,11 @@ const Live: React.FC = () => {
           );
         }
         combined.push(
-          <div 
-            key={`blog-row-${globalIndex}`} 
-            className={`${styles.blogRow} ${i % 2 === 0 ? styles.scrollLeft : styles.scrollRight}`}
+          <div
+            key={`blog-row-${globalIndex}`}
+            className={`${styles.blogRow} ${
+              i % 2 === 0 ? styles.scrollLeft : styles.scrollRight
+            }`}
           >
             {rowItems}
             {rowItems}
@@ -251,13 +363,24 @@ const Live: React.FC = () => {
 
   return (
     <div className={styles.LiveContainer}>
-      <Search keyword={keyword} ChangeFunction={ChangeFunction} handleKeyDown={handleKeyDown} />
+      {successMessage && (
+        <div className={styles.successMessage}>{successMessage}</div>
+      )}
+      <Search
+        keyword={keyword}
+        ChangeFunction={ChangeFunction}
+        handleKeyDown={handleKeyDown}
+      />
       <Categories onCategoryClick={handleCategoryClick} />
       <div className={styles.Content}>
-        {getAlternatingRows(filteredLive.map(item => ({
-          ...item,
-          date: item.date ? new Date(item.date).toLocaleDateString() : undefined
-        })))}
+        {getAlternatingRows(
+          filteredLive.map((item) => ({
+            ...item,
+            date: item.date
+              ? new Date(item.date).toLocaleDateString()
+              : undefined,
+          }))
+        )}
       </div>
     </div>
   );

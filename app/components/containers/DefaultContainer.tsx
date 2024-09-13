@@ -4,6 +4,7 @@ import './DefaultContainer.css'
 import AuthContainer from "./AuthContainer";
 import Live from "../live/Live";
 import { useLiveVisibility } from "@/hooks/useLiveVisibility";
+import { useSearchParams } from "next/navigation";
 
 interface ContainerProps {
     children: React.ReactNode
@@ -12,12 +13,25 @@ interface ContainerProps {
 const DefaultContainer: React.FC<ContainerProps> = ({ children }) => {
     const [totalWidth, setTotalWidth] = useState<number>(window.innerWidth);
     const { isLiveVisible } = useLiveVisibility();
+    const searchParams = useSearchParams();
+    const [expandedLiveId, setExpandedLiveId] = useState<number | null>(null);
 
     useEffect(() => {
         const handleResize = () => setTotalWidth(window.innerWidth);
         window.addEventListener('resize', handleResize);
+
+        // URL'den lives parametresini kontrol et
+        const livesParam = searchParams?.get('lives');
+        if (livesParam) {
+            const liveId = parseInt(livesParam, 10);
+            console.log(liveId);
+            if (!isNaN(liveId)) {
+                setExpandedLiveId(liveId);
+            }
+        }
+
         return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    }, [searchParams]);
 
     const profileWidth = totalWidth * (1 / 4.5);
     const liveWidth = isLiveVisible ? totalWidth * (1 / 4.5) : 0;
@@ -38,7 +52,7 @@ const DefaultContainer: React.FC<ContainerProps> = ({ children }) => {
             
             {isLiveVisible && (
                 <div className="panel-live" style={{ width: liveWidth }}>
-                    <Live />
+                    <Live initialExpandedId={expandedLiveId} />
                 </div>
             )}
         </div>
