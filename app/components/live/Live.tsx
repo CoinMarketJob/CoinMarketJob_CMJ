@@ -93,12 +93,16 @@ const Live: React.FC = () => {
     return `${months[date.getMonth()]} ${date.getDate()}`;
   };
 
-  const handleShareClick = (e: React.MouseEvent, id: any) => {
+  const handleShareClick = (e: React.MouseEvent, item: LiveItem | undefined) => {
     e.stopPropagation(); 
-    console.log("Share clicked for:", id);
+    if (item && item.id) {
+      console.log("Share clicked for item with ID:", item.id);
+    } else {
+      console.log("Share clicked, but item or item ID is undefined");
+    }
   };
 
-  const getAlternatingRows = (items: any[]) => {
+  const getAlternatingRows = (items: LiveItem[]) => {
     const combined: JSX.Element[] = [];
     let liveIndex = 0;
     let blogIndex = 0;
@@ -107,6 +111,7 @@ const Live: React.FC = () => {
       for (let i = 0; i < 2 && liveIndex < items.length; i++, liveIndex++, globalIndex++) {
         const isExpanded = expandedIndex === globalIndex;
         const index = globalIndex;
+        const currentItem = items[liveIndex];
         combined.push(
           <div
             key={`live-${liveIndex}`}
@@ -130,7 +135,7 @@ const Live: React.FC = () => {
               </motion.svg>
             </div>
             <div className={styles.Title}>
-              {items[liveIndex].title}
+              {currentItem.title}
             </div>
             <AnimatePresence>
               {isExpanded && (
@@ -152,21 +157,21 @@ const Live: React.FC = () => {
                     transition={{ delay: 0.1, duration: 0.3 }}
                     className={styles.NewsDetails}
                   >
-                    {items[liveIndex].content}
+                    {currentItem.content}
                   </motion.div>
                 </motion.div>
               )}
             </AnimatePresence>
             <div className={styles.NewsMetadata}>
-              {items[liveIndex].author && <span className={styles.Author}>By {items[liveIndex].author}</span>}
-              {items[liveIndex].date && <span className={styles.Date}>{formatDate(items[liveIndex].date)}</span>}
+              {currentItem.author && <span className={styles.Author}>By {currentItem.author}</span>}
+              {currentItem.date && <span className={styles.Date}>{formatDate(currentItem.date)}</span>}
             </div>
             <div className={`${styles.bottomRow} ${isExpanded ? styles.expanded : ''}`}>
-              <div className={styles.Type}>{items[liveIndex].liveType}</div>
+              <div className={styles.Type}>{currentItem.liveType}</div>
 
               <div className={styles.iconContainer}>
                 <Icon
-                  onClick={(e) => handleShareClick(e, items[liveIndex].id)}
+                  onClick={(e) => handleShareClick(e, currentItem)}
                   hoverSize={40}
                   hoverContent="Share"
                   tooltipPosition="top"
@@ -177,7 +182,7 @@ const Live: React.FC = () => {
                 </Icon>
 
                 <Icon
-                  onClick={(e) => handleShareClick(e, items[liveIndex].id)}
+                  onClick={(e) => handleShareClick(e, currentItem)}
                   hoverSize={40}
                   hoverContent="Share"
                   tooltipPosition="top"
