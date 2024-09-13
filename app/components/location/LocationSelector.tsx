@@ -106,7 +106,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({
               list={[
                 { id: "Remote", label: "Remote" },
                 { id: "Hybrid", label: "Hybrid" },
-                { id: "OnSite", label: "Office" },
+                { id: "Office", label: "Office" },
               ]}
               multiple={false}
               borderRadius={4}

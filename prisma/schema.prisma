@@ -373,3 +373,9 @@ model Answers{
   question      JobQuestions @relation(fields: [questionId], references: [id], onDelete: Cascade)
   answer        String
 }
+
+model WaitListUsers {
+  id            Int      @id @default(autoincrement())
+  email         String   @unique
+  referenceMail String?
+}
