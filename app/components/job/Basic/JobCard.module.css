@@ -135,3 +135,13 @@
     right: 10px;
     top: 10px;
 }
+
+.timeAgo {
+    position: absolute;
+    bottom: 12px;
+    right: 22px;
+    font-size: 12px;
+    color: #999;
+    font-weight: 400;
+    font-family: "Inter", sans-serif;
+}

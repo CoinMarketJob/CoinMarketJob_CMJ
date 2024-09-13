@@ -236,6 +236,7 @@ const EditClient: React.FC<EditClientProps> = ({
     src={selectedImage ? URL.createObjectURL(selectedImage) : image}
     className={styles.companyLogo}
     alt="Description"
+    onClick={triggerFileInput}
   />
   <input
     type="file"

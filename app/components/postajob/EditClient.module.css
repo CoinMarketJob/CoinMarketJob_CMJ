@@ -45,9 +45,10 @@
 .circleIcon {
   position: absolute;
   bottom: 0px;
-  right: 0px;
-  background: #fff;
-  border-radius: 50%;
+  right: -10px;
+  background: rgba(255, 255, 255, 0.767);
+  backdrop-filter: blur(5px);
+  border-radius: 50%; 
   padding: 5px;
   cursor: pointer;
   z-index: 10; /* İkonu resmin üstünde gösterecek */
@@ -57,9 +58,11 @@
 }
 
 .companyLogo {
-  width: 100px;
+  width: 130px;
   height: auto;
   z-index: 1; /* Resmin z-index'i ikondan düşük olmalı */
+  border-radius: 15px;
+  cursor: pointer;
 }
 
 
@@ -71,6 +74,7 @@
   background: #fff; /* İkonun arka plan rengi, gerekirse */
   border-radius: 50%; /* İkonu daire şeklinde yapma */
   padding: 5px; /* İkonun etrafında boşluk */
+  
 }
 
 .logoText {
