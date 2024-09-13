@@ -117,7 +117,7 @@
   color: #242220;
   margin-bottom: 12px;
   align-self: flex-start;
-  padding-left: 20px;
+  padding-left: 0; /* Bu satırı 0 olarak değiştirdik veya tamamen kaldırdık */
 }
 
 .descriptionContent {
