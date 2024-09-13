@@ -12,11 +12,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const result = await uploadFile(
-      process.env.S3_IMAGE_BUCKET_NAME,
-      file,
-      uuidv6()
-    );
+    const result = await uploadFile("cmj-profile-image", file, uuidv6());
     return NextResponse.json({ url: result.Location });
   } catch (error) {
     console.error("Error uploading file:", error);
