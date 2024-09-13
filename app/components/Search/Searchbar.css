@@ -8,8 +8,7 @@
 }
 
 .home-button{
-    position: absolute;
-    left: calc(50% - 15.7vw); /* Half of the searchbar width (34.34vw/2) plus 36px */
+    margin-right: 10px;
 }
 
 .main-container{
@@ -22,8 +21,7 @@
 }
 
 .post-job-button {
-    position: absolute;
-    right: calc(50% - 15.7vw); /* Half of the searchbar width (34.34vw/2) plus 36px */
+    margin-left: 10px;
 }
 
 .ErrorMessage {
