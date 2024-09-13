@@ -272,6 +272,7 @@ const Page = () => {
       ) : page === 1 ? (
         <ReviewClient
           image={selectedImage}
+          logoURL={logoURL} // Yeni eklenen prop
           companyName={companyName}
           jobTitle={jobTitle}
           selectedLocations={selectedLocations}

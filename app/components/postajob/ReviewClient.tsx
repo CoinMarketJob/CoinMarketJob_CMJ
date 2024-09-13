@@ -7,6 +7,7 @@ import Button from "../general/Button";
 
 interface ReviewClientProps {
   image: File | null;
+  logoURL: string; // Yeni eklenen prop
   companyName: string;
   jobTitle: string;
   selectedLocations: string[];
@@ -27,6 +28,7 @@ interface ReviewClientProps {
 
 const ReviewClient: React.FC<ReviewClientProps> = ({
   image,
+  logoURL,
   companyName,
   jobTitle,
   selectedLocations,
@@ -68,9 +70,15 @@ const ReviewClient: React.FC<ReviewClientProps> = ({
   return (
     <div className={styles.container}>
       <div className={`${styles.centerDiv} ${styles.logo}`}>
-        {displayImage ? (
+        {image ? (
           <img
-            src={displayImage}
+            src={URL.createObjectURL(image)}
+            className={styles.companyLogo}
+            alt="Company Logo"
+          />
+        ) : logoURL ? (
+          <img
+            src={logoURL}
             className={styles.companyLogo}
             alt="Company Logo"
           />
