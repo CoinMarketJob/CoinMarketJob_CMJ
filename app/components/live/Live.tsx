@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./Live.module.css";
 import Search from "./Search";
 import Categories from "./Categories";
@@ -29,6 +29,7 @@ const Live: React.FC<LiveProps> = ({ initialExpandedId }) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<number | null>(null);
+  const scrollPosition = useRef(0);
 
   let globalIndex = 0;
 
@@ -94,8 +95,12 @@ const Live: React.FC<LiveProps> = ({ initialExpandedId }) => {
     setFilteredLive(filteredItems);
   };
 
-  const toggleExpand = (id: number) => {  
+  const toggleExpand = (id: number) => { 
+    scrollPosition.current = window.scrollX; 
     setExpandedId(prevId => prevId === id ? null : id);
+    setTimeout(() => {
+      window.scrollTo(scrollPosition.current, 0);
+    }, 0);
   };
 
   const formatDate = (dateString: string | undefined) => {
