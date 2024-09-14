@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styles from "./CheckoutClient.module.css";
 import PaymentCheckbox from "./PaymentCheckbox";
 import Button from "../general/Button";
 import { useRouter } from "next/navigation";
-import CreditCard from "./CreditCard";
+import CreditCard, { CreditCardRef } from "./CreditCard";
 import PostaJobPopup from "./PostaJobPopup";
 import BillingAddress from "./BillingAddress";
 import BillingEmail from "./BillingEmail";
+import Input from "../general/Input"; // Add this import
 
 interface CheckoutProps {
   oneJobIsChecked: boolean;
@@ -32,14 +33,23 @@ const CheckoutClient: React.FC<CheckoutProps> = ({
   const [creditCard, setCreditCard] = useState<boolean>(false);
   const [address, setAddress] = useState<boolean>(false);
   const [billingEmail, setBillingEmail] = useState<boolean>(false);
+  const [savedCardNumber, setSavedCardNumber] = useState<string>("");
+  const [savedCardType, setSavedCardType] = useState<string>("");
 
+  const creditCardRef = useRef<CreditCardRef>(null);
 
   const CreditCardSave = () => {
-    console.log("Save Credit Card");
+    if (creditCardRef.current) {
+      const isValid = creditCardRef.current.handleSave();
+      if (isValid) {
+        setCreditCard(false);
+      }
+    }
   };
 
   const AddressSave = () => {
-    console.log("Save Address");
+    console.log("Address saved");
+    // Implement address saving logic here
   };
 
   return (
@@ -67,13 +77,21 @@ const CheckoutClient: React.FC<CheckoutProps> = ({
             setOpen={setCreditCard}
             Save={CreditCardSave}
           >
-            <CreditCard />
+            <CreditCard 
+              ref={creditCardRef} 
+              onSave={(number, type) => {
+                setSavedCardNumber(number);
+                setSavedCardType(type);
+              }} 
+            />
           </PostaJobPopup>
         </div>
-        <div
-          className={styles.AddCol}
-        >
-          <span onClick={() => setCreditCard(!creditCard)}>Add Credit Card</span>
+        <div className={styles.AddCol}>
+          {savedCardNumber ? (
+            <span>{savedCardType} **** **** **** {savedCardNumber.slice(-4)}</span>
+          ) : (
+            <span onClick={() => setCreditCard(!creditCard)}>Add Credit Card</span>
+          )}
         </div>
       </div>
       <div className={styles.Line}></div>

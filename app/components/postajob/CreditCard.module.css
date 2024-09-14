@@ -5,5 +5,32 @@
     font-weight: 500;
     line-height: 27.84px;
     letter-spacing: 0.04em; 
-    margin-top: 16px;   
+    margin-top: 16px;  
+    margin-bottom: 24px;
+    z-index: 100;
+}
+
+.ErrorText {
+    color: #ff0000;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.inputWrapper {
+    position: relative;
+}
+
+.cardInput {
+    width: 100%;
+    padding-right: 80px; /* Make space for the card type */
+}
+
+.CardType {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999999;
+    font-size: 14px;
+    pointer-events: none; /* Ensures the text doesn't interfere with input interaction */
 }
