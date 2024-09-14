@@ -39,6 +39,7 @@
   .TextSelect{
     margin-left: 12px;
     color: #242220;
+    font-weight: bold; /* Eklendi */
   }
 
   .PriceSelect{
@@ -46,6 +47,7 @@
     flex-grow: 1;
     justify-content: flex-end;
     color: #242220;
+    font-weight: bold; /* Eklendi */
   }
 
   .Price{

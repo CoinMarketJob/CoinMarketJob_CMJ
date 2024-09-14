@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import styles from "./PaymentCheckbox.module.css";
 
 interface CheckboxProps {
@@ -22,21 +22,23 @@ const PaymentCheckbox: React.FC<CheckboxProps> = ({
   const toggleCheckbox = (checkBox: number) => {
     switch (checkBox) {
       case 0:
-        setOneJobIsChecked(true);
-        setMonthlyChecked(false);
-        setFiveJobChecked(false);
+        setOneJobIsChecked(!oneJobIsChecked);
         return;
       case 1:
-        setOneJobIsChecked(false);
-        setMonthlyChecked(true);
-        setFiveJobChecked(false);
+        setMonthlyChecked(!monthlyChecked);
         return;
       case 2:
-        setOneJobIsChecked(false);
-        setMonthlyChecked(false);
-        setFiveJobChecked(true);
+        setFiveJobChecked(!fiveJobChecked);
         return;
     }
+  };
+
+  const calculateTotal = () => {
+    let total = 0;
+    if (oneJobIsChecked) total += 15;
+    if (monthlyChecked) total += 150;
+    if (fiveJobChecked) total += 100;
+    return total;
   };
 
   return (
@@ -63,8 +65,8 @@ const PaymentCheckbox: React.FC<CheckboxProps> = ({
             </svg>
           </div>
         </div>
-        <div className={styles.TextSelect}>1 Job Posting</div>
-        <div className={styles.PriceSelect}>$15</div>
+        <div className={oneJobIsChecked ? styles.TextSelect : styles.Text}>1 Job Posting</div>
+        <div className={oneJobIsChecked ? styles.PriceSelect : styles.Price}>$15</div>
       </div>
 
       <div style={{ display: "flex", marginTop: 26, width: "100%" }}>
@@ -89,8 +91,8 @@ const PaymentCheckbox: React.FC<CheckboxProps> = ({
             </svg>
           </div>
         </div>
-        <div className={styles.Text}>Monthly Subscription (150$)</div>
-        <div className={styles.Price}>$0</div>
+        <div className={monthlyChecked ? styles.TextSelect : styles.Text}>Monthly Subscription</div>
+        <div className={monthlyChecked ? styles.PriceSelect : styles.Price}>$150</div>
       </div>
 
       <div style={{ display: "flex", marginTop: 26, width: "100%" }}>
@@ -115,8 +117,8 @@ const PaymentCheckbox: React.FC<CheckboxProps> = ({
             </svg>
           </div>
         </div>
-        <div className={styles.Text}>5 Job Posting Bundle (100$)</div>
-        <div className={styles.Price}>$0</div>
+        <div className={fiveJobChecked ? styles.TextSelect : styles.Text}>5 Job Posting Bundle</div>
+        <div className={fiveJobChecked ? styles.PriceSelect : styles.Price}>$100</div>
       </div>
 
       <div style={{ display: "flex", marginTop: 26, width: "100%" }}>
@@ -129,7 +131,7 @@ const PaymentCheckbox: React.FC<CheckboxProps> = ({
       <div className={styles.Line}></div>
 
       <div style={{ display: "flex", marginTop: 13, width: "100%" }}>
-        <div className={styles.Total}>Total $15 USD</div>
+        <div className={styles.Total}>Total ${calculateTotal()} USD</div>
       </div>
     </div>
   );
