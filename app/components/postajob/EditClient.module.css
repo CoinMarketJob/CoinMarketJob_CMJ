@@ -273,6 +273,23 @@
   cursor: pointer;
 }
 
+.AddQuestionWrapper span {
+  cursor: pointer;
+  font-family: Inter;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 21px;
+  text-align: left;
+  color: #999999;
+  cursor: pointer;
+}
+
+.AddQuestionWrapper:active span{
+  color: #242220BF;
+  cursor: pointer;
+}
+
+
 
 .QuestionPopup {
   top: 100%;
