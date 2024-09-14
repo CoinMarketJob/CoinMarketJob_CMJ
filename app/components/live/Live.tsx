@@ -96,12 +96,13 @@ const Live: React.FC<LiveProps> = ({ initialExpandedId }) => {
   };
 
   const toggleExpand = (id: number) => { 
-    scrollPosition.current = window.scrollX; 
+    const currentScrollX = window.scrollX; // Mevcut yatay kaydırma konumunu kaydet
     setExpandedId(prevId => prevId === id ? null : id);
     setTimeout(() => {
-      window.scrollTo(scrollPosition.current, 0);
+      window.scrollTo(currentScrollX, window.scrollY); // Yatay kaydırma konumunu geri yükle
     }, 0);
   };
+  
 
   const formatDate = (dateString: string | undefined) => {
     if (!dateString) return "";
