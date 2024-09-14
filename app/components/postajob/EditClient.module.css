@@ -266,15 +266,13 @@
   cursor: pointer;
 }
 
-/*
-.AddQuestion:hover {
-  color: #242220BF;
+.AddQuestionWrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  cursor: pointer;
 }
 
-.AddQuestion:active {
-  color: #000000;
-}
-*/
 
 .QuestionPopup {
   top: 100%;
