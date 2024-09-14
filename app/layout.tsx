@@ -49,8 +49,8 @@ export default function RootLayout({
   }, []);
 
   return (
-    <html lang="en">
-      <head style={{ width: isMobile ? "100vw" : "1900px" }}>
+    <html lang="en" style={{ width: isMobile ? "100vw" : "1900px", minWidth: isMobile ? "100vw" : "1900px" }}>
+      <head>
         <link
           href="https://fonts.googleapis.com/css?family=Inter"
           rel="stylesheet"
@@ -60,7 +60,7 @@ export default function RootLayout({
           content="width=device-width, initial-scale=1.0"
         ></meta>
       </head>
-      <body>
+      <body style={{ width: isMobile ? "100vw" : "1900px", minWidth: isMobile ? "100vw" : "1900px" }}>
         {isMobile ? (
           <Home />
         ) : (

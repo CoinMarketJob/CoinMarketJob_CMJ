@@ -266,15 +266,35 @@
   cursor: pointer;
 }
 
-/*
-.AddQuestion:hover {
-  color: #242220BF;
+.AddQuestionWrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  cursor: pointer;
 }
 
-.AddQuestion:active {
-  color: #000000;
+.AddQuestionWrapper span {
+  cursor: pointer;
+  font-family: Inter;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 21px;
+  text-align: left;
+  color: #999999;
+  cursor: pointer;
 }
-*/
+
+.AddQuestionWrapper:active span{
+  color: #242220e0;
+  cursor: pointer;
+}
+
+.AddQuestionWrapper:active  path{
+  stroke: #242220;
+  stroke-width: 1px;
+  cursor: pointer;
+}
+
 
 .QuestionPopup {
   top: 100%;

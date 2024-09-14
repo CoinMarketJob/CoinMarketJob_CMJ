@@ -11,13 +11,13 @@ interface ContainerProps {
 }
 
 const DefaultContainer: React.FC<ContainerProps> = ({ children }) => {
-    const [totalWidth, setTotalWidth] = useState<number>(window.innerWidth);
+    const [totalWidth, setTotalWidth] = useState<number>(1920);
     const { isLiveVisible } = useLiveVisibility();
     const searchParams = useSearchParams();
     const [expandedLiveId, setExpandedLiveId] = useState<number | null>(null);
 
     useEffect(() => {
-        const handleResize = () => setTotalWidth(window.innerWidth);
+        const handleResize = () => setTotalWidth(1920);
         window.addEventListener('resize', handleResize);
 
         // URL'den lives parametresini kontrol et
@@ -36,7 +36,7 @@ const DefaultContainer: React.FC<ContainerProps> = ({ children }) => {
     const profileWidth = totalWidth * (1 / 4.5);
     const liveWidth = isLiveVisible ? totalWidth * (1 / 4.5) : 0;
     const childWidth = totalWidth - profileWidth - liveWidth;
-
+    
     return (
         <div className="container-div" style={{ width: totalWidth, display: 'flex' }}>
             <div className="panel-profile" style={{ width: profileWidth }}>

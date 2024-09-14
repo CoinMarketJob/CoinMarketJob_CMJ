@@ -112,7 +112,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({
               borderRadius={4}
             />
           </div>
-          {(locationType === "Hybrid" || locationType === "OnSite") && (
+          {(locationType === "Hybrid" || locationType === "Office") && (
             <>
               <div className={styles.searchContainer}>
                 <svg

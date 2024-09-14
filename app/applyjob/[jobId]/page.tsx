@@ -15,7 +15,6 @@ import { JobQuestions } from "@prisma/client";
 import { useRouter } from "next/navigation"; // Add this import
 import Icon from "@/app/components/general/Icon";
 
-
 type JobProps = {
   jobId: string;
 };
@@ -51,7 +50,6 @@ const page = ({ params }: { params: JobProps }) => {
   const [uploading, setUploading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-
 
   const handleAnswerChange = (questionId: number, answer: string) => {
     setAnswers((prev) => ({ ...prev, [questionId]: answer }));
@@ -405,7 +403,13 @@ const page = ({ params }: { params: JobProps }) => {
 
   const ArrowIcon = () => {
     return (
-      <svg width="16" height="29" viewBox="0 0 16 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        width="16"
+        height="29"
+        viewBox="0 0 16 29"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <path
           d="M2.29487 14.4688L14.8961 27.0707C15.1398 27.3144 15.2709 27.5515 15.2894 27.7819C15.3074 28.0127 15.177 28.2704 14.8983 28.5549C14.619 28.8393 14.3718 28.9875 14.1565 28.9993C13.9418 29.0112 13.6749 28.8668 13.3558 28.5662L0.60167 15.8114C0.424835 15.5976 0.280236 15.3838 0.167877 15.17C0.0559922 14.9561 5.15829e-05 14.7177 5.15829e-05 14.4546C5.15829e-05 14.1914 0.0564681 13.952 0.169301 13.7363C0.282134 13.5211 0.42768 13.3241 0.605936 13.1454L13.3515 0.403309C13.6369 0.117909 13.8844 -0.0160195 14.094 0.00152051C14.3035 0.0185894 14.5479 0.16935 14.8271 0.453803C15.1059 0.738255 15.2453 0.986676 15.2453 1.19907C15.2453 1.41146 15.1052 1.65775 14.825 1.93793L2.29487 14.4688Z"
           fill="#242220"
@@ -419,7 +423,7 @@ const page = ({ params }: { params: JobProps }) => {
   const handleBackClick = () => {
     router.back();
   };
-  
+
   return (
     <div ref={panelRef} className={styles.ContainerCard}>
       {errorMessage && (
@@ -431,16 +435,15 @@ const page = ({ params }: { params: JobProps }) => {
       <div className={styles.ApplyCard}>
         <div style={{ display: "flex" }}>
           <div className={styles.arrowContainer}>
-          <Icon onClick={handleBackClick}
-          hoverSize={45}
-          hoverContent="Back"
-          
-          tooltipPosition="bottom"
-          ><ArrowIcon /></Icon>
+            <Icon
+              onClick={handleBackClick}
+              hoverSize={45}
+              hoverContent="Back"
+              tooltipPosition="bottom"
+            >
+              <ArrowIcon />
+            </Icon>
           </div>
-        
-  
-
 
           <div className={styles.ApplyText}>Apply</div>
           <div>
