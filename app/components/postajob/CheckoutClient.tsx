@@ -52,6 +52,10 @@ const CheckoutClient: React.FC<CheckoutProps> = ({
     // Implement address saving logic here
   };
 
+  const handleCreditCardClick = () => {
+    setCreditCard(true);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.CheckoutText}>Checkout</div>
@@ -87,11 +91,12 @@ const CheckoutClient: React.FC<CheckoutProps> = ({
           </PostaJobPopup>
         </div>
         <div className={styles.AddCol}>
-          {savedCardNumber ? (
-            <span>{savedCardType} **** **** **** {savedCardNumber.slice(-4)}</span>
-          ) : (
-            <span onClick={() => setCreditCard(!creditCard)}>Add Credit Card</span>
-          )}
+          <span onClick={handleCreditCardClick}>
+            {savedCardNumber 
+              ? `${savedCardType} **** **** **** ${savedCardNumber.slice(-4)}`
+              : "Add Credit Card"
+            }
+          </span>
         </div>
       </div>
       <div className={styles.Line}></div>
