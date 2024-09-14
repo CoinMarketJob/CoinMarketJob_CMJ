@@ -285,10 +285,15 @@
 }
 
 .AddQuestionWrapper:active span{
-  color: #242220BF;
+  color: #242220e0;
   cursor: pointer;
 }
 
+.AddQuestionWrapper:active  path{
+  stroke: #242220;
+  stroke-width: 1px;
+  cursor: pointer;
+}
 
 
 .QuestionPopup {
