@@ -81,7 +81,7 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags, isFilterOpen, setIs
     };
 
     const toggleFilter = () => {
-        setModalOpen(prevState => !prevState);
+        setModalOpen(!modalOpen);
     };
 
     useEffect(() => {
@@ -175,7 +175,7 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags, isFilterOpen, setIs
 
             <div className='JobFilterPopUp'>
             {modalOpen && (
-                <JobFilterPopUp />
+                <JobFilterPopUp  modalOpen={modalOpen} setModalOpen={setModalOpen}/>
             )}
             </div>
             
