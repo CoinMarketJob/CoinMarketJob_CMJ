@@ -20,6 +20,61 @@ interface LiveProps {
   initialExpandedId?: number | null;
 }
 
+interface HackathonCardProps {
+  name: string;
+  organizer: string;
+  date: string;
+  location: string;
+  prizePool: string;
+  participants: number;
+  url: string;
+}
+
+const HackathonCard: React.FC<HackathonCardProps> = ({
+  name,
+  organizer,
+  date,
+  location,
+  prizePool,
+  participants,
+  url,
+}) => {
+  return (
+    <div className={styles.hackathonCard}>
+      <div className={styles.hackathonCardHeader}>
+        <div className={styles.hackathonCardHeaderTop}>
+          <div>
+            <div className={styles.hackathonCardTitle}>{name}</div>
+            <div className={styles.hackathonCardOrganizer}>By {organizer}</div>
+          </div>
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.hackathonCardExternalLink}
+            aria-label="Go to Hackathon Page"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 13V19C18 19.5304 17.7893 20.0391 17.4142 20.4142C17.0391 20.7893 16.5304 21 16 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V8C3 7.46957 3.21071 6.96086 3.58579 6.58579C3.96086 6.21071 4.46957 6 5 6H11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M15 3H21V9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M10 14L21 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div className={styles.hackathonCardContent}>
+        <div className={styles.hackathonCardGrid}>
+          <div>Date: {date}</div>
+          <div>Location: {location}</div>
+          <div>Prize Pool: {prizePool}</div>
+          <div>Participants: {participants}</div>
+        </div>
+      </div>
+      <div className={styles.hackathonCardOverlay} aria-hidden="true" />
+    </div>
+  );
+};
+
 const Live: React.FC<LiveProps> = ({ initialExpandedId }) => {
   const [live, setLive] = useState<LiveItem[]>([]);
   const [filteredLive, setFilteredLive] = useState<LiveItem[]>([]);
@@ -149,146 +204,161 @@ const Live: React.FC<LiveProps> = ({ initialExpandedId }) => {
         i++, liveIndex++, globalIndex++
       ) {
         const currentItem = items[liveIndex];
-        const isExpanded = expandedId === currentItem.id;
-        const index = globalIndex;
-        combined.push(
-          <div
-            key={`live-${liveIndex}`}
-            className={styles.liveItem}
-            onClick={() => toggleExpand(currentItem.id)}
-          >
-            <div className={styles.DetailArrow}>
-              <motion.svg
-                width="19"
-                height="10"
-                viewBox="0 0 19 10"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                animate={{ rotate: isExpanded ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <path
-                  d="M9.29366 10C9.09763 10 8.91677 9.96799 8.75108 9.90396C8.58539 9.83962 8.42304 9.7281 8.26403 9.56939L0.274133 1.57904C0.10359 1.4088 0.0125526 1.19987 0.00102115 0.95225C-0.0108137 0.704932 0.0802237 0.484469 0.274133 0.290862C0.467739 0.0969527 0.682436 0 0.918223 0C1.15401 0 1.36871 0.0969527 1.56231 0.290862L9.29366 8.02176L17.025 0.290862C17.1953 0.120319 17.4042 0.0292816 17.6518 0.0177502C17.8991 0.00591532 18.1196 0.0969527 18.3132 0.290862C18.5071 0.484469 18.6041 0.699166 18.6041 0.934953C18.6041 1.17074 18.5071 1.38544 18.3132 1.57904L10.3233 9.56939C10.1643 9.7281 10.0019 9.83962 9.83625 9.90396C9.67056 9.96799 9.4897 10 9.29366 10Z"
-                  fill="#999999"
-                />
-              </motion.svg>
-            </div>
-            <div className={styles.Title}>{currentItem.title}</div>
-            <AnimatePresence>
-              {isExpanded && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, height: "auto", scale: 1 }}
-                  exit={{ opacity: 0, height: 0, scale: 0.95 }}
-                  transition={{
-                    duration: 0.5,
-                    ease: [0.04, 0.62, 0.23, 0.98],
-                    scale: { duration: 0.3 },
-                  }}
-                  className={styles.Details}
-                >
-                  <motion.div
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: 20, opacity: 0 }}
-                    transition={{ delay: 0.1, duration: 0.3 }}
-                    className={styles.NewsDetails}
-                  >
-                    {currentItem.content}
-                  </motion.div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-            <div className={styles.NewsMetadata}>
-              {currentItem.author && (
-                <span className={styles.Author}>By {currentItem.author}</span>
-              )}
-              {currentItem.date && (
-                <span className={styles.Date}>
-                  {formatDate(currentItem.date)}
-                </span>
-              )}
-            </div>
+        if (currentItem.liveType === "HACKHATHONS") {
+          combined.push(
+            <HackathonCard
+              key={`hackathon-${currentItem.id}`}
+              name={currentItem.title}
+              organizer={currentItem.organisation || ""}
+              date={formatDate(currentItem.date)}
+              location="TBA" // You might want to add this field to your LiveItem interface
+              prizePool="TBA" // You might want to add this field to your LiveItem interface
+              participants={0} // You might want to add this field to your LiveItem interface
+              url="#" // You might want to add this field to your LiveItem interface
+            />
+          );
+        } else {
+          const isExpanded = expandedId === currentItem.id;
+          const index = globalIndex;
+          combined.push(
             <div
-              className={`${styles.bottomRow} ${
-                isExpanded ? styles.expanded : ""
-              }`}
+              key={`live-${liveIndex}`}
+              className={styles.liveItem}
+              onClick={() => toggleExpand(currentItem.id)}
             >
-              <div className={styles.Type}>{currentItem.liveType}</div>
-
-              <div className={styles.iconContainer}>
-                <Icon
-                  onClick={(e) => handleShareClick(e, currentItem)}
-                  hoverSize={40}
-                  hoverContent="Share"
-                  tooltipPosition="top"
+              <div className={styles.DetailArrow}>
+                <motion.svg
+                  width="19"
+                  height="10"
+                  viewBox="0 0 19 10"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  animate={{ rotate: isExpanded ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
                 >
-                  <svg
-                    width="18"
-                    height="24"
-                    viewBox="0 0 18 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <path
+                    d="M9.29366 10C9.09763 10 8.91677 9.96799 8.75108 9.90396C8.58539 9.83962 8.42304 9.7281 8.26403 9.56939L0.274133 1.57904C0.10359 1.4088 0.0125526 1.19987 0.00102115 0.95225C-0.0108137 0.704932 0.0802237 0.484469 0.274133 0.290862C0.467739 0.0969527 0.682436 0 0.918223 0C1.15401 0 1.36871 0.0969527 1.56231 0.290862L9.29366 8.02176L17.025 0.290862C17.1953 0.120319 17.4042 0.0292816 17.6518 0.0177502C17.8991 0.00591532 18.1196 0.0969527 18.3132 0.290862C18.5071 0.484469 18.6041 0.699166 18.6041 0.934953C18.6041 1.17074 18.5071 1.38544 18.3132 1.57904L10.3233 9.56939C10.1643 9.7281 10.0019 9.83962 9.83625 9.90396C9.67056 9.96799 9.4897 10 9.29366 10Z"
+                    fill="#999999"
+                  />
+                </motion.svg>
+              </div>
+              <div className={styles.Title}>{currentItem.title}</div>
+              <AnimatePresence>
+                {isExpanded && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, height: "auto", scale: 1 }}
+                    exit={{ opacity: 0, height: 0, scale: 0.95 }}
+                    transition={{
+                      duration: 0.5,
+                      ease: [0.04, 0.62, 0.23, 0.98],
+                      scale: { duration: 0.3 },
+                    }}
+                    className={styles.Details}
                   >
-                    <path
-                      d="M0 2.25C0 1.00781 1.00781 0 2.25 0V2.25V20.6906L8.34844 16.3359C8.7375 16.0547 9.26719 16.0547 9.65625 16.3359L15.75 20.6906V2.25H2.25V0H15.75C16.9922 0 18 1.00781 18 2.25V22.875C18 23.2969 17.7656 23.6812 17.3906 23.8734C17.0156 24.0656 16.5656 24.0328 16.2234 23.789L9 18.6328L1.77656 23.789C1.43438 24.0328 0.984375 24.0656 0.609375 23.8734C0.234375 23.6812 0 23.2969 0 22.875V2.25Z"
-                      fill="#242220"
-                      fill-opacity="0.2"
-                    />
-                  </svg>
-                </Icon>
+                    <motion.div
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: 20, opacity: 0 }}
+                      transition={{ delay: 0.1, duration: 0.3 }}
+                      className={styles.NewsDetails}
+                    >
+                      {currentItem.content}
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              <div className={styles.NewsMetadata}>
+                {currentItem.author && (
+                  <span className={styles.Author}>By {currentItem.author}</span>
+                )}
+                {currentItem.date && (
+                  <span className={styles.Date}>
+                    {formatDate(currentItem.date)}
+                  </span>
+                )}
+              </div>
+              <div
+                className={`${styles.bottomRow} ${
+                  isExpanded ? styles.expanded : ""
+                }`}
+              >
+                <div className={styles.Type}>{currentItem.liveType}</div>
 
-                <Icon
-                  onClick={(e) => handleShareClick(e, currentItem)}
-                  hoverSize={40}
-                  hoverContent="Share"
-                  tooltipPosition="top"
-                >
-                  <svg
-                    width="18"
-                    height="29"
-                    viewBox="0 0 27 29"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+                <div className={styles.iconContainer}>
+                  <Icon
+                    onClick={(e) => handleShareClick(e, currentItem)}
+                    hoverSize={40}
+                    hoverContent="Share"
+                    tooltipPosition="top"
                   >
-                    <path
-                      d="M17.1484 24.5C17.1484 22.0147 19.1632 20 21.6484 20C24.1337 20 26.1484 22.0147 26.1484 24.5C26.1484 26.9853 24.1337 29 21.6484 29C19.1632 29 17.1484 26.9853 17.1484 24.5Z"
-                      fill="#A7A7A6"
-                    />
-                    <path
-                      d="M18.1484 24.5C18.1484 22.567 19.7154 21 21.6484 21C23.5814 21 25.1484 22.567 25.1484 24.5C25.1484 26.433 23.5814 28 21.6484 28C19.7154 28 18.1484 26.433 18.1484 24.5Z"
-                      fill="white"
-                    />
-                    <path
-                      d="M0 14.5C0 12.0147 2.01472 10 4.5 10C6.98528 10 9 12.0147 9 14.5C9 16.9853 6.98528 19 4.5 19C2.01472 19 0 16.9853 0 14.5Z"
-                      fill="#A7A7A6"
-                    />
-                    <path
-                      d="M1 14.5C1 12.567 2.567 11 4.5 11C6.433 11 8 12.567 8 14.5C8 16.433 6.433 18 4.5 18C2.567 18 1 16.433 1 14.5Z"
-                      fill="white"
-                    />
-                    <path
-                      d="M17.1484 4.5C17.1484 2.01472 19.1632 0 21.6484 0C24.1337 0 26.1484 2.01472 26.1484 4.5C26.1484 6.98528 24.1337 9 21.6484 9C19.1632 9 17.1484 6.98528 17.1484 4.5Z"
-                      fill="#A7A7A6"
-                    />
-                    <path
-                      d="M18.1484 4.5C18.1484 2.567 19.7154 1 21.6484 1C23.5814 1 25.1484 2.567 25.1484 4.5C25.1484 6.433 23.5814 8 21.6484 8C19.7154 8 18.1484 6.433 18.1484 4.5Z"
-                      fill="white"
-                    />
-                    <path
-                      d="M7.64844 12.093L18.0022 6.04275L18.5068 6.90615L8.15297 12.9564L7.64844 12.093Z"
-                      fill="#A7A7A6"
-                    />
-                    <path
-                      d="M18.006 22.8531L7.61021 16.8753L8.1087 16.0084L18.5045 21.9863L18.006 22.8531Z"
-                      fill="#A7A7A6"
-                    />
-                  </svg>
-                </Icon>
+                    <svg
+                      width="18"
+                      height="24"
+                      viewBox="0 0 18 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 2.25C0 1.00781 1.00781 0 2.25 0V2.25V20.6906L8.34844 16.3359C8.7375 16.0547 9.26719 16.0547 9.65625 16.3359L15.75 20.6906V2.25H2.25V0H15.75C16.9922 0 18 1.00781 18 2.25V22.875C18 23.2969 17.7656 23.6812 17.3906 23.8734C17.0156 24.0656 16.5656 24.0328 16.2234 23.789L9 18.6328L1.77656 23.789C1.43438 24.0328 0.984375 24.0656 0.609375 23.8734C0.234375 23.6812 0 23.2969 0 22.875V2.25Z"
+                        fill="#242220"
+                        fill-opacity="0.2"
+                      />
+                    </svg>
+                  </Icon>
+
+                  <Icon
+                    onClick={(e) => handleShareClick(e, currentItem)}
+                    hoverSize={40}
+                    hoverContent="Share"
+                    tooltipPosition="top"
+                  >
+                    <svg
+                      width="18"
+                      height="29"
+                      viewBox="0 0 27 29"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M17.1484 24.5C17.1484 22.0147 19.1632 20 21.6484 20C24.1337 20 26.1484 22.0147 26.1484 24.5C26.1484 26.9853 24.1337 29 21.6484 29C19.1632 29 17.1484 26.9853 17.1484 24.5Z"
+                        fill="#A7A7A6"
+                      />
+                      <path
+                        d="M18.1484 24.5C18.1484 22.567 19.7154 21 21.6484 21C23.5814 21 25.1484 22.567 25.1484 24.5C25.1484 26.433 23.5814 28 21.6484 28C19.7154 28 18.1484 26.433 18.1484 24.5Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M0 14.5C0 12.0147 2.01472 10 4.5 10C6.98528 10 9 12.0147 9 14.5C9 16.9853 6.98528 19 4.5 19C2.01472 19 0 16.9853 0 14.5Z"
+                        fill="#A7A7A6"
+                      />
+                      <path
+                        d="M1 14.5C1 12.567 2.567 11 4.5 11C6.433 11 8 12.567 8 14.5C8 16.433 6.433 18 4.5 18C2.567 18 1 16.433 1 14.5Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M17.1484 4.5C17.1484 2.01472 19.1632 0 21.6484 0C24.1337 0 26.1484 2.01472 26.1484 4.5C26.1484 6.98528 24.1337 9 21.6484 9C19.1632 9 17.1484 6.98528 17.1484 4.5Z"
+                        fill="#A7A7A6"
+                      />
+                      <path
+                        d="M18.1484 4.5C18.1484 2.567 19.7154 1 21.6484 1C23.5814 1 25.1484 2.567 25.1484 4.5C25.1484 6.433 23.5814 8 21.6484 8C19.7154 8 18.1484 6.433 18.1484 4.5Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M7.64844 12.093L18.0022 6.04275L18.5068 6.90615L8.15297 12.9564L7.64844 12.093Z"
+                        fill="#A7A7A6"
+                      />
+                      <path
+                        d="M18.006 22.8531L7.61021 16.8753L8.1087 16.0084L18.5045 21.9863L18.006 22.8531Z"
+                        fill="#A7A7A6"
+                      />
+                    </svg>
+                  </Icon>
+                </div>
               </div>
             </div>
-          </div>
-        );
+          );
+        }
       }
 
       for (let i = 0; i < 2; i++) {
