@@ -71,10 +71,9 @@ const CheckoutClient: React.FC<CheckoutProps> = ({
           </PostaJobPopup>
         </div>
         <div
-          onClick={() => setCreditCard(!creditCard)}
           className={styles.AddCol}
         >
-          Add Credit Card
+          <span onClick={() => setCreditCard(!creditCard)}>Add Credit Card</span>
         </div>
       </div>
       <div className={styles.Line}></div>
@@ -88,8 +87,8 @@ const CheckoutClient: React.FC<CheckoutProps> = ({
           </PostaJobPopup>
         </div>
 
-        <div onClick={() => setAddress(!address)} className={styles.AddCol}>
-          Add Adress
+        <div className={styles.AddCol}>
+          <span onClick={() => setAddress(!address)}>Add Adress</span>
         </div>
       </div>
       <div className={styles.Line}></div>
@@ -108,10 +107,9 @@ const CheckoutClient: React.FC<CheckoutProps> = ({
         </div>
 
         <div
-          onClick={() => setBillingEmail(!address)}
           className={styles.AddCol}
         >
-          email@you.com
+          <span onClick={() => setBillingEmail(!address)}>email@you.com</span>
         </div>
       </div>
       <div className={styles.Line}></div>

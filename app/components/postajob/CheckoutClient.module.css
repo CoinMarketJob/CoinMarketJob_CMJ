@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: column;
     padding: 4px;
+    padding-top: 36px;
     margin: 0;
     justify-content: flex-start;
     flex-grow: 1;    
@@ -70,14 +71,6 @@
     font-weight: 400;
 }
 
-.AddCol:hover{
-    color: #242220BF;
-}
-
-.AddCol:active{
-    color: #000000;
-}
-
 .FirstCol{
     color: #999999;
     font-family: 'Inter';
@@ -91,4 +84,17 @@
     justify-content: flex-end;
     margin-top: 64px;
     margin-bottom: 200px;
+}
+
+.AddCol span{
+    cursor: pointer;
+    color: #999999;
+}
+
+.AddCol span:hover{
+    color: #242220BF;
+}
+
+.AddCol span:active{
+    color: #000000;
 }

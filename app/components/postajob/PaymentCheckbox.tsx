@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import styles from "./PaymentCheckbox.module.css";
 
 interface CheckboxProps {
@@ -22,26 +22,42 @@ const PaymentCheckbox: React.FC<CheckboxProps> = ({
   const toggleCheckbox = (checkBox: number) => {
     switch (checkBox) {
       case 0:
-        setOneJobIsChecked(true);
-        setMonthlyChecked(false);
-        setFiveJobChecked(false);
+        setOneJobIsChecked(!oneJobIsChecked);
         return;
       case 1:
-        setOneJobIsChecked(false);
-        setMonthlyChecked(true);
-        setFiveJobChecked(false);
+        setMonthlyChecked(!monthlyChecked);
         return;
       case 2:
-        setOneJobIsChecked(false);
-        setMonthlyChecked(false);
-        setFiveJobChecked(true);
+        setFiveJobChecked(!fiveJobChecked);
         return;
     }
   };
 
+  const calculateSubtotal = () => {
+    let subtotal = 0;
+    if (oneJobIsChecked) subtotal += 25;
+    if (monthlyChecked) subtotal += 150;
+    if (fiveJobChecked) subtotal += 100;
+    return subtotal;
+  };
+
+  const calculateTax = (subtotal: number) => {
+    return subtotal * 0.05; // %5 vergi
+  };
+
+  const calculateTotal = () => {
+    const subtotal = calculateSubtotal();
+    const tax = calculateTax(subtotal);
+    return subtotal + tax;
+  };
+
+  const subtotal = calculateSubtotal();
+  const tax = calculateTax(subtotal);
+  const total = calculateTotal();
+
   return (
     <div>
-      <div style={{ display: "flex", marginTop: 26, width: "100%" }}>
+      <div style={{ display: "flex", marginTop: 26, width: "100%", alignItems: "center" }}>
         <div
           className={`${styles.checkboxIcon} ${
             oneJobIsChecked ? styles.checked : ""
@@ -63,11 +79,11 @@ const PaymentCheckbox: React.FC<CheckboxProps> = ({
             </svg>
           </div>
         </div>
-        <div className={styles.TextSelect}>1 Job Posting</div>
-        <div className={styles.PriceSelect}>$15</div>
+        <div className={oneJobIsChecked ? styles.TextSelect : styles.Text}>1 Job Posting</div>
+        <div className={oneJobIsChecked ? styles.PriceSelect : styles.Price}>$25</div>
       </div>
 
-      <div style={{ display: "flex", marginTop: 26, width: "100%" }}>
+      <div style={{ display: "flex", marginTop: 26, width: "100%", alignItems: "center" }}>
         <div
           className={`${styles.checkboxIcon} ${
             monthlyChecked ? styles.checked : ""
@@ -89,11 +105,11 @@ const PaymentCheckbox: React.FC<CheckboxProps> = ({
             </svg>
           </div>
         </div>
-        <div className={styles.Text}>Monthly Subscription (150$)</div>
-        <div className={styles.Price}>$0</div>
+        <div className={monthlyChecked ? styles.TextSelect : styles.Text}>Monthly Subscription</div>
+        <div className={monthlyChecked ? styles.PriceSelect : styles.Price}>$150</div>
       </div>
 
-      <div style={{ display: "flex", marginTop: 26, width: "100%" }}>
+      <div style={{ display: "flex", marginTop: 26, width: "100%", alignItems: "center" }}>
         <div
           className={`${styles.checkboxIcon} ${
             fiveJobChecked ? styles.checked : ""
@@ -115,21 +131,28 @@ const PaymentCheckbox: React.FC<CheckboxProps> = ({
             </svg>
           </div>
         </div>
-        <div className={styles.Text}>5 Job Posting Bundle (100$)</div>
-        <div className={styles.Price}>$0</div>
+        <div className={fiveJobChecked ? styles.TextSelect : styles.Text}>5 Job Posting Bundle</div>
+        <div className={fiveJobChecked ? styles.PriceSelect : styles.Price}>$100</div>
+      </div>
+
+      <div style={{ display: "flex", marginTop: 26, width: "100%"}}>
+        <div className={styles.Text} style={{ marginLeft: 35 }}>
+          Subtotal
+        </div>
+        <div className={styles.Price}>${subtotal.toFixed(2)}</div>
       </div>
 
       <div style={{ display: "flex", marginTop: 26, width: "100%" }}>
         <div className={styles.Text} style={{ marginLeft: 35 }}>
-          % Taxes (estimated)
+          Estimated tax
         </div>
-        <div className={styles.Price}>$0</div>
+        <div className={styles.Price}>${tax.toFixed(2)}</div>
       </div>
 
       <div className={styles.Line}></div>
 
       <div style={{ display: "flex", marginTop: 13, width: "100%" }}>
-        <div className={styles.Total}>Total $15 USD</div>
+        <div className={styles.Total}>Total ${total.toFixed(2)} USD</div>
       </div>
     </div>
   );
