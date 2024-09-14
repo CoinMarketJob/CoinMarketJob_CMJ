@@ -13,6 +13,7 @@ interface InputProps {
     paddingRight?: number
     paddingLeft?: number
     disabled?: boolean
+    error?: boolean  // Yeni eklenen error prop'u
 }
 
 const Input: React.FC<InputProps> = ({ 
@@ -25,7 +26,8 @@ const Input: React.FC<InputProps> = ({
     className, 
     paddingRight, 
     paddingLeft,
-    disabled
+    disabled,
+    error  // Yeni eklenen error prop'u
 }) => {
     const spanRef = useRef<HTMLSpanElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -58,7 +60,7 @@ const Input: React.FC<InputProps> = ({
         <div style={{ position: 'relative', overflow: "visible", height: "100%" }}>
             <input
                 ref={inputRef}
-                className={`form-input ${className || ''}`}
+                className={`form-input ${className || ''} ${error ? 'error-input' : ''}`}
                 id={id}
                 type={type}
                 required={required}

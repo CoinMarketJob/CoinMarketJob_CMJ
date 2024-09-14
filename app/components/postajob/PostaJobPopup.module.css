@@ -11,6 +11,7 @@
     width: 26.875rem;
     top: -20px;
     right: 204px;    
+    z-index: 1000;
 }
 
 .ButtonGroup{

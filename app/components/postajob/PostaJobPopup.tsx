@@ -13,26 +13,36 @@ const PostaJobPopup:React.FC<Popup> = ({ children, Save, open, setOpen }) => {
    const popupRef = useRef<HTMLDivElement>(null);
 
    useEffect(() => {
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleClickOutside = (event: MouseEvent) => {
       if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
         setOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    if (open) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [setOpen]);
+  }, [setOpen, open]);
 
     const Cancel = () => {
         setOpen(false);  
     }
 
+    const handlePopupClick = (e: React.MouseEvent) => {
+      e.stopPropagation();
+    }
+
   return (
-    <div ref={popupRef} style={{display: open ? "block" : "none"}} className={styles.Popup}>
+    <div 
+      ref={popupRef} 
+      style={{display: open ? "block" : "none"}} 
+      className={styles.Popup}
+      onClick={handlePopupClick}
+    >
       {children}
       <div className={styles.ButtonGroup}>
             <Button text='Cancel' onClick={Cancel}
@@ -44,7 +54,6 @@ const PostaJobPopup:React.FC<Popup> = ({ children, Save, open, setOpen }) => {
               paddingTop={12} paddingBottom={12}
               paddingLeft={27} paddingRight={28}  />
         </div>
-        
     </div>
   )
 }
