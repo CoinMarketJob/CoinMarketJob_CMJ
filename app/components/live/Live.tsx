@@ -24,10 +24,11 @@ const Live: React.FC<LiveProps> = ({ initialExpandedId }) => {
   const [live, setLive] = useState<LiveItem[]>([]);
   const [filteredLive, setFilteredLive] = useState<LiveItem[]>([]);
   const [blog, setBlog] = useState<LiveItem[]>([]);
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
   const [keyword, setKeyword] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [expandedId, setExpandedId] = useState<number | null>(null);
 
   let globalIndex = 0;
 
@@ -39,13 +40,6 @@ const Live: React.FC<LiveProps> = ({ initialExpandedId }) => {
         setLive(data.filter((x) => x.liveType !== "BLOG"));
         setFilteredLive(data.filter((x) => x.liveType !== "BLOG"));
         setBlog(data.filter((x) => x.liveType === "BLOG"));
-
-        if (initialExpandedId) {
-          const index = data.findIndex(item => item.id === initialExpandedId);
-          if (index !== -1) {
-            setExpandedIndex(index);
-          }
-        }
       } catch (error) {
         console.error("Veri getirme hatası:", error);
       }
@@ -55,27 +49,9 @@ const Live: React.FC<LiveProps> = ({ initialExpandedId }) => {
   }, []);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch("/api/live/");
-        const data: LiveItem[] = await response.json();
-        setLive(data.filter((x) => x.liveType !== "BLOG"));
-        setFilteredLive(data.filter((x) => x.liveType !== "BLOG"));
-        setBlog(data.filter((x) => x.liveType === "BLOG"));
-
-        if (initialExpandedId) {
-          const index = data.filter((x) => x.liveType !== "BLOG").findIndex((item: LiveItem) => item.id === initialExpandedId);
-          console.log("toggleExpand", index);
-          if (index !== -1) {
-            setExpandedIndex(index);
-          }
-        }
-      } catch (error) {
-        console.error("Veri getirme hatası:", error);
-      }
+    if (initialExpandedId) {
+      setExpandedId(initialExpandedId);
     }
-
-    fetchData();
   }, [initialExpandedId]);
 
   const ChangeFunction = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,9 +94,9 @@ const Live: React.FC<LiveProps> = ({ initialExpandedId }) => {
     setFilteredLive(filteredItems);
   };
 
-  const toggleExpand = (index: number) => {
-    console.log("toggleExpand", index);
-    setExpandedIndex(expandedIndex === index ? null : index);
+  const toggleExpand = (id: number) => {
+    console.log("toggleExpand", id);
+    setExpandedId(expandedId === id ? null : id);
   };
 
   const formatDate = (dateString: string | undefined) => {
@@ -172,14 +148,14 @@ const Live: React.FC<LiveProps> = ({ initialExpandedId }) => {
         i < 2 && liveIndex < items.length;
         i++, liveIndex++, globalIndex++
       ) {
-        const isExpanded = expandedIndex === globalIndex;
-        const index = globalIndex;
         const currentItem = items[liveIndex];
+        const isExpanded = expandedId === currentItem.id;
+        const index = globalIndex;
         combined.push(
           <div
             key={`live-${liveIndex}`}
             className={styles.liveItem}
-            onClick={() => toggleExpand(index)}
+            onClick={() => toggleExpand(currentItem.id)}
           >
             <div className={styles.DetailArrow}>
               <motion.svg
