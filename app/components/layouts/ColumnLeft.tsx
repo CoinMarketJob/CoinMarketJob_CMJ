@@ -1,4 +1,6 @@
-import React, { useCallback, useState } from "react";
+"use client";
+
+import React, { useCallback, useState, useEffect } from "react";
 import { useDrop } from "react-dnd";
 import JobCard from "../job/Basic/JobCard";
 import { Job } from "@prisma/client";
@@ -20,6 +22,7 @@ interface ColumnProps {
   onDragBegin: () => void;
   onDragEnd: () => void;
   isDragging: boolean;
+  selectedJob?: number | null;
 }
 
 const ColumnLeft: React.FC<ColumnProps> = ({
@@ -30,7 +33,8 @@ const ColumnLeft: React.FC<ColumnProps> = ({
   onClick,
   onDragBegin,
   onDragEnd,
-  isDragging
+  isDragging,
+  selectedJob
 }) => {
 
   const [selectedJobId, setSelectedJobId] = useState<number | null>(null);
@@ -42,6 +46,12 @@ const ColumnLeft: React.FC<ColumnProps> = ({
       isOver: monitor.isOver(),
     }),
   }));
+
+  useEffect(() => {
+    if (selectedJob) {
+      setSelectedJobId(selectedJob);
+    }
+  }, [selectedJob]);
 
 
   const dragRef = useCallback((node: HTMLDivElement | null) => {

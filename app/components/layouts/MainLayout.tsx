@@ -109,6 +109,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
             cards={leftCards}
             onDrop={handleDrop}
             isDragging={isDragging}
+            selectedJob={parseInt(selectedJobId ? selectedJobId : "", 10)}
           />
         </div>
 

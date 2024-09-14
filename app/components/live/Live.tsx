@@ -64,7 +64,8 @@ const Live: React.FC<LiveProps> = ({ initialExpandedId }) => {
         setBlog(data.filter((x) => x.liveType === "BLOG"));
 
         if (initialExpandedId) {
-          const index = data.findIndex(item => item.id === initialExpandedId);
+          const index = data.filter((x) => x.liveType !== "BLOG").findIndex((item: LiveItem) => item.id === initialExpandedId);
+          console.log("toggleExpand", index);
           if (index !== -1) {
             setExpandedIndex(index);
           }
@@ -118,6 +119,7 @@ const Live: React.FC<LiveProps> = ({ initialExpandedId }) => {
   };
 
   const toggleExpand = (index: number) => {
+    console.log("toggleExpand", index);
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
