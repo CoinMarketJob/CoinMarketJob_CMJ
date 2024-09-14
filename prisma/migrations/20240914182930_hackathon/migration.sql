@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE `Live` ADD COLUMN `location` VARCHAR(191) NULL,
+    ADD COLUMN `participants` INTEGER NULL,
+    ADD COLUMN `prizePool` VARCHAR(191) NULL,
+    ADD COLUMN `url` VARCHAR(191) NULL,
+    MODIFY `content` VARCHAR(65535) NOT NULL;

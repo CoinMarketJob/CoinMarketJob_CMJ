@@ -13,6 +13,10 @@ export async function GET() {
       content: true,
       author: true,
       date: true,
+      location: true,
+      prizePool: true,
+      participants: true,
+      url: true,
     },
     cacheStrategy: { swr: 60, ttl: 60 },
   });
