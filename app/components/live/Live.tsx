@@ -94,9 +94,8 @@ const Live: React.FC<LiveProps> = ({ initialExpandedId }) => {
     setFilteredLive(filteredItems);
   };
 
-  const toggleExpand = (id: number) => {
-    console.log("toggleExpand", id);
-    setExpandedId(expandedId === id ? null : id);
+  const toggleExpand = (id: number) => {  
+    setExpandedId(prevId => prevId === id ? null : id);
   };
 
   const formatDate = (dateString: string | undefined) => {
