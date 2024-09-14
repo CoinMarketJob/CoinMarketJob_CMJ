@@ -231,17 +231,18 @@
 /* Remove the .shareIcon class if it's no longer needed */
 
 .hackathonCard {
-  width: 100%;
+  width: 99.6%;
   margin-bottom: 16px;
   border-radius: 8px;
   border: 1px solid #e7e5e4;
   background-color: #ffffff;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .hackathonCardHeader {
-  padding: 16px 16px 8px;
+  padding: 24px 24px 24px;
 }
 
 .hackathonCardHeaderTop {
@@ -251,12 +252,19 @@
 }
 
 .hackathonCardTitle {
-  font-size: 18px;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
   font-weight: 600;
+  letter-spacing: -0.025em;
+  font-size: 18px;
+  font-weight: 500;
   color: #242220;
+  font-family: Inter;
 }
 
 .hackathonCardOrganizer {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
   font-size: 14px;
   color: #999999;
 }
@@ -271,7 +279,7 @@
 }
 
 .hackathonCardContent {
-  padding: 0 16px 16px;
+  padding: 0 24px 24px;
 }
 
 .hackathonCardGrid {
@@ -282,15 +290,3 @@
   color: #666666;
 }
 
-.hackathonCardOverlay {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(36, 34, 32, 0.05);
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  pointer-events: none;
-}
-
-.hackathonCard:hover .hackathonCardOverlay {
-  opacity: 1;
-}
