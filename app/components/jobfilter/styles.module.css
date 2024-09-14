@@ -29,8 +29,8 @@
   align-items: center !important;
   width: 928px;
   height: 760px;
-  top: 150px;
-  left: 496px;
+  top: 7vh;
+  left: 26vw;
   border: 0.5px solid #E7E5E4; 
   background-color: rgba(255, 255, 255, 0.75); /* Arkaplan saydamlığını artırdık */
   backdrop-filter: blur(10px); /* Buzlu cam efekti */
