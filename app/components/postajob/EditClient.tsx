@@ -230,49 +230,60 @@ const EditClient: React.FC<EditClientProps> = ({
 
   return (
     <div className={styles.container}>
-<div className={styles.companyLogoSection}>
-<div className={styles.companyLogoWrapper}>
-  <img
-    src={selectedImage ? URL.createObjectURL(selectedImage) : image}
-    className={styles.companyLogo}
-    alt="Description"
-    onClick={triggerFileInput}
-  />
-  <input
-    type="file"
-    ref={fileInputRef}
-    onChange={handleImageSelect}
-    style={{ display: "none" }}
-    accept="image/*"
-  />
-  <div className={styles.circleIcon} onClick={triggerFileInput}>
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M9.92819 0.513214L8.60331 1.83799L12.1619 5.39627L13.4867 4.07149C14.1711 3.38721 14.1711 2.27867 13.4867 1.59438L12.4082 0.513214C11.7239 -0.171071 10.6153 -0.171071 9.93092 0.513214H9.92819ZM7.98467 2.45658L1.6039 8.83959C1.31921 9.12425 1.11118 9.47735 0.996207 9.86328L0.0271838 13.1561C-0.04125 13.3887 0.0217091 13.6378 0.191425 13.8075C0.361141 13.9772 0.61024 14.0402 0.840177 13.9745L4.13321 13.0055C4.51918 12.8906 4.8723 12.6825 5.15698 12.3979L11.5432 6.01486L7.98467 2.45658Z" fill="#999999"/>
-    </svg>
-  </div>
-  </div>
-</div>
-
-
+      <div className={styles.companyLogoSection}>
+        <div className={styles.companyLogoWrapper}>
+          <img
+            src={selectedImage ? URL.createObjectURL(selectedImage) : image}
+            className={styles.companyLogo}
+            alt="Description"
+            onClick={triggerFileInput}
+          />
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleImageSelect}
+            style={{ display: "none" }}
+            accept="image/*"
+          />
+          <div className={styles.circleIcon} onClick={triggerFileInput}>
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M9.92819 0.513214L8.60331 1.83799L12.1619 5.39627L13.4867 4.07149C14.1711 3.38721 14.1711 2.27867 13.4867 1.59438L12.4082 0.513214C11.7239 -0.171071 10.6153 -0.171071 9.93092 0.513214H9.92819ZM7.98467 2.45658L1.6039 8.83959C1.31921 9.12425 1.11118 9.47735 0.996207 9.86328L0.0271838 13.1561C-0.04125 13.3887 0.0217091 13.6378 0.191425 13.8075C0.361141 13.9772 0.61024 14.0402 0.840177 13.9745L4.13321 13.0055C4.51918 12.8906 4.8723 12.6825 5.15698 12.3979L11.5432 6.01486L7.98467 2.45658Z"
+                fill="#999999"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
 
       <div className={`${styles.centerDiv} ${styles.companyName}`}>
-        <Input
-          id="CompanyName"
-          type="text"
-          value={companyName}
-          onChange={(e) => setCompanyName(e.target.value)}
-          placeholder="Company Name"
-        />
+        <div style={{ width: "250px" }}>
+          <Input
+            id="CompanyName"
+            type="text"
+            value={companyName}
+            onChange={(e) => setCompanyName(e.target.value)}
+            placeholder="Company Name"
+          />
+        </div>
       </div>
 
       <div className={`${styles.centerDiv} ${styles.jobTitleContainer}`}>
-        <Input
-          id="JobTitle"
-          type="text"
-          value={jobTitle}
-          onChange={(e) => setJobTitle(e.target.value)}
-          placeholder="Job Title*"
-        />
+        <div style={{ width: "250px" }}>
+          <Input
+            id="JobTitle"
+            type="text"
+            value={jobTitle}
+            onChange={(e) => setJobTitle(e.target.value)}
+            placeholder="Job Title*"
+          />
+        </div>
       </div>
 
       <div className={`${styles.centerDiv} ${styles.locationContainer}`}>
@@ -446,15 +457,24 @@ const EditClient: React.FC<EditClientProps> = ({
         </div>
 
         <div className={`${styles.AddQuestionGroup}`}>
-          <span onClick={(e) => setQuestionAddShow(true)} className={`${styles.AddQuestion}`}>Add question</span>
-          <Icon onClick={(e) => setQuestionAddShow(true)} hoverSize={40} disableHover={true}>
+          <span
+            onClick={(e) => setQuestionAddShow(true)}
+            className={`${styles.AddQuestion}`}
+          >
+            Add question
+          </span>
+          <Icon
+            onClick={(e) => setQuestionAddShow(true)}
+            hoverSize={40}
+            disableHover={true}
+          >
             <svg
               width="17"
               height="18"
               viewBox="0 0 17 18"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: "pointer" }}
             >
               <path
                 d="M9.18996 9.60416L9.19013 16.3893C9.19002 16.5745 9.12097 16.7383 8.98299 16.8807C8.84501 17.0229 8.6791 17.0941 8.48528 17.0942C8.29146 17.0941 8.12556 17.025 7.98757 16.887C7.84959 16.7491 7.78054 16.5832 7.78043 16.3893L7.7806 9.60416L0.995417 9.60433C0.810288 9.60421 0.646503 9.53517 0.504062 9.39718C0.361843 9.2592 0.290678 9.0933 0.290567 8.89948C0.290678 8.70565 0.359725 8.53975 0.497708 8.40177C0.635691 8.26378 0.801594 8.19474 0.995416 8.19463L7.7806 8.19479L7.78043 1.40961C7.78054 1.22448 7.84959 1.0607 7.98757 0.918256C8.12556 0.776037 8.29146 0.704872 8.48528 0.70476C8.6791 0.704872 8.84501 0.773919 8.98299 0.911902C9.12097 1.04989 9.19002 1.21579 9.19013 1.40961L9.18996 8.19479L15.9751 8.19463C16.1603 8.19474 16.3241 8.26378 16.4665 8.40177C16.6087 8.53975 16.6799 8.70565 16.68 8.89948C16.6799 9.0933 16.6108 9.2592 16.4729 9.39718C16.3349 9.53517 16.169 9.60421 15.9751 9.60433L9.18996 9.60416Z"
