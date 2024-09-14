@@ -33,17 +33,31 @@ const PaymentCheckbox: React.FC<CheckboxProps> = ({
     }
   };
 
-  const calculateTotal = () => {
-    let total = 0;
-    if (oneJobIsChecked) total += 15;
-    if (monthlyChecked) total += 150;
-    if (fiveJobChecked) total += 100;
-    return total;
+  const calculateSubtotal = () => {
+    let subtotal = 0;
+    if (oneJobIsChecked) subtotal += 25;
+    if (monthlyChecked) subtotal += 150;
+    if (fiveJobChecked) subtotal += 100;
+    return subtotal;
   };
+
+  const calculateTax = (subtotal: number) => {
+    return subtotal * 0.05; // %5 vergi
+  };
+
+  const calculateTotal = () => {
+    const subtotal = calculateSubtotal();
+    const tax = calculateTax(subtotal);
+    return subtotal + tax;
+  };
+
+  const subtotal = calculateSubtotal();
+  const tax = calculateTax(subtotal);
+  const total = calculateTotal();
 
   return (
     <div>
-      <div style={{ display: "flex", marginTop: 26, width: "100%" }}>
+      <div style={{ display: "flex", marginTop: 26, width: "100%", alignItems: "center" }}>
         <div
           className={`${styles.checkboxIcon} ${
             oneJobIsChecked ? styles.checked : ""
@@ -66,10 +80,10 @@ const PaymentCheckbox: React.FC<CheckboxProps> = ({
           </div>
         </div>
         <div className={oneJobIsChecked ? styles.TextSelect : styles.Text}>1 Job Posting</div>
-        <div className={oneJobIsChecked ? styles.PriceSelect : styles.Price}>$15</div>
+        <div className={oneJobIsChecked ? styles.PriceSelect : styles.Price}>$25</div>
       </div>
 
-      <div style={{ display: "flex", marginTop: 26, width: "100%" }}>
+      <div style={{ display: "flex", marginTop: 26, width: "100%", alignItems: "center" }}>
         <div
           className={`${styles.checkboxIcon} ${
             monthlyChecked ? styles.checked : ""
@@ -95,7 +109,7 @@ const PaymentCheckbox: React.FC<CheckboxProps> = ({
         <div className={monthlyChecked ? styles.PriceSelect : styles.Price}>$150</div>
       </div>
 
-      <div style={{ display: "flex", marginTop: 26, width: "100%" }}>
+      <div style={{ display: "flex", marginTop: 26, width: "100%", alignItems: "center" }}>
         <div
           className={`${styles.checkboxIcon} ${
             fiveJobChecked ? styles.checked : ""
@@ -121,17 +135,24 @@ const PaymentCheckbox: React.FC<CheckboxProps> = ({
         <div className={fiveJobChecked ? styles.PriceSelect : styles.Price}>$100</div>
       </div>
 
+      <div style={{ display: "flex", marginTop: 26, width: "100%"}}>
+        <div className={styles.Text} style={{ marginLeft: 35 }}>
+          Subtotal
+        </div>
+        <div className={styles.Price}>${subtotal.toFixed(2)}</div>
+      </div>
+
       <div style={{ display: "flex", marginTop: 26, width: "100%" }}>
         <div className={styles.Text} style={{ marginLeft: 35 }}>
-          % Taxes (estimated)
+          Estimated tax
         </div>
-        <div className={styles.Price}>$0</div>
+        <div className={styles.Price}>${tax.toFixed(2)}</div>
       </div>
 
       <div className={styles.Line}></div>
 
       <div style={{ display: "flex", marginTop: 13, width: "100%" }}>
-        <div className={styles.Total}>Total ${calculateTotal()} USD</div>
+        <div className={styles.Total}>Total ${total.toFixed(2)} USD</div>
       </div>
     </div>
   );
