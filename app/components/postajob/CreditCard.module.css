@@ -34,3 +34,8 @@
     font-size: 14px;
     pointer-events: none; /* Ensures the text doesn't interfere with input interaction */
 }
+
+/* Hata durumu için yeni stil */
+.cardInput.error {
+    border-color: #ff0000;
+}

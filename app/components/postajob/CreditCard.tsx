@@ -69,7 +69,7 @@ const CreditCard = forwardRef<CreditCardRef, CreditCardProps>(({ onSave }, ref) 
             setError("Invalid credit card number");
             return false;
         }
-        if (cardType === "Unknown") {
+        if (cardType === "") {
             setError("Unrecognized card type");
             return false;
         }
@@ -93,6 +93,7 @@ const CreditCard = forwardRef<CreditCardRef, CreditCardProps>(({ onSave }, ref) 
                     value={cardNumber} 
                     onChange={change} 
                     className={styles.cardInput}
+                    error={error !== ""} // Hata durumunu Input bileşenine iletiyoruz
                 />
                 {cardType && <div className={styles.CardType}>{cardType}</div>}
             </div>
