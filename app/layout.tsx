@@ -12,7 +12,7 @@ import { ProfileProvider } from "@/hooks/useCompanyProfile";
 import { JobApplicationsProvider } from "@/hooks/useApplicationJob";
 import { ProfileDataProvider } from "@/hooks/useProfileData";
 import { LiveVisibilityProvider } from "@/hooks/useLiveVisibility";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Home from "./components/MobilePage/Home";
 
 export default function RootLayout({
@@ -21,6 +21,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [isMobile, setIsMobile] = useState(false);
+  const [mainDivHeight, setMainDivHeight] = useState(950);
+  const mainDivRef = useRef<HTMLDivElement>(null);
 
   function isMobilePhone() {
     const userAgent =
@@ -50,7 +52,7 @@ export default function RootLayout({
 
   useEffect(() => {
     function scaleContent() {
-      const content = document.querySelector(".layout-container-div");
+      const content = document.querySelector(".layout-container-div") as HTMLElement;
       const scaleX = window.innerWidth / 1920;
       const scaleY = window.innerHeight / 1080;
       const scale = Math.min(scaleX, scaleY);
@@ -64,6 +66,19 @@ export default function RootLayout({
     window.addEventListener("resize", scaleContent);
     
     return () => window.removeEventListener("resize", scaleContent);
+  }, []);
+
+  useEffect(() => {
+    function updateMainDivHeight() {
+      if (mainDivRef.current) {
+        setMainDivHeight(mainDivRef.current.clientHeight);
+      }
+    }
+
+    updateMainDivHeight();
+    window.addEventListener("resize", updateMainDivHeight);
+
+    return () => window.removeEventListener("resize", updateMainDivHeight);
   }, []);
 
   return (
@@ -103,8 +118,8 @@ export default function RootLayout({
                         <LiveVisibilityProvider>
                           <div className="layout-container-div">
                             <Searchbar />
-                            <main className="layout-main-div">
-                              <DefaultContainer>{children}</DefaultContainer>
+                            <main className="layout-main-div" ref={mainDivRef}>
+                              <DefaultContainer mainDivHeight={mainDivHeight}>{children}</DefaultContainer>
                             </main>
                             <Footer />
                           </div>
