@@ -12,7 +12,7 @@ import { ProfileProvider } from "@/hooks/useCompanyProfile";
 import { JobApplicationsProvider } from "@/hooks/useApplicationJob";
 import { ProfileDataProvider } from "@/hooks/useProfileData";
 import { LiveVisibilityProvider } from "@/hooks/useLiveVisibility";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Home from "./components/MobilePage/Home";
 
 export default function RootLayout({
@@ -74,23 +74,37 @@ export default function RootLayout({
     return () => window.removeEventListener("resize", checkDevice);
   }, []);
 
-  useEffect(() => {
-    function scaleContent() {
-      const content = document.querySelector(".layout-container-div") as HTMLElement;
+  const scaleContent = useCallback(() => {
+    const content = document.querySelector(".layout-container-div") as HTMLElement;
+    if (content) {
       const scaleX = window.innerWidth / 1920;
       const scaleY = window.innerHeight / 1080;
       const scale = Math.min(scaleX, scaleY);
-      if(content){
-        content.style.transform = `scale(${scale})`;
-        content.style.width = `${window.innerWidth / scale}px`;
-        content.style.height = `${window.innerHeight / scale}px`;
-      }
+      content.style.transform = `scale(${scale})`;
+      content.style.width = `${window.innerWidth / scale}px`;
+      content.style.height = `${window.innerHeight / scale}px`;
     }
-    window.addEventListener("load", scaleContent);
-    window.addEventListener("resize", scaleContent);
-    
-    return () => window.removeEventListener("resize", scaleContent);
   }, []);
+
+  useLayoutEffect(() => {
+    scaleContent();
+  }, [scaleContent]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      requestAnimationFrame(scaleContent);
+    };
+
+    window.addEventListener("resize", handleResize);
+    
+    // Sayfa yüklendikten kısa bir süre sonra tekrar scale'i uygula
+    const timeoutId = setTimeout(scaleContent, 100);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      clearTimeout(timeoutId);
+    };
+  }, [scaleContent]);
 
   return (
     <html
