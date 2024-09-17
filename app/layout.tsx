@@ -12,7 +12,7 @@ import { ProfileProvider } from "@/hooks/useCompanyProfile";
 import { JobApplicationsProvider } from "@/hooks/useApplicationJob";
 import { ProfileDataProvider } from "@/hooks/useProfileData";
 import { LiveVisibilityProvider } from "@/hooks/useLiveVisibility";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Home from "./components/MobilePage/Home";
 
 export default function RootLayout({
@@ -23,6 +23,30 @@ export default function RootLayout({
   const [isMobile, setIsMobile] = useState(false);
   const [mainDivHeight, setMainDivHeight] = useState(950);
   const mainDivRef = useRef<HTMLDivElement>(null);
+
+  const updateMainDivHeight = useCallback(() => {
+    if (mainDivRef.current) {
+      setMainDivHeight(mainDivRef.current.clientHeight);
+    }
+  }, []);
+
+  useEffect(() => {
+    updateMainDivHeight();
+    window.addEventListener("resize", updateMainDivHeight);
+    window.addEventListener("load", updateMainDivHeight);
+
+    const resizeObserver = new ResizeObserver(updateMainDivHeight);
+    if (mainDivRef.current) {
+      resizeObserver.observe(mainDivRef.current);
+    }
+
+    return () => {
+      window.removeEventListener("resize", updateMainDivHeight);
+      window.removeEventListener("load", updateMainDivHeight);
+      resizeObserver.disconnect();
+    };
+  }, [updateMainDivHeight]);
+  
 
   function isMobilePhone() {
     const userAgent =
@@ -66,20 +90,6 @@ export default function RootLayout({
     window.addEventListener("resize", scaleContent);
     
     return () => window.removeEventListener("resize", scaleContent);
-  }, []);
-
-  useEffect(() => {
-    function updateMainDivHeight() {
-      if (mainDivRef.current) {
-        setMainDivHeight(mainDivRef.current.clientHeight);
-      }
-    }
-
-    updateMainDivHeight();
-    window.addEventListener("resize", updateMainDivHeight);
-    window.addEventListener("load", updateMainDivHeight);
-
-    return () => window.removeEventListener("resize", updateMainDivHeight);
   }, []);
 
   return (
