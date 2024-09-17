@@ -48,8 +48,32 @@ export default function RootLayout({
     return () => window.removeEventListener("resize", checkDevice);
   }, []);
 
+  useEffect(() => {
+    function scaleContent() {
+      const content = document.querySelector(".layout-container-div");
+      const scaleX = window.innerWidth / 1920;
+      const scaleY = window.innerHeight / 1080;
+      const scale = Math.min(scaleX, scaleY);
+      if(content){
+        content.style.transform = `scale(${scale})`;
+        content.style.width = `${window.innerWidth / scale}px`;
+        content.style.height = `${window.innerHeight / scale}px`;
+      }
+    }
+    window.addEventListener("load", scaleContent);
+    window.addEventListener("resize", scaleContent);
+    
+    return () => window.removeEventListener("resize", scaleContent);
+  }, []);
+
   return (
-    <html lang="en" style={{ width: isMobile ? "100vw" : "1900px", minWidth: isMobile ? "100vw" : "1900px" }}>
+    <html
+      lang="en"
+      style={{
+        width: isMobile ? "100vw" : "1900px",
+        minWidth: isMobile ? "100vw" : "1900px",
+      }}
+    >
       <head>
         <link
           href="https://fonts.googleapis.com/css?family=Inter"
@@ -60,7 +84,12 @@ export default function RootLayout({
           content="width=device-width, initial-scale=1.0"
         ></meta>
       </head>
-      <body style={{ width: isMobile ? "100vw" : "1900px", minWidth: isMobile ? "100vw" : "1900px" }}>
+      <body
+        style={{
+          width: isMobile ? "100vw" : "1900px",
+          minWidth: isMobile ? "100vw" : "1900px",
+        }}
+      >
         {isMobile ? (
           <Home />
         ) : (

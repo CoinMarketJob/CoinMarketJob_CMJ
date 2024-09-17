@@ -1,19 +1,22 @@
 html,
 body {
-  width: 1900px;
-  min-width: 1900px;
-  overflow-x: auto;
-  max-height: 100vh;
-  overflow-y: hidden;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   font-family: 'Inter', sans-serif;
 }
 
 .layout-container-div{
   display: flex;
   flex-direction: column;
-  width: 100%;
-  min-height: 100vh;
-  overflow-x: hidden;
+  width: 1920px;
+  height: 1080px;
+  transform-origin: top left;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .layout-main-div{
