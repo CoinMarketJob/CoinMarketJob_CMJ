@@ -77,6 +77,7 @@ export default function RootLayout({
 
     updateMainDivHeight();
     window.addEventListener("resize", updateMainDivHeight);
+    window.addEventListener("load", updateMainDivHeight);
 
     return () => window.removeEventListener("resize", updateMainDivHeight);
   }, []);
