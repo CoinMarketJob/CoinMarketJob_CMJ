@@ -92,7 +92,7 @@
   border-radius: 15px;
   border: 1px solid #E7E5E4;
   margin: 2px;
-  margin-right: 20px;
+  margin-right: 8px;
   padding: 20px; 
   overflow-y: hidden; /* Live panelinde scrollbar'ı gizle */
 }
