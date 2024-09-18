@@ -38,8 +38,8 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ label, options, sel
   );
 
   return (
-    <div ref={dropdownRef} style={{ position: 'relative' }}>
-      <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => setOpen(!open)}>
+    <div ref={dropdownRef} style={{ position: 'relative', maxWidth: '11rem'}}>
+      <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer'}} onClick={() => setOpen(!open)}>
         <label className={styles.label}>{label}</label>
         <FontAwesomeIcon
           icon={faChevronDown}
