@@ -22,7 +22,12 @@ const JobFilterModal: React.FC<{ children: ReactNode, modalRef: React.RefObject<
   );
 };
 
-const JobFilterPopUp: React.FC = () => {
+interface JobFilterProps {
+  modalOpen: boolean;
+  setModalOpen: (modalOpen: boolean) => void;
+}
+
+const JobFilterPopUp: React.FC<JobFilterProps> = ({ modalOpen, setModalOpen }) => {
   const { jobs, filteredJobs, setFilteredJobs } = useJobs();
   const [datePosted, setDatePosted] = useState<string[]>([]);
   const [locationType, setLocationType] = useState<string[]>([]);
@@ -32,7 +37,6 @@ const JobFilterPopUp: React.FC = () => {
   const [experienceLevel, setExperienceLevel] = useState<string[]>([]);
   const [location, setlocation] = useState<string[]>([]);
   const [isResetDisabled, setIsResetDisabled] = useState(true);
-  const [isPopupVisible, setIsPopupVisible] = useState(true);
   const [isLocationSelectorOpen, setIsLocationSelectorOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -125,12 +129,12 @@ const JobFilterPopUp: React.FC = () => {
 
   const handleOutsideClick = (event: MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-      setIsPopupVisible(false);  // Close the modal if the click is outside
+      setModalOpen(false);  // Close the modal if the click is outside
     }
   };
 
   useEffect(() => {
-    if (isPopupVisible) {
+    if (modalOpen) {
       document.addEventListener('mousedown', handleOutsideClick);
     } else {
       document.removeEventListener('mousedown', handleOutsideClick);
@@ -139,10 +143,10 @@ const JobFilterPopUp: React.FC = () => {
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
-  }, [isPopupVisible]);
+  }, [modalOpen]);
 
   const toggleFilter = () => {
-    setIsPopupVisible(prevState => !prevState);  // Toggle the modal visibility
+    setModalOpen(!open);  // Toggle the modal visibility
   };
 
   function filterJobs() {
@@ -217,7 +221,6 @@ const JobFilterPopUp: React.FC = () => {
 
   return (
     <>
-      {isPopupVisible && (
         <div className={styles.filterPage}>
           <JobFilterModal modalRef={modalRef}>
             <div className={styles.filterWrapper}>
@@ -322,7 +325,6 @@ const JobFilterPopUp: React.FC = () => {
             </div>
           </JobFilterModal>
         </div>
-      )}
     </>
   );
   

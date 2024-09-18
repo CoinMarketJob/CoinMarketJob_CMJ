@@ -12,7 +12,7 @@ import { ProfileProvider } from "@/hooks/useCompanyProfile";
 import { JobApplicationsProvider } from "@/hooks/useApplicationJob";
 import { ProfileDataProvider } from "@/hooks/useProfileData";
 import { LiveVisibilityProvider } from "@/hooks/useLiveVisibility";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Home from "./components/MobilePage/Home";
 
 export default function RootLayout({
@@ -21,6 +21,32 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [isMobile, setIsMobile] = useState(false);
+  const [mainDivHeight, setMainDivHeight] = useState(950);
+  const mainDivRef = useRef<HTMLDivElement>(null);
+
+  const updateMainDivHeight = useCallback(() => {
+    if (mainDivRef.current) {
+      setMainDivHeight(mainDivRef.current.clientHeight);
+    }
+  }, []);
+
+  useEffect(() => {
+    updateMainDivHeight();
+    window.addEventListener("resize", updateMainDivHeight);
+    window.addEventListener("load", updateMainDivHeight);
+
+    const resizeObserver = new ResizeObserver(updateMainDivHeight);
+    if (mainDivRef.current) {
+      resizeObserver.observe(mainDivRef.current);
+    }
+
+    return () => {
+      window.removeEventListener("resize", updateMainDivHeight);
+      window.removeEventListener("load", updateMainDivHeight);
+      resizeObserver.disconnect();
+    };
+  }, [updateMainDivHeight]);
+  
 
   function isMobilePhone() {
     const userAgent =
@@ -48,8 +74,46 @@ export default function RootLayout({
     return () => window.removeEventListener("resize", checkDevice);
   }, []);
 
+  const scaleContent = useCallback(() => {
+    const content = document.querySelector(".layout-container-div") as HTMLElement;
+    if (content) {
+      const scaleX = window.innerWidth / 1920;
+      const scaleY = window.innerHeight / 1080;
+      const scale = Math.min(scaleX, scaleY);
+      content.style.transform = `scale(${scale})`;
+      content.style.width = `${window.innerWidth / scale}px`;
+      content.style.height = `${window.innerHeight / scale}px`;
+    }
+  }, []);
+
+  useLayoutEffect(() => {
+    scaleContent();
+  }, [scaleContent]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      requestAnimationFrame(scaleContent);
+    };
+
+    window.addEventListener("resize", handleResize);
+    
+    // Sayfa yüklendikten kısa bir süre sonra tekrar scale'i uygula
+    const timeoutId = setTimeout(scaleContent, 100);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      clearTimeout(timeoutId);
+    };
+  }, [scaleContent]);
+
   return (
-    <html lang="en" style={{ width: isMobile ? "100vw" : "1900px", minWidth: isMobile ? "100vw" : "1900px" }}>
+    <html
+      lang="en"
+      style={{
+        width: isMobile ? "100vw" : "1900px",
+        minWidth: isMobile ? "100vw" : "1900px",
+      }}
+    >
       <head>
         <link
           href="https://fonts.googleapis.com/css?family=Inter"
@@ -60,7 +124,12 @@ export default function RootLayout({
           content="width=device-width, initial-scale=1.0"
         ></meta>
       </head>
-      <body style={{ width: isMobile ? "100vw" : "1900px", minWidth: isMobile ? "100vw" : "1900px" }}>
+      <body
+        style={{
+          width: isMobile ? "100vw" : "1900px",
+          minWidth: isMobile ? "100vw" : "1900px",
+        }}
+      >
         {isMobile ? (
           <Home />
         ) : (
@@ -74,8 +143,8 @@ export default function RootLayout({
                         <LiveVisibilityProvider>
                           <div className="layout-container-div">
                             <Searchbar />
-                            <main className="layout-main-div">
-                              <DefaultContainer>{children}</DefaultContainer>
+                            <main className="layout-main-div" ref={mainDivRef}>
+                              <DefaultContainer mainDivHeight={mainDivHeight}>{children}</DefaultContainer>
                             </main>
                             <Footer />
                           </div>
