@@ -135,9 +135,20 @@ const JobCard: React.FC<JobCardProps> = ({
         </p>
       </div>
       <div className={styles.actions}>
-        <div>
-          <Icon onClick={JobSave} hoverSize={45} hoverContent={isSaved ? "Unsave" : "Save"}>
-            <svg
+  <div>
+    <Icon onClick={JobSave} hoverSize={45} hoverContent={isSaved ? "Unsave" : "Save"}>
+      {isSaved ? (
+        <svg width="20" height="24" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1 2.25C1 1.00781 2.00781 0 3.25 0V2.25V20.6906L9.34844 16.3359C9.7375 16.0547 10.2672 16.0547 10.6562 16.3359L16.75 20.6906V2.25H3.25V0H16.75C17.9922 0 19 1.00781 19 2.25V22.875C19 23.2969 18.7656 23.6812 18.3906 23.8734C18.0156 24.0656 17.5656 24.0328 17.2234 23.789L10 18.6328L2.77656 23.789C2.43438 24.0328 1.98438 24.0656 1.60938 23.8734C1.23438 23.6812 1 23.2969 1 22.875V2.25Z" fill="#999999"/>
+<rect x="3" y="2" width="14" height="16" fill="#999999"/>
+<path d="M2.87486 21.0326L3.36928 14.8815L7.8654 17.4028L2.87486 21.0326Z" fill="#999999"/>
+<path d="M17.3123 21.9632L12.2789 18.3929L16.7448 15.8183L17.3123 21.9632Z" fill="#999999"/>
+</svg>
+
+        
+        
+      ) : (
+        <svg
               width="18"
               height="24"
               viewBox="0 0 18 24"
@@ -146,14 +157,16 @@ const JobCard: React.FC<JobCardProps> = ({
             >
               <path
                 d="M0 2.25C0 1.00781 1.00781 0 2.25 0V2.25V20.6906L8.34844 16.3359C8.7375 16.0547 9.26719 16.0547 9.65625 16.3359L15.75 20.6906V2.25H2.25V0H15.75C16.9922 0 18 1.00781 18 2.25V22.875C18 23.2969 17.7656 23.6812 17.3906 23.8734C17.0156 24.0656 16.5656 24.0328 16.2234 23.789L9 18.6328L1.77656 23.789C1.43438 24.0328 0.984375 24.0656 0.609375 23.8734C0.234375 23.6812 0 22.875V2.25Z"
-                fill={isSaved ? "#242220" : "#242220"}
+                fill={"#242220"}
                 className="svg-icon"
-                fillOpacity={isSaved ? "1" : "0.2"}
+                fillOpacity={"0.2"}
               />
             </svg>
-          </Icon>
-        </div>
-      </div>
+      )}
+    </Icon>
+  </div>
+</div>
+
       <div className={styles.timeAgo}>
         {formatTimeAgo(new Date(job.date))}
       </div>
