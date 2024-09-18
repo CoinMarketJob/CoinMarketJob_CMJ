@@ -67,8 +67,9 @@ const Page = () => {
           <ArrowIcon />
         </Icon>
       </div>
-      <span className={styles.JobsText}>JOBS</span>
+      <div className={styles.JobsText}>JOBS</div>
     </div>
+    <div className={styles.Line}></div>
       
     <div className={styles.savedJobsContainer}>
   {savedJobs.length > 0 ? (
