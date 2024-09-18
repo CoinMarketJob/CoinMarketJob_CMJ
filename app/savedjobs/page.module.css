@@ -1,16 +1,37 @@
-.Container{
+.Container {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
 }
 
-.JobsText{
+.JobsText {
     font-family: Inter;
-    font-size: 22px;
+    font-size: calc(10px + 0.7vw);
     font-weight: 500;
     line-height: 26.63px;
     letter-spacing: 0.04em;
-    margin-bottom: 24px;
+    margin-bottom: 2rem; /* Space below the text */
     color: #000000;
+    margin-left: 1.7rem;
+}
+
+.arrowContainer {
+    margin-top: 0.9rem;
+    margin-left: 0.9rem;
+    top: 15px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    margin-right: 30px;
+    background-color: rgba(255, 255, 255, 0.5); /* Increased transparency */
+    backdrop-filter: blur(10px);
+    width: 45px;
+    height: 45px;
+    border-radius: 30px;
+    z-index: 40;
+}
+
+.savedJobsContainer {
+    margin-top: 2rem; /* Adds space between JobsText and savedJobsContainer */
 }
