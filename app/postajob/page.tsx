@@ -237,7 +237,13 @@ const Page = () => {
   };
 
   const handleBackClick = () => {
-    router.back();
+    if (page === 0) {
+      // Eğer ilk sayfadaysak, ana sayfaya dön
+      router.push('/');
+    } else {
+      // Diğer durumlarda bir önceki sayfaya git
+      setPage(page - 1);
+    }
   };
 
   return (

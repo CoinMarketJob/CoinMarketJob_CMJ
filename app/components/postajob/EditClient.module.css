@@ -343,6 +343,10 @@
   padding-right: 1px;
 }
 
+.JobDescription :global(.editor-content) {
+  padding: 36px 24px !important;
+}
+
 .Continue {
   width: 100%;
   display: flex;
