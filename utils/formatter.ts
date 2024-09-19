@@ -43,3 +43,11 @@ export function formatValueToFrequency(value: number): string{
     return "PrettyMuchEverything";
 }
 
+export function formatSalary(value: number){
+    if (value >= 1000000) {
+      return (value / 1000000).toFixed(1).replace(/\.0$/, '') + "M"; // 1.2M gibi
+    } else if (value >= 1000) {
+      return (value / 1000).toFixed(1).replace(/\.0$/, '') + "K"; // 250K gibi
+    }
+    return value; // Eğer 1000'den küçükse direkt olarak döndür
+  }

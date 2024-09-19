@@ -4,6 +4,7 @@ import styles from "./JobCard.module.css";
 import { Job } from "@prisma/client";
 import Icon from "../../general/Icon";
 import { formatJobType } from "@/utils/formatter";
+import { formatSalary } from "@/utils/formatter";
 import { useJobs } from "@/hooks/useJobs";
 import { useDrag } from "react-dnd";
 
@@ -109,6 +110,8 @@ const JobCard: React.FC<JobCardProps> = ({
     [drag]
   );
 
+
+
   return (
     <div
       ref={dragRef}
@@ -132,6 +135,16 @@ const JobCard: React.FC<JobCardProps> = ({
           <span className={styles.location}>
             {job.location || "Unknown Location"}
           </span>
+          <span className={styles.location}>
+  {job.salaryMin && job.salaryMax
+    ? `${formatSalary(job.salaryMin)} - ${formatSalary(job.salaryMax)}`
+    : job.salaryMin
+    ? formatSalary(job.salaryMin)
+    : job.salaryMax
+    ? formatSalary(job.salaryMax)
+    : ""}
+</span>
+          
         </p>
       </div>
       <div className={styles.actions}>

@@ -41,11 +41,13 @@
     /* Küçük boyut */
 }
 
+
 .icon img {
     width: 60px;
     height: 60px;
     border-radius: 25%;
     transition: filter 0.3s ease;
+    will-change: filter;
 }
 
 .card:hover .icon img {
@@ -66,7 +68,16 @@
     font-family: "Inter", sans-serif;
     padding: 0;
     margin-bottom: 4px;
-}
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* For Webkit browsers */
+    -webkit-box-orient: vertical;
+    line-clamp: 2; /* Standard property */
+    box-orient: vertical; /* Standard property */
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  
 
 .company {
     font-weight: 500;
