@@ -12,7 +12,7 @@
     cursor: pointer;
     max-width: 100%;
     border: #E7E5E4 1px solid;
-    margin-bottom: 30px;
+    margin-bottom: 24px;
     filter: grayscale(100%);
     transition: filter 0.3s ease;
 }
@@ -75,6 +75,7 @@
     box-orient: vertical; /* Standard property */
     overflow: hidden;
     text-overflow: ellipsis;
+    letter-spacing: 0.02rem;
   }
   
   
