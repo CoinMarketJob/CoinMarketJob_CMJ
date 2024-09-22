@@ -307,7 +307,7 @@ model Live {
   liveType     LiveType
   organisation String
   headline     String
-  content      String   @db.VarChar(65535)
+  content      String   @db.VarChar(300)
   author       String?
   date         DateTime?
   location     String?
