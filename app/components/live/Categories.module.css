@@ -64,7 +64,6 @@
 
 .Element.disabled {
     color: #CCCCCC;
-    cursor: not-allowed;
 }
 
 .Element.disabled:hover {

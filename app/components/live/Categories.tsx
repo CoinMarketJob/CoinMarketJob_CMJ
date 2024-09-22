@@ -12,7 +12,7 @@ const Categories: React.FC<Props> = ({ onCategoryClick }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleCategoryClick = (category: string) => {
-    if (["Academy", "Live"].includes(category)) {
+    if (["Article", "Academy", "Live"].includes(category)) {
       return;
     }
     if (activeCategory === category) {
@@ -24,7 +24,7 @@ const Categories: React.FC<Props> = ({ onCategoryClick }) => {
     }
   };
 
-  const categories = ["News", "Hackathon", "Event", "Blog", "Academy", "Live"];
+  const categories = ["News", "Hackathon", "Event", "Blog", "Article", "Academy", "Live"];
 
   const checkScroll = () => {
     if (containerRef.current) {
@@ -71,7 +71,7 @@ const Categories: React.FC<Props> = ({ onCategoryClick }) => {
             key={category}
             className={`${styles.Element} 
               ${activeCategory === category ? styles.active : ""}
-              ${["Academy", "Live"].includes(category) ? styles.disabled : ""}`}
+              ${["Article", "Academy", "Live"].includes(category) ? styles.disabled : ""}`}
             onClick={() => handleCategoryClick(category)}
           >
             {category}
