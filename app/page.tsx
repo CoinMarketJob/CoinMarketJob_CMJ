@@ -3,7 +3,6 @@
 import styles from "./page.module.css";
 import React, { useEffect, useRef, useState } from 'react';
 import ReferralLink from "./components/ReferenceLink";
-import CryptoJS from 'crypto-js';
 import Icon from "./components/Icon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
@@ -96,7 +95,7 @@ export default function Home() {
             <div className={styles.Content}>
               <div className={styles.Full}>
                 <span className={styles.Title}>CoinMarketJob</span>
-                <p className={styles.ConnectMinds}>CONNECTING MINDS AND JOBS</p>
+                <p className={styles.ConnectMinds}>Career accelerator platform: CONNECTING MINDS AND JOBS</p>
                 {success ? (<div className={styles.Description}>
                               <div className={styles.DescriptionContentSuccess}>
                                 <span className={styles.SucccessText}>Success! You're on the waitlist.</span>
@@ -112,6 +111,9 @@ export default function Home() {
                       <input className={styles.Mail} ref={emailRef} placeholder="Email" 
                       value={email} onChange={(e) => setEmail(e.target.value)} type="email" />
                       <button onClick={handleSubmit} className={styles.button} >Join the waitlist</button>
+                      <button onClick={() => window.open('https://beta.coinmarketjob.com', '_blank')} className={`${styles.button} ${styles.buttonMargin}`}>
+                        Visit Beta
+                      </button>
                       
                       <div style={{display: 'flex', justifyContent: 'center', marginTop: '8px'}}>
                         <Icon size={32} marginRight>

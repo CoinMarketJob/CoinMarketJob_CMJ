@@ -103,7 +103,7 @@
   display: grid;
   place-items: center;
   text-align: center;
-  margin-top: 8rem;
+  margin-top: 7rem;
 }
 
 .DescriptionContent{
@@ -251,3 +251,7 @@
   color: #000000;
   font-size: 6px;
 } */
+
+.buttonMargin {
+  margin-top: 8px;
+}
