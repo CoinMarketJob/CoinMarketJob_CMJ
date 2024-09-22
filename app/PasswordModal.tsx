@@ -47,7 +47,6 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ onSubmit }) => {
           </div>
         </div>
       </div>
-
       <div className={styles.footer}>© 2024 COINMARKETJOB</div>
     </div>
   );
