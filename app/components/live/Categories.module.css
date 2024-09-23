@@ -32,15 +32,17 @@
     font-weight: 400;
     line-height: 21px;
     color: #242220;
-    cursor: pointer;
+    cursor: grab;
     position: relative;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, cursor 0.3s ease;
+    user-select: none; /* Prevent text selection during drag */
     
     flex-shrink: 0;
 }
 
+.Element:active,
 .Element:hover {
-    color: #666666;
+    cursor: grabbing;
 }
 
 .Element.active {
