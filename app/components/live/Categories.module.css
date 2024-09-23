@@ -58,8 +58,9 @@
     transition: width 0.3s ease;
 }
 
+.Element:hover::after,
 .Element.active::after {
-    width: calc(100% - 2px); /* 2px sağdan boşluk bırakmak için */
+    width: calc(100% - 2px);
 }
 
 .Element.disabled {

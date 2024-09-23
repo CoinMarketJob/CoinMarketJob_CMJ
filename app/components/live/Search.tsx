@@ -39,6 +39,10 @@ const Search: React.FC<props> = ({ keyword, ChangeFunction, handleKeyDown }) => 
         value={keyword}
         onChange={ChangeFunction}
         onKeyDown={handleKeyDown}
+        autoComplete="off"
+        autoCorrect="off"
+        autoCapitalize="off"
+        spellCheck="false"
       />
     </div>
   );
