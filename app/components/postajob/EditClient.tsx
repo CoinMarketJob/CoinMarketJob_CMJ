@@ -530,7 +530,7 @@ const EditClient: React.FC<EditClientProps> = ({
       <div className={`${styles.JobDescription}`}>
         <span className={`${styles.JobDescriptionText}`}>Job Description*</span>
         <div>
-          <Draft onChange={descriptionDraftChange} />
+          <Draft content={description} onChange={descriptionDraftChange} />
         </div>
       </div>
 
