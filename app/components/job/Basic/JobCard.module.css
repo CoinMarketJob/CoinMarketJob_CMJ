@@ -72,10 +72,15 @@
   transition: filter 0.3s ease;
   object-fit: cover;
   overflow: hidden;
+  /* Yeni eklenen özellikler */
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .card:hover .icon img {
   filter: grayscale(0%);
+  /* Yeni eklenen özellik */
+  image-rendering: -webkit-optimize-contrast;
 }
 
 .details {
