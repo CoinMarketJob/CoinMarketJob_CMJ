@@ -1,171 +1,171 @@
 /* JobCard.module.css */
 
 .card {
-    padding: 20px;
-    border-radius: 15px;
-    background-color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    cursor: pointer;
-    max-width: 100%;
-    border: #E7E5E4 1px solid;
-    margin-bottom: 24px;
-    /* transition: width 0.3s ease;
+  padding: 20px;
+  border-radius: 15px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  max-width: 100%;
+  border: #e7e5e4 1px solid;
+  margin-bottom: 24px;
+  /* transition: width 0.3s ease;
     filter: grayscale(100%);
     transition: filter 0.3s ease; */
 }
 
 .card:hover {
-    background-color: #9997950d;
-    border: 1px solid #2422200D;    
-    /* filter: grayscale(0%); */
+  background-color: #9997950d;
+  border: 1px solid #2422200d;
+  /* filter: grayscale(0%); */
 }
 
 .card:active {
-    background-color: #9997950d;
-    border: 1.5px solid #242220;
+  background-color: #9997950d;
+  border: 1.5px solid #242220;
 }
-.card.active{
-    filter: grayscale(0%);
-    background-color: #9997950d;
+.card.active {
+  background-color: #9997950d;
 }
 
-.card.active:hover{
-    background-color: #9997951a;
+.card.active .icon img {
+  filter: grayscale(0%);
+}
+
+.card.active:hover {
+  background-color: #9997951a;
 }
 
 .collapsed {
-    max-width: 100%;
-    /* Küçük boyut */
+  max-width: 100%;
+  /* Küçük boyut */
 }
 
-.details, .title, .company, .meta {
-    transition: none; /* Alt öğelerdeki geçişleri kaldır */
+.details,
+.title,
+.company,
+.meta {
+  transition: none; /* Alt öğelerdeki geçişleri kaldır */
 }
 
 .card:hover .details,
 .card:hover .title,
 .card:hover .company,
 .card:hover .meta {
-    transform: none; /* Hover durumunda dönüşümleri kaldır */
-    opacity: 1; /* Opaklığı sabit tut */
+  transform: none; /* Hover durumunda dönüşümleri kaldır */
+  opacity: 1; /* Opaklığı sabit tut */
 }
 
-
 .icon img {
-    width: 60px;
-    height: 60px;
-    border-radius: 25%;
-    /* transition: filter 0.3s ease;
+  width: 60px;
+  height: 60px;
+  border-radius: 25%;
+  filter: grayscale(100%);
+  /* transition: filter 0.3s ease;
     will-change: filter; */
 }
 
 .card:hover .icon img {
-    /* filter: grayscale(0%); */
+  filter: grayscale(0%);
 }
 
 .details {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    margin-left: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin-left: 20px;
 }
 
 .title {
-    font-size: 16px;
-    font-weight: 500;
-    font-family: "Inter", sans-serif;
-    padding: 0;
-    margin-bottom: 4px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* For Webkit browsers */
-    -webkit-box-orient: vertical;
-    line-clamp: 2; /* Standard property */
-    box-orient: vertical; /* Standard property */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    letter-spacing: 0.02rem;
-  }
-  
-  
+  font-size: 16px;
+  font-weight: 500;
+  font-family: "Inter", sans-serif;
+  padding: 0;
+  margin-bottom: 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* For Webkit browsers */
+  -webkit-box-orient: vertical;
+  line-clamp: 2; /* Standard property */
+  box-orient: vertical; /* Standard property */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.02rem;
+}
 
 .company {
-    font-weight: 500;
-    font-family: "Inter", sans-serif;
-    font-size: 13px;
-    margin: 0;
-    padding: 0;
-    margin-bottom: -12px;
+  font-weight: 500;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  margin: 0;
+  padding: 0;
+  margin-bottom: -12px;
 }
 
 .meta {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .type,
 .salary,
 .location {
-    font-weight: 400;
-    font-family: "Inter", sans-serif;
-    font-size: 13px;
-    opacity: 70%;
-    margin: 0;
-    padding: 0;
+  font-weight: 400;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  opacity: 70%;
+  margin: 0;
+  padding: 0;
 }
 
 .type,
 .location {
-    margin-right: 12px;
+  margin-right: 12px;
 }
 
 .actions {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 10px;
-    position: absolute;
-    right: 6px;
-    top: 0px;
-    height: 98%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  position: absolute;
+  right: 6px;
+  top: 0px;
+  height: 98%;
 }
 
 .actions .faCircleCheck,
 .actions .faBookmark {
-    margin-top: auto;
-
+  margin-top: auto;
 }
 
-
 .IconCircle {
-    position: absolute;
-    right: 40px;
-    bottom: 20px;
-
+  position: absolute;
+  right: 40px;
+  bottom: 20px;
 }
 
 .IconSave {
-    position: absolute;
-    right: 40px;
-    bottom: 20px;
-
+  position: absolute;
+  right: 40px;
+  bottom: 20px;
 }
 
 .closeIcon {
-    position: absolute;
-    right: 10px;
-    top: 10px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 
 .timeAgo {
-    position: absolute;
-    bottom: 12px;
-    right: 22px;
-    font-size: 12px;
-    color: #999;
-    font-weight: 400;
-    font-family: "Inter", sans-serif;
+  position: absolute;
+  bottom: 12px;
+  right: 22px;
+  font-size: 12px;
+  color: #999;
+  font-weight: 400;
+  font-family: "Inter", sans-serif;
 }
