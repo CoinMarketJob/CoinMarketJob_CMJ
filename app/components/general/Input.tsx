@@ -57,7 +57,7 @@ const Input: React.FC<InputProps> = ({
     }, [value]);
 
     return (
-        <div style={{ position: 'relative', overflow: "visible", height: "100%" }}>
+        <div style={{ position: 'relative', overflow: "visible", height: "100%", width: "100%" }}>
             <input
                 ref={inputRef}
                 className={`form-input ${className || ''} ${error ? 'error-input' : ''}`}

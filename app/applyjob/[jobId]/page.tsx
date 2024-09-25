@@ -526,9 +526,10 @@ const page = ({ params }: { params: JobProps }) => {
               display: "flex",
               alignItems: "center",
               marginBottom: "1.5rem",
+              maxWidth: "479px",
             }}
           >
-            <div style={{ display: "flex", width: "47%" }}>
+            <div style={{ display: "flex", width: "100%" }}>
               <InputFile
                 id="cv"
                 placeholder="Attach Resume / CV"
