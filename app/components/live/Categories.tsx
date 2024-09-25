@@ -113,9 +113,41 @@ const Categories: React.FC<Props> = ({ onCategoryClick }) => {
 
   const handleShift = (direction: 'left' | 'right') => {
     if (containerRef.current) {
-      const scrollAmount = containerRef.current.clientWidth;
-      containerRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
+      const container = containerRef.current;
+      const categories = Array.from(container.children) as HTMLElement[];
+      const containerWidth = container.clientWidth;
+      const scrollLeft = container.scrollLeft;
+
+      let scrollAmount = 0;
+      let targetIndex = 0;
+
+      if (direction === 'right') {
+        // Sağa kaydırma için
+        for (let i = 0; i < categories.length; i++) {
+          const category = categories[i];
+          const categoryRight = category.offsetLeft + category.offsetWidth;
+          if (categoryRight > scrollLeft + containerWidth) {
+            targetIndex = i;
+            // Bir sonraki kategorinin sonu görünene kadar kaydır
+            scrollAmount = categoryRight - containerWidth;
+            break;
+          }
+        }
+      } else {
+        // Sola kaydırma için
+        for (let i = categories.length - 1; i >= 0; i--) {
+          const category = categories[i];
+          if (category.offsetLeft < scrollLeft) {
+            targetIndex = i;
+            // Hedef kategorinin başlangıcına kadar kaydır
+            scrollAmount = category.offsetLeft;
+            break;
+          }
+        }
+      }
+
+      container.scrollTo({
+        left: scrollAmount,
         behavior: 'smooth'
       });
     }
