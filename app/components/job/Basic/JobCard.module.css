@@ -8,19 +8,19 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    transition: width 0.3s ease;
     cursor: pointer;
     max-width: 100%;
     border: #E7E5E4 1px solid;
     margin-bottom: 24px;
+    /* transition: width 0.3s ease;
     filter: grayscale(100%);
-    transition: filter 0.3s ease;
+    transition: filter 0.3s ease; */
 }
 
 .card:hover {
     background-color: #9997950d;
     border: 1px solid #2422200D;    
-    filter: grayscale(0%);
+    /* filter: grayscale(0%); */
 }
 
 .card:active {
@@ -41,17 +41,29 @@
     /* Küçük boyut */
 }
 
+.details, .title, .company, .meta {
+    transition: none; /* Alt öğelerdeki geçişleri kaldır */
+}
+
+.card:hover .details,
+.card:hover .title,
+.card:hover .company,
+.card:hover .meta {
+    transform: none; /* Hover durumunda dönüşümleri kaldır */
+    opacity: 1; /* Opaklığı sabit tut */
+}
+
 
 .icon img {
     width: 60px;
     height: 60px;
     border-radius: 25%;
-    transition: filter 0.3s ease;
-    will-change: filter;
+    /* transition: filter 0.3s ease;
+    will-change: filter; */
 }
 
 .card:hover .icon img {
-    filter: grayscale(0%);
+    /* filter: grayscale(0%); */
 }
 
 .details {
