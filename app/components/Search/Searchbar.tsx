@@ -5,6 +5,7 @@ import Icon from "../general/Icon";
 import SearchInput from "./SearchInput";
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
+import styles from './Searchbar.module.css';
 
 const Searchbar = () => {
   const [tags, setTags] = useState<Array<string>>([]);
@@ -62,22 +63,27 @@ const Searchbar = () => {
     <div className="search-container-div">
       {errorMessage && <div className="ErrorMessage">{errorMessage}</div>}
       <div className="burger-menu" ref={burgerRef}>
-        <Icon
-          onClick={handleBurgerClick}
-          hoverSize={45}
-          hoverContent="Menu"
-          tooltipPosition="bottom"
-        >
+        <button className={styles.burgerButton} onClick={handleBurgerClick}>
           <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="35px"
-            viewBox="0 -960 960 960"
-            width="35px"
-            fill="#999999"
+            className={`${styles.burgerIcon} ${isBurgerOpen ? styles.open : ''}`}
+            viewBox="0 0 100 100"
+            width="35"
+            height="35"
           >
-            <path d="M170-254.62q-12.75 0-21.37-8.63-8.63-8.62-8.63-21.38 0-12.75 8.63-21.37 8.62-8.61 21.37-8.61h620q12.75 0 21.37 8.62 8.63 8.63 8.63 21.39 0 12.75-8.63 21.37-8.62 8.61-21.37 8.61H170ZM170-450q-12.75 0-21.37-8.63-8.63-8.63-8.63-21.38 0-12.76 8.63-21.37Q157.25-510 170-510h620q12.75 0 21.37 8.63 8.63 8.63 8.63 21.38 0 12.76-8.63 21.37Q802.75-450 790-450H170Zm0-195.39q-12.75 0-21.37-8.62-8.63-8.63-8.63-21.39 0-12.75 8.63-21.37 8.62-8.61 21.37-8.61h620q12.75 0 21.37 8.63 8.63 8.62 8.63 21.38 0 12.75-8.63 21.37-8.62 8.61-21.37 8.61H170Z" />
+            <path
+              className={`${styles.line} ${styles.line1}`}
+              d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058"
+            />
+            <path
+              className={`${styles.line} ${styles.line2}`}
+              d="M 20,50 H 80"
+            />
+            <path
+              className={`${styles.line} ${styles.line3}`}
+              d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942"
+            />
           </svg>
-        </Icon>
+        </button>
         {isBurgerOpen && (
           <div className="burger-dropdown">
             <div className="burger-dropdown-item" onClick={handleSavedJobs}>
