@@ -6,61 +6,24 @@ import Icon from "../../general/Icon";
 import { formatJobType } from "@/utils/formatter";
 import { formatSalary } from "@/utils/formatter";
 import { useJobs } from "@/hooks/useJobs";
-import { useDrag } from "react-dnd";
 
 interface JobCardProps {
   job: Job;
   onClick: (job: Job) => void;
   collapsed?: boolean;
-  onDrop: (id: number, list: string) => void;
-  onDragBegin: () => void;
-  onDragEnd: () => void;
   isSelected: boolean;
   onSelect: (id: number) => void;
 }
-
-const ItemTypes = {
-  CARD: "card",
-};
 
 const JobCard: React.FC<JobCardProps> = ({
   job,
   onClick,
   collapsed,
-  onDrop,
-  onDragBegin,
-  onDragEnd,
   isSelected,
   onSelect,
 }) => {
   const { filteredJobs, setFilteredJobs } = useJobs();
   const id = job.id;
-  const cardType = "left";
-
-  const [{ isDragging }, drag] = useDrag(
-    () => ({
-      type: ItemTypes.CARD,
-      item: () => {
-        onDragBegin();
-        return { id, cardType };
-      },
-      end: (item, monitor) => {
-        const dropResult = monitor.getDropResult<{ list: string }>();
-        console.log(monitor);
-        if (item && dropResult) {
-          onDrop(item.id, dropResult.list);
-        }
-
-        if (!monitor.didDrop() || dropResult?.list === "left") {
-          onDragEnd();
-        }
-      },
-      collect: (monitor) => ({
-        isDragging: monitor.isDragging(),
-      }),
-    }),
-    [id, cardType, onDragBegin, onDrop, onDragEnd]
-  );
 
   const [isSaved, setIsSaved] = useState(false);
 
@@ -101,20 +64,8 @@ const JobCard: React.FC<JobCardProps> = ({
     onClick(job);
   };
 
-  const dragRef = useCallback(
-    (node: HTMLDivElement | null) => {
-      if (node) {
-        drag(node);
-      }
-    },
-    [drag]
-  );
-
-
-
   return (
     <div
-      ref={dragRef}
       className={`${styles.card} ${collapsed ? styles.collapsed : ""} ${
         isSelected ? styles.active : ""
       }`}
