@@ -11,7 +11,10 @@ interface ContainerProps {
   mainDivHeight: number;
 }
 
-const DefaultContainer: React.FC<ContainerProps> = ({ children, mainDivHeight }) => {
+const DefaultContainer: React.FC<ContainerProps> = ({
+  children,
+  mainDivHeight,
+}) => {
   const [totalWidth, setTotalWidth] = useState<number>(1920);
   const { isLiveVisible } = useLiveVisibility();
   const searchParams = useSearchParams();
@@ -45,9 +48,12 @@ const DefaultContainer: React.FC<ContainerProps> = ({ children, mainDivHeight })
 
   const updateContainerHeight = () => {
     if (containerRef.current) {
-      const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+      const scale = Math.min(
+        window.innerWidth / 1920,
+        window.innerHeight / 1080
+      );
       const headerHeight = 130; // Header'ın yüksekliği
-      const availableHeight = (window.innerHeight / scale) - headerHeight;
+      const availableHeight = window.innerHeight / scale - headerHeight;
       containerRef.current.style.height = `${availableHeight}px`;
     }
   };
@@ -71,11 +77,9 @@ const DefaultContainer: React.FC<ContainerProps> = ({ children, mainDivHeight })
         {children}
       </div>
 
-      {isLiveVisible && (
-        <div className="panel-live" style={{ width: liveWidth }}>
-          <Live initialExpandedId={expandedLiveId} />
-        </div>
-      )}
+      <div className={`panel-live ${isLiveVisible ? '' : 'hidden'}`} style={{ width: liveWidth }}>
+        <Live initialExpandedId={expandedLiveId} />
+      </div>
     </div>
   );
 };
