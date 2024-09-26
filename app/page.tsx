@@ -95,7 +95,7 @@ export default function Home() {
             <div className={styles.Content}>
               <div className={styles.Full}>
                 <span className={styles.Title}>CoinMarketJob</span>
-                <p className={styles.ConnectMinds}>Career accelerator platform: CONNECTING MINDS AND JOBS</p>
+                <p className={styles.ConnectMinds}>CONNECTING MINDS AND JOBS</p>
                 {success ? (<div className={styles.Description}>
                               <div className={styles.DescriptionContentSuccess}>
                                 <span className={styles.SucccessText}>Success! You're on the waitlist.</span>
@@ -112,7 +112,7 @@ export default function Home() {
                       value={email} onChange={(e) => setEmail(e.target.value)} type="email" />
                       <button onClick={handleSubmit} className={styles.button} >Join the waitlist</button>
                       <button onClick={() => window.open('https://beta.coinmarketjob.com', '_blank')} className={`${styles.button} ${styles.buttonMargin}`}>
-                        Visit Beta
+                        Visit beta
                       </button>
                       
                       <div style={{display: 'flex', justifyContent: 'center', marginTop: '8px'}}>
