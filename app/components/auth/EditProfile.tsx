@@ -371,16 +371,6 @@ const EditProfile: React.FC<EditProfileProps> = ({ profile, onUpdate }) => {
               onChange={(e) => setHeadline(e.target.value)}
             />
           </div>
-          {/* <div className={styles.Site}>
-            <input
-              className={styles.SiteInput}
-              type="text"
-              placeholder="www.site.com"
-              value={site}
-              onChange={(e) => setSite(e.target.value)}
-            />
-          </div> */}
-
           <div className={styles.About}>
             <span className={styles.AboutText}>About</span>
             <EditProfileDraft

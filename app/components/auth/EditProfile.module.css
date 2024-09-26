@@ -51,14 +51,14 @@
 }
 
 .InputGroup {
-  width: calc(100% - 48px); /* 48px sol ve sağ boşluk için */
+  width: calc(100% - 48px); 
   margin-left: 24px;
   margin-right: 24px;
   margin-top: 4px;
 }
 
 .InputGroup + .InputGroup {
-  margin-top: 12px; /* Name Surname ve Headline arasına 12px boşluk ekler */
+  margin-top: 12px; 
 }
 
 .Site {

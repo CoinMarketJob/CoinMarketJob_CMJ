@@ -75,7 +75,7 @@
     font-size: 17px;
     font-weight: 400;
     line-height: 20px;
-    cursor: pointer; /* Add this line */
+    cursor: pointer; 
 }
 
 .bottom-line{
@@ -147,7 +147,7 @@ input.checked::before {
 }
 
 .error-message-container {
-  height: 20px; /* Adjust this value based on your needs */
+  height: 20px; 
   margin-bottom: 10px;
 }
 

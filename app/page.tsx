@@ -35,21 +35,4 @@ const Home = () => {
   )
 }
 
-export default Home /*
-"use client"
-import JobFilterModal from "./jobfilter/jobFilterModal";
-import JobFilter from "./jobfilter/Job";
-import { useState } from "react";
-import JobFilterPopUp  from "./jobfilter/page";
-import React from 'react';
-
-
-function App() {
-  return (
-    <div className="App">
-      <JobFilterPopUp />
-    </div>
-  );
-}
-
-export default App; */
+export default Home 

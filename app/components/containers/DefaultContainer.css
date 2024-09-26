@@ -107,12 +107,10 @@
   border: none;
 }
 
-/* Webkit tarayıcılar için scrollbar'ı gizle */
 .panel-live::-webkit-scrollbar {
   display: none;
 }
 
-/* Firefox için scrollbar'ı gizle */
 .panel-live {
   scrollbar-width: none;
 }

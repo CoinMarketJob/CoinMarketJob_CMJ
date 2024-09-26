@@ -203,9 +203,9 @@
 }
 
 .menuContainer {
-  height: 40px; /* Menü tuşunun yüksekliği */
+  height: 40px; 
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 10px; /* İsteğe bağlı, diğer içerikle arasında boşluk bırakmak için */
+  margin-bottom: 10px; 
 }
