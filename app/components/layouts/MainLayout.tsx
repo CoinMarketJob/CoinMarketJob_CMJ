@@ -31,6 +31,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({
   const [hasRightItems, setHasRightItems] = useState<boolean>(false);
   const [showJobDetails, setShowJobDetails] = useState(false);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+  
+  const [selectedJobManualId, setSelectedJobManualId] = useState<number | null>(null);
 
   useEffect(() => {
     setLeftCards(filteredJobs);
@@ -94,6 +96,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
     setShowDetail(false);
     setDetailJob(null);
     setShowRightSide(false);
+    setSelectedJobManualId(null);
   };
 
   return (
@@ -110,6 +113,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({
             onDrop={handleDrop}
             isDragging={isDragging}
             selectedJob={parseInt(selectedJobId ? selectedJobId : "", 10)}
+            setSelectedJobId={setSelectedJobManualId}
+            selectedJobId={selectedJobManualId}
           />
         </div>
 

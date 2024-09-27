@@ -23,6 +23,8 @@ interface ColumnProps {
   onDragEnd: () => void;
   isDragging: boolean;
   selectedJob?: number | null;
+  selectedJobId: number | null;
+  setSelectedJobId: (id: number | null) => void;
 }
 
 const ColumnLeft: React.FC<ColumnProps> = ({
@@ -34,10 +36,11 @@ const ColumnLeft: React.FC<ColumnProps> = ({
   onDragBegin,
   onDragEnd,
   isDragging,
-  selectedJob
+  selectedJob,
+  selectedJobId,
+  setSelectedJobId
 }) => {
 
-  const [selectedJobId, setSelectedJobId] = useState<number | null>(null);
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.CARD,

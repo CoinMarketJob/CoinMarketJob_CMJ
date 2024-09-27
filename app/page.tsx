@@ -30,7 +30,7 @@ const Home = () => {
 
   return (
     <div style={{width: '100%'}}>
-      <MainLayout filteredJobs={filteredJobs}  layout={layout} />
+      <MainLayout filteredJobs={filteredJobs} layout={layout} />
     </div>
   )
 }
