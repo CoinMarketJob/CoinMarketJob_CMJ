@@ -8,10 +8,13 @@ import Account from './Account';
 import Notifications from './Notifications';
 import Defaults from './Defaults';
 import { Settings } from '@prisma/client';
+import { useSearchParams } from 'next/navigation';
 
 const SettingsPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('General');
   const [settingsData, setSettingsData] = useState<Settings | null>(null);
+  
+  const searchParams = useSearchParams();
 
 
   useEffect(() => {
