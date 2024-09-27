@@ -1,3 +1,41 @@
+:root {
+  --font-geist-sans: var(--font-geist-sans);
+  --font-geist-mono: var(--font-geist-mono);
+}
+
+/* Geist Sans'ı tüm elementler için varsayılan font olarak ayarla */
+* {
+  font-family: var(--font-geist-sans), sans-serif !important;
+}
+
+/* Form elemanları için özel kural */
+input,
+textarea,
+select,
+button {
+  font-family: inherit !important;
+}
+
+/* Placeholder'lar için özel kural */
+::placeholder {
+  font-family: var(--font-geist-sans), sans-serif !important;
+}
+
+/* Webkit tarayıcıları için placeholder kuralı */
+::-webkit-input-placeholder {
+  font-family: var(--font-geist-sans), sans-serif !important;
+}
+
+/* Firefox için placeholder kuralı */
+::-moz-placeholder {
+  font-family: var(--font-geist-sans), sans-serif !important;
+}
+
+/* Internet Explorer 10+ için placeholder kuralı */
+:-ms-input-placeholder {
+  font-family: var(--font-geist-sans), sans-serif !important;
+}
+
 html,
 body {
   margin: 0;
@@ -5,7 +43,6 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  font-family: 'Inter', sans-serif;
 }
 
 .layout-container-div{
@@ -22,4 +59,15 @@ body {
 .layout-main-div{
   flex-grow: 1;
   display: flex;
+}
+
+/* Geist Mono için özel bir sınıf */
+.geist-mono {
+  font-family: var(--font-geist-mono), monospace !important;
+}
+
+/* Diğer özel font sınıfları artık Geist Sans'ı kullanacak */
+.inter-font,
+.custom-font {
+  /* Bu sınıflar artık Geist Sans'ı kullanacak, çünkü * seçicisi ile override edildi */
 }

@@ -1,6 +1,8 @@
 "use client";
 
 import "./globals.css";
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 import DefaultContainer from "./components/containers/DefaultContainer";
 import Searchbar from "./components/Search/Searchbar";
 import { JobsProvider } from "@/hooks/useJobs";
@@ -113,12 +115,9 @@ export default function RootLayout({
         width: isMobile ? "100vw" : "1900px",
         minWidth: isMobile ? "100vw" : "1900px",
       }}
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
     >
       <head>
-        <link
-          href="https://fonts.googleapis.com/css?family=Inter"
-          rel="stylesheet"
-        />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0"
