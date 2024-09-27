@@ -41,22 +41,24 @@
 
 .dropdown {
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.1); /* Arkaplan saydamlığını artırdık */
-  backdrop-filter: blur(10px); /* Buzlu cam efekti */
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
   box-shadow: 0px 0px 2px 0px #00000033, 0px 0px 11.3px 0px #00000033;
-  width: 223px; /* Container genişliğine eşit */
-  max-width: 223px;
-  max-height: none;
-  overflow-y: auto; /* Add a scrollbar when content exceeds the height */
+  width: auto; /* Allow it to adjust automatically */
   border-radius: 15px;
-  top: 100%; /* Position it right below the container */
-  left: 50%; /* Yeni eklenen satır */
-  transform: translateX(-50%); /* Yeni eklenen satır */
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
   padding: 12px;
-  padding-bottom: 33px;
-  flex-direction: column;
   z-index: 1000;
-  margin-top: 8px; /* Add some space between the container and dropdown */
+  margin-top: 8px;
+  display: flex; /* Use flex to arrange child elements */
+}
+.dropdownContent {
+  display: flex; /* Align items in a row */
+  justify-content: space-between; /* Space out the items */
+  width: 100%; /* Ensure it takes full width of dropdown */
+  
 }
 
 .searchContainer {
@@ -91,7 +93,22 @@
   max-height: 150px; /* İstediğiniz yüksekliğe göre ayarlayın */
   overflow-y: auto; 
   padding-top: 5px;
+  margin-left: 0.2vh;
+  flex: 1; /* Take up one part of the available space */
+  width: 100%;
+  margin-right: 10%;
 
+
+}
+
+.rightContainer {
+  display: flex; /* Ensure it displays as flex */
+  flex-direction: column; /* Align contents in a column if needed */
+  width: 100%; /* Ensure it can grow */
+  flex: 2; /* Take up two parts of the available space */
+
+  margin-right: 0.2vh;
+ 
 }
 
 
