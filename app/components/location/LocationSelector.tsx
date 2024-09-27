@@ -98,6 +98,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({
       </div>
       {open && (
         <div className={styles.dropdown} onClick={(e) => e.stopPropagation()} ref={dropdownRef}>
+          <div className={styles.dropdownContent}>
           <div className={styles.optionsMenu}>
             <Selection
               id="location-type-selection"
@@ -113,7 +114,8 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({
             />
           </div>
           {(locationType === "Hybrid" || locationType === "Office") && (
-            <>
+          
+            <div className={styles.rightContainer}>
               <div className={styles.searchContainer}>
                 <svg
                   width="27"
@@ -150,8 +152,10 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({
                   borderRadius={4}
                 />
               </div>
-            </>
+              </div>
+            
           )}
+          </div>
         </div>
       )}
     </div>
