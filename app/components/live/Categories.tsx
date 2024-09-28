@@ -68,7 +68,18 @@ const Categories: React.FC<Props> = ({ onCategoryClick }) => {
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [categories, setCategories] = useState(["News", "Hackathon", "Event", "Blog", "Article", "Academy", "Live"]);
+  const [categories, setCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    // Sayfa yüklendiğinde kategorileri localStorage'dan yükle
+    const savedCategories = localStorage.getItem('categories');
+    if (savedCategories) {
+      setCategories(JSON.parse(savedCategories));
+    } else {
+      // Eğer localStorage'da kayıtlı kategori yoksa, varsayılan listeyi kullan
+      setCategories(["News", "Hackathon", "Event", "Blog", "Article", "Academy", "Live"]);
+    }
+  }, []);
 
   const handleCategoryClick = (category: string) => {
     if (["Article", "Academy", "Live"].includes(category)) {
@@ -89,67 +100,46 @@ const Categories: React.FC<Props> = ({ onCategoryClick }) => {
     newCategories.splice(dragIndex, 1);
     newCategories.splice(hoverIndex, 0, draggedCategory);
     setCategories(newCategories);
+    
+    // Yeni kategori sırasını localStorage'a kaydet
+    localStorage.setItem('categories', JSON.stringify(newCategories));
   };
 
   const checkScroll = () => {
     if (containerRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
-      setShowLeftArrow(scrollLeft > 0);
-      setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 1);
+      setShowLeftArrow(scrollLeft > 1); // Küçük bir tolerans ekledik
+      setShowRightArrow(Math.ceil(scrollLeft + clientWidth) < scrollWidth - 1); // Yuvarlama ve tolerans ekledik
     }
   };
 
   useEffect(() => {
     checkScroll();
-    if (containerRef.current) {
-      containerRef.current.addEventListener('scroll', checkScroll);
-    }
+    window.addEventListener('resize', checkScroll);
     return () => {
-      if (containerRef.current) {
-        containerRef.current.removeEventListener('scroll', checkScroll);
-      }
+      window.removeEventListener('resize', checkScroll);
     };
   }, []);
+
+  useEffect(() => {
+    checkScroll();
+  }, [categories]); // categories değiştiğinde de kontrol et
 
   const handleShift = (direction: 'left' | 'right') => {
     if (containerRef.current) {
       const container = containerRef.current;
-      const categories = Array.from(container.children) as HTMLElement[];
-      const containerWidth = container.clientWidth;
-      const scrollLeft = container.scrollLeft;
-
-      let scrollAmount = 0;
-      let targetIndex = 0;
-
-      if (direction === 'right') {
-        // Sağa kaydırma için
-        for (let i = 0; i < categories.length; i++) {
-          const category = categories[i];
-          const categoryRight = category.offsetLeft + category.offsetWidth;
-          if (categoryRight > scrollLeft + containerWidth) {
-            targetIndex = i;
-            // Bir sonraki kategorinin sonu görünene kadar kaydır
-            scrollAmount = categoryRight - containerWidth;
-            break;
-          }
-        }
-      } else {
-        // Sola kaydırma için
-        for (let i = categories.length - 1; i >= 0; i--) {
-          const category = categories[i];
-          if (category.offsetLeft < scrollLeft) {
-            targetIndex = i;
-            // Hedef kategorinin başlangıcına kadar kaydır
-            scrollAmount = category.offsetLeft;
-            break;
-          }
-        }
-      }
-
+      const scrollAmount = container.clientWidth * 0.8; // Genişliğin %80'i kadar kaydır
+      const newScrollLeft = direction === 'right' 
+        ? container.scrollLeft + scrollAmount 
+        : container.scrollLeft - scrollAmount;
+      
       container.scrollTo({
-        left: scrollAmount,
+        left: newScrollLeft,
         behavior: 'smooth'
       });
+
+      // Kaydırma tamamlandıktan sonra ok durumunu güncelle
+      setTimeout(checkScroll, 300);
     }
   };
 
@@ -163,7 +153,11 @@ const Categories: React.FC<Props> = ({ onCategoryClick }) => {
             </svg>
           </div>
         )}
-        <div ref={containerRef} className={styles.Container}>
+        <div 
+          ref={containerRef} 
+          className={styles.Container}
+          onScroll={checkScroll} // Scroll olayını dinle
+        >
           {categories.map((category, index) => (
             <CategoryItem
               key={category}
