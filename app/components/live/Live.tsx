@@ -256,7 +256,7 @@ const Live: React.FC<LiveProps> = ({ initialExpandedId }) => {
                   />
                 </motion.svg>
               </div>
-              <div className={styles.Title}>{currentItem.title}</div>
+              <div className={`${styles.Title} ${isExpanded ? styles.expandedTitle : ''}`}>{currentItem.title}</div>
               <AnimatePresence>
                 {isExpanded && (
                   <motion.div

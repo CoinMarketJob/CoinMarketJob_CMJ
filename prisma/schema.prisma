@@ -303,7 +303,7 @@ model Attachments {
 
 model Live {
   id           Int      @id @default(autoincrement())
-  title        String
+  title        String   @db.VarChar(300)
   liveType     LiveType
   organisation String
   headline     String

@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Live` MODIFY `title` VARCHAR(300) NOT NULL;
