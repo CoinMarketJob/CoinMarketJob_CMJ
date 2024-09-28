@@ -22,6 +22,18 @@ const MenuBar: React.FC<{ editor: Editor | null }> = ({ editor }) => {
   const [textSize, setTextSize] = useState<string>("Normal");
   const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if ((event.target as Element).closest('.text-size-container') === null) {
+        setIsOpen(false); // Close the dropdown when clicking outside
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   if (!editor) {
     return null
   }

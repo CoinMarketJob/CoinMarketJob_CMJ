@@ -344,7 +344,7 @@
 }
 
 .JobDescription :global(.editor-content) {
-  padding: 36px 24px !important;
+  padding: 15px 24px !important;
 }
 
 .Continue {
