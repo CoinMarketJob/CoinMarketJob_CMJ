@@ -14,6 +14,11 @@ interface LiveItem {
   content?: string;
   author?: string;
   date?: string;
+  
+  location: string;
+  prizePool: string;
+  participants: number;
+  url: string;
 }
 
 interface LiveProps {
@@ -39,6 +44,7 @@ const HackathonCard: React.FC<HackathonCardProps> = ({
   participants,
   url,
 }) => {
+  console.log(date);
   return (
     <div className={styles.hackathonCard}>
       <div className={styles.hackathonCardHeader}>
@@ -93,6 +99,7 @@ const Live: React.FC<LiveProps> = ({ initialExpandedId }) => {
       try {
         const response = await fetch("/api/live/");
         const data: LiveItem[] = await response.json();
+        console.log(data);
         setLive(data.filter((x) => x.liveType !== "BLOG"));
         setFilteredLive(data.filter((x) => x.liveType !== "BLOG"));
         setBlog(data.filter((x) => x.liveType === "BLOG"));
@@ -160,8 +167,10 @@ const Live: React.FC<LiveProps> = ({ initialExpandedId }) => {
   
 
   const formatDate = (dateString: string | undefined) => {
+    console.log(dateString);
     if (!dateString) return "";
     const date = new Date(dateString);
+    console.log(date);
     const months = [
       "Jan",
       "Feb",
@@ -201,7 +210,7 @@ const Live: React.FC<LiveProps> = ({ initialExpandedId }) => {
     const combined: JSX.Element[] = [];
     let liveIndex = 0;
     let blogIndex = 0;
-
+    console.log(items);
     while (liveIndex < items.length || blogIndex < blog.length) {
       for (
         let i = 0;
@@ -216,10 +225,10 @@ const Live: React.FC<LiveProps> = ({ initialExpandedId }) => {
               name={currentItem.title}
               organizer={currentItem.organisation || ""}
               date={formatDate(currentItem.date)}
-              location="TBA" // You might want to add this field to your LiveItem interface
-              prizePool="TBA" // You might want to add this field to your LiveItem interface
-              participants={0} // You might want to add this field to your LiveItem interface
-              url="#" // You might want to add this field to your LiveItem interface
+              location={currentItem.location} // You might want to add this field to your LiveItem interface
+              prizePool={currentItem.prizePool} // You might want to add this field to your LiveItem interface
+              participants={currentItem.participants} // You might want to add this field to your LiveItem interface
+              url={currentItem.url} // You might want to add this field to your LiveItem interface
             />
           );
         } else {
