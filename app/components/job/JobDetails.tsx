@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Job } from '@prisma/client';
 import Icon from '../general/Icon';
 import Button from '../general/Button';
-import Draft from '../general/Draft';
+import Draft from '../general/DraftShow';
 import { JSONContent } from '@tiptap/react';
 
 interface JobDetailsProps {
@@ -131,7 +131,7 @@ const JobDetails: React.FC<JobDetailsProps> = ({ job, onClose = () => {} }) => {
             {job && (
                 <div className={styles.section}>
                     {jobDescription && (
-                        <Draft show content={jobDescription} />
+                        <Draft content={jobDescription} />
                     )}
                 </div>
             )}
