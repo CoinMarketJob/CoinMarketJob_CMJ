@@ -1,8 +1,8 @@
 "use client";
 
 import "./globals.css";
-import { GeistSans } from 'geist/font/sans';
-import { GeistMono } from 'geist/font/mono';
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import DefaultContainer from "./components/containers/DefaultContainer";
 import Searchbar from "./components/Search/Searchbar";
 import { JobsProvider } from "@/hooks/useJobs";
@@ -14,7 +14,14 @@ import { ProfileProvider } from "@/hooks/useCompanyProfile";
 import { JobApplicationsProvider } from "@/hooks/useApplicationJob";
 import { ProfileDataProvider } from "@/hooks/useProfileData";
 import { LiveVisibilityProvider } from "@/hooks/useLiveVisibility";
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  Suspense,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import Home from "./components/MobilePage/Home";
 
 export default function RootLayout({
@@ -48,7 +55,6 @@ export default function RootLayout({
       resizeObserver.disconnect();
     };
   }, [updateMainDivHeight]);
-  
 
   function isMobilePhone() {
     const userAgent =
@@ -77,7 +83,9 @@ export default function RootLayout({
   }, []);
 
   const scaleContent = useCallback(() => {
-    const content = document.querySelector(".layout-container-div") as HTMLElement;
+    const content = document.querySelector(
+      ".layout-container-div"
+    ) as HTMLElement;
     if (content) {
       const scaleX = window.innerWidth / 1920;
       const scaleY = window.innerHeight / 1080;
@@ -98,7 +106,7 @@ export default function RootLayout({
     };
 
     window.addEventListener("resize", handleResize);
-    
+
     // Sayfa yüklendikten kısa bir süre sonra tekrar scale'i uygula
     const timeoutId = setTimeout(scaleContent, 100);
 
@@ -132,29 +140,36 @@ export default function RootLayout({
         {isMobile ? (
           <Home />
         ) : (
-          <SessionProvider>
-            <LayoutProvider>
-              <ProfileProvider>
-                <JobsProvider>
-                  <AuthWrapper>
-                    <JobApplicationsProvider>
-                      <ProfileDataProvider>
-                        <LiveVisibilityProvider>
-                          <div className="layout-container-div">
-                            <Searchbar />
-                            <main className="layout-main-div" ref={mainDivRef}>
-                              <DefaultContainer mainDivHeight={mainDivHeight}>{children}</DefaultContainer>
-                            </main>
-                            <Footer />
-                          </div>
-                        </LiveVisibilityProvider>
-                      </ProfileDataProvider>
-                    </JobApplicationsProvider>
-                  </AuthWrapper>
-                </JobsProvider>
-              </ProfileProvider>
-            </LayoutProvider>
-          </SessionProvider>
+          <Suspense>
+            <SessionProvider>
+              <LayoutProvider>
+                <ProfileProvider>
+                  <JobsProvider>
+                    <AuthWrapper>
+                      <JobApplicationsProvider>
+                        <ProfileDataProvider>
+                          <LiveVisibilityProvider>
+                            <div className="layout-container-div">
+                              <Searchbar />
+                              <main
+                                className="layout-main-div"
+                                ref={mainDivRef}
+                              >
+                                <DefaultContainer mainDivHeight={mainDivHeight}>
+                                  {children}
+                                </DefaultContainer>
+                              </main>
+                              <Footer />
+                            </div>
+                          </LiveVisibilityProvider>
+                        </ProfileDataProvider>
+                      </JobApplicationsProvider>
+                    </AuthWrapper>
+                  </JobsProvider>
+                </ProfileProvider>
+              </LayoutProvider>
+            </SessionProvider>
+          </Suspense>
         )}
       </body>
     </html>
