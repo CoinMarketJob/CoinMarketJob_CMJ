@@ -157,14 +157,9 @@ const Live: React.FC<LiveProps> = ({ initialExpandedId }) => {
     setFilteredLive(filteredItems);
   };
 
-  const toggleExpand = (id: number) => { 
-    const currentScrollX = window.scrollX; // Mevcut yatay kaydırma konumunu kaydet
+  const toggleExpand = (id: number) => {
     setExpandedId(prevId => prevId === id ? null : id);
-    setTimeout(() => {
-      window.scrollTo(currentScrollX, window.scrollY); // Yatay kaydırma konumunu geri yükle
-    }, 0);
   };
-  
 
   const formatDate = (dateString: string | undefined) => {
     console.log(dateString);
@@ -260,25 +255,15 @@ const Live: React.FC<LiveProps> = ({ initialExpandedId }) => {
               <AnimatePresence>
                 {isExpanded && (
                   <motion.div
-                    initial={{ opacity: 0, height: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, height: "auto", scale: 1 }}
-                    exit={{ opacity: 0, height: 0, scale: 0.95 }}
-                    transition={{
-                      duration: 0.5,
-                      ease: [0.04, 0.62, 0.23, 0.98],
-                      scale: { duration: 0.3 },
-                    }}
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
                     className={styles.Details}
                   >
-                    <motion.div
-                      initial={{ y: 20, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      exit={{ y: 20, opacity: 0 }}
-                      transition={{ delay: 0.1, duration: 0.3 }}
-                      className={styles.NewsDetails}
-                    >
+                    <div className={styles.NewsDetails}>
                       {currentItem.content}
-                    </motion.div>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
