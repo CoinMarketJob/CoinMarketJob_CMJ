@@ -285,26 +285,6 @@ const Live: React.FC<LiveProps> = ({ initialExpandedId }) => {
                 <div className={styles.Type}>{currentItem.liveType}</div>
 
                 <div className={styles.iconContainer}>
-                  <Icon
-                    onClick={(e) => handleShareClick(e, currentItem)}
-                    hoverSize={40}
-                    hoverContent="Share"
-                    tooltipPosition="top"
-                  >
-                    <svg
-                      width="18"
-                      height="24"
-                      viewBox="0 0 18 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M0 2.25C0 1.00781 1.00781 0 2.25 0V2.25V20.6906L8.34844 16.3359C8.7375 16.0547 9.26719 16.0547 9.65625 16.3359L15.75 20.6906V2.25H2.25V0H15.75C16.9922 0 18 1.00781 18 2.25V22.875C18 23.2969 17.7656 23.6812 17.3906 23.8734C17.0156 24.0656 16.5656 24.0328 16.2234 23.789L9 18.6328L1.77656 23.789C1.43438 24.0328 0.984375 24.0656 0.609375 23.8734C0.234375 23.6812 0 23.2969 0 22.875V2.25Z"
-                        fill="#242220"
-                        fill-opacity="0.2"
-                      />
-                    </svg>
-                  </Icon>
 
                   <Icon
                     onClick={(e) => handleShareClick(e, currentItem)}

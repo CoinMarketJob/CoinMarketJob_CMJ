@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
-import React, { useState, useEffect } from 'react';
-import styles from './page.module.css';
-import MainLayout from '../components/layouts/MainLayout';
-import { useRouter } from "next/navigation"
-import Icon from '../components/general/Icon';
+import React, { useState, useEffect } from "react";
+import styles from "./page.module.css";
+import MainLayout from "../components/layouts/MainLayout";
+import { useRouter } from "next/navigation";
+import Icon from "../components/general/Icon";
 
 const Page = () => {
   const [savedJobs, setSavedJobs] = useState<any[]>([]);
@@ -12,19 +12,23 @@ const Page = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch('/api/savedjobs/get');
+        const response = await fetch("/api/savedjobs/get");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const allJobs = await response.json();
-        
-        const savedJobIds = JSON.parse(localStorage.getItem('savedJobs') || '[]');
-        
-        const filteredJobs = allJobs.filter((job: any) => savedJobIds.includes(job.id));
-        
+
+        const savedJobIds = JSON.parse(
+          localStorage.getItem("savedJobs") || "[]"
+        );
+
+        const filteredJobs = allJobs.filter((job: any) =>
+          savedJobIds.includes(job.id)
+        );
+
         setSavedJobs(filteredJobs);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     }
 
@@ -56,31 +60,30 @@ const Page = () => {
 
   return (
     <div className={styles.Container}>
-    <div className={styles.Header}>
-      <div className={styles.arrowContainer}>
-        <Icon
-          onClick={handleBackClick}
-          hoverSize={45}
-          hoverContent="Back"
-          tooltipPosition="bottom"
-        >
-          <ArrowIcon />
-        </Icon>
+      <div className={styles.Header}>
+        <div className={styles.arrowContainer}>
+          <Icon
+            onClick={handleBackClick}
+            hoverSize={45}
+            hoverContent="Back"
+            tooltipPosition="bottom"
+          >
+            <ArrowIcon />
+          </Icon>
+        </div>
+        <div className={styles.JobsText}>JOBS</div>
       </div>
-      <div className={styles.JobsText}>JOBS</div>
-    </div>
-    <div className={styles.Line}></div>
-      
-    <div className={styles.savedJobsContainer}>
-  {savedJobs.length > 0 ? (
-    <MainLayout filteredJobs={savedJobs} layout={1} />
-  ) : (
-    <p>Nothing Saved.</p>
-  )}
-</div>
-   
+      <div className={styles.Line}></div>
+
+      <div className={styles.savedJobsContainer}>
+        {savedJobs.length > 0 ? (
+          <MainLayout filteredJobs={savedJobs} layout={1} />
+        ) : (
+          <p>Nothing Saved.</p>
+        )}
+      </div>
     </div>
   );
-}
+};
 
 export default Page;
