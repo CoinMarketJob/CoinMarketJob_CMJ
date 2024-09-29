@@ -6,7 +6,7 @@ import Dropdown from "../general/Dropdown";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import "./LoginClient.css";
-import Link from 'next/link';
+import Link from "next/link";
 
 const LoginClient = () => {
   const router = useRouter();
@@ -213,7 +213,7 @@ const LoginClient = () => {
 
   const complete = async () => {
     setError(null);
-    
+
     if (!isValidEmail(email)) {
       setError("Please enter a valid email address");
       return;
@@ -297,11 +297,10 @@ const LoginClient = () => {
   const loginWithGoogle = async () => {};
 
   const ContinueWithProfile = async () => {
-
-    if(name == "" || surname == "" || phone == ""){
+    if (name == "" || surname == "" || phone == "") {
       setRegisterError("You must fill all field.");
       return;
-    } 
+    }
 
     const profileData = {
       userId,
@@ -343,7 +342,8 @@ const LoginClient = () => {
 
   return (
     <div className="login-client-container">
-      <Button
+      {process === 0 ? (
+        <Button
           text="Login"
           disabled={false}
           onClick={login}
@@ -358,18 +358,21 @@ const LoginClient = () => {
           fontSize={19}
           fontWeight={600}
         />
-    </div>
-     /*  {process === 0 ? (
-        
       ) : (
         <div>
           {loginProcess === 0 ? (
             <div>
-              
               <div style={{ display: "flex" }}>
                 <span className="header-text">Join the Job Market</span>
               </div>
-              <div style={{ position: "relative", marginBottom: 24, width: '100%', maxWidth: '300px' }}>
+              <div
+                style={{
+                  position: "relative",
+                  marginBottom: 24,
+                  width: "100%",
+                  maxWidth: "300px",
+                }}
+              >
                 <button className="google-button" onClick={loginWithGoogle}>
                   <svg
                     width="23"
@@ -407,7 +410,13 @@ const LoginClient = () => {
                   Continue with Google
                 </button>
               </div>
-              <div style={{ position: "relative", width: '100%', maxWidth: '300px' }}>
+              <div
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  maxWidth: "300px",
+                }}
+              >
                 <button className="apple-button">
                   <svg
                     width="20"
@@ -436,15 +445,30 @@ const LoginClient = () => {
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <span className="information">
                   By continuing, you agree to the{" "}
-                  <Link href="https://beta.coinmarketjob.com/tos" className="policy-link" target="_blank" rel="noopener noreferrer">
+                  <Link
+                    href="https://beta.coinmarketjob.com/tos"
+                    className="policy-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     Terms of Service
                   </Link>{" "}
                   and{" "}
-                  <Link href="https://beta.coinmarketjob.com/privacy" className="policy-link" target="_blank" rel="noopener noreferrer">
+                  <Link
+                    href="https://beta.coinmarketjob.com/privacy"
+                    className="policy-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     Privacy Policy
                   </Link>
                   , including{" "}
-                  <Link href="https://beta.coinmarketjob.com/cookies" className="policy-link" target="_blank" rel="noopener noreferrer">
+                  <Link
+                    href="https://beta.coinmarketjob.com/cookies"
+                    className="policy-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     Cookie Use
                   </Link>
                   .
@@ -529,7 +553,9 @@ const LoginClient = () => {
         style={{ display: !isPopupOpen ? "none" : "flex" }}
       >
         <div className="error-message-container">
-          {registerError && <div className="error-message">{registerError}</div>}
+          {registerError && (
+            <div className="error-message">{registerError}</div>
+          )}
         </div>
         <div className="register-popup-line">
           <Input
@@ -559,7 +585,7 @@ const LoginClient = () => {
               placeholder="Phone Code"
               value={phoneCode}
               setValue={setPhoneCode}
-              error={registerError ? true: false}
+              error={registerError ? true : false}
             />
           </div>
           <div style={{ width: "193px" }}>
@@ -588,7 +614,7 @@ const LoginClient = () => {
           </div>
         </div>
       </div>
-    </div> */
+    </div>
   );
 };
 
