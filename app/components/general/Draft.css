@@ -1,6 +1,7 @@
 .control-group{
     border-radius: 15px;
     width: 100%;
+
 }
 
 .button-group{
@@ -185,11 +186,16 @@
     word-wrap: break-word; 
     white-space: pre-wrap; 
     padding: 24px; 
+    min-height: 120px;
     padding-top: 30px;
     padding-bottom: 30px;
     box-sizing: border-box; 
+    cursor: text;
 }
 
+.editor-content > div {
+    min-height: 120px;
+}
 
 .text-size-select{
     display: flex;
@@ -272,8 +278,4 @@
 
 .dropdown-item:hover {
     background-color: #F5F5F5;
-}
-
-.control-group p{
-    min-height: 120px;
 }

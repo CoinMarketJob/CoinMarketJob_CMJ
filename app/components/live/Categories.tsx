@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import styles from "./Categories.module.css";
@@ -125,23 +125,50 @@ const Categories: React.FC<Props> = ({ onCategoryClick }) => {
     checkScroll();
   }, [categories]); // categories değiştiğinde de kontrol et
 
-  const handleShift = (direction: 'left' | 'right') => {
+  const handleShift = useCallback((direction: 'left' | 'right') => {
     if (containerRef.current) {
       const container = containerRef.current;
-      const scrollAmount = container.clientWidth * 0.8; // Genişliğin %80'i kadar kaydır
-      const newScrollLeft = direction === 'right' 
-        ? container.scrollLeft + scrollAmount 
-        : container.scrollLeft - scrollAmount;
-      
+      const containerWidth = container.clientWidth;
+      const currentScrollLeft = container.scrollLeft;
+      const categoryElements = Array.from(container.children) as HTMLElement[];
+
+      let targetScrollLeft = currentScrollLeft;
+      let visibleWidth = 0;
+
+      if (direction === 'right') {
+        for (let i = 0; i < categoryElements.length; i++) {
+          const categoryElement = categoryElements[i];
+          const categoryLeft = categoryElement.offsetLeft;
+          const categoryWidth = categoryElement.offsetWidth;
+
+          if (categoryLeft + categoryWidth > currentScrollLeft + containerWidth) {
+            targetScrollLeft = categoryLeft + categoryWidth - containerWidth;
+            break;
+          }
+        }
+      } else {
+        for (let i = categoryElements.length - 1; i >= 0; i--) {
+          const categoryElement = categoryElements[i];
+          const categoryLeft = categoryElement.offsetLeft;
+          const categoryWidth = categoryElement.offsetWidth;
+
+          visibleWidth += categoryWidth;
+          if (visibleWidth > containerWidth || categoryLeft < currentScrollLeft) {
+            targetScrollLeft = categoryLeft;
+            break;
+          }
+        }
+      }
+
       container.scrollTo({
-        left: newScrollLeft,
+        left: targetScrollLeft,
         behavior: 'smooth'
       });
 
       // Kaydırma tamamlandıktan sonra ok durumunu güncelle
       setTimeout(checkScroll, 300);
     }
-  };
+  }, []);
 
   return (
     <DndProvider backend={HTML5Backend}>

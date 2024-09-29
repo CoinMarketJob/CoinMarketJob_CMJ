@@ -157,6 +157,12 @@ const Draft: React.FC<DraftProps> = ({show, content, onChange, onContentChange, 
     editable: !show
   }, [])
 
+  useEffect(() => {
+    if (editor) {
+      editor.setEditable(!show);
+    }
+  }, [show, editor]);
+
   if (show) {
     return (      
       <div className="control-group">
@@ -166,9 +172,16 @@ const Draft: React.FC<DraftProps> = ({show, content, onChange, onContentChange, 
   }
 
   return (
-    <div className={`control-group ${error ? 'error-border' : ''}`} style={{border: border ? "none" : "1px solid #E7E5E4" }}>
+    <div 
+      className={`control-group ${error ? 'error-border' : ''}`} 
+      style={{border: border ? "none" : "1px solid #E7E5E4" }}
+    >
       <MenuBar editor={editor} />
-      <EditorContent className="editor-content" editor={editor} />
+      <EditorContent 
+        className="editor-content" 
+        editor={editor} 
+        onClick={() => editor?.chain().focus().run()}
+      />
     </div>
   )
 }
