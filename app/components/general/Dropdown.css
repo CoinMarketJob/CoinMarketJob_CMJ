@@ -63,6 +63,18 @@
   padding: 12px;
 }
 
+.list-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: -1;
+}
+
 .list-item {
   width: calc(100% - 24px);
   border-radius: 15px;
@@ -75,6 +87,9 @@
   line-height: 19.36px;
   letter-spacing: 0.04em;
   color: #999999;
+  position: relative;
+  z-index: 1;
+  background-color: transparent;
 }
 
 .list-item:hover {
