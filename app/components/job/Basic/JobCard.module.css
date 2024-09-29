@@ -93,7 +93,7 @@
 
 .title {
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 400;
   font-family: "Inter", sans-serif;
   padding: 0;
   margin-bottom: 4px;
@@ -108,7 +108,7 @@
 }
 
 .company {
-  font-weight: 500;
+  font-weight: 400;
   font-family: "Inter", sans-serif;
   font-size: 13px;
   margin: 0;

@@ -4,61 +4,24 @@ import styles from "./JobCard.module.css";
 import { Job } from "@prisma/client";
 import Icon from "../../general/Icon";
 import { formatJobType } from "@/utils/formatter";
-import { useDrag } from "react-dnd";
 import { useJobs } from "@/hooks/useJobs";
 
 interface JobCardProps {
   job: Job;
   onClick: (job: Job) => void;
   collapsed?: boolean;
-  onDrop: (id: number, list: string) => void;
-  onDragBegin: () => void;
-  onDragEnd: () => void;
   isSelected: boolean;
   onSelect: (id: number) => void;
 }
-
-const ItemTypes = {
-  CARD: "card",
-};
 
 const Grid: React.FC<JobCardProps> = ({
   job,
   onClick,
   collapsed,
-  onDrop,
-  onDragBegin,
-  onDragEnd,
   isSelected,
   onSelect,
 }) => {
   const { filteredJobs, setFilteredJobs } = useJobs();
-  const id = job.id;
-  const cardType = "left";
-
-  const [{ isDragging }, drag] = useDrag(
-    () => ({
-      type: ItemTypes.CARD,
-      item: () => {
-        onDragBegin();
-        return { id, cardType };
-      },
-      end: (item, monitor) => {
-        const dropResult = monitor.getDropResult<{ list: string }>();
-        console.log(item);
-        console.log(dropResult);
-        if (item && dropResult) {
-          onDrop(item.id, dropResult.list);
-        } else if (dropResult?.list == "left") {
-          onDragEnd();
-        }
-      },
-      collect: (monitor) => ({
-        isDragging: monitor.isDragging(),
-      }),
-    }),
-    [id, cardType, onDragBegin, onDrop, onDragEnd]
-  );
 
   const JobSave = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
@@ -91,10 +54,10 @@ const Grid: React.FC<JobCardProps> = ({
   const dragRef = useCallback(
     (node: HTMLDivElement | null) => {
       if (node) {
-        drag(node);
+        // Removed drag function call
       }
     },
-    [drag]
+    []
   );
 
   return (
