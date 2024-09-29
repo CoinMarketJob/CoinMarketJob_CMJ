@@ -435,7 +435,7 @@ const LoginClient = () => {
                 </button>
               </div>
               <div style={{ display: "flex" }}>
-                <a className="email-text" onClick={showInput}>
+                <a className="email-text">
                   Continue with Email
                 </a>
               </div>
@@ -446,7 +446,7 @@ const LoginClient = () => {
                 <span className="information">
                   By continuing, you agree to the{" "}
                   <Link
-                    href="https://beta.coinmarketjob.com/tos"
+                    href="/en/tos"
                     className="policy-link"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -455,7 +455,7 @@ const LoginClient = () => {
                   </Link>{" "}
                   and{" "}
                   <Link
-                    href="https://beta.coinmarketjob.com/privacy"
+                    href="/en/privacy"
                     className="policy-link"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -464,7 +464,7 @@ const LoginClient = () => {
                   </Link>
                   , including{" "}
                   <Link
-                    href="https://beta.coinmarketjob.com/cookies"
+                    href="/en/cookies"
                     className="policy-link"
                     target="_blank"
                     rel="noopener noreferrer"
