@@ -1,0 +1,65 @@
+.skeleton {
+  padding: 20px;
+  border-radius: 15px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  border: #e7e5e4 1px solid;
+  margin-bottom: 24px;
+}
+
+.icon {
+  width: 60px;
+  height: 60px;
+  background-color: #e7e5e4;
+  border-radius: 25%;
+  margin-right: 20px;
+}
+
+.content {
+  flex-grow: 1;
+}
+
+.title {
+  height: 20px;
+  width: 70%;
+  background-color: #e7e5e4;
+  margin-bottom: 8px;
+  border-radius: 4px;
+}
+
+.company {
+  height: 16px;
+  width: 50%;
+  background-color: #e7e5e4;
+  margin-bottom: 8px;
+  border-radius: 4px;
+}
+
+.meta {
+  display: flex;
+}
+
+.type, .location {
+  height: 14px;
+  width: 80px;
+  background-color: #e7e5e4;
+  margin-right: 12px;
+  border-radius: 4px;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+.skeleton * {
+  animation: pulse 1.5s infinite;
+}

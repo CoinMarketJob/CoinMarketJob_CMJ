@@ -6,6 +6,7 @@ import SearchInput from "./SearchInput";
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import styles from './Searchbar.module.css';
+import { usePathname } from 'next/navigation'; // Add this import
 
 const Searchbar = () => {
   const [tags, setTags] = useState<Array<string>>([]);
@@ -13,6 +14,7 @@ const Searchbar = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   const router = useRouter();
+  const pathname = usePathname(); // Add this line
   const { data: session } = useSession();
   const burgerRef = useRef<HTMLDivElement>(null);
 
@@ -32,7 +34,13 @@ const Searchbar = () => {
   }, []);
 
   const home = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    router.push("/");
+    if (pathname === '/') {
+      // If we're already on the home page, reload the page
+      window.location.reload();
+    } else {
+      // Otherwise, navigate to the home page
+      router.push("/");
+    }
     setIsFilterOpen(false);
   };
 

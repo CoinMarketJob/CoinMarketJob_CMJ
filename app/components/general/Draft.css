@@ -274,3 +274,6 @@
     background-color: #F5F5F5;
 }
 
+.control-group p{
+    min-height: 120px;
+}
