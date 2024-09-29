@@ -18,14 +18,13 @@
   width: 223px;
   max-width: 223px;
   max-height: 198px;
-  overflow-y: auto;
   border-radius: 15px;
   left: -20px;
   padding: 12px;
-  padding-bottom: 33px;
   flex-direction: column;
   z-index: 1001;
   position: relative;
+  overflow: hidden;
 }
 
 .dropdown::before {
@@ -40,6 +39,34 @@
   border-radius: 15px;
   z-index: -1;
 }
+
+.dropdownContent {
+  max-height: 174px; /* Dropdown'ın içeriği için maksimum yükseklik */
+  overflow-y: auto; /* Dikey scroll'u etkinleştir */
+  padding-right: 5px; /* Scroll çubuğu için biraz boşluk bırak */
+}
+
+/* Webkit tarayıcılar için özel scroll çubuğu stilleri */
+.dropdownContent::-webkit-scrollbar {
+  width: 5px;
+}
+
+.dropdownContent::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dropdownContent::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+}
+
+/* Firefox için özel scroll çubuğu stilleri */
+.dropdownContent {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+/* Diğer stiller aynı kalacak */
 
 .searchContainer {
   position: relative;
