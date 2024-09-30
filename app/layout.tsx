@@ -107,8 +107,7 @@ export default function RootLayout({
 
     window.addEventListener("resize", handleResize);
 
-    // Sayfa yüklendikten kısa bir süre sonra tekrar scale'i uygula
-    const timeoutId = setTimeout(scaleContent, 100);
+    const timeoutId = setTimeout(scaleContent, 10);
 
     return () => {
       window.removeEventListener("resize", handleResize);
