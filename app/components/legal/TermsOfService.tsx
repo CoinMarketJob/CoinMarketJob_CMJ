@@ -231,8 +231,9 @@ const TermsOfService: React.FC = () => {
       content: `
         <p>You agree that the only way to provide us legal notice is at the addresses provided in this Section.</p>
         <p>For general inquiries, you may contact us online via mail addresses provided below. For legal notices or service of process, you may write us at the addresses provided below.</p>
-        <p>Mail Address: [__]</p>
-        <p>Address for Legal Notice: [__]</p>
+        <p>Mail Address: support@coinmarketjob.com</p>
+        <p>Address for Legal Notice: Armaturvägen 3D, 136 50 Haninge
+Stockholm / Sweden</p>
       `
     }
   };
@@ -242,7 +243,12 @@ const TermsOfService: React.FC = () => {
   });
 
   const scrollToSection = (sectionKey: string) => {
-    sectionRefs.current[sectionKey]?.current?.scrollIntoView({ behavior: 'smooth' });
+    const element = sectionRefs.current[sectionKey]?.current;
+    if (element) {
+      const yOffset = -75; // Bu değeri ayarlayarak başlığın ne kadar yukarıda görüneceğini belirleyebilirsiniz
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({top: y, behavior: 'smooth'});
+    }
   };
 
   return (

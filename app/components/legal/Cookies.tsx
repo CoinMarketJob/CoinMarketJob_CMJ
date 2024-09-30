@@ -116,7 +116,12 @@ const Cookies: React.FC = () => {
   });
 
   const scrollToSection = (sectionKey: string) => {
-    sectionRefs.current[sectionKey]?.current?.scrollIntoView({ behavior: 'smooth' });
+    const element = sectionRefs.current[sectionKey]?.current;
+    if (element) {
+      const yOffset = -75;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({top: y, behavior: 'smooth'});
+    }
   };
 
   return (

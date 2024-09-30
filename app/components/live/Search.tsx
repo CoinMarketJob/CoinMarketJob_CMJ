@@ -33,16 +33,17 @@ const Search: React.FC<props> = ({ keyword, ChangeFunction, handleKeyDown }) => 
 
       <input
         ref={inputRef}
-        className={styles.input}
-        placeholder="Filter by keyword"
         type="text"
+        placeholder="Search"
         value={keyword}
         onChange={ChangeFunction}
         onKeyDown={handleKeyDown}
+        className={`${styles.input} ${keyword ? styles.inputWithContent : ''}`}
         autoComplete="off"
         autoCorrect="off"
         autoCapitalize="off"
         spellCheck="false"
+        name="search"
       />
     </div>
   );

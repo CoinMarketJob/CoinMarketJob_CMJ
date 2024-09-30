@@ -1,0 +1,16 @@
+/* Tüm scrollbar'ları gizle */
+* {
+  scrollbar-width: none;  /* Firefox için */
+  -ms-overflow-style: none;  /* IE ve Edge için */
+}
+
+/* Webkit tarayıcıları (Chrome, Safari) için scrollbar'ı gizle */
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* Sayfa içeriğinin scrollbar olmadan da kaydırılabilmesini sağla */
+html, body {
+  overflow-y: auto;
+  overflow-x: hidden;
+}

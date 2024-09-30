@@ -289,8 +289,9 @@ const PrivacyPolicy: React.FC = () => {
 
         <h3>6.5. Contact Information</h3>
         <p>If you have questions or complaints regarding this Policy, please first contact with us online. You can also reach us by physical mail.</p>
-        <p>E-Mail Address: [__]</p>
-        <p>Address for Physical Mail: [__]</p>
+        <p>E-Mail Address: support@coinmarketjob.com</p>
+        <p>Address for Physical Mail: Armaturvägen 3D, 136 50 Haninge
+Stockholm / Sweden</p>
       `,
     },
   };
@@ -300,7 +301,12 @@ const PrivacyPolicy: React.FC = () => {
   });
 
   const scrollToSection = (sectionKey: string) => {
-    sectionRefs.current[sectionKey]?.current?.scrollIntoView({ behavior: 'smooth' });
+    const element = sectionRefs.current[sectionKey]?.current;
+    if (element) {
+      const yOffset = -75;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({top: y, behavior: 'smooth'});
+    }
   };
 
   return (
