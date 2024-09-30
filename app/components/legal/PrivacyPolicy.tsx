@@ -1,240 +1,298 @@
 import React, { useRef } from 'react';
 import styles from './TermsOfService.module.css';
 
-const TermsOfService: React.FC = () => {
+const PrivacyPolicy: React.FC = () => {
   const sectionRefs = useRef<{ [key: string]: React.RefObject<HTMLDivElement> }>({});
 
   const sections = {
     introduction: {
       title: '1. Introduction',
       content: `
-        <h3>1.1. Contract</h3>
-        <p>By creating a CoinMarketJob ("CMJ") account or accessing or using our Services (described below), you are agreeing to enter into a legally binding contract with CMJ (even if you are using third party credentials or using our Services on behalf of a company). If you do not agree to this contract ("Contract" or "User Agreement"), do not create an account or access or otherwise use any of our Services. If you wish to terminate this Contract at any time, you can do so by closing your account and no longer accessing or using our Services.</p>
-        <p>When you use our Services you agree to all of these terms. Your use of our Services is also subject to our Cookie Policy and our Privacy Policy, which covers how we collect, use, share, and store your personal information. Use of the Services may be subject to additional terms and conditions presented by CMJ, which are hereby incorporated by this reference into the terms of this Contract.</p>
+        <h3>1.1. General</h3>
+        <p>We are a social network and online platform for professionals. People use our Services to find and be found for business opportunities, to connect with others and find information. Our Privacy Policy applies to any Member or Visitor to our Services.</p>
+        <p>Our registered users ("Members") share their professional identities, engage with their network, exchange knowledge and professional insights, post and view relevant content, learn and develop skills, and find business and career opportunities. Content and data on some of our Services is viewable to non-Members ("Visitors")</p>
 
         <h3>1.2. Services</h3>
-        <p>This Contract applies to coinmarketjob.com, coinmarketjob-branded apps, and other coinmarketjob-related sites, apps, communications, and other services that state that they are offered under this Contract ("Services"), including the offsite collection of data for those Services.</p>
-        <p>We provide numerous Services options. Certain Services options are provided free-of-charge, while other options require payment before they can be accessed (the "paid Services"). We may also offer special promotional plans, memberships, or services, including offerings of third-party products and services. We are not responsible for the products and services provided by such third parties.</p>
-        <p>The Services may be integrated with, or may otherwise interact with, third-party applications, websites, and services ("Third-Party Applications") and third-party personal computers, mobile handsets, tablets, wearable devices, speakers, and other devices ("Devices"). Your use of such Third-Party Applications and Devices may be subject to additional terms, conditions and policies provided to you by the applicable third party. CMJ does not guarantee that Third-Party Applications and Devices will be compatible with the Services.</p>
-        <p>Subject to your compliance with the terms of this Contract (including any other applicable terms and conditions), we grant to you limited, non-exclusive, revocable permission to use of the Services. Services shall remain in effect unless and until terminated by you or CMJ. You agree that you will not redistribute or transfer the Services.</p>
-        <p>The CMJ software applications are licensed, not sold or transferred to you, and CMJ retains ownership of all copies of the CMJ software applications even after installation on your Devices.</p>
+        <p>This Privacy Policy, including our Cookie Policy applies to your use of our Services.</p>
+        <p>This Privacy Policy applies to coinmarketjob.com, coinmarketjob-branded apps, and other coinmarketjob-branded sites, apps, communications and services offered by coinmarketjob ("CMJ") ("Services"), including off-site Services. For California residents, additional disclosures required by California law may be found in our California Privacy Disclosure.</p>
 
-        <h3>1.3. CoinMarketJob</h3>
-        <p>You are entering into this Contract with CoinMarketJob (also referred to as "we" and "us").</p>
-        <p>You are entering into this Contract with CoinMarketJob and CoinMarketJob will be the controller of (or business responsible for) your personal data provided to, or collected by or for, or processed in connection with our Services.</p>
-        <p>As a Visitor or Member of our Services, the collection, use, and sharing of your personal data is subject to our Privacy Policy, our Cookie Policy and other documents referenced in our Privacy Policy, and updates. You acknowledge and have read our Privacy Policy.</p>
+        <h3>1.3. Data Controllers and Contracting Parties</h3>
+        <p>CMJ will be the controller of (or business responsible for) your personal data provided to, or collected by or for, or processed in connection with our Services.</p>
+        <p>As a Visitor or Member of our Services, the collection, use and sharing of your personal data is subject to this Privacy Policy and other documents referenced in this Privacy Policy, as well as updates.</p>
 
-        <h3>1.4. Members and Visitors</h3>
-        <p>When you register and join the CoinMarketJob Services, you become a "Member". If you have chosen not to register for our Services, you may access certain features as a "Visitor." This Contract applies to Members and Visitors.</p>
-
-        <h3>1.5. Changes</h3>
-        <p>We may modify this Contract, our Privacy Policy and our Cookie Policy from time to time. If required by applicable law or we make material changes to this Contract, we will provide you notice through our Services, or by other means, to provide you the opportunity to review the changes before they become effective. We agree that changes cannot be retroactive. If you object to any of these changes, you may close your account. Your continued use of our Services after we publish or send a notice about our changes to these terms means that you are consenting to the updated terms as of their effective date.</p>
-
-        <h3>1.6. Service Limitations and Modifications</h3>
-        <p>We use reasonable care and skill to keep the Services operational. However, our service offerings and their availability may change from time to time and subject to applicable laws, without liability to you; for example:</p>
-        <p>(i). The Services may experience temporary interruptions due to technical difficulties, maintenance or testing, or updates, including those required to reflect changes in relevant laws and regulatory requirements.</p>
-        <p>(ii). We aim to evolve and improve our Services constantly, and we may modify, suspend, or stop (permanently or temporarily) providing all or part of the Services (including particular functions, features, subscription plans and promotional offerings).</p>
-        <p>(iii). CMJ has no obligation to provide any specific content through the Services, and CMJ or the applicable owners may remove particular content without notice.</p>
-        <p>CMJ has no liability to you, nor any obligation to provide a refund to you, in connection with internet or other service outages or failures that are caused by the actions of government authorities, other third parties or events beyond our control.</p>
-      `
+        <h3>1.4. Change</h3>
+        <p>Changes to the Privacy Policy apply to your use of our Services after the "effective date."</p>
+        <p>CMJ ("we" or "us") can modify this Privacy Policy, and if we make material changes to it, we will provide notice through our Services, or by other means, to provide you the opportunity to review the changes before they become effective. If you object to any changes, you may close your account.</p>
+        <p>You acknowledge that your continued use of our Services after we publish or send a notice about our changes to this Privacy Policy means that the collection, use and sharing of your personal data is subject to the updated Privacy Policy, as of its effective date.</p>
+      `,
     },
-    obligations: {
-      title: '2. Obligations',
+    dataWeCollect: {
+      title: '2. Data We Collect',
       content: `
-        <h3>2.1. Service Eligibility</h3>
-        <p>In order to use or access our Services, you must (1) be 13 years of age (or the equivalent minimum age in your home country) or older; (2) have the permission of your parent or guardian if you are under the age of legal responsibility in your home country; (3) have the authority to enter into a binding contract with us and are not prevented from doing so under applicable law; (4) not already restricted by CMJ from using the Services and (5) reside in a country where the Services is available.</p>
-        <p>You also promise that any registration information you submit to CMJ is true, accurate, and complete, and you agree to keep it that way at all times. Creating an account with false information is a violation of our terms, including accounts registered on behalf of others or persons under the minimum age. If law requires that you must be older in order for CMJ to lawfully provide the Services to you without parental consent (including using your personal data) then the minimum age is such older age. If you are under the age of legal responsibility in your home country, your parent or guardian must sign these Terms on your behalf. If you do not meet the minimum age requirements, CMJ cannot register you as a user.</p>
+        <h3>2.1. Data You Provide To Us</h3>
+        <p>To create an account you need to provide data including your name, email address and/or mobile number, general location (e.g., city), and a password. If you register for a premium Service, you will need to provide payment (e.g., credit card) and billing information.</p>
+        <p>You have choices about the information on your profile, such as your education, work experience, skills, photo, city or area, endorsements, and optional verifications of information on your profile (such as verifications of your identity or workplace). You don't have to provide additional information on your profile; however, profile information helps you to get more from our Services, including helping recruiters and business opportunities find you. It's your choice whether to include sensitive information on your profile and to make that sensitive information public. Please do not post or add personal data to your profile that you would not want to be publicly available.</p>
+        <p>We collect personal data from you when you provide, post or upload it to our Services, such as when you fill out a form, (e.g., with demographic data or salary), respond to a survey, or submit a resume or fill out a job application on our Services.</p>
+        <p>You don't have to post or upload personal data; though if you don't, it may limit your ability to grow and engage with your network over our Services.</p>
 
-        <h3>2.2. Your Account</h3>
-        <p>Members are account holders. You agree to: (1) protect against wrongful access to your account (e.g., use a strong password and keep it confidential); (2) not share or transfer your account or any part of it (e.g., sell or transfer the personal data of others by transferring your connections); and (3) follow the law, our list of Dos and Don'ts (below). You are responsible for anything that happens through your account unless you close it or report misuse. If your username or password is lost or stolen, or if you believe there has been an unauthorized access to your account, notify us immediately. CMJ may reclaim, or require you to change, your username for any reason.</p>
-        <p>As between you and others (including your employer), your account belongs to you. However, if the Services were purchased by another party for you to use (e.g., Recruiter seat or courses offered by CMJ bought by your employer), the party paying for such Service has the right to control access to and get reports on your use of such paid Service; however, they do not have rights to your personal account.</p>
+        <h3>2.2. Data From Others</h3>
+        <h4>Content and News</h4>
+        <p>Others may post or write about you. You and others may post content that includes information about you (as part of articles, posts, comments, videos) on our Services. We also may collect public information about you, such as professional-related news and accomplishments, and make it available as part of our Services, including, as permitted by your settings, in notifications to others of mentions in the news.</p>
+        <h4>Contact</h4>
+        <p>We receive personal data (including contact information) about you when others associate their contacts with Member profiles, scan and upload business cards, or send messages using our Services (including invites or connection requests). If you or others opt-in to sync email accounts with our Services, we will also collect "email header" information that we can associate with Member profiles.</p>
+        <h4>Partners</h4>
+        <p>We receive personal data (e.g., your job title and work email address) about you when you use the services of our customers and partners, such as employers or prospective employers and applicant tracking systems providing us job application data.</p>
+        <h4>Related Companies and Other Services</h4>
+        <p>We receive data about you when you use some of the other services provided by us or our Affiliates.</p>
 
-        <h3>2.3. Payment</h3>
-        <p>If you buy any of our paid Services, you agree to pay us the applicable fees and taxes and you agree to the additional terms specific to the paid Services. Failure to pay these fees will result in the termination of your paid Services. Also, you agree that:</p>
-        <p>(i). Your purchase may be subject to foreign exchange fees or differences in prices based on location (e.g., exchange rates).</p>
-        <p>(ii). We may store and continue billing your payment method (e.g., credit card), even after it has expired, to avoid interruptions in your paid Services and to use it to pay for other Services you may buy. You may update or change your payment method.</p>
-        <p>(iii). If you purchase a subscription, your payment method automatically will be charged at the start of each subscription period for the fees and taxes applicable to that period. To avoid future charges, cancel before the renewal date.</p>
-        <p>(iv). We may modify our prices effective prospectively upon reasonable notice to the extent allowed under the law. Price changes will take effect at the start of the next subscription period following the date of the price change. Subject to applicable law, by continuing to use our Services after the price change takes effect, you will have accepted the new price. If you do not agree to a price change, you can reject the change by unsubscribing from the applicable paid Services prior to the price change going into effect.</p>
-        <p>(v). All of your paid Services are subject to CMJ's refund policy.</p>
-        <p>(vi). We may calculate taxes payable by you based on the billing information that you provide us.</p>
+        <h3>2.3. Service Use</h3>
+        <p>We log your visits and use of our Services, including mobile apps. We log usage data when you visit or otherwise use our Services, including our sites, app and platform technology, such as when you view or click on content (e.g., learning video) or ads (on or off our sites and apps), perform a search, install or update one of our mobile apps, share articles or apply for jobs. We use log-ins, cookies, device information and internet protocol ("IP") addresses to identify you and log your use.</p>
 
-        <h3>2.4. Trials</h3>
-        <p>From time to time, we or others on our behalf may offer trials of paid Services for a specified period without payment or at a reduced rate (a "Trial"). By using our Services via a Trial, you agree to the additional terms specific to the paid Services.</p>
+        <h3>2.4. Cookies and Similar Technologies</h3>
+        <p>We collect data through cookies and similar technologies. As further described in our Cookie Policy, we may use cookies and similar technologies (e.g., pixels and ad tags) to collect data (e.g., device IDs) to recognize you and your device(s) on, off and across different services and devices where you have engaged with our Services. We may also allow some others to use cookies as described in our Cookie Policy. You can opt out from our use of data from cookies and similar technologies that track your behaviour on the sites of others for ad targeting and other ad-related purposes.</p>
 
-        <h3>2.5. Renewal and Cancellation</h3>
-        <p>Your payment to CMJ or the third party through which you purchased our paid Services will automatically renew at the end of the applicable subscription period, unless you cancel your paid Services before the end of the current subscription period. The cancellation will take effect the day after the last day of the current subscription period, and you will be downgraded to the free version of our Services. We do not provide refunds or credits for any partial subscription periods, except as expressly stated in these Contract.</p>
+        <h3>2.5. Your Device and Location</h3>
+        <p>When you visit or leave our Services (including some plugins and our cookies or similar technology on the sites of others), we receive the URL of both the site you came from and the one you go to and the time of your visit. We also get information about your network and device (e.g., IP address, proxy server, operating system, web browser and add-ons, device identifier and features, cookie IDs and/or ISP, or your mobile carrier). If you use our Services from a mobile device, that device will send us data about your location based on your phone settings. We will ask you to opt-in before we use GPS or other tools to identify your precise location.</p>
 
-        <h3>2.6. Withdrawal Right</h3>
-        <p>If you sign up for a Trial, you agree that the withdrawal right for the paid Services for which you are receiving a Trial ends fourteen (14) days after you start the Trial. If you don't cancel the paid Services before the Trial ends, you lose your right of withdrawal and authorise CMJ to automatically charge you the agreed price each month until you cancel the paid Services.</p>
-        <p>If you purchase our paid Services with no Trial, you agree you have fourteen (14) days after your purchase to withdraw for any reason and must pay us for the services provided up until the time you tell us that you have changed your mind. You expressly consent to us providing you with the service immediately following your purchase, that you lose your right of withdrawal, and authorize CMJ to charge you automatically each month until you cancel.</p>
+        <h3>2.6. Communications</h3>
+        <p>We collect information about you when you communicate with others through our Services (e.g., when you send, receive, or engage with messages, events, or connection requests, including our marketing communications). This may include information that indicates who you are communicating with and when. We also use automated systems to support and protect our site. For example, we use such systems to suggest possible responses to messages and to manage or block content that violates our User Agreement or company policies.</p>
 
-        <h3>2.7. Company Accounts</h3>
-        <p>If you establish a CMJ account on behalf of a company, organization, or entity, (a "Company," and such account a "Company Account"), the terms "you" and "your," as used throughout these Contract (including other CMJ terms and conditions incorporated by reference herein), apply to both you and the Company.</p>
-        <p>If you create a Company Account, you represent and warrant that you are authorized to grant all permissions and licenses provided in the Contract (including any other applicable CMJ terms and conditions) and to bind the Company to these terms.</p>
+        <h3>2.7. Workplace and School Provided Information</h3>
+        <p>Others buying our Services for your use, such as your employer or your school, provide us with personal data about you and your eligibility to use the Services that they purchase for use by their workers, students or alumni. For example, we will get contact information for "Profile Page" administrators and for authorizing users of our premium Services, such as our recruiting, sales or learning products.</p>
 
-        <h3>2.8. Notices and Messages</h3>
-        <p>You agree that we will provide notices and messages to you in the following ways: (1) within the Services or (2) sent to the contact information you provided us (e.g., email, mobile number, physical address). You agree to keep your contact information up to date.</p>
-
-        <h3>2.9. Sharing</h3>
-        <p>Our Services allow sharing of information (including content) in many ways, such as through your profile, posts, articles, group posts, links to news articles, job postings, and messages. Depending on the feature and choices you make, information that you share may be seen, copied, or used by other Members, Visitors, or others (on or off of the Services). Where we have made settings available, we will honor the choices you make about who can see content or other information (e.g., message content to your addressees, sharing content only to CMJ connections, restricting your profile visibility from search tools, or opting not to notify others of your CMJ profile update). For job searching activities, we default to not notifying your connections or the public. So, if you apply for a job through our Services or opt to signal that you are interested in a job, our default is to share it only with the job poster.</p>
-        <p>To the extent that laws allow this, we are not obligated to publish any content or other information on our Services and can remove it with or without notice.</p>
-
-        <h3>2.10. Member's Content</h3>
-        <p>Members may post, upload, or otherwise contribute content to the Services ("User Content"). For the avoidance of doubt, "User Content" includes all information, materials and other content that is added, created, uploaded, submitted, distributed, or posted to the Services by users.</p>
-        <p>You are solely responsible for all User Content that you post. You promise that, with respect to any User Content you post while using the Services, (1) you own or have the right to post such User Content; (2) such User Content, or its use by CMJ pursuant to the license granted below, does not: (i) violate the terms of this Contract, applicable law, or the intellectual property or other rights of any third party; or (ii) such User Content does not imply any affiliation with or endorsement of you or your User Content by CMJ or other individual or entity without the prior express written consent from CMJ or such individual or entity.</p>
-        <p>In posting or sharing User Content or other information on the Services, please keep in mind that content and other information will be publicly accessible and may be used and re-shared by others on the Services and across the web, so please use caution in posting or sharing on the Services, and be mindful of your account settings. CMJ is not responsible for what you or others post or share on the Services.</p>
-        <p>CMJ may, but has no obligation to, monitor or review User Content. CMJ reserves the right to remove or disable access to any User Content for any or no reason. CMJ may take these actions without prior notification to you.</p>
-      `
+        <h3>2.8. Other</h3>
+        <p>We are improving our Services, which means we get new data and create new ways to use data. Our Services are dynamic, and we often introduce new features, which may require the collection of new information. If we collect materially different personal data or materially change how we collect, use or share your data, we will notify you and may also modify this Privacy Policy.</p>
+      `,
     },
-    rightsAndLimits: {
-      title: '3. Rights and Limits',
+    legalBases: {
+      title: '3. Legal Bases for Processing your Personal Data',
       content: `
-        <h3>3.1. Your License to CMJ</h3>
-        <p>As between you and CMJ, you own your original content that you submit or post to the Services.</p>
-        <p>You grant CMJ and our affiliates the following non-exclusive license to the content and other information you provide (e.g., share, post, upload, and/or otherwise submit) to our Services:</p>
-        <p>A worldwide, transferable and sublicensable right to use, copy, modify, distribute, publicly perform and display, host, and process your content and other information without any further consent, notice and/or compensation to you or others. These rights are limited in the following ways:</p>
-        <p>(i). You can end this license for specific content by deleting such content from the Services, or generally by closing your account, except (a) to the extent you (1) shared it with others as part of the Services and they copied, re-shared it or stored it, (2) we had already sublicensed others prior to your content removal or closing of your account, or (3) we are required by law to retain or share it with others, and (b) for the reasonable time it takes to remove from backup and other systems.</p>
-        <p>(ii). We will not include your content in advertisements for the products and services of third parties to others without your separate consent (including sponsored content). However, without compensation to you or others, ads may be served near your content and other information, and your social actions may be visible and included with ads, as noted in the Privacy Policy. If you use a Service feature, we may mention that with your name or photo to promote that feature within our Services, subject to your settings.</p>
-        <p>(iii). We will honor the audience choices for shared content (e.g., "Connections only"). For example, if you choose to share your post to "Anyone on or off CMJ" (or similar): (a) we may make it available off CMJ; (b) we may enable others to publicly share onto third-party services (e.g., a Member embedding your post on a third party service); and/or (c) we may enable search tools to make that public content findable though their services.</p>
-        <p>(iv). While we may edit and make format changes to your content (such as translating or transcribing it, modifying the size, layout or file type, and removing or adding labels or metadata), we will take steps to avoid materially modifying the meaning of your expression in content you share with others.</p>
-        <p>(v). Because you own your original content and we only have non-exclusive rights to it, you may choose to make it available to others, including under the terms of a Creative Commons license.</p>
-        <p>You and CMJ agree that we may access, store, process, and use any information (including content and/or personal data) that you provide in accordance with the terms of the Privacy Policy and your choices (including settings).</p>
-        <p>By submitting suggestions or other feedback regarding our Services to CMJ, you agree that CMJ can use and share (but does not have to) such feedback for any purpose without compensation to you.</p>
-        <p>You agree to only provide content and other information that does not violate the law or anyone's rights (including intellectual property rights). You have choices about how much information to provide on your profile but also agree that the profile information you provide will be truthful. CMJ may be required by law to remove certain content and other information in certain countries.</p>
+        <p>CMJ only processes your personal data when we have a legal basis. We set out in this section each of the legal bases we rely on, why and how we use your data, and the categories of personal data we process.</p>
 
-        <h3>3.2. Service Availability</h3>
-        <p>We may change, suspend or discontinue any of our Services. We may also limit the availability of features, content and other information so that they are not available to all Visitors or Members (e.g., by country or by subscription access).</p>
-        <p>We don't promise to store or show (or keep showing) any information (including content) that you've shared. CMJ is not a storage service. You agree that we have no obligation to store, maintain or provide you a copy of any content or other information that you or others provide, except to the extent required by applicable law and as noted in our Privacy Policy.</p>
+        <h3>3.1. To perform our contract with you</h3>
+        <p>CMJ processes personal data when it is necessary to perform our contract (the Terms of Use) with our Members. Where we need your personal data to perform a contract with you and you do not provide the data, we will not be able to enter into the contract, or we may have to suspend or cancel any existing contract we have with you.</p>
 
-        <h3>3.3. Other Content, Sites and Apps</h3>
-        <p>Others' Content: By using the Services, you may encounter content or other information that might be inaccurate, incomplete, delayed, misleading, illegal, offensive, or otherwise harmful. You agree that we are not responsible for content or other information made available through or within the Services by others, including Members. While we trying to review the content and other information presented in the Services, we cannot always prevent misuse of our Services, and you agree that we are not responsible for any such misuse. You also acknowledge the risk that others may share inaccurate or misleading information about you or your organization, and that you or your organization may be mistakenly associated with content about others, for example, when we let connections and followers know you or your organization were mentioned in the news.</p>
-        <p>Others' Products and Services: CMJ may help connect you to other Members (e.g., Members using our enterprise recruiting, jobs, sales, or marketing products) who offer you opportunities (on behalf of themselves, their organizations, or others) such as offers to become a candidate for employment or other work or offers to purchase products or services. You acknowledge that CMJ does not perform these offered services, employ those who perform these services, or provide these offered products.</p>
-        <p>You further acknowledge that CMJ does not supervise, direct, control, or monitor Members in the making of these offers, or in their providing you with work, delivering products or performing services, and you agree that (1) CMJ is not responsible for these offers, or performance or procurement of them, (2) CMJ does not endorse any particular Member's offers, and (3) CMJ is not an agent or employment agency on behalf of any Member offering employment or other work, products or services. With respect to employment or other work, CMJ does not make employment or hiring decisions on behalf of Members offering opportunities and does not have such authority from Members or organizations using our products.</p>
-        <p>Others' Events: Similarly, CMJ may help you register for and/or attend events organized by Members and connect with other Members who are attendees at such events. You agree that (1) CMJ is not responsible for the conduct of any of the Members or other attendees at such events, (2) CMJ does not endorse any particular event listed on our Services, (3) CMJ does not review and/or vet any of these events or speakers, and (4) you will adhere to the terms and conditions that apply to such events.</p>
+        <table>
+          <tr>
+            <th>Why and how we use your data</th>
+            <th>Data we use</th>
+          </tr>
+          <tr>
+            <td>To allow Members to register for and manage access to their CMJ account, to view the CMJ platform in their preferred language, and to receive the core Services under our Terms of Use.</td>
+            <td>Your account information: your name, email address, login and two-step verification information, payment information (for paid Services), subscription information, and Member-chosen language.<br><br>Data relating to your use of our Services: IP address, device ID, user agent, location data, browser type and version, operating system and platform, and other online identifiers collected from Cookies and other similar technologies.</td>
+          </tr>
+        </table>
 
-        <h3>3.4. Limits</h3>
-        <p>CMJ reserves the right to limit your use of the Services, including the number of your connections and your ability to contact other Members. CMJ reserves the right to restrict, suspend, or terminate your account if you breach this Contract or the law or are misusing the Services (e.g., violating any of the Dos and Don'ts).</p>
-        <p>We can also remove any content or other information you shared if we believe it violates our Dos and Don'ts or otherwise violates this Contract.</p>
+        <h3>3.2. Consent</h3>
+        <p>CMJ processes personal data when Members give us consent, such as via their settings, by agreeing to our terms, and through in-product experiences. Where we rely on consent, you can withdraw your consent at any time by using your settings or by contacting us, however this will not affect our use of your data up to that point.</p>
 
-        <h3>3.5. Intellectual Property Rights</h3>
-        <p>CMJ reserves all of its intellectual property rights in the Services. Trademarks and logos used in connection with the Services are the trademarks of their respective owners. CMJ, and CMJ's logos and other CMJ trademarks, service marks, graphics and logos used for our Services are trademarks or registered trademarks of CMJ.</p>
+        <table>
+          <tr>
+            <th>Why and how we use your data</th>
+            <th>Data we use</th>
+          </tr>
+          <tr>
+            <td>So Members can add information to their profiles and display it to their connections, network and Visitors on CMJ, and display it off CMJ on their publicly-visible profile and in the applications of affiliates, partners, customers and developers.</td>
+            <td>Data that you or others provide in your profile: your name, photo, current position, education, location, skills, endorsements, recommendations, and contact details</td>
+          </tr>
+          <tr>
+            <td>To enable two-factor authentication for Members to protect their accounts or recover access to their accounts.</td>
+            <td>Two-factor verification information (e.g., phone number)</td>
+          </tr>
+          <tr>
+            <td>To allow Members to make and accept new connections.</td>
+            <td>Connect functionality on Member profiles<br>Contact information (email, telephone, etc.)</td>
+          </tr>
+          <tr>
+            <td>So Members can show their profile alongside information about their company or institution, or their stated interests on CMJ.</td>
+            <td>Data that you or others provide in your profile: your name, photo, current position, education, location, skills, endorsements, recommendations, and contact details</td>
+          </tr>
+          <tr>
+            <td>So that Members can verify certain information about themselves, to include a verification and related information on their profile and elsewhere where their profile information appears, and, depending on the verification method, to receive and store verification data, and to use it for security purposes.</td>
+            <td>Verification data (work or educational institution email address, profile verification badge and information, Member ID, hashed unique identifier, country of issuance for government IDs used to obtain verification badge via our verification partner)<br>Name</td>
+          </tr>
+          <tr>
+            <td>So Members can interact with our platform functionality, features and tools, such as certain tools and solutions that leverage AI.</td>
+            <td>Member inputted information (e.g., learning goals, topics of interest, uploaded CVs)<br>Publicly-viewable information on Members<br>Data that you or others provide in your profile: your name, photo, current position, education, location, skills, endorsements, recommendations, and contact details</td>
+          </tr>
+          <tr>
+            <td>For CMJ or third parties to send Members marketing communications (e.g., emails or SMS messages) in order to market products, services and events.</td>
+            <td>Contact details (e.g., email address, phone number), location and current position<br>Other data submitted through forms (e.g. name, company, answers to custom questions)</td>
+          </tr>
+          <tr>
+            <td>To enable Members to discover, signal interest in and apply for jobs and opportunities on our Services; and to enable Members to be discovered by hirers for job and opportunities.</td>
+            <td>Location<br>Job search filters (e.g. industry, experience level, job type, remote status, salary, benefits etc.)<br>Job preferences (as set by Members)<br>Uploaded CVs<br>Member profile information submitted by Members as part of a job application<br>Job account information</td>
+          </tr>
+          <tr>
+            <td>For CMJ to use non-essential cookies and similar tracking technologies to identify Members, to deliver ads, and to conduct analytics related to user interaction with CMJ pages and ads.</td>
+            <td>Data relating to your use of our Services: IP address, device ID, user agent, location data, browser type and version, operating system and platform, and other online identifiers collected from Cookies and similar technologies</td>
+          </tr>
+          <tr>
+            <td>To perform analytics to provide aggregated workforce and salary insights to Members, customers and others based on Member-provided data.</td>
+            <td>Member provided demographic data (e.g. disability and gender)</td>
+          </tr>
+          <tr>
+            <td>For CMJ and its customers to use data we receive from third parties to display personalized advertisements to Members and Visitors.</td>
+            <td>Data collected when Members and Visitors visit third party websites; IP address and browser ID<br>Information from advertising partners, vendors and publishers.</td>
+          </tr>
+        </table>
 
-        <h3>3.6. Recommendation and Automated Processing</h3>
-        <p>Recommendations: We use the data and other information that you provide and that we have about Members and content on the Services to make recommendations for connections, content, ads, and features that may be useful to you. We use that data and other information to recommend and to present information to you in an order that may be more relevant for you. For example, that data and information may be used to recommend jobs to you and you to recruiters and to organize content in your feed in order to optimize your experience and use of the Services. Keeping your profile accurate and up to date helps us to make these recommendations more accurate and relevant.</p>
-        <p>AI Features: By using the Services, you may interact with features we offer that use artificial intelligence or you may use AI based features and product outside the Services. The content that is generated with AI based tools inside or outside the Services might be inaccurate, incomplete, delayed, misleading or not suitable for your purposes. Please review and edit such content before sharing with others. Like all content you share on our Services, you are responsible for ensuring it complies with our policies, including not sharing misleading information.</p>
-      `
+        <h3>3.3. Legitimate Interest</h3>
+        <p>In some cases, the collection and processing of your personal data is based on our legitimate interests and/or the legitimate interests of third parties (e.g., CMJ customers and our Members), provided that our interest in processing does not outweigh your interests or fundamental rights and freedoms. These interests include commercial interests, the interests of our Members and broader societal benefits. In each instance, we have considered whether these interests are outweighed by your rights and freedoms, and have concluded, based on the limited impact of the processing, the strong safeguards we apply, and the controls we offer you over your data, that we can proceed with the processing.</p>
+
+        <table>
+          <tr>
+            <th>How we use your data</th>
+            <th>Legitimate interests relied on</th>
+            <th>Personal data used</th>
+          </tr>
+          <tr>
+            <td>To help protect you, us, or others from threats, we log users' activity on CMJ to identify and investigate harmful or fraudulent behaviour that violates our Terms of User. Examples of the behaviour include: security threats, hacks, scraping, fake accounts and information, bots, malicious actors, or fraud.<br>To verify certain information you have provided e.g. your workplace, educational institution or your identity.<br>To share data with our affiliates, for security purposes, to prevent, detect investigate and address possible fraud or harmful behaviour or other violations of the law or our Terms of Use, attempts to harm our Members, Visitors, our affiliates or others, and to protect the security and integrity of our platform.<br>To share data with other organisations for security purposes to prevent, detect, investigate and address threats, harmful behaviour, possible fraud or other violations of the law.<br>To use automated systems such as generative AI to detect and prevent harmful content on your feed and in messages, and train and improve our AI systems for these trust and security-related purposes.<br>To verify your account following account restriction or closure for breaches of our Terms of Use.</td>
+            <td>Safety and Security:<br>To improve the safety, security, authenticity of our Services.<br>To better protect the personal data of our Members and Visitors.<br>To detect, investigate and address threats, bad actors and malicious activity on our Services.<br>So that our affiliates, can detect, investigate and address threats, possible fraud, bad actors, harmful behaviour and malicious activity against CMJ, our affiliates, and others.<br>So that CMJ and other organisations can detect, investigate and address threats, possible fraud, bad actors and malicious activity online.</td>
+            <td>Data relating to your use of our Services: IP address, device ID, user agent, location data, browser type and version, operating system and platform, and other online identifiers collected from cookies and other similar technologies<br>Your account information: your email address, login and two-step verification information, payment and subscription information<br>Data that you or others provide in your profile: your name, photo, current position, education, location, skills, endorsements, recommendations, and contact details<br>Your activity data including data that you or others provide in messages, posts, comments, articles, or other content on our Services<br>Data that you provide when you contact us or request support via email, our ticket system or live chat. This may include your name, email address, account details, phone number, payment information and the details of your query or issue<br>Your connections and group memberships<br>Reports from you, or reports that others make about you relating to possible violations of Terms of Use or CMJ policies<br>Your verification badge and verification information when you have verified certain information on the platform<br>Where permitted, government ID and other personal identification documentation for account recovery purposes</td>
+          </tr>
+          <tr>
+            <td>To enable or administer our business, such as for quality control, preparing consolidated reports on our business, and customer service.<br>To manage corporate transactions, such as mergers, acquisitions or sales.<br>To monitor the use of our Member and customer service offerings and perform analytics to produce reports on the effectiveness of our Member and customer support services.<br>To perform analytics to produce reports and metrics on how our Services are used to help evaluate product performance, fix issues, improve and deliver our Services.<br>To understand and improve our business or customer relationships generally.<br>To make business and financial projections.<br>To transfer Member and Customer data to be processed and stored on data centres in  or outside of the related country.<br>To create reports and metrics based on your use of our products, such as interactions with ads, to enable us to invoice our customers for our products and services, and to understand usage of our Services.</td>
+            <td>Business Administration:<br>To run our business efficiently and effectively.<br>To comply with laws regarding business operations, consumer protection and tax compliance.<br>To fulfil the expectations of our Members, Visitors, and customers about the high quality of our Services.<br>To enhance, grow, strengthen and otherwise manage our business and assets.<br>To meet the needs of our Visitors, Members and Customers, and better ensure that our Members, customers and Visitors receive quality services from CMJ.</td>
+            <td>Data relating to your use of our Services: IP address, device ID, user agent, location data, browser type and version, operating system and platform, and other online identifiers collected from Cookies and other similar technologies<br>Your account information including payment and subscription information<br>Data that you provide when you contact us or request support via email, our ticket system or live chat. This may include your name, email address, account details, phone number, payment information and the details of your query or issue<br>Information received by post at any of our CMJ offices worldwide<br>Data that you or others provide in your profile: your name, photo, current position, education, location, skills, endorsements, recommendations, and contact details<br>Your activity data including data that you or others provide in messages, posts, comments, articles, or other content on our Services<br>Your connections and group memberships<br>Inferences we make about you<br>Personal demographic data<br>Reports from you, or reports that others make about you relating to possible violations of Terms of Use or CMJ policies<br>Data about your use of some of the other services provided by us or our affiliates</td>
+          </tr>
+          <tr>
+            <td>To perform analytics, CMJ uses information you've provided, and information inferred from you and your network to personalise content and recommendations. CMJ may use profiling techniques to achieve these purposes. These include seeing posts and people that we think might interest you on your feed.<br>To make suggestions for how you can expand your network by recommending connections, groups and topics you may like to follow or contribute to.<br>To recommend jobs.<br>To display personalised ads, as described in more detail below.<br>To provide personalised features to customers in CMJ paid services<br>Allowing CMJ customers to search for and contact Members that may be interested in purchasing products or services<br>To allow CMJ customers to search for job candidates who match their job criteria and contact Members directly about job opportunities.</td>
+            <td>Personalising your CMJ experience:<br>To fulfil our mission to connect the world's professionals to make them more productive and successful.<br>To create economic opportunity for our Members, customers and Visitors.<br>To enable our Members and Visitors to make real world connections with each other, find jobs and economic opportunity, express opinions, exchange information, and conduct business.<br>To meet CMJ's customers' interests in ensuring they can advertise jobs, products or services to Members who may be interested in them.<br>To provide Members with access to business development opportunities derived from B2B marketing.<br>To connect Members with jobs and opportunities to match their skills, experience and career aspirations.</td>
+            <td>Data relating to your use of our Services: IP address, device ID, user agent, location data, browser type and version, operating system and platform, and other online identifiers collected from Cookies and other similar technologies<br>Data that you or others provide in your profile:your name, photo, current position, education, location, skills, endorsements, recommendations, and contact details<br>Your activity data including data that you or others provide in messages, posts, comments, articles, or other content on our Services<br>Your connections and group memberships<br>Inferences we make about you<br>Personal demographic data</td>
+          </tr>
+          <tr>
+            <td>To disclose information about you when required by law, subpoena, or other legal process or if we have a good faith belief that disclosure is reasonably necessary for any of the following reasons:<br>- To investigate, prevent or take action regarding suspected or actual illegal activities or to assist government enforcement agencies;<br>- To enforce our agreements with you and our customers;<br>- To investigate and defend ourselves against any claims and allegations, including third-party claims;<br>- To protect the security or integrity of our Services (such as by sharing with companies facing similar threats);<br>- To exercise or protect the rights and safety of CMJ, our Members, personnel or others.</td>
+            <td>Law enforcement and legal requests:<br>To advance the legitimate interests of CMJ and our wider community (including Members, Visitors and customers) to comply with the law.<br>To avoid sanctions for non-compliance.<br>To better protect against illegal or harmful activity in connection with our Services.</td>
+            <td>Data relating to your use of our Services: IP address, device ID, user agent, location data, browser type and version, operating system and platform, and other online identifiers collected from Cookies and other similar technologies<br>Data that you or others provide in your profile: your name, photo, current position, education, location, skills, endorsements, recommendations, and contact details<br>Your activity data including data that you or others provide in messages, posts, comments, articles, or other content on our Services<br>Your connections and group memberships<br>Your communications with CMJ, including information received by post at any of our CMJ offices worldwide</td>
+          </tr>
+          <tr>
+            <td>We retain and share information with our lawyers and relevant experts when we seek legal advice or are involved in litigation. regulatory inquiries or disputes.</td>
+            <td>Legal advice and litigation:<br>CMJ's interest to protect CMJ and its Affiliates, their brands, employees and business interests from legal challenges, regulatory investigations or criminal activity.<br>To better protect the interests of our Members, Visitors and customers by identifying and addressing illegal, unfair or harmful activity.</td>
+            <td>Any data relating to you that is relevant to the legal advice, possible litigation or ongoing litigation. This will depend on the nature of the legal issue and could involve any information related to your use of CMJ's products and the Services</td>
+          </tr>
+          <tr>
+            <td>To review our products, conduct research and introduce new product features that help us better serve our Members and customers.<br>To generate metrics to understand how our Services are used, to inform and improve product direction and development. For example, we may measure how many users visit a certain page, how long they stay, or what actions they take on that page.<br>To undertake testing to evaluate the impact of new features.<br>To invite you to take surveys or provide feedback and analyse your responses to gain insights into users' views, preferences, needs, or experiences with our Services and to identify corrections and/or improvements for our products.<br>To produce aggregate insights to deliver data to Members, advertisers, and others relating to global workforce trends, to measure and improve equality of e.g. job opportunities.<br>To provide access to third party researchers who may conduct research regarding online safety and other areas where CMJ is required to allow access to certain data.<br>To identify and report aggregated trends like talent migration, hiring rates, and in-demand skills by region.</td>
+            <td>Research development and addressing errors:<br>To help us connect people to economic opportunity in new ways and by partnering with governments and organisations around the world.<br>To fulfil our mission to connect the world's professionals to make them more productive and successful.<br>To create economic opportunity for our Members and Visitors.<br>To understand how people use our Services and what new features they like, so we can improve existing features and create more useful products in the future.<br>In furtherance of our legal and other obligations to provide safe, secure, fair and legal service.</td>
+            <td>Personal demographic data<br>Your connections and group memberships<br>Inferences we make about you<br>Data that you or others provide in your profile:nyour name, photo, current position, education, location, skills, endorsements, recommendations, and contact details<br>Your activity data including data that you or others provide in messages, posts, comments, articles, or other content on our Services<br>Data relating to your use of our Services: IP address, device ID, user agent, location data, browser type and version, operating system and platform, and other online identifiers collected from Cookies and other similar technologies</td>
+          </tr>
+          <tr>
+            <td>To display certain ads that are relevant to your interests and preferences, based on the data we collect from our Services.<br>To show you ads while you visit websites or apps.</td>
+            <td>To display personalised ads:<br>To provide you with more personalized relevant ads, and to help our customers reach the right audience for their products and services.<br>To further our efforts to provide you with ads that are more likely to contain content you are interested in, which advances our legitimate interests and those of our Members in providing a revenue source that better enables us to offer many Services free of charge to our Members.<br>To meet our customers' interests in advertising jobs, products or services to Members that are likely to be interested in them.</td>
+            <td>Data that you or others provide in your profile: your name, photo, current position, education, location, skills, endorsements, recommendations, and contact details<br>Your activity data including data that you or others provide in messages, posts, comments, articles, or other content on our Services including: search history, feed, content you read, who you follow or is following you, connections, participation, page visits, videos you watch<br>Your connections and group memberships<br>Inferences we make about you including about your location, age and gender<br>Personal demographic data<br>Actions by Members with similar profiles to yours<br>Third party requests to show ads to Members<br>Information from advertising partners, vendors and publishers <br>Data relating to your use of our services, such as IP address, device ID, user agent, location data, browser type and version, operating system and platform, and other online identifiers collected from Cookies and other similar technologies</td>
+          </tr>
+          <tr>
+            <td>To measure and optimise ad delivery and engagement so that we can create aggregated reports (that don't identify you) for our Customers on the performance and effectiveness of their ads and other informational and promotional activities on our services, and the characteristics of the audiences they reach.<br>To create aggregated reports for our Customers on how Members interact with their ads on and off CMJ and their informational and promotional activities on our services.<br>To create aggregated statistics about Members, their professions or industry, and to publish Visitor demographics for our Services.<br>Although the aggregated reports we provide to our customers do not identify you, customers can use these reports to inform their overall advertising strategies.</td>
+            <td>To perform and provide analytics and insights:<br>To help our customers measure the impact and relevance of their ads.<br>To support customers' interests in understanding the categories of professionals that engage with their content without identifying individual Members. In turn, this helps customers to adapt their content to make them more suitable for the types of professionals they are interested in connecting with.</td>
+            <td>Data relating to your use of our Services: IP address, device ID, user agent, location data, browser type and version, operating system and platform, and other online identifiers collected from Cookies and other similar technologies<br>Data that you or others provide in your profile: your name, photo, current position, education, location, skills, endorsements, recommendations, and contact details<br>Your activity data including data that you or others provide in messages, posts, comments, articles, or other content on our Services including: search history, feed, content you read, who you follow or is following you, connections, page visits, videos you watch<br>Your connections and group memberships<br>Personal demographic data<br>Data about actions you took in response to ads (visits to websites, ads you have clicked on or product purchases)</td>
+          </tr>
+          <tr>
+            <td>Members or customers may provide personal data as an input to an AI or generative AI feature ("AI-powered feature"), which could result in personal data being included within output.<br>Automatically processing your data (including your profile data and posts) as an input for an AI-powered feature (e.g. providing more relevant responses to your queries or in connection with your inputs to a generative AI feature).<br>To train and improve our AI systems for purposes other than content creation (e.g., for security, trust, and content classification purposes).<br>Using Members' feedback to improve, correct or modify our products, including for AI-powered features.<br>Using automated techniques, including generative AI-powered tools as part of our online safety and security efforts.</td>
+            <td>AI features:<br>To enable economic opportunity and help our Members and customers be more productive and successful.<br>To enhance the safety and security of our platform.<br>To improve the efficiency and effectiveness of providing our Services.<br>To ensure that our products, features and Services are innovative, relevant and high quality.</td>
+            <td>Personal data manually input into an AI powered feature by Members<br>Feedback you provide on AI features<br>Data that you or others provide in in a resume you provide or your profile: your name, photo, current position, education, location, skills, endorsements, recommendations, and contact details<br>Your connections and group memberships<br>Your activity data including data that you or others provide in messages, posts, comments, articles, or other content on our Services</td>
+          </tr>
+          <tr>
+            <td>Where permitted, sending marketing emails and other marketing communications about CMJ content, products or offers that we think will interest you. CMJ may use profiling techniques to achieve this purpose.<br>Promoting CMJ paid services and other products and features we think you'd like on and off CMJ.</td>
+            <td>Direct Marketing<br>To enable economic opportunity and help our Members be more productive and successful.<br>To enhance and grow our business, meet the needs of our Visitors, Members and customers, and better ensure that our Members, customers and Visitors receive the quality services from CMJ.</td>
+            <td>Data that you or others provide in your profile: your name, photo, current position, education, location, skills, endorsements, recommendations, and contact details<br>Your activity data including data that you or others provide in messages, posts, comments, articles, or other content on our Services<br>Your email address<br>Your connections and group memberships<br>Inferences we make about you<br>Personal demographic data<br>Data relating to your use of our Services: IP address, device ID, user agent, location data, browser type and version, operating system and platform, and other online identifiers collected from Cookies and other similar technologies</td>
+          </tr>
+        </table>
+
+        <h3>3.4. Compliance with Legal Obligations and Public Interest</h3>
+        <p>CMJ processes information to comply with a legal obligation, such as preserving or disclosing certain information to adhere to a valid legal request from law enforcement agencies, courts or regulators, or to comply with financial or consumer law obligations. New legal obligations may arise over time requiring the processing of Member and Visitor personal data. The data that we are required to process depends on e.g. the nature of the legal obligation or the legal request. CMJ will process personal data where is it is necessary to carry out a task in the public interest e.g. to protect children from harm.</p>
+      `,
     },
-    disclaimerAndLimitOfLiability: {
-      title: '4. Disclaimer and Limit of Liability',
+    howWeShareInformation: {
+      title: '4. How We Share Information',
       content: `
-        <h3>4.1. No Warranty</h3>
-        <p>CMJ AND ITS AFFILIATES MAKE NO REPRESENTATION OR WARRANTY ABOUT THE SERVICES, INCLUDING ANY REPRESENTATION THAT THE SERVICES WILL BE UNINTERRUPTED OR ERROR-FREE, AND PROVIDE THE SERVICES (INCLUDING CONTENT AND INFORMATION) ON AN "AS IS" AND "AS AVAILABLE" BASIS. TO THE FULLEST EXTENT PERMITTED UNDER APPLICABLE LAW, CMJ AND ITS AFFILIATES DISCLAIM ANY IMPLIED OR STATUTORY WARRANTY, INCLUDING ANY IMPLIED WARRANTY OF TITLE, ACCURACY OF DATA, NON-INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. NEITHER CMJ NOR ANY OWNER OF CONTENT WARRANTS THAT THE SERVICES OR CONTENT IS FREE OF MALWARE OR OTHER HARMFUL COMPONENTS. IN ADDITION, CMJ MAKES NO REPRESENTATION REGARDING, NOR DOES IT WARRANT OR ASSUME ANY RESPONSIBILITY FOR, ANY THIRD-PARTY APPLICATIONS (OR THE CONTENT THEREOF), USER CONTENT, DEVICES OR ANY PRODUCT OR SERVICE ADVERTISED, PROMOTED OR OFFERED BY A THIRD PARTY ON OR THROUGH THE SERVICES OR ANY HYPERLINKED WEBSITE, AND CMJ IS NOT RESPONSIBLE FOR ANY TRANSACTIONS BETWEEN YOU AND ANY THIRD-PARTY OF THE FOREGOING. NO ADVICE OR INFORMATION WHETHER ORAL OR IN WRITING OBTAINED BY YOU FROM CMJ SHALL CREATE ANY WARRANTY ON BEHALF OF CMJ. THIS SECTION APPLIES TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW.</p>
+        <h3>4.1. Our Services</h3>
+        <p>Any data that you include on your profile and any content you post or social action (e.g., likes, follows, comments, shares) you take on our Services will be seen by others, consistent with your settings.</p>
+        
+        <h4>Profile</h4>
+        <p>Your profile is fully visible to all Members and customers of our Services. Subject to your settings, it can also be visible to others on or off of our Services (e.g., Visitors to our Services or users of third-party search tools). Your settings, degree of connection with the viewing Member, the subscriptions they may have, their usage of our Services, access channels and search types (e.g., by name or by keyword) impact the availability of your profile and whether they can view certain fields in your profile.</p>
+        
+        <h4>Posts, Likes, Follows, Comments, Messages</h4>
+        <p>Our Services may allow viewing and sharing information including through posts, likes, follows and comments. When you share an article or a post (e.g., an update, image, video or article) publicly it can be viewed by everyone and re-shared anywhere. Members, Visitors and others will be able to find and see your publicly-shared content, including your name (and photo if you have provided one).</p>
+        <p>In a group, posts are visible to others according to group type. For example, posts in private groups are visible to others in the group and posts in public groups are visible publicly. Your membership in groups is public and part of your profile, but you can change visibility in your settings.</p>
+        <p>Any information you share through companies' or other organizations' pages on our Services will be viewable by those organizations and others who view those pages' content.</p>
+        <p>When you follow a person or organization, you are visible to others and that "page owner" as a follower.</p>
+        <p>We let senders know when you act on their message, subject to your settings where applicable.</p>
+        <p>Subject to your settings, we let a Member know when you view their profile. We also give you choices about letting organizations know when you've viewed their Page.</p>
+        <p>When you like or re-share or comment on another's content (including ads), others will be able to view these "social actions" and associate it with you (e.g., your name, profile and photo if you provided it).</p>
+        <p>Your employer can see how you use Services they provided for your work (e.g. as a recruiter or sales agent) and related information. We will not show them your job searches or personal messages.</p>
+        
+        <h4>Enterprise Accounts</h4>
+        <p>Your employer may offer you access to our enterprise Services. Your employer can review and manage your use of such enterprise Services.</p>
+        <p>Depending on the enterprise Service, before you use such Service, we will ask for permission to share with your employer relevant data from your profile or use of our non-enterprise Services. We understand that certain activities such as job hunting and personal messages are sensitive, and so we do not share those with your employer unless you choose to share it with them through our Services.</p>
+        <p>Subject to your settings, (if applicable) when you use workplace tools and services certain of your data may also be made available to your employer or be connected with information we receive from your employer to enable these tools and services.</p>
 
-        <h3>4.2. Exclusion of Liability</h3>
-        <p>TO THE FULLEST EXTENT PERMITTED BY LAW (AND UNLESS CMJ HAS ENTERED INTO A SEPARATE WRITTEN AGREEMENT THAT OVERRIDES THIS CONTRACT), CMJ, INCLUDING ITS AFFILIATES, WILL NOT BE LIABLE IN CONNECTION WITH THIS CONTRACT FOR LOST PROFITS OR LOST BUSINESS OPPORTUNITIES, REPUTATION (E.G., OFFENSIVE OR DEFAMATORY STATEMENTS), LOSS OF DATA (E.G., DOWN TIME OR LOSS, USE OF, OR CHANGES TO, YOUR INFORMATION OR CONTENT) OR ANY INDIRECT, INCIDENTAL, CONSEQUENTIAL, SPECIAL OR PUNITIVE DAMAGES.</p>
-        <p>CMJ AND ITS AFFILIATES WILL NOT BE LIABLE TO YOU IN CONNECTION WITH THIS CONTRACT FOR ANY AMOUNT THAT EXCEEDS (A) THE TOTAL FEES PAID OR PAYABLE BY YOU TO CMJ FOR THE SERVICES DURING THE TERM OF THIS CONTRACT, IF ANY, OR (B) US $250.</p>
+        <h3>4.2. Communication Archival</h3>
+        <p>Regulated Members may need to store communications outside of our Service. Some Members (or their employers) need, for legal or professional compliance, to archive their communications and social media activity, and will use services of others to provide these archival services. We may enable archiving of messages by and to those Members outside of our Services.</p>
 
-        <h3>4.3. Basis of the Bargain; Exclusions</h3>
-        <p>The limitations of liability in this Section 4 are part of the basis of the bargain between you and CMJ and shall apply to all claims of liability (e.g., warranty, tort, negligence, contract and law) even if CMJ or its affiliates has been told of the possibility of any such damage, and even if these remedies fail their essential purpose.</p>
-        <p>THESE LIMITATIONS OF LIABILITY DO NOT APPLY TO LIABILITY FOR DEATH OR PERSONAL INJURY OR FOR FRAUD, GROSS NEGLIGENCE OR INTENTIONAL MISCONDUCT, OR IN CASES OF NEGLIGENCE, WHERE A MATERIAL OBLIGATION HAS BEEN BREACHED. A MATERIAL OBLIGATION BEING AN OBLIGATION WHICH FORMS A PREREQUISITE TO OUR DELIVERY OF SERVICES AND ON WHICH YOU MAY REASONABLY RELY, BUT ONLY TO THE EXTENT THAT THE DAMAGES WERE DIRECTLY CAUSED BY THE BREACH AND WERE FORESEEABLE UPON CONCLUSION OF THIS CONTRACT AND TO THE EXTENT THAT THEY ARE TYPICAL IN THE CONTEXT OF THIS CONTRACT.</p>
+        <h3>4.3. Others' Services</h3>
+        <p>Subject to your settings, other services may look up your profile. (if available) When you opt to link your account with other services, personal data (e.g., your name, title, and company) will become available to them. The sharing and use of that personal data will be described in, or linked to, a consent screen when you opt to link the accounts. Third-party services have their own privacy policies, and you may be giving them permission to use your data in ways we would not. You may revoke the link with such accounts.</p>
+        <p>The information you make available to others in our Services (e.g., information from your profile, your posts, your engagement with the posts, or message to Pages) may be available to them on other services. For example, search tools, mail and calendar applications, or talent and lead managers may show a user limited profile data, and social media management tools or other platforms may display your posts. The information retained on these services may not reflect updates you make on our Services.</p>
 
-        <h3>4.4. Indemnification</h3>
-        <p>You agree to indemnify and hold CMJ harmless from and against any reasonably foreseeable direct losses, damages, and reasonable expenses (including reasonable attorney fees and costs) suffered or incurred by CMJ arising out of or related to: (1) your breach of any of the terms of this Contract (including any additional CMJ terms and conditions incorporated herein); (2) any User Content you post or otherwise contribute; (3) any activity in which you engage on or through the Services; and (4) your violation of any law or the rights of a third party.</p>
-      `
+        <h3>4.4. Related Services</h3>
+        <p>We will share your personal data with our Affiliates to provide and develop our Services. We may also share your publicly-shared content (such as your public CMJ posts) with our affiliates, to provide or develop their services. Where allowed, we may combine information internally across the different Services covered by this Privacy Policy to help our Services be more relevant and useful to you and others. For example, we may personalize your feed or job recommendations based on your learning history.</p>
+
+        <h3>4.5. Service Providers</h3>
+        <p>We may also share your data with third-party service providers and processors. These include cloud service providers, content delivery networks, telecommunications providers, maintenance providers, Member support providers, development service providers, market researchers, anti-fraud and anti-abuse services providers, marketing and analytics providers, payment processors, external auditors and advisors, managed services providers, consultancy and professional services firms, such as legal and tax advisors. They will have access to your information (e.g., the contents of a customer support request) as reasonably necessary to perform these tasks on our behalf and are obligated not to disclose or use it for other purposes. If you purchase a Service from us, we may use a payments service provider who may separately collect information about you (e.g., for fraud prevention or to comply with legal obligations).</p>
+
+        <h3>4.6. Legal Disclosures</h3>
+        <p>We may need to share your data when we believe it's required by law or to help protect the rights and safety of you, us or others. It is possible that we will need to disclose information about you when required by law, subpoena, or other legal process or if we have a good faith belief that disclosure is reasonably necessary to (1) investigate, prevent or take action regarding suspected or actual illegal activities or to assist government enforcement agencies; (2) enforce our agreements with you; (3) investigate and defend ourselves against any third-party claims or allegations; (4) protect the security or integrity of our Services or the products or services of our affiliates (such as by sharing with companies facing similar threats); or (5) exercise or protect the rights and safety of CMJ, our Members, personnel or others. We attempt to notify Members about legal demands for their personal data when appropriate in our judgment, unless prohibited by law or court order or when the request is an emergency. We may dispute such demands when we believe, in our discretion, that the requests are overbroad, vague or lack proper authority, but we do not promise to challenge every demand.</p>
+
+        <h3>4.7. Change in Control or Sale</h3>
+        <p>We may share your data when our business is sold to others, but it must continue to be used in accordance with this Privacy Policy. We can also share your personal data as part of a sale, merger or change in control, or in preparation for any of these events. Any other entity which buys us or part of our business will have the right to continue to use your data, but only in the manner set out in this Privacy Policy unless you agree otherwise.</p>
+      `,
     },
-    termination: {
-      title: '5. Termination',
+    yourChoicesAndObligations: {
+      title: '5. Your Choices & Obligations',
       content: `
-        <p>Both you and CMJ may terminate this Contract at any time with notice to the other. On termination, you lose the right to access or use the Services. The following shall survive termination:</p>
-        <ol>
-          <li>Our rights to use and disclose your feedback;</li>
-          <li>Section 3 (subject to 3.1.i);</li>
-          <li>Sections 4, 6, 7, and 8.2 of this Contract; and</li>
-          <li>Any amounts owed by either party prior to termination remain owed after termination.</li>
-        </ol>
-      `
-    },
-    disputeResolution: {
-      title: '6. Dispute Resolution',
-      content: `
-        <h3>6.1. Governing Law and Jurisdiction</h3>
-        <p>Unless otherwise required by mandatory laws in your country of residence, the Contract (and any non-contractual disputes/claims arising out of or in connection with them) are subject to the laws of Sweden, without regard to choice or conflicts of law principles.</p>
-        <p>Further, you and CMJ agree to the jurisdiction of the Courts of Sweden to resolve any dispute, claim, or controversy that arises in connection with the Contract (and any non-contractual disputes/claims arising out of or in connection with them), except where under applicable mandatory laws, you can choose to bring legal proceedings in your country of residence, or we are required to only bring legal proceedings in your country of residence</p>
+        <h3>5.1. Data Retention</h3>
+        <p>We generally retain your personal data as long as you keep your account open or as needed to provide you Services. This includes data you or others provided to us and data generated or inferred from your use of our Services. Even if you only use our Services when looking for a new job every few years, we will retain your information and keep your profile open, unless you close your account. In some cases we choose to retain certain information (e.g., insights about Services use) in a depersonalized or aggregated form.</p>
 
-        <h3>6.2. Class Action Waiver</h3>
-        <p>WHERE PERMITTED UNDER THE APPLICABLE LAW, YOU AND CMJ AGREE THAT EACH MAY BRING CLAIMS AGAINST THE OTHER ONLY IN YOUR OR ITS INDIVIDUAL CAPACITY AND NOT AS A PLAINTIFF OR CLASS MEMBER IN ANY PURPORTED CLASS OR REPRESENTATIVE ACTION. Unless both you and CMJ agree, no arbitrator or judge may consolidate more than one person's claims or otherwise preside over any form of a representative or class proceeding.</p>
-      `
-    },
-    generalTerms: {
-      title: '7. General Terms',
-      content: `
-        <h3>7.1. Changes</h3>
-        <p>We may make changes to the terms of this Contract (including any additional CMJ terms and conditions incorporated by reference herein) from time to time by notifying you of such changes by any reasonable means (before they take effect), including by posting a revised Contract on the applicable Services (provided that, for material changes, we will seek to supplement such notice by email, an in-service pop-up message, or other means). Any such changes will not apply to any dispute between you and us arising prior to the date on which we posted the revised Contract, or other CMJ terms and conditions, incorporating such changes, or otherwise notified you of such changes. Your use of the Services following any changes to the terms of this Contract will constitute your acceptance of such changes. If you do not wish to continue using the Services under the updated terms, you may close your account.</p>
+        <h3>5.2. Rights to Access and Control Your Personal Data</h3>
+        <p>We may provide many choices about the collection, use and sharing of your data, from deleting or correcting data you include in your profile and controlling the visibility of your posts to advertising opt-outs and communication controls. We may offer you settings to control and manage the personal data we have about you.</p>
+        <p>For personal data that we have about you, you can:</p>
+        <ul>
+          <li><strong>Delete Data:</strong> You can ask us to erase or delete all or some of your personal data (e.g., if it is no longer necessary to provide Services to you).</li>
+          <li><strong>Change or Correct Data:</strong> You can edit some of your personal data through your account. You can also ask us to change, update or fix your data in certain cases, particularly if it's inaccurate.</li>
+          <li><strong>Object to, or Limit or Restrict, Use of Data:</strong> You can ask us to stop using all or some of your personal data (e.g., if we have no legal right to keep using it) or to limit our use of it (e.g., if your personal data is inaccurate or unlawfully held).</li>
+          <li><strong>Right to Access and/or Take Your Data:</strong> You can ask us for a copy of your personal data and can ask for a copy of personal data you provided in machine readable form.</li>
+          <li><strong>Portability:</strong> If we use your personal data to perform a contract with you, or with your consent, you have the right to receive your data and port it to another controller.</li>
+        </ul>
 
-        <h3>7.2. Entire Agreement</h3>
-        <p>Other than as stated in this section or as explicitly agreed upon in writing between you and CMJ, the terms of this Contract (including additional terms that may be provided by us when you engage with a feature of the Services) constitute all the terms and conditions agreed upon between you and CMJ and supersede any prior agreements in relation to the subject matter of these terms, whether written or oral.</p>
-
-        <h3>7.3. Severability and Waiver</h3>
-        <p>Unless as otherwise stated in the terms of this Contract, should any provision of these terms be held invalid or unenforceable for any reason or to any extent, the remaining provisions of these terms will not be affected, and the application of that provision shall be enforced to the extent permitted by law.</p>
-        <p>Any failure by CMJ or any third-party beneficiary to enforce these terms or any provision thereof shall not mean that CMJ or any third party waive its rights to do so.</p>
-
-        <h3>7.4. Assignment</h3>
-        <p>You may not assign or transfer this Contract (or your membership or use of Services) to anyone without our consent. However, you agree that CMJ may assign this Contract to its affiliates or a party that buys it without your consent.</p>
-      `
+        <h3>5.3. Account Closure</h3>
+        <p>If you choose to close your account, your personal data will generally stop being visible to others on our Services within 24 hours. We generally delete closed account information within 30 days of account closure, except as noted below.</p>
+        <p>We retain your personal data even after you have closed your account if reasonably necessary to comply with our legal obligations (including law enforcement requests), meet regulatory requirements, resolve disputes, maintain security, prevent fraud and abuse (e.g., if we have restricted your account for breach of our policies), enforce our Terms of Use, or fulfill your request to "unsubscribe" from further messages from us. We will retain de-personalized information after your account has been closed.</p>
+        <p>Information you have shared with others (e.g., through messages, updates or group posts) will remain visible after you close your account or delete the information from your own profile or mailbox, and we do not control data that other Members have copied out of our Services. Groups content and ratings or review content associated with closed accounts will show an unknown user as the source. Your profile may continue to be displayed in the services of others (e.g., search tools) until they refresh their cache. Search engines like Bing, Google and Yahoo! may still display your information temporarily due to the way they collect and update their search data.</p>
+      `,
     },
-    cmjDosAndDonts: {
-      title: '8. CMJ Dos and Don\'ts',
+    otherImportantInformation: {
+      title: '6. Other Important Information',
       content: `
-        <h3>8.1. Dos</h3>
-        <p>You agree that you will:</p>
-        <ol>
-          <li>Comply with all applicable laws, including, without limitation, privacy laws, intellectual property laws, anti-spam laws, export control laws, laws governing the content shared, and other applicable laws and regulatory requirements;</li>
-          <li>Provide accurate contact and identity information to us and keep it updated;</li>
-          <li>Use your real name on your profile; and</li>
-          <li>Use the Services in a professional manner.</li>
-        </ol>
+        <h3>6.1. Security</h3>
+        <p>We implement security safeguards designed to protect your data, such as HTTPS. We regularly monitor our systems for possible vulnerabilities and attacks. We put in place appropriate technical and organizational measures to help protect the security of your personal data. However, we cannot warrant the security of any information that you send us. There is no guarantee that data may not be accessed, disclosed, altered, or destroyed by breach of any of our physical, technical, or managerial safeguards.</p>
+        <p>To protect your account, we encourage you to: (i) use a strong password which you only use for your CMJ account, (ii) never share your password with anyone, (iii) limit access to your computer and browser, and (iv) log out once you have finished using our Service on a shared device.</p>
 
-        <h3>8.2. Don'ts</h3>
-        <p>You agree that you will not:</p>
-        <ol>
-          <li>Create a false identity on CMJ, misrepresent your identity, create a Member profile for anyone other than yourself (a real person), or use or attempt to use another's account (such as sharing log-in credentials or copying cookies);</li>
-          <li>Develop, support or use software, devices, scripts, robots or any other means or processes (such as crawlers, browser plugins and add-ons or any other technology) to scrape or copy the Services, including profiles and other data from the Services;</li>
-          <li>Override any security feature or bypass or circumvent any access controls or use limits of the Services (such as search results, profiles, or videos);</li>
-          <li>Copy, use, display or distribute any information (including content) obtained from the Services, whether directly or through third parties (such as search tools or data aggregators or brokers), without the consent of the content owner (such as CMJ for content it owns);</li>
-          <li>Disclose information that you do not have the consent to disclose (such as confidential information of others (including your employer));</li>
-          <li>Violate the intellectual property rights of others, including copyrights, patents, trademarks, trade secrets or other proprietary rights. For example, do not copy or distribute (except through the available sharing functionality) the posts or other content of others without their permission, which they may give by posting under a Creative Commons license;</li>
-          <li>Violate the intellectual property or other rights of CMJ, including, without limitation, (i) copying or distributing our learning videos or other materials, (ii) copying or distributing our technology, unless it is released under open source licenses; or (iii) using the word "CoinMarketJob", "CMJ" or our logos in any business name, email, or URL;</li>
-          <li>Post (or otherwise share) anything that contains software viruses, worms, or any other harmful code;</li>
-          <li>Reverse engineer, decompile, disassemble, decipher or otherwise attempt to derive the source code for the Services or any related technology that is not open source;</li>
-          <li>Imply or state that you are affiliated with or endorsed by CMJ without our express consent (e.g., representing yourself as an accredited CMJ trainer);</li>
-          <li>Rent, lease, loan, trade, sell/re-sell or otherwise monetize the Services or related data or access to the same, without CMJ's consent;</li>
-          <li>Deep-link to our Services for any purpose other than to promote your profile or a Group on our Services, without CMJ's consent;</li>
-          <li>Use bots or other unauthorized automated methods to access the Services, add or download contacts, send or redirect messages, create, comment on, like, share, or re-share posts, or otherwise drive inauthentic engagement;</li>
-          <li>Engage in "framing", "mirroring", or otherwise simulating the appearance or function of the Services;</li>
-          <li>Overlay or otherwise modify the Services or their appearance (such as by inserting elements into the Services or removing, covering, or obscuring an advertisement included on the Services);</li>
-          <li>Interfere with the operation of, or place an unreasonable load on, the Services (e.g., spam, denial of service attack, viruses, manipulating algorithms);</li>
-          <li>Violate the CMJ's policies, certain third party terms where applicable, or any additional terms concerning a specific Service that are provided when you sign up for or start using such Service;</li>
-          <li>Use our Services to do anything that is unlawful, misleading, discriminatory, or fraudulent; and/or</li>
-          <li>Misuse our reporting or appeals process, including by submitting duplicative, fraudulent or unfounded reports, complaints or appeals.</li>
-        </ol>
-      `
+        <h3>6.2. Cross-Border Data Transfers</h3>
+        <p>CMJ shares personal data cross-border manner with CMJ affiliates, subcontractors and partners when carrying out the Services described in this Policy and Terms of Use. CMJ may store personal data in a country other than your home country. Your personal data may be processed in countries whose data protection laws are not considered to be as strong as EU laws or the laws which apply where you live. For example, they may not give you the same rights over your data.</p>
+        <p>Whenever we transfer personal data internationally, we use tools to: make sure the data transfer complies with applicable law, help to give your data the same level of protection as it has in the EU.</p>
+        <p>To ensure each data transfer complies with applicable EU legislation, we use the following legal mechanisms including transfers based on an adequacy decision by an approved authority, standard contractual clauses or, where appropriate, derogations permitted by law.</p>
+
+        <h3>6.3. Lawful Bases for Processing</h3>
+        <p>We will only collect and process personal data about you where we have lawful bases. Lawful bases include consent (where you have given consent), contract (where processing is necessary for the performance of a contract with you (e.g., to deliver our Services you have requested) and "legitimate interests." Where we rely on legitimate interests, you have the right to object. If you have any questions about the lawful bases upon which we collect and use your personal data, please contact us.</p>
+
+        <h3>6.4. Withdrawing your Consent</h3>
+        <p>Where we rely on your consent to process personal data, you have the right to withdraw or decline your consent at any time. When you withdraw your consent, this won't affect our use of your data up to that point.</p>
+
+        <h3>6.5. Contact Information</h3>
+        <p>If you have questions or complaints regarding this Policy, please first contact with us online. You can also reach us by physical mail.</p>
+        <p>E-Mail Address: [__]</p>
+        <p>Address for Physical Mail: [__]</p>
+      `,
     },
-    complaintsRegardingContents: {
-      title: '9. Complaints Regarding Contents',
-      content: `
-        <p>We ask that you report content and other information that you believe violates your rights (including intellectual property rights), our policies or otherwise violates this Contract or the law. To the extent possible under law, we may remove or restrict access to content, features, services, or information, including if we believe that it's reasonably necessary to avoid harm to CMJ or others, violates the law or is reasonably necessary to prevent misuse of our Services. We reserve the right to take action against serious violations of this Contract, including by implementing account restrictions for significant violations.</p>
-        <p>We respect the intellectual property rights of others. We require that information shared by Members be accurate and not in violation of the intellectual property rights or other rights of third parties.</p>
-      `
-    },
-    contact: {
-      title: '10. Contact',
-      content: `
-        <p>You agree that the only way to provide us legal notice is at the addresses provided in this Section.</p>
-        <p>For general inquiries, you may contact us online via mail addresses provided below. For legal notices or service of process, you may write us at the addresses provided below.</p>
-        <p>Mail Address: [__]</p>
-        <p>Address for Legal Notice: [__]</p>
-      `
-    }
   };
 
   Object.keys(sections).forEach((key) => {
@@ -250,7 +308,7 @@ const TermsOfService: React.FC = () => {
       <div className={styles.navbar}></div>
       <div className={styles.container}>
         <div className={styles.menu}>
-          <h2>Terms of Service</h2>
+          <h2>Privacy Policy</h2>
           <ul>
             {Object.entries(sections).map(([key, section]) => (
               <li 
@@ -275,4 +333,4 @@ const TermsOfService: React.FC = () => {
   );
 };
 
-export default TermsOfService;
+export default PrivacyPolicy;
