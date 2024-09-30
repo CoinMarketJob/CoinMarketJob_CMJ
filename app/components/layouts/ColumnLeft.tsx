@@ -69,40 +69,28 @@ const ColumnLeft: React.FC<ColumnProps> = ({
         <>
           {layout == 1 ? (
             <JobCard
-              onDragEnd={onDragEnd}
-              onDragBegin={onDragBegin}
               job={card}
               key={card.id}
               onClick={onClick}
-              onDrop={onDrop}
               isSelected={selectedJobId === card.id}
               onSelect={setSelectedJobId}
             />
           ) : layout == 2 ? (
             <Cozy
-              onDragEnd={onDragEnd}
-              onDragBegin={onDragBegin}
               job={card}
               onClick={onClick}
-              onDrop={onDrop}
               isSelected={selectedJobId === card.id}
               onSelect={setSelectedJobId}
             />
           ) : layout == 3 ? (
             <Compact
-              onDragEnd={onDragEnd}
-              onDragBegin={onDragBegin}
               job={card}
               onClick={onClick}
-              onDrop={onDrop}
             />
           ) : (
             <Grid
-              onDragEnd={onDragEnd}
-              onDragBegin={onDragBegin}
               job={card}
               onClick={onClick}
-              onDrop={onDrop}
               isSelected={selectedJobId === card.id}
               onSelect={setSelectedJobId}
             />
