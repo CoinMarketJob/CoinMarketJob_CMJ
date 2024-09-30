@@ -1,15 +1,21 @@
 .container {
   display: flex;
+  font-family: 'Geist', sans-serif;
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  margin: 50px auto;
+  padding: 0 20px 20px;
 }
 
 .menu {
   width: 250px;
-  padding-right: 20px;
+  padding-right: 100px;
   position: sticky;
-  top: 20px;
+  top: 60px; /* Navbar'ın hemen altında başlaması için */
+  height: calc(100vh - 65px); /* Viewport yüksekliği eksi navbar yüksekliği */
+  overflow-y: auto; /* İçerik fazla olursa scroll olabilmesi için */
+  line-height: 18px;
+  font-size: 15px;
+  font-weight: 600;
   align-self: flex-start;
 }
 
@@ -24,53 +30,65 @@
 }
 
 .menu li {
-  padding: 10px 0;
   cursor: pointer;
+  margin-bottom: 20px;
+  color: #242220;
 }
 
 .menu li:hover {
-  color: #1DA1F2;
+  color: #242220be;
 }
 
 .content {
   flex: 1;
+  padding-bottom: 65px;
 }
 
 .content h2 {
   font-size: 1.8rem;
-  color: #14171A;
-  margin-top: 40px;
-  margin-bottom: 20px;
-}
-
-.content p {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: #657786;
-  margin-bottom: 20px;
-}
-
-.content h3 {
-  font-size: 1.4rem;
-  color: #14171A;
   margin-top: 30px;
   margin-bottom: 15px;
 }
 
-.content ul, .content ol {
-  margin-left: 20px;
-  margin-bottom: 15px;
+.content h3 {
+  font-size: 1.3rem;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
-.content li {
-  margin-bottom: 5px;
+.content p, .content li {
+  line-height: 1.6;
+  margin-bottom: 10px;
 }
 
 .content ol {
-  list-style-type: decimal;
   padding-left: 20px;
 }
 
-.content ol li {
-  margin-bottom: 10px;
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .menu {
+    width: 100%;
+    position: static;
+    height: auto;
+    margin-bottom: 20px;
+    overflow-y: visible;
+  }
+
+  .content {
+    padding-bottom: 20px;
+  }
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 65px;
+  background-color: white;
+  z-index: 1000;
 }

@@ -6,7 +6,7 @@ const TermsOfService: React.FC = () => {
 
   const sections = {
     introduction: {
-      title: 'Introduction',
+      title: '1. Introduction',
       content: `
         <h3>1.1. Contract</h3>
         <p>By creating a CoinMarketJob ("CMJ") account or accessing or using our Services (described below), you are agreeing to enter into a legally binding contract with CMJ (even if you are using third party credentials or using our Services on behalf of a company). If you do not agree to this contract ("Contract" or "User Agreement"), do not create an account or access or otherwise use any of our Services. If you wish to terminate this Contract at any time, you can do so by closing your account and no longer accessing or using our Services.</p>
@@ -39,7 +39,7 @@ const TermsOfService: React.FC = () => {
       `
     },
     obligations: {
-      title: 'Obligations',
+      title: '2. Obligations',
       content: `
         <h3>2.1. Service Eligibility</h3>
         <p>In order to use or access our Services, you must (1) be 13 years of age (or the equivalent minimum age in your home country) or older; (2) have the permission of your parent or guardian if you are under the age of legal responsibility in your home country; (3) have the authority to enter into a binding contract with us and are not prevented from doing so under applicable law; (4) not already restricted by CMJ from using the Services and (5) reside in a country where the Services is available.</p>
@@ -87,7 +87,7 @@ const TermsOfService: React.FC = () => {
       `
     },
     rightsAndLimits: {
-      title: 'Rights and Limits',
+      title: '3. Rights and Limits',
       content: `
         <h3>3.1. Your License to CMJ</h3>
         <p>As between you and CMJ, you own your original content that you submit or post to the Services.</p>
@@ -125,7 +125,7 @@ const TermsOfService: React.FC = () => {
       `
     },
     disclaimerAndLimitOfLiability: {
-      title: 'Disclaimer and Limit of Liability',
+      title: '4. Disclaimer and Limit of Liability',
       content: `
         <h3>4.1. No Warranty</h3>
         <p>CMJ AND ITS AFFILIATES MAKE NO REPRESENTATION OR WARRANTY ABOUT THE SERVICES, INCLUDING ANY REPRESENTATION THAT THE SERVICES WILL BE UNINTERRUPTED OR ERROR-FREE, AND PROVIDE THE SERVICES (INCLUDING CONTENT AND INFORMATION) ON AN "AS IS" AND "AS AVAILABLE" BASIS. TO THE FULLEST EXTENT PERMITTED UNDER APPLICABLE LAW, CMJ AND ITS AFFILIATES DISCLAIM ANY IMPLIED OR STATUTORY WARRANTY, INCLUDING ANY IMPLIED WARRANTY OF TITLE, ACCURACY OF DATA, NON-INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. NEITHER CMJ NOR ANY OWNER OF CONTENT WARRANTS THAT THE SERVICES OR CONTENT IS FREE OF MALWARE OR OTHER HARMFUL COMPONENTS. IN ADDITION, CMJ MAKES NO REPRESENTATION REGARDING, NOR DOES IT WARRANT OR ASSUME ANY RESPONSIBILITY FOR, ANY THIRD-PARTY APPLICATIONS (OR THE CONTENT THEREOF), USER CONTENT, DEVICES OR ANY PRODUCT OR SERVICE ADVERTISED, PROMOTED OR OFFERED BY A THIRD PARTY ON OR THROUGH THE SERVICES OR ANY HYPERLINKED WEBSITE, AND CMJ IS NOT RESPONSIBLE FOR ANY TRANSACTIONS BETWEEN YOU AND ANY THIRD-PARTY OF THE FOREGOING. NO ADVICE OR INFORMATION WHETHER ORAL OR IN WRITING OBTAINED BY YOU FROM CMJ SHALL CREATE ANY WARRANTY ON BEHALF OF CMJ. THIS SECTION APPLIES TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW.</p>
@@ -143,7 +143,7 @@ const TermsOfService: React.FC = () => {
       `
     },
     termination: {
-      title: 'Termination',
+      title: '5. Termination',
       content: `
         <p>Both you and CMJ may terminate this Contract at any time with notice to the other. On termination, you lose the right to access or use the Services. The following shall survive termination:</p>
         <ol>
@@ -155,7 +155,7 @@ const TermsOfService: React.FC = () => {
       `
     },
     disputeResolution: {
-      title: 'Dispute Resolution',
+      title: '6. Dispute Resolution',
       content: `
         <h3>6.1. Governing Law and Jurisdiction</h3>
         <p>Unless otherwise required by mandatory laws in your country of residence, the Contract (and any non-contractual disputes/claims arising out of or in connection with them) are subject to the laws of Sweden, without regard to choice or conflicts of law principles.</p>
@@ -166,7 +166,7 @@ const TermsOfService: React.FC = () => {
       `
     },
     generalTerms: {
-      title: 'General Terms',
+      title: '7. General Terms',
       content: `
         <h3>7.1. Changes</h3>
         <p>We may make changes to the terms of this Contract (including any additional CMJ terms and conditions incorporated by reference herein) from time to time by notifying you of such changes by any reasonable means (before they take effect), including by posting a revised Contract on the applicable Services (provided that, for material changes, we will seek to supplement such notice by email, an in-service pop-up message, or other means). Any such changes will not apply to any dispute between you and us arising prior to the date on which we posted the revised Contract, or other CMJ terms and conditions, incorporating such changes, or otherwise notified you of such changes. Your use of the Services following any changes to the terms of this Contract will constitute your acceptance of such changes. If you do not wish to continue using the Services under the updated terms, you may close your account.</p>
@@ -183,7 +183,7 @@ const TermsOfService: React.FC = () => {
       `
     },
     cmjDosAndDonts: {
-      title: 'CMJ Dos and Don\'ts',
+      title: '8. CMJ Dos and Don\'ts',
       content: `
         <h3>8.1. Dos</h3>
         <p>You agree that you will:</p>
@@ -220,14 +220,14 @@ const TermsOfService: React.FC = () => {
       `
     },
     complaintsRegardingContents: {
-      title: 'Complaints Regarding Contents',
+      title: '9. Complaints Regarding Contents',
       content: `
         <p>We ask that you report content and other information that you believe violates your rights (including intellectual property rights), our policies or otherwise violates this Contract or the law. To the extent possible under law, we may remove or restrict access to content, features, services, or information, including if we believe that it's reasonably necessary to avoid harm to CMJ or others, violates the law or is reasonably necessary to prevent misuse of our Services. We reserve the right to take action against serious violations of this Contract, including by implementing account restrictions for significant violations.</p>
         <p>We respect the intellectual property rights of others. We require that information shared by Members be accurate and not in violation of the intellectual property rights or other rights of third parties.</p>
       `
     },
     contact: {
-      title: 'Contact',
+      title: '10. Contact',
       content: `
         <p>You agree that the only way to provide us legal notice is at the addresses provided in this Section.</p>
         <p>For general inquiries, you may contact us online via mail addresses provided below. For legal notices or service of process, you may write us at the addresses provided below.</p>
@@ -246,29 +246,32 @@ const TermsOfService: React.FC = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.menu}>
-        <h2>Terms of Service</h2>
-        <ul>
+    <>
+      <div className={styles.navbar}></div>
+      <div className={styles.container}>
+        <div className={styles.menu}>
+          <h2>Terms of Service</h2>
+          <ul>
+            {Object.entries(sections).map(([key, section]) => (
+              <li 
+                key={key} 
+                onClick={() => scrollToSection(key)}
+              >
+                {section.title}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className={styles.content}>
           {Object.entries(sections).map(([key, section]) => (
-            <li 
-              key={key} 
-              onClick={() => scrollToSection(key)}
-            >
-              {section.title}
-            </li>
+            <div key={key} ref={sectionRefs.current[key]}>
+              <h2 id={key}>{section.title}</h2>
+              <div dangerouslySetInnerHTML={{ __html: section.content }} />
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
-      <div className={styles.content}>
-        {Object.entries(sections).map(([key, section]) => (
-          <div key={key} ref={sectionRefs.current[key]}>
-            <h2 id={key}>{section.title}</h2>
-            <div dangerouslySetInnerHTML={{ __html: section.content }} />
-          </div>
-        ))}
-      </div>
-    </div>
+    </>
   );
 };
 

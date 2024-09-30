@@ -21,15 +21,15 @@
 .apple-button {
     position: relative;
     width: 100%;
-    max-width: 300px;
+    max-width: 252px;
     padding: 19.7px 23px 19.7px 58px;
     border-radius: 15px;
     background-color: #FFFFFF;
     border: 1px solid #E0E0E9;
     font-family: Inter;
-    font-size: 19px;
+    font-size: 16px;
     font-weight: 500;
-    line-height: 20px;
+    line-height: 21px;
     text-align: left;
     transition: all 0.1s ease-in-out;
     cursor: pointer;

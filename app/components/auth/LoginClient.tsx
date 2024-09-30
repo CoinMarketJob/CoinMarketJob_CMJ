@@ -362,9 +362,6 @@ const LoginClient = () => {
         <div>
           {loginProcess === 0 ? (
             <div>
-              <div style={{ display: "flex" }}>
-                <span className="header-text">Join the Job Market</span>
-              </div>
               <div
                 style={{
                   position: "relative",
