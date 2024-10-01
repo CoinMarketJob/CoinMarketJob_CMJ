@@ -111,7 +111,7 @@ export default function RootLayout({
 
     window.addEventListener("resize", handleResize);
 
-    const timeoutId = setTimeout(scaleContent, 100);
+    const timeoutId = setTimeout(scaleContent, 1000);
 
     return () => {
       window.removeEventListener("resize", handleResize);
