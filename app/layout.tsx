@@ -32,6 +32,7 @@ export default function RootLayout({
   const [isMobile, setIsMobile] = useState(false);
   const [mainDivHeight, setMainDivHeight] = useState(950);
   const mainDivRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const updateMainDivHeight = useCallback(() => {
     if (mainDivRef.current) {
@@ -96,26 +97,22 @@ export default function RootLayout({
     }
   }, []);
 
-  useLayoutEffect(() => {
-    scaleContent();
-  }, [scaleContent]);
-
-  useEffect(() => {
-    scaleContent();
-  }, []);
-
   useEffect(() => {
     const handleResize = () => {
-      requestAnimationFrame(scaleContent);
+      setIsLoading(true);
+      requestAnimationFrame(() => {
+        scaleContent();
+        setTimeout(() => setIsLoading(false), 1000);
+      });
     };
 
     window.addEventListener("resize", handleResize);
 
-    const timeoutId = setTimeout(scaleContent, 100);
+    // Initial scaling
+    handleResize();
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      clearTimeout(timeoutId);
     };
   }, [scaleContent]);
 
@@ -140,6 +137,11 @@ export default function RootLayout({
           minWidth: isMobile ? "100vw" : "1900px",
         }}
       >
+        {isLoading && (
+          <div className="loading-overlay">
+            <div className="loading-spinner"></div>
+          </div>
+        )}
         {isMobile ? (
           <Home />
         ) : (
