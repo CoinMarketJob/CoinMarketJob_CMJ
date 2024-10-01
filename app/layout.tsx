@@ -139,9 +139,7 @@ export default function RootLayout({
       >
         {isLoading && (
           <div className="loading-overlay">
-            <div className="loading-spinner-layout">
-              <div className="spinner"></div>
-            </div>
+            <div className="loading-spinner"></div>
           </div>
         )}
         {isMobile ? (
