@@ -101,6 +101,10 @@ export default function RootLayout({
   }, [scaleContent]);
 
   useEffect(() => {
+    scaleContent();
+  }, []);
+
+  useEffect(() => {
     const handleResize = () => {
       requestAnimationFrame(scaleContent);
     };
