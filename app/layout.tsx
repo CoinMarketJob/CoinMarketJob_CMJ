@@ -35,25 +35,26 @@ export default function RootLayout({
   const [isLoading, setIsLoading] = useState(true);
 
   const updateMainDivHeight = useCallback(() => {
-    if (mainDivRef.current) {
+    if (typeof window !== 'undefined' && mainDivRef.current) {
       setMainDivHeight(mainDivRef.current.clientHeight);
     }
   }, []);
 
-  useEffect(() => {
-    updateMainDivHeight();
-    window.addEventListener("resize", updateMainDivHeight);
-    window.addEventListener("load", updateMainDivHeight);
-
-    const resizeObserver = new ResizeObserver(updateMainDivHeight);
-    if (mainDivRef.current) {
-      resizeObserver.observe(mainDivRef.current);
-    }
+  useLayoutEffect(() => {
+    const timer = setTimeout(() => {
+      updateMainDivHeight();
+      if (typeof window !== 'undefined') {
+        window.addEventListener("resize", updateMainDivHeight);
+        window.addEventListener("load", updateMainDivHeight);
+      }
+    }, 100);
 
     return () => {
-      window.removeEventListener("resize", updateMainDivHeight);
-      window.removeEventListener("load", updateMainDivHeight);
-      resizeObserver.disconnect();
+      clearTimeout(timer);
+      if (typeof window !== 'undefined') {
+        window.removeEventListener("resize", updateMainDivHeight);
+        window.removeEventListener("load", updateMainDivHeight);
+      }
     };
   }, [updateMainDivHeight]);
 
@@ -84,35 +85,41 @@ export default function RootLayout({
   }, []);
 
   const scaleContent = useCallback(() => {
-    const content = document.querySelector(
-      ".layout-container-div"
-    ) as HTMLElement;
-    if (content) {
-      const scaleX = window.innerWidth / 1920;
-      const scaleY = window.innerHeight / 1080;
-      const scale = Math.min(scaleX, scaleY);
-      content.style.transform = `scale(${scale})`;
-      content.style.width = `${window.innerWidth / scale}px`;
-      content.style.height = `${window.innerHeight / scale}px`;
+    if (typeof window !== 'undefined') {
+      const content = document.querySelector(
+        ".layout-container-div"
+      ) as HTMLElement;
+      if (content) {
+        const scaleX = window.innerWidth / 1920;
+        const scaleY = window.innerHeight / 1080;
+        const scale = Math.min(scaleX, scaleY);
+        content.style.transform = `scale(${scale})`;
+        content.style.width = `${window.innerWidth / scale}px`;
+        content.style.height = `${window.innerHeight / scale}px`;
+      }
     }
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const handleResize = () => {
-      setIsLoading(true);
-      requestAnimationFrame(() => {
-        scaleContent();
-        setTimeout(() => setIsLoading(false), 1000);
-      });
+      if (typeof window !== 'undefined') {
+        requestAnimationFrame(() => {
+          scaleContent();
+          setTimeout(() => setIsLoading(false), 1000);
+        });
+      }
     };
 
-    window.addEventListener("resize", handleResize);
-
-    // Initial scaling
-    handleResize();
+    if (typeof window !== 'undefined') {
+      window.addEventListener("resize", handleResize);
+      // Initial scaling with a slight delay
+      setTimeout(handleResize, 1000);
+    }
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      if (typeof window !== 'undefined') {
+        window.removeEventListener("resize", handleResize);
+      }
     };
   }, [scaleContent]);
 
