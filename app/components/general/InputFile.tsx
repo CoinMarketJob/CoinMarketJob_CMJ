@@ -7,22 +7,29 @@ interface InputFileProps {
     placeholder: string
     required?: boolean
     disabled?: boolean
-    value?: string  // Burada value özelliğini ekliyoruz
+    value?: string
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const InputFile: React.FC<InputFileProps> = ({ id, placeholder, required, disabled, value, onChange }) => {
-    const [fileName, setFileName] = useState<string>(value || '');
+    const [fileName, setFileName] = useState<string>("");
+    const [isActive, setIsActive] = useState(false);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files.length > 0) {
-            setFileName(e.target.files[0].name);
+        const file = e.target.files?.[0];
+        if (file) {
+            setFileName(file.name);
             onChange(e);
         }
-    }
+    };
 
     return (
-        <div className={styles.container}>
+        <div 
+            className={`${styles.container} ${isActive ? styles.active : ''}`}
+            onMouseDown={() => setIsActive(true)}
+            onMouseUp={() => setIsActive(false)}
+            onMouseLeave={() => setIsActive(false)}
+        >
             <input 
                 type="file" 
                 id={id} 
@@ -32,15 +39,9 @@ const InputFile: React.FC<InputFileProps> = ({ id, placeholder, required, disabl
                 disabled={disabled}
             />
             <label htmlFor={id} className={styles.FileLabel}>
-                <svg width="17" height="20" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g clipPath="url(#clip0_969_3108)">
-                        <path d="M9.35759 0.355748C8.88326 -0.118583 8.11295 -0.118583 7.63862 0.355748L2.78147 5.2129C2.30714 5.68723 2.30714 6.45754 2.78147 6.93187C3.2558 7.4062 4.02612 7.4062 4.50045 6.93187L7.28571 4.1466V12.1419C7.28571 12.8136 7.82835 13.3562 8.5 13.3562C9.17165 13.3562 9.71429 12.8136 9.71429 12.1419V4.1466L12.4996 6.93187C12.9739 7.4062 13.7442 7.4062 14.2185 6.93187C14.6929 6.45754 14.6929 5.68723 14.2185 5.2129L9.36138 0.355748H9.35759ZM2.42857 13.3562C2.42857 12.6846 1.88594 12.1419 1.21429 12.1419C0.542634 12.1419 0 12.6846 0 13.3562V15.7848C0 17.7959 1.6317 19.4276 3.64286 19.4276H13.3571C15.3683 19.4276 17 17.7959 17 15.7848V13.3562C17 12.6846 16.4574 12.1419 15.7857 12.1419C15.1141 12.1419 14.5714 12.6846 14.5714 13.3562V15.7848C14.5714 16.4564 14.0288 16.9991 13.3571 16.9991H3.64286C2.97121 16.9991 2.42857 16.4564 2.42857 15.7848V13.3562Z" fill="#242220" fillOpacity="0.4"/>
-                    </g>
-                    <defs>
-                        <clipPath id="clip0_969_3108">
-                            <rect width="17" height="19.4286" fill="white"/>
-                        </clipPath>
-                    </defs>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.5535 2.49392C12.4114 2.33852 12.2106 2.25 12 2.25C11.7894 2.25 11.5886 2.33852 11.4465 2.49392L7.44648 6.86892C7.16698 7.17462 7.18822 7.64902 7.49392 7.92852C7.79962 8.20802 8.27402 8.18678 8.55352 7.88108L11.25 4.9318V16C11.25 16.4142 11.5858 16.75 12 16.75C12.4142 16.75 12.75 16.4142 12.75 16V4.9318L15.4465 7.88108C15.726 8.18678 16.2004 8.20802 16.5061 7.92852C16.8118 7.64902 16.833 7.17462 16.5535 6.86892L12.5535 2.49392Z" fill="currentColor"/>
+                    <path d="M3.75 15C3.75 14.5858 3.41422 14.25 3 14.25C2.58579 14.25 2.25 14.5858 2.25 15V15.0549C2.24998 16.4225 2.24996 17.5248 2.36652 18.3918C2.48754 19.2919 2.74643 20.0497 3.34835 20.6516C3.95027 21.2536 4.70814 21.5125 5.60825 21.6335C6.47522 21.75 7.57754 21.75 8.94513 21.75H15.0549C16.4225 21.75 17.5248 21.75 18.3918 21.6335C19.2919 21.5125 20.0497 21.2536 20.6517 20.6516C21.2536 20.0497 21.5125 19.2919 21.6335 18.3918C21.75 17.5248 21.75 16.4225 21.75 15.0549V15C21.75 14.5858 21.4142 14.25 21 14.25C20.5858 14.25 20.25 14.5858 20.25 15C20.25 16.4354 20.2484 17.4365 20.1469 18.1919C20.0482 18.9257 19.8678 19.3142 19.591 19.591C19.3142 19.8678 18.9257 20.0482 18.1919 20.1469C17.4365 20.2484 16.4354 20.25 15 20.25H9C7.56459 20.25 6.56347 20.2484 5.80812 20.1469C5.07435 20.0482 4.68577 19.8678 4.40901 19.591C4.13225 19.3142 3.9518 18.9257 3.85315 18.1919C3.75159 17.4365 3.75 16.4354 3.75 15Z" fill="currentColor"/>
                 </svg>
                 <span className={styles.text}>{fileName || placeholder}</span>
             </label>

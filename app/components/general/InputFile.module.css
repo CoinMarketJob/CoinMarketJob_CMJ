@@ -1,13 +1,22 @@
 .container {
     position: relative;
     width: 100%;
-    height: 50px; /* Yüksekliği isteğinize göre ayarlayın */
-    border-radius: 15px; /* Kenarları yuvarlat */
+    height: 50px;
+    border-radius: 15px;
     border: 1px solid #E7E5E4;
     display: flex;
     align-items: center;
     padding: 0 29px;
     background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+.container:hover {
+    border-color: #242220;
+}
+
+.container.active {
+    border-color: #242220;
 }
 
 .FileInput {
@@ -28,12 +37,28 @@
     font-family: Inter, sans-serif;
     font-size: clamp(3px, 16px, 16px);
     font-weight: 500;
-    pointer-events: none; /* Tıklanabilirliği kapatır */
+    pointer-events: none;
     z-index: 1;
+    transition: color 0.3s ease;
 }
 
+.container.active .FileLabel {
+    color: #242220;
+}
 
 .FileLabel .text {
     display: inline-block;
     margin-left: 12px;
+}
+
+.FileLabel svg {
+    transition: color 0.3s ease;
+}
+
+.container .FileLabel svg {
+    color: #24222066;
+}
+
+.container.active .FileLabel svg {
+    color: #242220;
 }

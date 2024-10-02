@@ -6,47 +6,28 @@
 }
 
 .burgerIcon {
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease;
 }
-
 
 .line {
   fill: none;
   stroke: #999999;
   stroke-width: 6;
-  transition: stroke-dasharray 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-              stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
 }
 
-.line1 {
-  stroke-dasharray: 60 207;
-  stroke-width: 6;
-}
-
-.line2 {
-  stroke-dasharray: 60 60;
-  stroke-width: 6;
-}
-
-.line3 {
-  stroke-dasharray: 60 207;
-  stroke-width: 6;
+.line1, .line2, .line3 {
+  transform-origin: 50% 50%;
 }
 
 .open .line1 {
-  stroke-dasharray: 90 207;
-  stroke-dashoffset: -134;
-  stroke-width: 6;
+  transform: translateY(15px) translateX(-10px) rotate(45deg) scaleX(1.2);
 }
 
 .open .line2 {
-  stroke-dasharray: 1 60;
-  stroke-dashoffset: -30;
-  stroke-width: 6;
+  opacity: 0;
 }
 
 .open .line3 {
-  stroke-dasharray: 90 207;
-  stroke-dashoffset: -134;
-  stroke-width: 6;
+  transform: translateY(-15px) translateX(-10px) rotate(-45deg) scaleX(1.2);
 }
