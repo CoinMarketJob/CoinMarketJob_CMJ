@@ -69,5 +69,4 @@ body {
 /* Diğer özel font sınıfları artık Geist Sans'ı kullanacak */
 .inter-font,
 .custom-font {
-  /* Bu sınıflar artık Geist Sans'ı kullanacak, çünkü * seçicisi ile override edildi */
 }
