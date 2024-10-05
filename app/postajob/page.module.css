@@ -37,7 +37,7 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  border: 1px solid #e7e5e499;
+  border: 1px solid #00000099;
   box-shadow: 0px 1px 2px -1px #0000001a;
   position: relative;
   cursor: pointer;
@@ -48,25 +48,21 @@
 .indicatorMargin {
   margin-right: 24px;
   position: relative;
+  
 }
 
-/* Başlangıçta çizgi görünmez */
+
 .indicatorMargin::after {
   content: "";
   position: absolute;
   top: 50%;
   left: 100%;
-  width: 0; /* Çizgi başlangıçta sıfır genişlikte */
+  width: 25px; 
   height: 1px;
   background-color: #242220;
-  transform: translateY(-50%);
-  transition: width 0.5s ease; /* Çizginin genişlemesi */
 }
 
-/* Bir sonraki aşamaya geçildiğinde çizgi uzar */
-.selectedLine::after {
-  width: 24px; /* Çizgi uzar */
-}
+
 
 /* Daire dolduğunda siyah olur */
 .selectedIndicator {
