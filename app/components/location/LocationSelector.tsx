@@ -65,6 +65,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({
 
   const handleCheckboxChange = (newSelectedLocations: string[]) => {
     setSelectedLocation(newSelectedLocations);
+    setOpen(false);
   };
 
   const filteredOptions = cities
@@ -75,12 +76,15 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({
 
   const toggleDropdown = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setOpen(!open);
+    setOpen((prevOpen) => !prevOpen);
   };
 
+
   return (
-    <div className={styles.locationContainer} onClick={toggleDropdown}>
-      <div className={styles.label}>{label}</div>
+    <div className={styles.locationContainer} onClick={toggleDropdown} style={{
+      borderColor: open ? "#242220" : "#E7E5E4"
+    }}>
+      <div className={styles.label} >{selectedLocation.length > 0 ? selectedLocation[0] : label}</div>
       <div className={styles.arrowContainer}>
         <svg
           width="23"
@@ -98,9 +102,9 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({
       </div>
       {open && (
         <div className={styles.dropdown} onClick={(e) => e.stopPropagation()} ref={dropdownRef}>
-          <div className={styles.dropdownContent}>
-          <div className={styles.optionsMenu}>
-            <Selection
+          <div className={styles.dropdownContent} >
+          <div className={styles.optionsMenu} >
+            <Selection 
               id="location-type-selection"
               value={[locationType]}
               onChange={(selected) => handleLocationTypeChange(selected[0])}
@@ -111,6 +115,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({
               ]}
               multiple={false}
               borderRadius={4}
+              
             />
           </div>
           {(locationType === "Hybrid" || locationType === "Office") && (

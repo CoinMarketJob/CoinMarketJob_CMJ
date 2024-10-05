@@ -88,3 +88,17 @@
   z-index: 1000; /* Diğer öğelerin üzerinde görünmesi için */
   animation: fadeIn 0.3s, fadeOut 0.3s 2.7s;
 }
+
+.SuccessMessage {
+  position: absolute;
+  top: -3px; /* Üst kısımda görünmesi için */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #7aff6b;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  z-index: 1000; /* Diğer öğelerin üzerinde görünmesi için */
+  animation: fadeIn 0.3s, fadeOut 0.3s 2.7s;
+}

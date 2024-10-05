@@ -42,6 +42,9 @@ const Page = () => {
   const { companyProfileData, setCompanyProfileData } = useProfileData();
   const [uploading, setUploading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+
 
   const defaultLogoPath = "/upload.png"; // Varsayılan logo yolu
   const [logoURL, setLogoURL] = useState<string>(defaultLogoPath);
@@ -170,6 +173,7 @@ const Page = () => {
 
   const Complete = async () => {
     setUploading(true);
+    setSuccessMessage(null); // Clear any previous success message
     try {
       const jobData = {
         PackageType: oneJobIsChecked
@@ -194,7 +198,7 @@ const Page = () => {
         unitSalary,
         locationType,
       };
-
+  
       const response = await fetch("/api/job/", {
         method: "POST",
         body: JSON.stringify(jobData),
@@ -202,9 +206,14 @@ const Page = () => {
           "Content-Type": "application/json",
         },
       });
-
+  
       if (response.ok) {
-        router.push("/");
+        setSuccessMessage("Job posted successfully!");
+  
+        // Redirect after 3 seconds
+        setTimeout(() => {
+          router.push("/");
+        }, 3000);
       } else {
         throw new Error("Failed to post job");
       }
@@ -217,6 +226,7 @@ const Page = () => {
       setUploading(false);
     }
   };
+  
 
   const ArrowIcon = () => {
     return (
@@ -261,6 +271,9 @@ const Page = () => {
       {errorMessage && (
         <div className={styles.ErrorMessage}>{errorMessage}</div>
       )}
+      {successMessage && ( 
+                <div className={styles.SuccessMessage}>{successMessage}</div>
+            )}
       <div className={styles.indicatorContainer}>
       <div
     className={`${styles.indicator} ${styles.indicatorMargin} ${
