@@ -42,24 +42,46 @@
 .dropdown {
   position: absolute;
   background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
   box-shadow: 0px 0px 2px 0px #00000033, 0px 0px 11.3px 0px #00000033;
-  width: auto; /* Allow it to adjust automatically */
+  width: auto;
   max-width: 200%;
   border-radius: 15px;
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
   padding: 12px;
-  z-index: 1000;
+  z-index: 1;
   margin-top: 8px;
-  display: flex; /* Use flex to arrange child elements */
+  display: flex;
 }
+
+.dropdown::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: -1;
+}
+
 .dropdownContent {
   display: flex; /* Align items in a row */
   justify-content: space-between; /* Space out the items */
+  gap: 12px;
   width: 100%; /* Ensure it takes full width of dropdown */
-  
+
+}
+
+/* Yeni stil: Geniş haldeki dropdown için */
+.dropdownWide {
+  width: 450px; /* veya istediğiniz genişlik */
+}
+
+.dropdownWide .dropdownContent {
+  margin: 12px;
 }
 
 .searchContainer {
@@ -69,22 +91,54 @@
 }
 
 .searchInput {
-  width: calc(100% - 55px);
+  
+  height: 48px;
   margin: 0;
   border: 1px solid #E7E5E4;
   border-radius: 15px;
-  padding-top: 14px;
-  padding-bottom: 13px;
-  padding-left: 50px;
+  padding: 0 14px 0 50px;
+  
   font-size: 16px;
   font-weight: 400;
   color: #999999;
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.searchInput::placeholder {
+  
+  font-size: 16px;
+  font-weight: 400;
+  color: #24222066;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #242220;
+  color: #242220;
+}
+
+.searchInput:focus::placeholder {
+  opacity: 0;
+  color: transparent;
 }
 
 .searchIcon {
   position: absolute;
-  top: 9px;
-  left: 12px;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.searchIcon path {
+  transition: fill 0.3s ease, fill-opacity 0.3s ease;
+  fill: #242220;
+  fill-opacity: 0.4;
+}
+
+.searchContainer:focus-within .searchIcon path {
+  fill-opacity: 1;
 }
 
 .optionsMenu {
