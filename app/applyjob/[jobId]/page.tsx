@@ -19,6 +19,23 @@ type JobProps = {
   jobId: string;
 };
 
+const PagePlaceholder = () => (
+  <div className={styles.placeholderContainer}>
+    <div className={styles.placeholderContent}>
+      <div className={styles.placeholderHeader}>
+        <div className={styles.placeholderLogo}></div>
+        <div className={styles.placeholderTitle}></div>
+      </div>
+      <div className={styles.placeholderLine}></div>
+      <div className={styles.placeholderForm}>
+        <div className={styles.placeholderInput}></div>
+        <div className={styles.placeholderInput}></div>
+        <div className={styles.placeholderInput}></div>
+      </div>
+    </div>
+  </div>
+);
+
 const page = ({ params }: { params: JobProps }) => {
   const [name, setName] = useState<string>("");
   const [surname, setSurname] = useState<string>("");
@@ -50,6 +67,8 @@ const page = ({ params }: { params: JobProps }) => {
   const [uploading, setUploading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  const [isPageLoading, setIsPageLoading] = useState<boolean>(true);
 
   const handleAnswerChange = (questionId: number, answer: string) => {
     setAnswers((prev) => ({ ...prev, [questionId]: answer }));
@@ -84,6 +103,7 @@ const page = ({ params }: { params: JobProps }) => {
   useEffect(() => {
     async function fetchData() {
       try {
+        setIsPageLoading(true);
         const response = await fetch("/api/job/get/" + jobId);
         const data = await response.json();
         setJobName(data.jobTitle);
@@ -92,6 +112,8 @@ const page = ({ params }: { params: JobProps }) => {
         console.log(data);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setIsPageLoading(false);
       }
     }
 
@@ -426,135 +448,141 @@ const page = ({ params }: { params: JobProps }) => {
 
   return (
     <div ref={panelRef} className={styles.ContainerCard}>
-      {errorMessage && (
-        <div className={styles.ErrorMessage}>{errorMessage}</div>
-      )}
-      {successMessage && (
-        <div className={styles.SuccessMessage}>{successMessage}</div>
-      )}
-      <div className={styles.ApplyCard}>
-        <div style={{ display: "flex" }}>
-          <div className={styles.arrowContainer}>
-            <Icon
-              onClick={handleBackClick}
-              hoverSize={45}
-              hoverContent="Back"
-              tooltipPosition="bottom"
-            >
-              <ArrowIcon />
-            </Icon>
-          </div>
-
-          <div className={styles.ApplyText}>Apply</div>
-          <div>
-            <img src={jobLogo} className={styles.Logo} alt="Description" />
-          </div>
-          <div className={styles.TitleText}>{jobName}</div>
-        </div>
-        <div className={styles.Line}></div>
-        <div className={styles.doubleRow}>
-          <Input
-            id="name"
-            placeholder="Name"
-            type="text"
-            required
-            value={name}
-            onChange={nameChange}
-          />
-          <div style={{ width: "2.25rem" }}></div>
-          <Input
-            id="surname"
-            placeholder="Surname"
-            type="text"
-            required
-            value={surname}
-            onChange={surnameChange}
-          />
-        </div>
-        <div className={styles.singleRow}>
-          <Input
-            id="email"
-            placeholder="Email"
-            type="email"
-            required
-            value={email}
-            onChange={emailChange}
-          />
-        </div>
-
-        <div className={styles.doubleRow}>
-          <div style={{ width: "7.5rem" }}>
-            <Dropdown
-              id="countryCode"
-              value={countryCode}
-              setValue={setCountryCode}
-              list={countryCodes}
-            />
-          </div>
-          <div style={{ width: "2.25rem" }}></div>
-
-          <Input
-            id="phone"
-            placeholder="Phone"
-            type="phone"
-            required={false}
-            value={phone}
-            onChange={phoneChange}
-          />
-        </div>
-        <div className={styles.jobQuestions}>
-          {jobQuestions != null ? (
-            jobQuestions.length > 0 ? (
-              jobQuestions.map((question, index) => (
-                <QuestionDraft
-                  key={question.id}
-                  question={question}
-                  onAnswerChange={handleAnswerChange}
-                />
-              ))
-            ) : (
-              <p></p>
-            )
-          ) : (
-            <p></p>
+      {isPageLoading ? (
+        <PagePlaceholder />
+      ) : (
+        <>
+          {errorMessage && (
+            <div className={styles.ErrorMessage}>{errorMessage}</div>
           )}
-        </div>
+          {successMessage && (
+            <div className={styles.SuccessMessage}>{successMessage}</div>
+          )}
+          <div className={styles.ApplyCard}>
+            <div style={{ display: "flex" }}>
+              <div className={styles.arrowContainer}>
+                <Icon
+                  onClick={handleBackClick}
+                  hoverSize={45}
+                  hoverContent="Back"
+                  tooltipPosition="bottom"
+                >
+                  <ArrowIcon />
+                </Icon>
+              </div>
 
-        {cvManualState == false && (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginBottom: "1.5rem",
-              maxWidth: "479px",
-            }}
-          >
-            <div style={{ display: "flex", width: "100%" }}>
-              <InputFile
-                id="cv"
-                placeholder="Attach Resume / CV"
+              <div className={styles.ApplyText}>Apply</div>
+              <div>
+                <img src={jobLogo} className={styles.Logo} alt="Job Logo" />
+              </div>
+              <div className={styles.TitleText}>{jobName}</div>
+            </div>
+            <div className={styles.Line}></div>
+            <div className={styles.doubleRow}>
+              <Input
+                id="name"
+                placeholder="Name"
+                type="text"
                 required
-                onChange={cvFileChange}
+                value={name}
+                onChange={nameChange}
+              />
+              <div style={{ width: "2.25rem" }}></div>
+              <Input
+                id="surname"
+                placeholder="Surname"
+                type="text"
+                required
+                value={surname}
+                onChange={surnameChange}
               />
             </div>
-          </div>
-        )}
-      </div>
+            <div className={styles.singleRow}>
+              <Input
+                id="email"
+                placeholder="Email"
+                type="email"
+                required
+                value={email}
+                onChange={emailChange}
+              />
+            </div>
 
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button
-          text="Submit"
-          fontSize={15}
-          fontWeight={500}
-          paddingLeft={60}
-          paddingRight={59}
-          paddingTop={15}
-          paddingBottom={15}
-          onClick={submit}
-          disabled={!isFormValid}
-          isLoading={uploading}
-        />
-      </div>
+            <div className={styles.doubleRow}>
+              <div style={{ width: "7.5rem" }}>
+                <Dropdown
+                  id="countryCode"
+                  value={countryCode}
+                  setValue={setCountryCode}
+                  list={countryCodes}
+                />
+              </div>
+              <div style={{ width: "2.25rem" }}></div>
+
+              <Input
+                id="phone"
+                placeholder="Phone"
+                type="phone"
+                required={false}
+                value={phone}
+                onChange={phoneChange}
+              />
+            </div>
+            <div className={styles.jobQuestions}>
+              {jobQuestions != null ? (
+                jobQuestions.length > 0 ? (
+                  jobQuestions.map((question, index) => (
+                    <QuestionDraft
+                      key={question.id}
+                      question={question}
+                      onAnswerChange={handleAnswerChange}
+                    />
+                  ))
+                ) : (
+                  <p></p>
+                )
+              ) : (
+                <p></p>
+              )}
+            </div>
+
+            {cvManualState == false && (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: "1.5rem",
+                  maxWidth: "479px",
+                }}
+              >
+                <div style={{ display: "flex", width: "100%" }}>
+                  <InputFile
+                    id="cv"
+                    placeholder="Attach Resume / CV"
+                    required
+                    onChange={cvFileChange}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <Button
+              text="Submit"
+              fontSize={15}
+              fontWeight={500}
+              paddingLeft={60}
+              paddingRight={59}
+              paddingTop={15}
+              paddingBottom={15}
+              onClick={submit}
+              disabled={!isFormValid}
+              isLoading={uploading}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };
