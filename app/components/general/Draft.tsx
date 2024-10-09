@@ -178,10 +178,19 @@ const Draft: React.FC<DraftProps> = ({show, content, onChange, onContentChange, 
     >
       <MenuBar editor={editor} />
       <EditorContent 
-        className="editor-content" 
-        editor={editor} 
-        onClick={() => editor?.chain().focus().run()}
-      />
+  className="editor-content" 
+  editor={editor} 
+  onClick={(event) => {
+    if (editor) {
+      const { clientX, clientY } = event;
+      const position = editor.view.posAtCoords({ left: clientX, top: clientY });
+      if (position) {
+        editor.commands.focus();
+        editor.commands.setTextSelection(position.pos);
+      }
+    }
+  }}
+/>
     </div>
   )
 }
