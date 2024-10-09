@@ -32,7 +32,7 @@ const Page = () => {
   const [description, setDescription] = useState<JSONContent>(JSON);
 
   const [jobTitle, setJobTitle] = useState<string>("");
-  const [locationType, setLocationType] = useState<string>();
+  const [locationType, setLocationType] = useState<string>("");
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
 
   const [oneJobIsChecked, setOneJobIsChecked] = useState<boolean>(true);
