@@ -30,7 +30,6 @@
     width: 191px; 
     display: flex;
     align-items: center; /* Center align dropdown vertically */
-    text-align: right;
     margin-right: 0; /* Sağdan boşluk bırakmaz */
     margin-left: auto;
   }

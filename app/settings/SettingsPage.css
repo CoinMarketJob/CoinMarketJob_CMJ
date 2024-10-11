@@ -1,6 +1,6 @@
 .settings-page {
     display: flex;
-    height: 100vh;
+    height: 100%;
     font-family: 'Inter', sans-serif;
     width: -webkit-fill-available;
   }

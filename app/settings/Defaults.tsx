@@ -6,7 +6,6 @@ const Defaults: React.FC = () => {
   return (
     <div className="defaults">
       <div className="defaults-item">
-        <h4>Email notifications</h4>
       </div>
      {/*  <div className="defaults-item">
         <h4>Job alerts</h4>
