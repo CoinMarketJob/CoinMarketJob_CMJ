@@ -8,6 +8,8 @@
   scrollbar-width: none;
   scrollbar-color: #E7E5E4 transparent;
   -webkit-overflow-scrolling: touch;
+  position: relative;
+  /* padding-top: 16px; Bu satırı kaldırdık */
 }
 
 .liveItem {

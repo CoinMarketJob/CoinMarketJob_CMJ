@@ -1,13 +1,15 @@
 .CategoriesWrapper {
-    position: relative;
-    overflow: hidden;
+    position: relative; /* sticky yerine relative yapıyoruz */
+    background-color: #fff;
+    z-index: 10;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
 }
 
 .Container {
     display: flex;
     justify-content: flex-start;
     margin-top: 16px;
-    margin-bottom: 24px;
     gap: 32px;
     transition: transform 0.3s ease;
     overflow-x: auto;
