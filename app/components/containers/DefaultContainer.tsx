@@ -43,8 +43,8 @@ const DefaultContainer: React.FC<ContainerProps> = ({
   }, [searchParams]);
 
   const profileWidth = totalWidth * (1 / 4.5);
-  const liveWidth = isLiveVisible ? totalWidth * (1 / 4.5) : 0;
-  const childWidth = totalWidth - profileWidth - liveWidth;
+  const liveWidth = totalWidth * (1 / 4.5);
+  const childWidth = isLiveVisible ? totalWidth - profileWidth - liveWidth : totalWidth - profileWidth;
 
   const updateContainerHeight = () => {
     if (containerRef.current) {
@@ -77,7 +77,15 @@ const DefaultContainer: React.FC<ContainerProps> = ({
         {children}
       </div>
 
-      <div className={`panel-live ${isLiveVisible ? '' : 'hidden'}`} style={{ width: liveWidth }}>
+      <div 
+        className={`panel-live ${isLiveVisible ? '' : 'hidden'}`} 
+        style={{ 
+          width: liveWidth,
+          padding: isLiveVisible ? '20px' : 0,
+          margin: isLiveVisible ? '2px' : 0,
+          borderWidth: isLiveVisible ? '1px' : 0,
+        }}
+      >
         <Live initialExpandedId={expandedLiveId} />
       </div>
     </div>
