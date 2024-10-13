@@ -86,7 +86,6 @@
   scrollbar-width: none;
   scrollbar-color: #E7E5E4 transparent;
   -webkit-overflow-scrolling: touch;
-  transition: width 0.3s ease-in-out, margin-right 0.3s ease-in-out;
 }
 
 .panel-live{
@@ -95,7 +94,7 @@
   margin: 2px;
   margin-right: 8px;
   padding: 20px; 
-  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out, width 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out, opacity 0.3s ease-in-out;
   opacity: 1;
   overflow: hidden;
 }
@@ -107,7 +106,6 @@
   padding: 0;
   margin: 0;
   border: none;
-  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out, width 0.3s ease-in-out;
 }
 
 .panel-live::-webkit-scrollbar {
