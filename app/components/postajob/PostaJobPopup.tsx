@@ -7,9 +7,10 @@ interface Popup {
     Save: () => void;
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    centerVertically?: boolean; // Yeni prop eklendi
 }
 
-const PostaJobPopup:React.FC<Popup> = ({ children, Save, open, setOpen }) => {  
+const PostaJobPopup:React.FC<Popup> = ({ children, Save, open, setOpen, centerVertically }) => {  
    const popupRef = useRef<HTMLDivElement>(null);
 
    useEffect(() => {
@@ -40,7 +41,7 @@ const PostaJobPopup:React.FC<Popup> = ({ children, Save, open, setOpen }) => {
     <div 
       ref={popupRef} 
       style={{display: open ? "block" : "none"}} 
-      className={styles.Popup}
+      className={`${styles.Popup} ${centerVertically ? styles.CenterVertically : ''}`}
       onClick={handlePopupClick}
     >
       {children}
