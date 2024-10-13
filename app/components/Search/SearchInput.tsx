@@ -31,24 +31,49 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags, isFilterOpen, setIs
     const router = useRouter();
     const [modalOpen, setModalOpen] = useState(false);
     const [placeholder, setPlaceholder] = useState('Type keyword, company or location');
+    const [isFaded, setIsFaded] = useState(false);
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Tab' && inputValue) {
-            e.preventDefault();
-            setTags([...tags, inputValue]);
-            setNewTagIndex(tags.length);
-            setInputValue('');
+        if (e.key === ' ' && inputValue.trim()) {
+            addNewTag();
         }
         if (e.key === 'Enter') {
             e.preventDefault();
-            filterJobs();
-            console.log(filteredJobs);
+            let updatedTags = [...tags];
+            if (inputValue.trim()) {
+                updatedTags = addNewTag();
+            }
+            filterJobs(updatedTags);
+        }
+        if (e.key === 'Backspace' && inputValue === '' && tags.length > 0) {
+            e.preventDefault();
+            const newTags = tags.slice(0, -1);
+            setTags(newTags);
+            updatePlaceholder(newTags);
         }
     };
 
-    function filterJobs() {
+    const addNewTag = () => {
+        const newTag = inputValue.trim();
+        const updatedTags = [...tags, newTag];
+        setTags(updatedTags);
+        setNewTagIndex(tags.length);
+        setInputValue('');
+        updatePlaceholder(updatedTags);
+        return updatedTags;
+    };
+
+    const updatePlaceholder = (newTags: string[]) => {
+        if (newTags.length === 0) {
+            setPlaceholder('Type keyword, company or location');
+        } else {
+            setPlaceholder('');
+        }
+    };
+
+    function filterJobs(currentTags: string[] = tags) {
         const fjobs = jobs.filter((job: Job) => {
-            const lowerCaseTags = tags.map(tag => tag.toLowerCase());
+            const lowerCaseTags = currentTags.map(tag => tag.toLowerCase());
             return lowerCaseTags.every(tag =>
                 (job.companyName?.toLowerCase().includes(tag) || false) ||
                 job.jobTitle.toLowerCase().includes(tag) ||
@@ -71,7 +96,11 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags, isFilterOpen, setIs
     }, [newTagIndex]);
 
     const handleRemoveTag = (index: number) => {
-        setTags(tags.filter((_, i) => i !== index));
+        const newTags = tags.filter((_, i) => i !== index);
+        setTags(newTags);
+        if (newTags.length === 0 && inputValue === '') {
+            setPlaceholder('Type keyword, company or location');
+        }
     };
 
     const handleWheel = (e: WheelEvent) => {
@@ -80,7 +109,8 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags, isFilterOpen, setIs
         }
     };
 
-    const toggleFilter = () => {
+    const toggleFilter = (e: React.MouseEvent) => {
+        e.stopPropagation(); // Event'in yayılmasını engelle
         setModalOpen(!modalOpen);
     };
 
@@ -96,20 +126,32 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags, isFilterOpen, setIs
 
     const handleFocus = () => {
         setPlaceholder('');
+        setIsFaded(false);
     };
 
     const handleBlur = () => {
-        if (inputValue === '') {
+        if (inputValue === '' && tags.length === 0) {
             setPlaceholder('Type keyword, company or location');
+        } else {
+            setIsFaded(true);
         }
     };
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
+        if (e.target.value !== '') {
+            setIsFaded(false);
+        }
+    };
+
+    const handleContainerClick = () => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
     };
 
     return (
-        <div className="search-container">
+        <div className="search-container" onClick={handleContainerClick}>
             <svg 
                 className="search-bar-icon search-icon" 
                 width="24" 
@@ -121,38 +163,36 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags, isFilterOpen, setIs
                 <path d="M34.838 35.57L27.2686 28.6192C25.8551 29.8226 24.2295 30.7541 22.3918 31.4138C20.5542 32.0734 18.7076 32.4033 16.852 32.4033C12.3239 32.4033 8.49147 30.8359 5.35475 27.701C2.21851 24.5662 0.650391 20.7361 0.650391 16.2108C0.650391 11.685 2.2178 7.85168 5.35263 4.71072C8.48746 1.57024 12.3175 0 16.8428 0C21.3686 0 25.202 1.56812 28.3429 4.70436C31.4834 7.84108 33.0537 11.6735 33.0537 16.2016C33.0537 18.166 32.7057 20.067 32.0097 21.9047C31.3138 23.7423 30.4004 25.3135 29.2695 26.6182L36.8389 33.5698C36.8389 33.5698 36.2291 34.1793 35.8384 34.5699C35.4477 34.9605 34.838 35.57 34.838 35.57ZM16.852 29.5761C20.6032 29.5761 23.77 28.2848 26.3526 25.7022C28.9352 23.1201 30.2265 19.9533 30.2265 16.2016C30.2265 12.45 28.9352 9.28315 26.3526 6.70103C23.77 4.11844 20.6032 2.82714 16.852 2.82714C13.1004 2.82714 9.93354 4.11844 7.35142 6.70103C4.76883 9.28315 3.47753 12.45 3.47753 16.2016C3.47753 19.9533 4.76883 23.1201 7.35142 25.7022C9.93354 28.2848 13.1004 29.5761 16.852 29.5761Z" />
             </svg>
 
-            <div className="buble-field" ref={bubleFieldRef}>
-                {tags.map((item, index) => (
-                    <div
-                        key={index}
-                        className={`buble ${newTagIndex === index ? 'animate-from-input' : ''}`}
-                        style={newTagIndex === index && inputRef.current ? {
-                            top: inputRef.current.offsetTop,
-                            left: inputRef.current.offsetLeft,
-                            transform: `translate(0, 0)`
-                        } : {}}
-                    >
-                        <div>{item}</div>
-                        <div className='Icons'>
-                            <div className='Overlay' onClick={() => handleRemoveTag(index)}>
-                                <FontAwesomeIcon icon={faTimes} style={{ width: 16, height: 16, overflow: "visible" }} />
-                            </div>
+            <div className="search-input" tabIndex={0}>
+                <div className="buble-field" ref={bubleFieldRef}>
+                    {tags.map((item, index) => (
+                        <div key={index} className="buble">
+                            <span>{item}</span>
+                            <FontAwesomeIcon
+                                icon={faTimes}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleRemoveTag(index);
+                                }}
+                                style={{ marginLeft: '5px', cursor: 'pointer' }}
+                            />
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
+                <input
+                    className={`search-input-element ${isFaded ? 'faded' : ''}`}
+                    type="text"
+                    placeholder={placeholder}
+                    value={inputValue}
+                    onChange={handleInput}
+                    onKeyDown={handleKeyDown}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    ref={inputRef}
+                />
             </div>
-            <input
-                className="search-input"
-                type="text"
-                placeholder={placeholder}
-                value={inputValue}
-                onChange={handleInput}
-                onKeyDown={handleKeyDown}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                ref={inputRef}
-            />
-            <div className="filter-icon-container">
+
+            <div className="filter-icon-container" onClick={(e) => e.stopPropagation()}>
                 <Icon
                     onClick={toggleFilter}
                     hoverSize={45}
@@ -174,11 +214,10 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags, isFilterOpen, setIs
             </div>
 
             <div className='JobFilterPopUp'>
-            {modalOpen && (
-                <JobFilterPopUp  modalOpen={modalOpen} setModalOpen={setModalOpen}/>
-            )}
+                {modalOpen && (
+                    <JobFilterPopUp modalOpen={modalOpen} setModalOpen={setModalOpen}/>
+                )}
             </div>
-            
         </div>
     );
 };

@@ -21,8 +21,11 @@
     vertical-align: middle;
     padding-left: 50.35px;
     padding-right: 56.35px;
-    padding-top: 25px;
-    padding-bottom: 23px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
     margin: 0;
     transition: border-color 0.3s ease, color 0.3s ease;
     color: #24222066; /* Default text color, same as placeholder */
@@ -39,7 +42,7 @@
     transition: opacity 0.3s ease, color 0.3s ease;
 }
 
-.search-input:focus {
+.search-input:focus-within {
     border-color: #242220;
     outline: none;
     color: #242220; /* Text color when focused */
@@ -59,7 +62,8 @@
 
 .search-icon {
     left: 16px;
-    top: 8px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .search-icon path {
@@ -79,13 +83,13 @@
 
 .filter-icon-container {
     position: absolute;
-    right: 30px;
-    top: 35%;
+    right: 29px; /* 16px'ten 12px'e değiştirdik */
+    top: 33%; /* 50%'den 45%'e değiştirdik */
     transform: translateY(-50%);
-    cursor: pointer; /* Bu satırı ekledik */
+    cursor: pointer;
 }
 
-/* Remove or comment out the following styles as they're no longer needed */
+
 /*
 .filter-div {
     position: absolute;
@@ -97,46 +101,49 @@
 */
 
 .buble-field {
-    position: absolute;
-    white-space: nowrap;
-    top: 6px;
-    left: 92.35px;
-    width: calc(100% - 184.70px);
-    max-width: calc(100% - 184.70px);
-    overflow-x: auto;
-    overflow-y: hidden;
+    position: static;
     display: inline-flex;
-    scrollbar-width: none;
-    scrollbar-color: #E7E5E4 transparent;
-    -webkit-overflow-scrolling: touch;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px;
+    max-width: calc(100% - 100px);
+    overflow-x: visible;
+    overflow-y: visible;
 }
-
-.buble-field::-webkit-scrollbar {
-    height: 6px;
-}
-
-.buble-field::-webkit-scrollbar-thumb {
-    background-color: #E7E5E4;
-    border-radius: 3px;
-}
-
 
 .buble {
     background-color: #2422201A;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    margin-left: 8px;
+    padding: 2px 10px;
     border-radius: 38px;
     color: #24222066;
-    font-family: Inter;
-    font-size: 12px;
     font-weight: 500;
+    font-size: 14px;
     line-height: 21px;
-    text-align: center;
-    position: relative;
-    transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.search-input-element {
+    border: none;
+    background: transparent;
+    flex-grow: 1;
+    min-width: 50px;
+    outline: none;
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: 400;
+    color: #242220;
+    transition: color 0.3s ease; /* Renk geçişi için transition ekledik */
+}
+
+.search-input-element.faded {
+    color: #24222066; /* Solmuş renk */
+}
+
+.search-input-element::placeholder{
+    color: #24222066;
 }
 
 .animate-from-input {
