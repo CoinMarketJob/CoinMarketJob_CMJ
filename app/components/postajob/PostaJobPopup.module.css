@@ -1,5 +1,5 @@
 .Popup{
-    position: absolute;
+    position: fixed;
     background-color: #FFFFFFCC;
     box-shadow: 0px 0px 2px 0px #00000033;
     box-shadow: 0px 0px 11.3px 0px #00000033;
@@ -9,9 +9,15 @@
     padding-right: 24px;
     padding-bottom: 27px;
     width: 26.875rem;
-    top: -20px;
-    right: 204px;    
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 1000;
+}
+
+.CenterVertically {
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .ButtonGroup{

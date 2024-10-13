@@ -39,3 +39,15 @@
 .cardInput.error {
     border-color: #ff0000;
 }
+
+/* Mevcut stiller burada kalacak */
+
+.ErrorMessage {
+    color: #ff0000;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.input-error {
+    border-color: #ff0000;
+}

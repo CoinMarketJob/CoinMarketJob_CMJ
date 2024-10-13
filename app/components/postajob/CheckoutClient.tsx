@@ -7,7 +7,7 @@ import CreditCard, { CreditCardRef } from "./CreditCard";
 import PostaJobPopup from "./PostaJobPopup";
 import BillingAddress from "./BillingAddress";
 import BillingEmail from "./BillingEmail";
-import Input from "../general/Input"; // Add this import
+import Input from "../general/Input";
 
 interface CheckoutProps {
   oneJobIsChecked: boolean;
@@ -35,8 +35,12 @@ const CheckoutClient: React.FC<CheckoutProps> = ({
   const [billingEmail, setBillingEmail] = useState<boolean>(false);
   const [savedCardNumber, setSavedCardNumber] = useState<string>("");
   const [savedCardType, setSavedCardType] = useState<string>("");
+  const [savedAddress, setSavedAddress] = useState<string>("");
+  const [savedEmail, setSavedEmail] = useState<string>("");
 
   const creditCardRef = useRef<CreditCardRef>(null);
+  const addressRef = useRef<any>(null);
+  const emailRef = useRef<any>(null);
 
   const CreditCardSave = () => {
     if (creditCardRef.current) {
@@ -48,12 +52,35 @@ const CheckoutClient: React.FC<CheckoutProps> = ({
   };
 
   const AddressSave = () => {
-    console.log("Address saved");
-    // Implement address saving logic here
+    if (addressRef.current) {
+      const addressData = addressRef.current.getSavedAddress();
+      if (addressData) {
+        setSavedAddress(addressData);
+        setAddress(false);
+      }
+    }
+  };
+
+  const EmailSave = () => {
+    if (emailRef.current) {
+      const emailData = emailRef.current.getSavedEmail();
+      if (emailData) {
+        setSavedEmail(emailData);
+        setBillingEmail(false);
+      }
+    }
   };
 
   const handleCreditCardClick = () => {
     setCreditCard(true);
+  };
+
+  const truncateAddress = (fullAddress: string, maxLength: number = 40) => {
+    const [address, ...rest] = fullAddress.split(',');
+    const truncatedAddress = address.length > maxLength 
+      ? address.slice(0, maxLength) + "..."
+      : address;
+    return [truncatedAddress, ...rest].join(',');
   };
 
   return (
@@ -80,6 +107,7 @@ const CheckoutClient: React.FC<CheckoutProps> = ({
             open={creditCard}
             setOpen={setCreditCard}
             Save={CreditCardSave}
+            centerVertically={true}
           >
             <CreditCard 
               ref={creditCardRef} 
@@ -106,12 +134,14 @@ const CheckoutClient: React.FC<CheckoutProps> = ({
 
         <div>
           <PostaJobPopup open={address} setOpen={setAddress} Save={AddressSave}>
-            <BillingAddress />
+            <BillingAddress ref={addressRef} />
           </PostaJobPopup>
         </div>
 
         <div className={styles.AddCol}>
-          <span onClick={() => setAddress(!address)}>Add Adress</span>
+          <span onClick={() => setAddress(!address)}>
+            {savedAddress ? truncateAddress(savedAddress) : "Add Address"}
+          </span>
         </div>
       </div>
       <div className={styles.Line}></div>
@@ -123,16 +153,16 @@ const CheckoutClient: React.FC<CheckoutProps> = ({
           <PostaJobPopup
             open={billingEmail}
             setOpen={setBillingEmail}
-            Save={AddressSave}
+            Save={EmailSave}
           >
-            <BillingEmail />
+            <BillingEmail ref={emailRef} />
           </PostaJobPopup>
         </div>
 
-        <div
-          className={styles.AddCol}
-        >
-          <span onClick={() => setBillingEmail(!address)}>email@you.com</span>
+        <div className={styles.AddCol}>
+          <span onClick={() => setBillingEmail(!billingEmail)}>
+            {savedEmail || "Add Email"}
+          </span>
         </div>
       </div>
       <div className={styles.Line}></div>
