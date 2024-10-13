@@ -26,9 +26,7 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags, isFilterOpen, setIs
     const [inputValue, setInputValue] = useState('');
     const [newTagIndex, setNewTagIndex] = useState<number | null>(null);
     const inputRef = useRef<HTMLInputElement>(null);
-    const bubleFieldRef = useRef<HTMLDivElement>(null);
     const { jobs, filteredJobs, setFilteredJobs } = useJobs();
-    const router = useRouter();
     const [modalOpen, setModalOpen] = useState(false);
     const [placeholder, setPlaceholder] = useState('Type keyword, company or location');
     const [isFaded, setIsFaded] = useState(false);
@@ -103,26 +101,10 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags, isFilterOpen, setIs
         }
     };
 
-    const handleWheel = (e: WheelEvent) => {
-        if (bubleFieldRef.current) {
-            bubleFieldRef.current.scrollLeft += e.deltaY;
-        }
-    };
-
     const toggleFilter = (e: React.MouseEvent) => {
         e.stopPropagation(); // Event'in yayılmasını engelle
         setModalOpen(!modalOpen);
     };
-
-    useEffect(() => {
-        const bubleField = bubleFieldRef.current;
-        if (bubleField) {
-            bubleField.addEventListener('wheel', handleWheel);
-            return () => {
-                bubleField.removeEventListener('wheel', handleWheel);
-            };
-        }
-    }, []);
 
     const handleFocus = () => {
         setPlaceholder('');
@@ -164,7 +146,7 @@ const SearchInput: React.FC<SearchProps> = ({ tags, setTags, isFilterOpen, setIs
             </svg>
 
             <div className="search-input" tabIndex={0}>
-                <div className="buble-field" ref={bubleFieldRef}>
+                <div className="buble-field">
                     {tags.map((item, index) => (
                         <div key={index} className="buble">
                             <span>{item}</span>

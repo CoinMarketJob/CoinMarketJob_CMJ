@@ -71,7 +71,6 @@ const Page = () => {
             <ArrowIcon />
           </Icon>
         </div>
-        <div className={styles.JobsText}>JOBS</div>
       </div>
       <div className={styles.Line}></div>
 

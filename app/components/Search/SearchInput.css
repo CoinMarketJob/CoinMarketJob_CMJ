@@ -18,17 +18,16 @@
     -webkit-appearance: none;
     appearance: none;
     box-sizing: border-box;
-    vertical-align: middle;
     padding-left: 50.35px;
     padding-right: 56.35px;
     padding-top: 10px;
     padding-bottom: 10px;
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
     margin: 0;
     transition: border-color 0.3s ease, color 0.3s ease;
     color: #24222066; /* Default text color, same as placeholder */
+    overflow: hidden; /* Taşan içeriği gizle */
 }
 
 .search-input::placeholder {
@@ -83,32 +82,27 @@
 
 .filter-icon-container {
     position: absolute;
-    right: 29px; /* 16px'ten 12px'e değiştirdik */
-    top: 33%; /* 50%'den 45%'e değiştirdik */
+    right: 29px; 
+    top: 33%; 
     transform: translateY(-50%);
     cursor: pointer;
 }
 
-
-/*
-.filter-div {
-    position: absolute;
-    width: 37px;
-    height: 24px;
-    right: 12px;
-    top: 9px;
-}
-*/
-
 .buble-field {
-    position: static;
-    display: inline-flex;
-    flex-wrap: wrap;
-    align-items: center;
+    display: flex;
     gap: 5px;
-    max-width: calc(100% - 100px);
-    overflow-x: visible;
-    overflow-y: visible;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: calc(100% - 50px); /* Input için minimum 50px bırak */
+}
+
+/* Webkit tarayıcıları için kaydırma çubuğunu gizle */
+.buble-field::-webkit-scrollbar {
+    display: none;
 }
 
 .buble {
@@ -128,14 +122,15 @@
 .search-input-element {
     border: none;
     background: transparent;
-    flex-grow: 1;
     min-width: 50px;
+    flex: 1;
+    width: 100%; /* Tam genişlik kullan */
     outline: none;
     font-family: Inter;
     font-size: 18px;
     font-weight: 400;
     color: #242220;
-    transition: color 0.3s ease; /* Renk geçişi için transition ekledik */
+    transition: color 0.3s ease;
 }
 
 .search-input-element.faded {
