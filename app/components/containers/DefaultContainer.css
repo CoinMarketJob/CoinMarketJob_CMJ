@@ -99,6 +99,7 @@
   overflow: hidden;
 }
 
+
 .panel-live.hidden {
   width: 0 !important;
   opacity: 0;

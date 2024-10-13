@@ -409,6 +409,7 @@ const Live: React.FC<LiveProps> = ({ initialExpandedId }) => {
           }))
         )}
       </div>
+      <div className={styles.blurEffect}></div>
     </div>
   );
 };
