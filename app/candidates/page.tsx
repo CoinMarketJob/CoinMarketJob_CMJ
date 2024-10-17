@@ -1,14 +1,21 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import styles from "./Candidates.module.css";
 import { useJobApplications } from "@/hooks/useApplicationJob";
 import CandidatesCard from "../components/dashboard/CandidatesCard";
 import Image from "next/image";
-import Draft from "../components/auth/ShowDraft";
 import ButtonImage from "../components/dashboard/ButtonImage";
 import Dropdown from "../components/general/Dropdown";
 
-const Page = () => {
+// Remove the problematic import
+// import { Draft } from 'some-draft-library';
+
+// If you need a placeholder for the Draft component, you can create a simple one:
+const Draft = ({ show, content }: { show: boolean; content: string }) => (
+  <div>{show && <pre>{content}</pre>}</div>
+);
+
+const CandidatesPage = () => {
   const { jobApplications } = useJobApplications();
   const [showDetail, setShowDetail] = useState<boolean>(false);
   const [selectedApplication, setSelectedApplication] = useState<any>();
@@ -18,17 +25,7 @@ const Page = () => {
     jobApplications.appliedJobs
   );
 
-  useEffect(() => {
-    console.log(option);
-    if (option === "All") {
-      setFilteredApplications(jobApplications.appliedJobs);
-      setOptionType("All");
-    } else {
-      fetchApplications();
-    }
-  }, [option]);
-
-  const fetchApplications = async () => {
+  const fetchApplications = useCallback(async () => {
     try {
       const response = await fetch(`/api/applicationState/${option}`);
       if (response.ok) {
@@ -42,9 +39,15 @@ const Page = () => {
     } catch (error) {
       console.error("Error fetching applications:", error);
     }
-  };
+  }, [option]);
+
+  useEffect(() => {
+    fetchApplications();
+  }, [fetchApplications, jobApplications.appliedJobs]);
 
   const changeState = async (state: string) => {
+    if (!selectedApplication) return;
+
     try {
       const data = {
         jobId: selectedApplication.jobId,
@@ -61,10 +64,13 @@ const Page = () => {
 
       if (response.ok) {
         console.log("State Successfully Changed");
+        fetchApplications(); // Refresh the applications after state change
       } else {
-        console.error("Error applying for job:", response.statusText);
+        console.error("Error changing application state:", response.statusText);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error changing application state:", error);
+    }
   };
 
   const options = [
@@ -224,4 +230,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default CandidatesPage;
