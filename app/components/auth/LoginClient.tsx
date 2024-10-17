@@ -21,7 +21,6 @@ const LoginClient = () => {
   const [surname, setSurname] = useState<string>("");
   const [phoneCode, setPhoneCode] = useState<string>("+1");
   const [phone, setPhone] = useState<string>("");
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [userId, setUserId] = useState(false);
   const [registerError, setRegisterError] = useState<string | null>(null);
 
@@ -243,31 +242,9 @@ const LoginClient = () => {
 
       if (data == null) {
         // User register.
-        const registerData = { email, password };
-        console.log("Registering user:", registerData);
-
-        const registerResponse = await fetch("/api/user/register", {
-          method: "POST",
-          body: JSON.stringify(registerData),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        if (!registerResponse.ok) {
-          throw new Error(
-            `Register fetch error: ${registerResponse.status} ${registerResponse.statusText}`
-          );
-        }
-
-        console.log("User registered, attempting sign in...");
-        const registerResult = await registerResponse.json();
-
-        console.log("Register result:", registerResult);
-
-        setUserId(registerResult.id);
-
-        setIsPopupOpen(true);
+        // Instead of opening a popup, we'll set a new state to show registration fields
+        setLoginProcess(2); // New state to indicate registration process
+        setUserId(true); // We'll use this to know we're in registration mode
       } else {
         // User Login.
         console.log("Logging in user...");
@@ -297,46 +274,71 @@ const LoginClient = () => {
   const loginWithGoogle = async () => {};
 
   const ContinueWithProfile = async () => {
-    if (name == "" || surname == "" || phone == "") {
-      setRegisterError("You must fill all field.");
+    if (name === "" || surname === "" || phone === "") {
+      setRegisterError("You must fill all fields.");
       return;
     }
 
-    const profileData = {
-      userId,
-      name,
-      surname,
-      phoneCode,
-      phoneNumber: phone,
-    };
+    const registerData = { email, password };
+    console.log("Registering user:", registerData);
 
-    const registerResponse = await fetch("/api/profile/firstRegister", {
-      method: "POST",
-      body: JSON.stringify(profileData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    try {
+      const registerResponse = await fetch("/api/user/register", {
+        method: "POST",
+        body: JSON.stringify(registerData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    if (!registerResponse.ok) {
-      throw new Error(
-        `Register fetch error: ${registerResponse.status} ${registerResponse.statusText}`
-      );
-    }
+      if (!registerResponse.ok) {
+        throw new Error(
+          `Register fetch error: ${registerResponse.status} ${registerResponse.statusText}`
+        );
+      }
 
-    const signInResult = await signIn("credentials", {
-      email: email,
-      password: password,
-      redirect: false,
-    });
+      const registerResult = await registerResponse.json();
+      console.log("Register result:", registerResult);
 
-    if (signInResult?.error) {
-      setError("Invalid email or password");
-    } else if (signInResult?.ok) {
-      console.log("Sign in successful, reloading page...");
-      setIsPopupOpen(false);
-    } else {
-      console.error("Sign in failed:", signInResult);
+      const profileData = {
+        userId: registerResult.id,
+        name,
+        surname,
+        phoneCode,
+        phoneNumber: phone,
+      };
+
+      const profileResponse = await fetch("/api/profile/firstRegister", {
+        method: "POST",
+        body: JSON.stringify(profileData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!profileResponse.ok) {
+        throw new Error(
+          `Profile fetch error: ${profileResponse.status} ${profileResponse.statusText}`
+        );
+      }
+
+      const signInResult = await signIn("credentials", {
+        email: email,
+        password: password,
+        redirect: false,
+      });
+
+      if (signInResult?.error) {
+        setError("Invalid email or password");
+      } else if (signInResult?.ok) {
+        console.log("Sign in successful, reloading page...");
+        window.location.reload();
+      } else {
+        console.error("Sign in failed:", signInResult);
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+      setRegisterError("An error occurred. Please try again.");
     }
   };
 
@@ -394,7 +396,7 @@ const LoginClient = () => {
                     <path
                       fill-rule="evenodd"
                       clip-rule="evenodd"
-                      d="M5.06523 13.6851C4.83523 12.9951 4.70455 12.258 4.70455 11.5001C4.70455 10.7421 4.83523 10.0051 5.06523 9.31506V6.33551H1.22318C0.444318 7.88801 0 9.64437 0 11.5001C0 13.3557 0.444318 15.1121 1.22318 16.6646L5.06523 13.6851Z"
+                      d="M5.06523 13.6851C4.83523 12.9951 4.70455 12.258 4.70455 11.5001C4.70455 10.7421 4.83523 10.0051 5.06523 9.31506V6.33551H1.22318C0.444318 7.88801 0 9.64437 0 11.5001C0 13.3557 0.444318 15.1121 1.22318 16.6646L5.06519 13.6851Z"
                       fill="black"
                     />
                     <path
@@ -431,7 +433,7 @@ const LoginClient = () => {
                   Continue with Apple
                 </button>
               </div>
-              <div style={{ display: "flex" }}>
+              <div style={{ display: "flex" }} onClick={showInput}>
                 <a className="email-text">
                   Continue with Email
                 </a>
@@ -472,7 +474,7 @@ const LoginClient = () => {
                 </span>
               </div>
             </div>
-          ) : (
+          ) : loginProcess === 1 ? (
             <div className="login-form-container">
               <div className="error-message-container">
                 {error && <div className="error-message">{error}</div>}
@@ -541,76 +543,91 @@ const LoginClient = () => {
                 />
               </div>
             </div>
+          ) : (
+            <div className="register-form-container">
+              <div className="error-message-container">
+                {registerError && (
+                  <div className="error-message">{registerError}</div>
+                )}
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  width: "252px",
+                  marginBottom: "20px",
+                }}
+              >
+                <Input
+                  id="name"
+                  placeholder="Name"
+                  type="text"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className={registerError ? "error-input" : ""}
+                />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  width: "252px",
+                  marginBottom: "20px",
+                }}
+              >
+                <Input
+                  id="surname"
+                  placeholder="Surname"
+                  type="text"
+                  required
+                  value={surname}
+                  onChange={(e) => setSurname(e.target.value)}
+                  className={registerError ? "error-input" : ""}
+                />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  width: "252px",
+                  marginBottom: "24px",
+                }}
+              >
+                <div style={{ width: "100px", marginRight: "12px" }}>
+                  <Dropdown
+                    id="phoneCode"
+                    list={countryCodes}
+                    placeholder="Code"
+                    value={phoneCode}
+                    setValue={setPhoneCode}
+                    error={registerError ? true : false}
+                  />
+                </div>
+                <div style={{ width: "160px" }}>
+                  <Input
+                    id="phone"
+                    placeholder="Phone"
+                    type="text"
+                    required
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    className={registerError ? "error-input" : ""}
+                  />
+                </div>
+              </div>
+              <div>
+                <Button
+                  text="Continue"
+                  onClick={ContinueWithProfile}
+                  paddingTop={15}
+                  paddingBottom={15}
+                  paddingLeft={92}
+                  paddingRight={91}
+                  fontSize={15}
+                />
+              </div>
+            </div>
           )}
         </div>
       )}
-
-      <div
-        className="register-popup"
-        style={{ display: !isPopupOpen ? "none" : "flex" }}
-      >
-        <div className="error-message-container">
-          {registerError && (
-            <div className="error-message">{registerError}</div>
-          )}
-        </div>
-        <div className="register-popup-line">
-          <Input
-            id="name"
-            placeholder="Name"
-            type="text"
-            required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className={registerError ? "error-input" : ""}
-          />
-          <Input
-            id="surname"
-            placeholder="Surname"
-            type="text"
-            required
-            value={surname}
-            onChange={(e) => setSurname(e.target.value)}
-            className={registerError ? "error-input" : ""}
-          />
-        </div>
-        <div className="register-popup-line">
-          <div style={{ width: "95px" }}>
-            <Dropdown
-              id="phoneCode"
-              list={countryCodes}
-              placeholder="Phone Code"
-              value={phoneCode}
-              setValue={setPhoneCode}
-              error={registerError ? true : false}
-            />
-          </div>
-          <div style={{ width: "193px" }}>
-            <Input
-              id="phone"
-              placeholder="Phone"
-              type="text"
-              required
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className={registerError ? "error-input" : ""}
-            />
-          </div>
-        </div>
-        <div className="register-popup-line">
-          <div style={{ width: "100%" }}>
-            <Button
-              text="Continue"
-              onClick={() => ContinueWithProfile()}
-              paddingTop={15}
-              paddingBottom={15}
-              paddingLeft={117}
-              paddingRight={117}
-              fontSize={15}
-            />
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

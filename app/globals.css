@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --font-geist-sans: var(--font-geist-sans);
   --font-geist-mono: var(--font-geist-mono);
@@ -60,7 +64,6 @@ body {
   flex-grow: 1;
   display: flex;
 }
-
 /* Geist Mono için özel bir sınıf */
 .geist-mono {
   font-family: var(--font-geist-mono), monospace !important;
