@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  images: {
-    domains: ["cmj-profile-image.s3.eu-north-1.amazonaws.com", "https://resmim.net"],
-  },
+  // Your Next.js configuration options here
 };
 
 export default nextConfig;

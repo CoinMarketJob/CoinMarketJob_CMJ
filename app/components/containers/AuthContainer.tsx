@@ -1,19 +1,24 @@
 "use client";
 import LoginClient from "../auth/LoginClient";
-import { useSession } from "next-auth/react";
+import { User } from "@prisma/client";
+import { getCurrentUser } from "@/app/actions/getCurrentUser";
+import { useEffect, useState } from "react";
+import styles from "./AuthContainer.module.css";
 import { useProfile } from "@/hooks/useCompanyProfile";
+import { useSession } from "next-auth/react";
 
 const AuthContainer = () => {
   const { profileType } = useProfile();
   const { data: session } = useSession();
 
   return (
-    <div className="flex w-full h-full overflow-y-auto scrollbar-none">
+    <div
+      className={styles.container}
+      style={{ display: "flex", width: "100%", height: "100%" }}
+    >
       {session ? (
-        <div className="w-full h-full flex items-center justify-center">
-          <div className="border-4 border-gray-300 rounded-lg p-8 shadow-lg">
-            <h1 className="text-3xl font-bold text-red-600">hello</h1>
-          </div>
+        <div className="tailwind">
+          <div className="text-4xl font-bold text-red-500">Merhaba </div>
         </div>
       ) : (
         <LoginClient />
