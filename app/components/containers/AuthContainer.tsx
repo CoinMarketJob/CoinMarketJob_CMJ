@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import styles from "./AuthContainer.module.css";
 import { useProfile } from "@/hooks/useCompanyProfile";
 import { useSession } from "next-auth/react";
+import ProfileCard from "../profile/ProfileCard";
 
 const AuthContainer = () => {
   const { profileType } = useProfile();
@@ -17,9 +18,7 @@ const AuthContainer = () => {
       style={{ display: "flex", width: "100%", height: "100%" }}
     >
       {session ? (
-        <div className="tailwind">
-          <div className="text-4xl font-bold text-red-500">Merhaba </div>
-        </div>
+        <ProfileCard />
       ) : (
         <LoginClient />
       )}
