@@ -8,14 +8,21 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Separator } from "../ui/separator";
+import { useProfileData } from "@/hooks/useProfileData";
 
 export default function ProfileCard() {
+  const { profileData } = useProfileData();
+
+  if (!profileData) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="tailwind" style={{ width: "100%" }}>
       <Card>
         <CardHeader>
-          <CardTitle>Name Surname</CardTitle>
-          <CardDescription>Headline Sentence Here</CardDescription>
+          <CardTitle>{profileData.nameSurname}</CardTitle>
+          <CardDescription>{profileData.headline}</CardDescription>
           <div className="flex w-full">
             <CardDescription>Messages</CardDescription>
             <CardDescription className="flex flex-grow justify-end">

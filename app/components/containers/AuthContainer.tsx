@@ -7,6 +7,7 @@ import styles from "./AuthContainer.module.css";
 import { useProfile } from "@/hooks/useCompanyProfile";
 import { useSession } from "next-auth/react";
 import ProfileCard from "../profile/ProfileCard";
+import AccordionCard from "../profile/AccordionCard";
 
 const AuthContainer = () => {
   const { profileType } = useProfile();
@@ -15,10 +16,18 @@ const AuthContainer = () => {
   return (
     <div
       className={styles.container}
-      style={{ display: "flex", width: "100%", height: "100%" }}
+      style={{ display: "flex", flexDirection: "column", width: "100%", height: "100%" }}
     >
       {session ? (
-        <ProfileCard />
+        <>
+          <ProfileCard />
+          <AccordionCard
+            name="John Doe"
+            publicationTitle="Sample Publication"
+            publisherName="Sample Publisher"
+            description="This is a sample description for the AccordionCard component."
+          />
+        </>
       ) : (
         <LoginClient />
       )}
