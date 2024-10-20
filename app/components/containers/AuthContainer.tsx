@@ -14,12 +14,9 @@ const AuthContainer = () => {
   const { data: session } = useSession();
 
   return (
-    <div
-      className={styles.container}
-      style={{ display: "flex", flexDirection: "column", width: "100%", height: "100%" }}
-    >
+    <div className={styles.container}>
       {session ? (
-        <>
+        <div className={styles.sessionContent}>
           <ProfileCard />
           <AccordionCard
             name="John Doe"
@@ -27,9 +24,11 @@ const AuthContainer = () => {
             publisherName="Sample Publisher"
             description="This is a sample description for the AccordionCard component."
           />
-        </>
+        </div>
       ) : (
-        <LoginClient />
+        <div className={styles.loginWrapper}>
+          <LoginClient />
+        </div>
       )}
     </div>
   );
