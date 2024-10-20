@@ -39,7 +39,6 @@ const Page = () => {
   const [monthlyChecked, setMonthlyChecked] = useState<boolean>(false);
   const [fiveJobChecked, setFiveJobChecked] = useState<boolean>(false);
 
-  const { companyProfileData, setCompanyProfileData } = useProfileData();
   const [uploading, setUploading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);

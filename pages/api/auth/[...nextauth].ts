@@ -9,8 +9,8 @@ export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma as any),
   providers: [
     GoogleProvider({
-      clientId: "http://795568910136-mboigjfkfi68ptn6oo28u89j9uod4cq3.apps.googleusercontent.com/",
-      clientSecret: "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",
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
     CredentialsProvider({
       name: "credentials",
@@ -50,11 +50,11 @@ export const authOptions: AuthOptions = {
   pages: {
     signIn: "/",
   },
-  debug: true,
+  debug: process.env.NODE_ENV === 'development',
   session: {
     strategy: "jwt"
   },
-  secret: "@CMJ2024"
+  secret: process.env.NEXTAUTH_SECRET
 };
 
 export default NextAuth(authOptions);

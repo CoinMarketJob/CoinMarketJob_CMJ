@@ -271,7 +271,14 @@ const LoginClient = () => {
     }
   };
 
-  const loginWithGoogle = async () => {};
+  const loginWithGoogle = async () => {
+    try {
+      await signIn("google", { callbackUrl: "/" });
+    } catch (error) {
+      console.error("Google login error:", error);
+      setError("An error occurred during Google login. Please try again.");
+    }
+  };
 
   const ContinueWithProfile = async () => {
     if (name === "" || surname === "" || phone === "") {
