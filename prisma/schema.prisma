@@ -140,22 +140,6 @@ model AppliedJobs {
   Answers Answers[]
 }
 
-model News {
-  id      Int    @id @default(autoincrement())
-  logo    String
-  summary String
-}
-
-model Hacks {
-  id          Int    @id @default(autoincrement())
-  logo        String
-  name        String
-  companyName String
-  date        String
-  prize       Int
-  location    String
-}
-
 model JobTitles {
   id       Int    @id @default(autoincrement())
   jobTitle String
@@ -252,23 +236,6 @@ enum socialMediaType {
   Custom
 }
 
-
-
-model BuyedPackage {
-  id               Int         @id @default(autoincrement())
-  userId           Int
-  user             User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  packageType      PackageType
-  subscriptionDate DateTime    @default(now())
-  expirationDate   DateTime?
-}
-
-enum PackageType {
-  OneJob
-  FiveJob
-  Monthly
-}
-
 model ProfileSection {
   id          Int           @id @default(autoincrement())
   profileId   Int
@@ -299,7 +266,29 @@ model Attachments {
   sectionId     Int
   section       ProfileSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
   attachmentUrl String
+  attachmentType AttachmentType
 }
+
+enum AttachmentType {
+  Image
+  File
+}
+
+model BuyedPackage {
+  id               Int         @id @default(autoincrement())
+  userId           Int
+  user             User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  packageType      PackageType
+  subscriptionDate DateTime    @default(now())
+  expirationDate   DateTime?
+}
+
+enum PackageType {
+  OneJob
+  FiveJob
+  Monthly
+}
+
 
 model Live {
   id           Int      @id @default(autoincrement())
