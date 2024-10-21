@@ -142,3 +142,13 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+* {
+  scrollbar-width: none;  /* Firefox için */
+  -ms-overflow-style: none;  /* IE ve Edge için */
+}
+
+/* Webkit tarayıcıları (Chrome, Safari) için scrollbar'ı gizle */
+*::-webkit-scrollbar {
+  display: none;
+}
