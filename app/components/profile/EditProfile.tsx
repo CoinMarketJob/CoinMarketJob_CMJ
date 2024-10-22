@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
 import { Button } from "@/app/components/ui/button"
 import { Input } from "@/app/components/ui/input"
@@ -9,11 +9,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { GripVertical, Image as ImageIcon, List, Link, Paperclip, X, Upload, Edit as EditIcon, Camera } from "lucide-react"
 import { Separator } from "@/app/components/ui/separator"
 import { Dialog, DialogContent, DialogTrigger } from "@/app/components/ui/dialog"
+import Image from 'next/image'
 
 type Section = "General" | "Work Experience" | "Volunteering" | "Education" | "Certification" | "Projects" | "Side Projects" | "Publications" | "Honors" | "Contact"
 
-export default function Component() {
-  const [profileImage, setProfileImage] = useState("/placeholder.svg?height=100&width=100")
+interface EditProfileProps {
+  onClose: () => void;
+}
+
+export default function EditProfile({ onClose }: EditProfileProps) {
+  const [profileImage, setProfileImage] = useState("/PlaceHolderAvatar.png?height=100&width=100")
   const [activeSection, setActiveSection] = useState<Section>("General")
   const [sections, setSections] = useState<Section[]>([
     "General", "Work Experience", "Volunteering", "Education", "Certification", "Projects", "Side Projects", "Publications", "Honors", "Contact"
@@ -30,11 +35,26 @@ export default function Component() {
   const [isAttachmentPopupOpen, setIsAttachmentPopupOpen] = useState(false)
   const [attachments, setAttachments] = useState<string[]>([])
 
+  const popupRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
+
   const removeImage = () => {
-    setProfileImage("/placeholder.svg?height=100&width=100")
+    setProfileImage("/PlaceHolderAvatar.png?height=100&width=100")
   }
 
-  const onDragEnd = (result) => {
+  const onDragEnd = (result : any) => {
     if (!result.destination) {
       return
     }
@@ -55,7 +75,7 @@ export default function Component() {
   }
 
   const renderSectionContent = (section: Section) => {
-    const addButton = (onClick) => (
+    const addButton = (onClick : any) => (
       <Button variant="outline" size="sm" onClick={onClick}>
         Add
       </Button>
@@ -117,7 +137,7 @@ export default function Component() {
       </Dialog>
     )
 
-    const actionButtons = (onCancel) => (
+    const actionButtons = (onCancel : any) => (
       <div className="flex justify-end space-x-2 mt-4">
         <Button variant="outline" onClick={onCancel}>Cancel</Button>
         <Button onClick={onCancel}>Save</Button>
@@ -130,7 +150,7 @@ export default function Component() {
           <div className="space-y-6 relative">
             <div className="flex items-start gap-4">
               <div className="relative">
-                <img src={profileImage} alt="Profile" className="w-24 h-24 rounded-full object-cover" />
+                <Image src={profileImage} alt="Profile" width={96} height={96} className="rounded-full object-cover" />
                 <Button variant="outline" size="icon" className="absolute bottom-0 right-0 rounded-full bg-white">
                   <Camera className="h-4 w-4" />
                 </Button>
@@ -164,7 +184,7 @@ export default function Component() {
               <h2 className="text-2xl font-bold">{section}</h2>
               {addButton(() => setIsAddingWorkExperience(true))}
             </div>
-            <Separator className="my-4" />
+            <Separator />
             {isAddingWorkExperience ? (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -229,7 +249,7 @@ export default function Component() {
                 {actionButtons(() => setIsAddingWorkExperience(false))}
               </div>
             ) : (
-              <p>No work experience added yet. Click 'Add' to add new work experience.</p>
+              <p>No work experience added yet. Click &apos;Add&apos; to add new work experience.</p>
             )}
           </div>
         )
@@ -240,7 +260,7 @@ export default function Component() {
               <h2 className="text-2xl font-bold">{section}</h2>
               {addButton(() => setIsAddingVolunteering(true))}
             </div>
-            <Separator className="my-4" />
+            <Separator />
             {isAddingVolunteering ? (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -305,7 +325,7 @@ export default function Component() {
                 {actionButtons(() => setIsAddingVolunteering(false))}
               </div>
             ) : (
-              <p>No volunteering experience added yet. Click 'Add' to add new volunteering experience.</p>
+              <p>No volunteering experience added yet. Click &apos;Add&apos; to add new volunteering experience.</p>
             )}
           </div>
         )
@@ -316,7 +336,7 @@ export default function Component() {
               <h2 className="text-2xl font-bold">{section}</h2>
               {addButton(() => setIsAddingEducation(true))}
             </div>
-            <Separator className="my-4" />
+            <Separator />
             {isAddingEducation ? (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -381,7 +401,7 @@ export default function Component() {
                 {actionButtons(() => setIsAddingEducation(false))}
               </div>
             ) : (
-              <p>No education added yet. Click 'Add' to add new education.</p>
+              <p>No education added yet. Click &apos;Add&apos; to add new education.</p>
             )}
           </div>
         )
@@ -392,7 +412,7 @@ export default function Component() {
               <h2 className="text-2xl font-bold">{section}</h2>
               {addButton(() => setIsAddingCertification(true))}
             </div>
-            <Separator className="my-4" />
+            <Separator />
             {isAddingCertification ? (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -438,7 +458,7 @@ export default function Component() {
                 {actionButtons(() => setIsAddingCertification(false))}
               </div>
             ) : (
-              <p>No certifications added yet. Click 'Add' to add a new certification.</p>
+              <p>No certifications added yet. Click &apos;Add&apos; to add a new certification.</p>
             )}
           </div>
         )
@@ -449,7 +469,7 @@ export default function Component() {
               <h2 className="text-2xl font-bold">{section}</h2>
               {addButton(() => setIsAddingProject(true))}
             </div>
-            <Separator className="my-4" />
+            <Separator />
             {isAddingProject ? (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -486,7 +506,7 @@ export default function Component() {
                 {actionButtons(() => setIsAddingProject(false))}
               </div>
             ) : (
-              <p>No projects added yet. Click 'Add' to add a new project.</p>
+              <p>No projects added yet. Click &apos;Add&apos; to add a new project.</p>
             )}
           </div>
         )
@@ -497,7 +517,7 @@ export default function Component() {
               <h2 className="text-2xl font-bold">{section}</h2>
               {addButton(() => setIsAddingSideProject(true))}
             </div>
-            <Separator className="my-4" />
+            <Separator />
             {isAddingSideProject ? (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -534,7 +554,7 @@ export default function Component() {
                 {actionButtons(() => setIsAddingSideProject(false))}
               </div>
             ) : (
-              <p>No side projects added yet. Click 'Add' to add a new side project.</p>
+              <p>No side projects added yet. Click &apos;Add&apos; to add a new side project.</p>
             )}
           </div>
         )
@@ -545,7 +565,7 @@ export default function Component() {
               <h2 className="text-2xl font-bold">{section}</h2>
               {addButton(() => setIsAddingPublication(true))}
             </div>
-            <Separator className="my-4" />
+            <Separator />
             {isAddingPublication ? (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -582,7 +602,7 @@ export default function Component() {
                 {actionButtons(() => setIsAddingPublication(false))}
               </div>
             ) : (
-              <p>No publications added yet. Click 'Add' to add a new publication.</p>
+              <p>No publications added yet. Click &apos;Add&apos; to add a new publication.</p>
             )}
           </div>
         )
@@ -593,7 +613,7 @@ export default function Component() {
               <h2 className="text-2xl font-bold">{section}</h2>
               {addButton(() => setIsAddingHonor(true))}
             </div>
-            <Separator className="my-4" />
+            <Separator />
             {isAddingHonor ? (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -630,7 +650,7 @@ export default function Component() {
                 {actionButtons(() => setIsAddingHonor(false))}
               </div>
             ) : (
-              <p>No honors added yet. Click 'Add' to add a new honor.</p>
+              <p>No honors added yet. Click &apos;Add&apos; to add a new honor.</p>
             )}
           </div>
         )
@@ -641,7 +661,7 @@ export default function Component() {
               <h2 className="text-2xl font-bold">{section}</h2>
               {addButton(() => setIsAddingContact(true))}
             </div>
-            <Separator className="my-4" />
+            <Separator />
             {isAddingContact ? (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -677,7 +697,7 @@ export default function Component() {
                 {actionButtons(() => setIsAddingContact(false))}
               </div>
             ) : (
-              <p>No contacts added yet. Click 'Add' to add a new contact.</p>
+              <p>No contacts added yet. Click &apos;Add&apos; to add a new contact.</p>
             )}
           </div>
         )
@@ -688,7 +708,7 @@ export default function Component() {
               <h2 className="text-2xl font-bold">{section}</h2>
               {addButton(() => {})}
             </div>
-            <Separator className="my-4" />
+            <Separator />
             <p>Content for {section} section.</p>
           </div>
         )
@@ -697,56 +717,55 @@ export default function Component() {
 
   return (
     <div className="tailwind" style={{width: "100%"}}>
-
-        <div className="flex h-screen bg-gray-100 items-center justify-center">
-        <div className="bg-white rounded-lg shadow-lg w-full max-w-4xl h-[600px] flex overflow-hidden">
-            <div className="w-64 bg-white border-r">
+      <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center shadow-lg">
+        <div ref={popupRef} className="bg-white rounded-2xl shadow-lg w-full max-w-4xl h-[600px] flex overflow-hidden">
+          <div className="w-64 bg-white border-r">
             <div className="h-full">
-                <DragDropContext onDragEnd={onDragEnd}>
+              <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable droppableId="sections">
-                    {(provided, snapshot) => (
+                  {(provided, snapshot) => (
                     <nav
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
-                        className={`space-y-1 p-4 ${snapshot.isDraggingOver ? 'bg-gray-50' : ''}`}
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                      className={`space-y-1 p-4 ${snapshot.isDraggingOver ? 'bg-gray-50' : ''}`}
                     >
-                        {sections.map((item, index) => (
+                      {sections.map((item, index) => (
                         <Draggable key={item} draggableId={item} index={index}>
-                            {(provided, snapshot) => (
+                          {(provided, snapshot) => (
                             <div
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                className={`flex items-center justify-between py-2 px-3 rounded-md cursor-pointer transition-colors duration-200 ${
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              className={`flex items-center justify-between py-2 px-3 rounded-md cursor-pointer transition-colors duration-200 ${
                                 item === activeSection
-                                    ? "bg-gray-200"
-                                    : snapshot.isDragging
+                                  ? "bg-gray-200"
+                                  : snapshot.isDragging
                                     ? "bg-gray-100"
                                     : "hover:bg-gray-100"
-                                }`}
-                                onClick={() => setActiveSection(item as Section)}
+                              }`}
+                              onClick={() => setActiveSection(item as Section)}
                             >
-                                <span>{item}</span>
-                                <div {...provided.dragHandleProps} className="cursor-grab active:cursor-grabbing">
+                              <span>{item}</span>
+                              <div {...provided.dragHandleProps} className="cursor-grab active:cursor-grabbing">
                                 <GripVertical className="h-4 w-4" />
-                                </div>
+                              </div>
                             </div>
-                            )}
+                          )}
                         </Draggable>
-                        ))}
-                        {provided.placeholder}
+                      ))}
+                      {provided.placeholder}
                     </nav>
-                    )}
+                  )}
                 </Droppable>
-                </DragDropContext>
+              </DragDropContext>
             </div>
-            </div>
-            <div className="flex-1 p-6 overflow-auto">
+          </div>
+          <div className="flex-1 p-6 overflow-auto border-0" style={{borderColor: "#E4E4E7"}}>
             <div className="max-w-2xl mx-auto">
-                {renderSectionContent(activeSection)}
+              {renderSectionContent(activeSection)}
             </div>
-            </div>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
   )
 }
