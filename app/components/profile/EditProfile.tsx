@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
 import { Button } from "@/app/components/ui/button"
 import { Input } from "@/app/components/ui/input"
@@ -12,7 +12,11 @@ import { Dialog, DialogContent, DialogTrigger } from "@/app/components/ui/dialog
 
 type Section = "General" | "Work Experience" | "Volunteering" | "Education" | "Certification" | "Projects" | "Side Projects" | "Publications" | "Honors" | "Contact"
 
-export default function Component() {
+interface EditProfileProps {
+  onClose: () => void;
+}
+
+export default function EditProfile({ onClose }: EditProfileProps) {
   const [profileImage, setProfileImage] = useState("/placeholder.svg?height=100&width=100")
   const [activeSection, setActiveSection] = useState<Section>("General")
   const [sections, setSections] = useState<Section[]>([
@@ -29,6 +33,21 @@ export default function Component() {
   const [isAddingContact, setIsAddingContact] = useState(false)
   const [isAttachmentPopupOpen, setIsAttachmentPopupOpen] = useState(false)
   const [attachments, setAttachments] = useState<string[]>([])
+
+  const popupRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
 
   const removeImage = () => {
     setProfileImage("/placeholder.svg?height=100&width=100")
@@ -697,56 +716,55 @@ export default function Component() {
 
   return (
     <div className="tailwind" style={{width: "100%"}}>
-
-        <div className="flex h-screen bg-gray-100 items-center justify-center">
-        <div className="bg-white rounded-lg shadow-lg w-full max-w-4xl h-[600px] flex overflow-hidden">
-            <div className="w-64 bg-white border-r">
+      <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center shadow-lg">
+        <div ref={popupRef} className="bg-white rounded-2xl shadow-lg w-full max-w-4xl h-[600px] flex overflow-hidden">
+          <div className="w-64 bg-white border-r">
             <div className="h-full">
-                <DragDropContext onDragEnd={onDragEnd}>
+              <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable droppableId="sections">
-                    {(provided, snapshot) => (
+                  {(provided, snapshot) => (
                     <nav
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
-                        className={`space-y-1 p-4 ${snapshot.isDraggingOver ? 'bg-gray-50' : ''}`}
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                      className={`space-y-1 p-4 ${snapshot.isDraggingOver ? 'bg-gray-50' : ''}`}
                     >
-                        {sections.map((item, index) => (
+                      {sections.map((item, index) => (
                         <Draggable key={item} draggableId={item} index={index}>
-                            {(provided, snapshot) => (
+                          {(provided, snapshot) => (
                             <div
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                className={`flex items-center justify-between py-2 px-3 rounded-md cursor-pointer transition-colors duration-200 ${
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              className={`flex items-center justify-between py-2 px-3 rounded-md cursor-pointer transition-colors duration-200 ${
                                 item === activeSection
-                                    ? "bg-gray-200"
-                                    : snapshot.isDragging
+                                  ? "bg-gray-200"
+                                  : snapshot.isDragging
                                     ? "bg-gray-100"
                                     : "hover:bg-gray-100"
-                                }`}
-                                onClick={() => setActiveSection(item as Section)}
+                              }`}
+                              onClick={() => setActiveSection(item as Section)}
                             >
-                                <span>{item}</span>
-                                <div {...provided.dragHandleProps} className="cursor-grab active:cursor-grabbing">
+                              <span>{item}</span>
+                              <div {...provided.dragHandleProps} className="cursor-grab active:cursor-grabbing">
                                 <GripVertical className="h-4 w-4" />
-                                </div>
+                              </div>
                             </div>
-                            )}
+                          )}
                         </Draggable>
-                        ))}
-                        {provided.placeholder}
+                      ))}
+                      {provided.placeholder}
                     </nav>
-                    )}
+                  )}
                 </Droppable>
-                </DragDropContext>
+              </DragDropContext>
             </div>
-            </div>
-            <div className="flex-1 p-6 overflow-auto">
+          </div>
+          <div className="flex-1 p-6 overflow-auto">
             <div className="max-w-2xl mx-auto">
-                {renderSectionContent(activeSection)}
+              {renderSectionContent(activeSection)}
             </div>
-            </div>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
   )
 }
