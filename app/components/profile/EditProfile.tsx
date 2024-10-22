@@ -17,7 +17,7 @@ interface EditProfileProps {
 }
 
 export default function EditProfile({ onClose }: EditProfileProps) {
-  const [profileImage, setProfileImage] = useState("/placeholder.svg?height=100&width=100")
+  const [profileImage, setProfileImage] = useState("/PlaceHolderAvatar.png?height=100&width=100")
   const [activeSection, setActiveSection] = useState<Section>("General")
   const [sections, setSections] = useState<Section[]>([
     "General", "Work Experience", "Volunteering", "Education", "Certification", "Projects", "Side Projects", "Publications", "Honors", "Contact"
@@ -50,7 +50,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
   }, [onClose]);
 
   const removeImage = () => {
-    setProfileImage("/placeholder.svg?height=100&width=100")
+    setProfileImage("/PlaceHolderAvatar.png?height=100&width=100")
   }
 
   const onDragEnd = (result : any) => {
