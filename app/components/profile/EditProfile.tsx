@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { GripVertical, Image as ImageIcon, List, Link, Paperclip, X, Upload, Edit as EditIcon, Camera } from "lucide-react"
 import { Separator } from "@/app/components/ui/separator"
 import { Dialog, DialogContent, DialogTrigger } from "@/app/components/ui/dialog"
+import Image from 'next/image'
 
 type Section = "General" | "Work Experience" | "Volunteering" | "Education" | "Certification" | "Projects" | "Side Projects" | "Publications" | "Honors" | "Contact"
 
@@ -149,7 +150,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
           <div className="space-y-6 relative">
             <div className="flex items-start gap-4">
               <div className="relative">
-                <img src={profileImage} alt="Profile" className="w-24 h-24 rounded-full object-cover" />
+                <Image src={profileImage} alt="Profile" width={96} height={96} className="rounded-full object-cover" />
                 <Button variant="outline" size="icon" className="absolute bottom-0 right-0 rounded-full bg-white">
                   <Camera className="h-4 w-4" />
                 </Button>
@@ -248,7 +249,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                 {actionButtons(() => setIsAddingWorkExperience(false))}
               </div>
             ) : (
-              <p>No work experience added yet. Click 'Add' to add new work experience.</p>
+              <p>No work experience added yet. Click &apos;Add&apos; to add new work experience.</p>
             )}
           </div>
         )
@@ -324,7 +325,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                 {actionButtons(() => setIsAddingVolunteering(false))}
               </div>
             ) : (
-              <p>No volunteering experience added yet. Click 'Add' to add new volunteering experience.</p>
+              <p>No volunteering experience added yet. Click &apos;Add&apos; to add new volunteering experience.</p>
             )}
           </div>
         )
@@ -400,7 +401,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                 {actionButtons(() => setIsAddingEducation(false))}
               </div>
             ) : (
-              <p>No education added yet. Click 'Add' to add new education.</p>
+              <p>No education added yet. Click &apos;Add&apos; to add new education.</p>
             )}
           </div>
         )
@@ -457,7 +458,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                 {actionButtons(() => setIsAddingCertification(false))}
               </div>
             ) : (
-              <p>No certifications added yet. Click 'Add' to add a new certification.</p>
+              <p>No certifications added yet. Click &apos;Add&apos; to add a new certification.</p>
             )}
           </div>
         )
@@ -505,7 +506,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                 {actionButtons(() => setIsAddingProject(false))}
               </div>
             ) : (
-              <p>No projects added yet. Click 'Add' to add a new project.</p>
+              <p>No projects added yet. Click &apos;Add&apos; to add a new project.</p>
             )}
           </div>
         )
@@ -553,7 +554,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                 {actionButtons(() => setIsAddingSideProject(false))}
               </div>
             ) : (
-              <p>No side projects added yet. Click 'Add' to add a new side project.</p>
+              <p>No side projects added yet. Click &apos;Add&apos; to add a new side project.</p>
             )}
           </div>
         )
@@ -601,7 +602,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                 {actionButtons(() => setIsAddingPublication(false))}
               </div>
             ) : (
-              <p>No publications added yet. Click 'Add' to add a new publication.</p>
+              <p>No publications added yet. Click &apos;Add&apos; to add a new publication.</p>
             )}
           </div>
         )
@@ -649,7 +650,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                 {actionButtons(() => setIsAddingHonor(false))}
               </div>
             ) : (
-              <p>No honors added yet. Click 'Add' to add a new honor.</p>
+              <p>No honors added yet. Click &apos;Add&apos; to add a new honor.</p>
             )}
           </div>
         )
@@ -696,7 +697,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                 {actionButtons(() => setIsAddingContact(false))}
               </div>
             ) : (
-              <p>No contacts added yet. Click 'Add' to add a new contact.</p>
+              <p>No contacts added yet. Click &apos;Add&apos; to add a new contact.</p>
             )}
           </div>
         )
