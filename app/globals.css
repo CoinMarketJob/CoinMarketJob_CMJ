@@ -1,8 +1,10 @@
 /* main.css (or global.css) */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+.tailwind {
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+}
 
 /* Diğer global stilleriniz buraya gelebilir */
 
@@ -68,7 +70,6 @@ body {
   flex-grow: 1;
   display: flex;
 }
-
 /* Geist Mono için özel bir sınıf */
 .geist-mono {
   font-family: var(--font-geist-mono), monospace !important;
@@ -78,7 +79,6 @@ body {
 .inter-font,
 .custom-font {
 }
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -134,7 +134,6 @@ body {
     --chart-5: 340 75% 55%;
   }
 }
-
 @layer base {
   * {
     @apply border-border;
@@ -146,6 +145,7 @@ body {
 
 * {
   scrollbar-width: none;  /* Firefox için */
+  -ms-overflow-style: none;  /* IE ve Edge için */
 }
 
 /* Webkit tarayıcıları (Chrome, Safari) için scrollbar'ı gizle */
