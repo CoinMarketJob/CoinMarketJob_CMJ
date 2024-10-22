@@ -1,31 +1,34 @@
 "use client";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import './Draft.css'
-import { Color } from '@tiptap/extension-color'
-import ListItem from '@tiptap/extension-list-item'
-import TextStyle from '@tiptap/extension-text-style'
-import { useEditor, EditorContent, Editor, JSONContent } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
-import React, { useEffect, useState } from 'react'
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './QuestionDraft.css';
+import { Color } from '@tiptap/extension-color';
+import ListItem from '@tiptap/extension-list-item';
+import TextStyle from '@tiptap/extension-text-style';
+import { useEditor, EditorContent, Editor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import React, { useEffect, useState } from 'react';
+import { faChevronDown, faCheck, faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 interface DraftProps {
+  id: string;
   show?: boolean;
-  content?: JSONContent;
-  onChange?: (content: JSONContent) => void;
-  onContentChange?: () => void; // Yeni eklenen prop
+  content?: string | undefined;
+  onChange?: (content: string) => void;
+  onContentChange?: () => void;
   border?: boolean;
   error?: boolean;
+  onSave: () => void;
+  onDelete: () => void;
 }
 
-const MenuBar: React.FC<{ editor: Editor | null }> = ({ editor }) => {
+const MenuBar: React.FC<{ editor: Editor | null, onSave: () => void }> = ({ editor, onSave }) => {
   const [textSize, setTextSize] = useState<string>("Normal");
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if ((event.target as Element).closest('.text-size-container') === null) {
-        setIsOpen(false); // Close the dropdown when clicking outside
+        setIsOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -35,22 +38,22 @@ const MenuBar: React.FC<{ editor: Editor | null }> = ({ editor }) => {
   }, []);
 
   if (!editor) {
-    return null
+    return null;
   }
 
   const changeSize = (newSize: string) => {
     setTextSize(newSize);
     setIsOpen(false);
 
-    switch(newSize) {
+    switch (newSize) {
       case "H2":
-        editor.chain().focus().toggleHeading({ level: 4 }).run();
+        editor.chain().focus().toggleHeading({ level: 2 }).run();
         break;
       default:
         editor.chain().focus().setParagraph().run();
         break;
     }
-  }
+  };
 
   return (
     <div className="button-group">
@@ -66,36 +69,34 @@ const MenuBar: React.FC<{ editor: Editor | null }> = ({ editor }) => {
       </div>
       <div className="right-line"></div>
       <button
-  onClick={() => editor.chain().focus().toggleBold().run()}
-  style={{
-    cursor: 'pointer',
-    transition: 'color 0.3s',
-    color: editor.isActive('bold') ? 'rgba(36, 34, 32, 0.8)' : '#999999'
-  }}
-  disabled={
-    !editor.can().chain().focus().toggleBold().run()
-  }
-  className="bold-button-draft"
->
-  B
-</button>
+        onClick={() => editor.chain().focus().toggleBold().run()}
+        style={{
+          cursor: 'pointer',
+          transition: 'color 0.3s',
+          color: editor.isActive('bold') ? 'rgba(36, 34, 32, 0.8)' : '#999999'
+        }}
+        disabled={!editor.can().chain().focus().toggleBold().run()}
+        className="bold-button-draft"
+      >
+        B
+      </button>
 
-<div className='svg-container-italic'>
-  <svg width="14" height="21" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg" 
-    onClick={() => editor.chain().focus().toggleItalic().run()} 
-    style={{
-      marginRight: '21.38px',
-      cursor: 'pointer',
-      transition: 'color 0.3s',
-      color: editor.isActive('italic') ? 'rgba(36, 34, 32, 0.8)' : '#999999'
-    }}
-    className="italic-button"
-  >
-    <path d="M0.662383 14C0.47692 14 0.320157 13.9394 0.192094 13.8183C0.0640314 13.6971 0 13.5489 0 13.3736C0 13.1982 0.0640314 13.0505 0.192094 12.9307C0.320157 12.8107 0.47692 12.7506 0.662383 12.7506H4.31633L8.45006 1.24936H4.79611C4.61065 1.24936 4.45389 1.18879 4.32583 1.06764C4.19776 0.946494 4.13373 0.798186 4.13373 0.62272C4.13373 0.44744 4.19776 0.299786 4.32583 0.17976C4.45389 0.0599195 4.61065 0 4.79611 0H13.3376C13.5231 0 13.6798 0.0605731 13.8079 0.18172C13.936 0.302866 14 0.45108 14 0.62636C14 0.801827 13.936 0.94948 13.8079 1.06932C13.6798 1.18935 13.5231 1.24936 13.3376 1.24936H9.82055L5.68681 12.7506H9.20388C9.38935 12.7506 9.54611 12.8112 9.67417 12.9324C9.80224 13.0535 9.86627 13.2018 9.86627 13.3773C9.86627 13.5526 9.80224 13.7002 9.67417 13.8202C9.54611 13.9401 9.38935 14 9.20388 14H0.662383Z" fill="currentColor"/>
-  </svg>
-</div>
+      <div className='svg-container-italic'>
+        <svg width="14" height="21" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg"
+          onClick={() => editor.chain().focus().toggleItalic().run()}
+          style={{
+            marginRight: '21.38px',
+            cursor: 'pointer',
+            transition: 'color 0.3s',
+            color: editor.isActive('italic') ? 'rgba(36, 34, 32, 0.8)' : '#999999'
+          }}
+          className="italic-button"
+        >
+          <path d="M0.662383 14C0.47692 14 0.320157 13.9394 0.192094 13.8183C0.0640314 13.6971 0 13.5489 0 13.3736C0 13.1982 0.0640314 13.0505 0.192094 12.9307C0.320157 12.8107 0.47692 12.7506 0.662383 12.7506H4.31633L8.45006 1.24936H4.79611C4.61065 1.24936 4.45389 1.18879 4.32583 1.06764C4.19776 0.946494 4.13373 0.798186 4.13373 0.62272C4.13373 0.44744 4.19776 0.299786 4.32583 0.17976C4.45389 0.0599195 4.61065 0 4.79611 0H13.3376C13.5231 0 13.6798 0.0605731 13.8079 0.18172C13.936 0.302866 14 0.45108 14 0.62636C14 0.801827 13.936 0.94948 13.8079 1.06932C13.6798 1.18935 13.5231 1.24936 13.3376 1.24936H9.82055L5.68681 12.7506H9.20388C9.38935 12.7506 9.54611 12.8112 9.67417 12.9324C9.80224 13.0535 9.86627 13.2018 9.86627 13.3773C9.86627 13.5526 9.80224 13.7002 9.67417 13.8202C9.54611 13.9401 9.38935 14 9.20388 14H0.662383Z" fill="currentColor"/>
+        </svg>
+      </div>
 
-<div className='svg-container-strike'>
+      <div className='svg-container-strike'>
   <svg width="14" height="17" viewBox="0 0 14 17" fill="none" xmlns="http://www.w3.org/2000/svg" 
     onClick={() => editor.chain().focus().toggleStrike().run()} 
     style={{
@@ -111,7 +112,7 @@ const MenuBar: React.FC<{ editor: Editor | null }> = ({ editor }) => {
   </svg>
 </div>
 
-<div className='svg-container-list'>
+      <div className='svg-container-list'>
   <svg width="17" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg"
     onClick={() => editor.chain().focus().toggleBulletList().run()} 
     style={{
@@ -124,65 +125,76 @@ const MenuBar: React.FC<{ editor: Editor | null }> = ({ editor }) => {
   </svg>
 </div>
 
+      <button style={{
+          marginLeft: 'auto', // This pushes the button to the right
+          
+          
+          cursor: 'pointer'
+        }} className="save-button" onClick={onSave}>
+        <FontAwesomeIcon icon={faCheck} />
+      </button>
     </div>
-  )
-}
+  );
+};
 
-const Draft: React.FC<DraftProps> = ({show, content, onChange, onContentChange, border, error}) => {
+const QuestionDraft: React.FC<DraftProps> = ({ id, show, content, onChange, onContentChange, border, error, onSave, onDelete }) => {
+  const [isEditMode, setIsEditMode] = useState(true);  // Start in edit mode
+  const [drafts, setDrafts] = useState([content || '']);
   const editor = useEditor({
     extensions: [
-      Color.configure({ /* Yapılandırma seçeneklerini buraya ekleyin, örneğin:  */}),
-      TextStyle.configure({ /* Yapılandırma seçeneklerini buraya ekleyin, örneğin:  */}),
+      Color.configure({}),
+      TextStyle.configure({}),
       StarterKit.configure({
-        bulletList: {
-          keepMarks: true,
-          keepAttributes: false,
-        },
-        orderedList: {
-          keepMarks: true,
-          keepAttributes: false,
-        },
+        bulletList: { keepMarks: true, keepAttributes: false },
+        orderedList: { keepMarks: true, keepAttributes: false },
       }),
     ],
-    content: content,
+    content: content || '',
     onUpdate: ({ editor }) => {
-      if (onChange) {
-        onChange(editor.getJSON());
-      }
-      if (onContentChange) {
-        onContentChange();
-      }
+      if (onChange) onChange(editor.getHTML());
+      if (onContentChange) onContentChange();
     },
-    
-    editable: !show
-  }, [])
+    editable: isEditMode,
+  });
 
-  useEffect(() => {
-    if (editor) {
-      editor.setEditable(!show);
+  const handleSave = () => {
+    setIsEditMode(false);  // Disable editing
+    editor?.setEditable(false);
+    setDrafts([...drafts, '']);
+    onSave(); 
+
+  };
+
+  const handleEdit = () => {
+    setIsEditMode(true);  // Enable editing
+    editor?.setEditable(true);  
+    onSave(); 
+  };
+
+  const handleDelete = () => {
+    if (window.confirm('Are you sure you want to delete this question?')) {
+      onDelete();
     }
-  }, [show, editor]);
-
-  if (show) {
-    return (      
-      <div className="control-group">
-        <EditorContent className="editor-content" editor={editor} />
-      </div>
-    );
-  }
+  };
 
   return (
-    <div 
-      className={`control-group ${error ? 'error-border' : ''}`} 
-      style={{border: border ? "none" : "1px solid #E7E5E4" }}
-    >
-      <MenuBar editor={editor} />
-      <EditorContent 
-        className="editor-content" 
-        editor={editor} 
-        onClick={() => editor?.chain().focus().run()}
-      />
+    <div className={`control-group ${error ? 'error-border' : ''}`} style={{ border: border ? "none" : "1px solid #E7E5E4" }}>
+      {isEditMode ? (
+        <>
+          <MenuBar editor={editor} onSave={handleSave} />
+          <EditorContent className="editor-content" editor={editor} onClick={() => editor?.chain().focus().run()} />
+        </>
+      ) : (
+        <div className="saved-question">
+          <EditorContent className="editor-content" editor={editor} />
+          <div className="hover-icons" >
+            <FontAwesomeIcon icon={faEdit} onClick={handleEdit} className="hover-edit-icon" />
+            <FontAwesomeIcon icon={faTimes} onClick={handleDelete} className="hover-delete-icon" />
+          </div>
+        </div>
+      )}
     </div>
-  )
-}
-export default Draft;
+  );
+};
+
+export default QuestionDraft;

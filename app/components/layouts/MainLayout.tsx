@@ -119,15 +119,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({
         </div>
 
         {showDetail && (
-          <div className={styles.DetailAreaContainer}>
           <div className={`${styles.DetailArea} ${styles.JobDetailArea}`}>
             <JobDetails job={detailJob} onClose={handleCloseJobDetails} />
-          </div>
           </div>
         )}
 
         {showRightSide && (
-          <div className={styles.DetailAreaContainer}>
           <div className={styles.DetailArea}>
             <ColumnRight
               list="right"
@@ -141,11 +138,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({
               rightCards={rightCards}
             />
           </div>
-          </div>
         )}
 
         {showJobDetails && selectedJob && (
-        
           <JobDetails job={selectedJob} onClose={handleCloseJobDetails} />
         )}
       </div>

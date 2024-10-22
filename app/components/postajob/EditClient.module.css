@@ -202,129 +202,24 @@
   height: 50px; /* Sabit bir yükseklik ekleyin */
 }
 
-.QuestionsGroup {
-  position: relative;
-  margin-top: 62px;
-}
-
-.AddQuestionGroup {
+.JobQuestions {
+  margin-top: 4.25rem;
   display: flex;
-  align-items: center;
-  flex-direction: row-reverse;
-  justify-content: flex-end;
-  margin-left: -10px;
-}
-
-.QuestionItem {
-  display: flex;
-  align-items: center;
-  margin-bottom: 16px;
-  padding-top: 15px;
-  padding-bottom: 14px;
-  padding-left: 24px;
-  font-family: Inter;
-  border: 1px solid #E7E5E4;
-  border-radius: 15px;
-  position: relative;
-  justify-content: space-between;
-  padding-right: 8px;
-}
-
-.QuestionText {
-  font-family: Inter;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 21px;
-  text-align: left;
-  color: #999999;
-  margin-right: 49px;;
-}
-
-.QuestionActions {
-  position: relative;
-}
-
-.DeleteIcon{
-  position: absolute;
-  bottom: -3px;
-  right: 3px;
-
-}
-
-.EditIcon{
-  position: absolute;
-  top: -3px;
-  right: 3px;
-
-}
-
-.QuestionsArea{
+  flex-direction: column;
   width: 100%;
-  max-width: 100%;
+  padding-right: 1px;
+
 }
 
-.AddQuestion {
+.JobQuestionText {
   font-family: Inter;
   font-size: 15px;
   font-weight: 400;
   line-height: 21px;
-  text-align: left;
   color: #999999;
-  cursor: pointer;
+  margin-bottom: 8px;
 }
 
-.AddQuestionWrapper {
-  display: flex;
-  align-items: center;
-  flex-direction: row-reverse;
-  cursor: pointer;
-}
-
-.AddQuestionWrapper span {
-  cursor: pointer;
-  font-family: Inter;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 21px;
-  text-align: left;
-  color: #999999;
-  cursor: pointer;
-}
-
-.AddQuestionWrapper:active span{
-  color: #242220e0;
-  cursor: pointer;
-}
-
-.AddQuestionWrapper:active  path{
-  stroke: #242220;
-  stroke-width: 1px;
-  cursor: pointer;
-}
-
-
-.QuestionPopup {
-  top: 100%;
-  position: absolute;
-  background: #ffffffcc;
-  border: 0.5px solid #e7e5e4;
-  box-shadow: 0px 0px 2px 0px #00000033;
-  box-shadow: 0px 0px 11.3px 0px #00000033;
-  padding-left: 24px;
-  padding-right: 24px;
-  padding-top: 48px;
-  padding-bottom: 24px;
-  left: 240px;
-  border-radius: 15px;  
-  z-index: 1000; 
-  background-color: rgba(255, 255, 255, 0.1); /* Yarı saydam arka plan */
-  backdrop-filter: blur(10px); /* Arka planı bulanıklaştır */
-  -webkit-backdrop-filter: blur(10px); /* Safari için destek */
-}
-
-.QuestionDiv {
-  width: 397px;
-}
 
 .ButtonGroup {
   display: flex;

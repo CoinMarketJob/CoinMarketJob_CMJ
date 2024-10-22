@@ -1,16 +1,18 @@
 .control-group{
     border-radius: 15px;
     width: 100%;
+    margin-bottom: 20px;
 
 }
 
-.button-group{
+.button-group {
     display: flex;
-    align-items: center;
-    border-bottom: 1.45px solid #E7E5E4;
-    padding-left: 26px;
-    
-}
+    align-items: center; /* Aligns items vertically center */
+    justify-content: flex-start; /* Align items to the left */
+    padding: 10px; /* Add some padding */
+    border-bottom: 1px solid #ddd; /* Optional: adds a bottom border */
+  }
+  
 
 .bold-button-draft {
     font-family: Inter;
@@ -21,7 +23,7 @@
     border: none;
     background-color: transparent;
     margin-right: 1px;
-    
+    margin-top: 1px;
     position: relative; /* Konumlandırmayı desteklemek için */
     transition: color 0.3s, background-color 0.3s; /* Geçiş efektleri */
 }
@@ -279,3 +281,82 @@
 .dropdown-item:hover {
     background-color: #F5F5F5;
 }
+/* Save button styling */
+.hover-icons {
+    position: absolute;
+    top: 10px; /* Adjust this value to control how near to the top */
+    right: 10px; /* Adjust this value for right-alignment */
+    display: flex;
+    gap: 8px; /* Space between the edit and delete icons */
+  }
+
+
+
+.save-button {
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 21px;
+    color: #999999;
+    border: none;
+    background-color: transparent;
+    margin-right: 1px;
+    
+    position: relative; /* Konumlandırmayı desteklemek için */
+    transition: color 0.3s, background-color 0.3s; /* Geçiş efektleri */
+}
+
+
+.save-button::before{
+    content: "";
+    position: absolute;
+    top: 47%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px; /* Dairenin boyutu */
+    height: 30px; /* Dairenin boyutu */
+    background-color: rgba(36, 34, 32, 0.05); /* Dairenin rengi */
+    border-radius: 50%; /* Yuvarlak daire */
+    z-index: -1; /* Arka planda kalması için */
+    transition: opacity 0.3s; /* Geçiş efekti */
+    opacity: 0; /* Başlangıçta görünmez */
+}
+
+.save-button:hover::before{
+    opacity: 1; /* Hover durumunda dairenin görünmesini sağlar */
+}
+
+  .saved-question {
+    position: relative;
+    padding: 15px;
+  
+    border-radius: 15px;
+    
+    transition: background-color 0.3s ease;
+  }
+  .saved-question:hover {
+    background-color: #f5f5f5;
+  }
+  
+  .saved-question:hover .hover-icons {
+    display: flex;
+   
+  }
+  
+  .hover-edit-icon,
+  .hover-delete-icon {
+    cursor: pointer;
+    color: #999999;
+    transition: color 0.3s ease;
+  }
+  
+  .hover-edit-icon:hover,
+  .hover-delete-icon:hover {
+    color: #333333;
+  }
+  
+
+  .error-border {
+    border-color: red;
+  }
+  
