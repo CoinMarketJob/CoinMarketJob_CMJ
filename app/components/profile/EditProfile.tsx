@@ -53,7 +53,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
     setProfileImage("/placeholder.svg?height=100&width=100")
   }
 
-  const onDragEnd = (result) => {
+  const onDragEnd = (result : any) => {
     if (!result.destination) {
       return
     }
@@ -74,7 +74,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
   }
 
   const renderSectionContent = (section: Section) => {
-    const addButton = (onClick) => (
+    const addButton = (onClick : any) => (
       <Button variant="outline" size="sm" onClick={onClick}>
         Add
       </Button>
@@ -136,7 +136,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
       </Dialog>
     )
 
-    const actionButtons = (onCancel) => (
+    const actionButtons = (onCancel : any) => (
       <div className="flex justify-end space-x-2 mt-4">
         <Button variant="outline" onClick={onCancel}>Cancel</Button>
         <Button onClick={onCancel}>Save</Button>
