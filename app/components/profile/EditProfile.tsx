@@ -183,7 +183,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
               <h2 className="text-2xl font-bold">{section}</h2>
               {addButton(() => setIsAddingWorkExperience(true))}
             </div>
-            <Separator className="my-4" />
+            <Separator />
             {isAddingWorkExperience ? (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -259,7 +259,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
               <h2 className="text-2xl font-bold">{section}</h2>
               {addButton(() => setIsAddingVolunteering(true))}
             </div>
-            <Separator className="my-4" />
+            <Separator />
             {isAddingVolunteering ? (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -335,7 +335,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
               <h2 className="text-2xl font-bold">{section}</h2>
               {addButton(() => setIsAddingEducation(true))}
             </div>
-            <Separator className="my-4" />
+            <Separator />
             {isAddingEducation ? (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -411,7 +411,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
               <h2 className="text-2xl font-bold">{section}</h2>
               {addButton(() => setIsAddingCertification(true))}
             </div>
-            <Separator className="my-4" />
+            <Separator />
             {isAddingCertification ? (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -468,7 +468,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
               <h2 className="text-2xl font-bold">{section}</h2>
               {addButton(() => setIsAddingProject(true))}
             </div>
-            <Separator className="my-4" />
+            <Separator />
             {isAddingProject ? (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -516,7 +516,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
               <h2 className="text-2xl font-bold">{section}</h2>
               {addButton(() => setIsAddingSideProject(true))}
             </div>
-            <Separator className="my-4" />
+            <Separator />
             {isAddingSideProject ? (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -564,7 +564,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
               <h2 className="text-2xl font-bold">{section}</h2>
               {addButton(() => setIsAddingPublication(true))}
             </div>
-            <Separator className="my-4" />
+            <Separator />
             {isAddingPublication ? (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -612,7 +612,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
               <h2 className="text-2xl font-bold">{section}</h2>
               {addButton(() => setIsAddingHonor(true))}
             </div>
-            <Separator className="my-4" />
+            <Separator />
             {isAddingHonor ? (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -660,7 +660,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
               <h2 className="text-2xl font-bold">{section}</h2>
               {addButton(() => setIsAddingContact(true))}
             </div>
-            <Separator className="my-4" />
+            <Separator />
             {isAddingContact ? (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -707,7 +707,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
               <h2 className="text-2xl font-bold">{section}</h2>
               {addButton(() => {})}
             </div>
-            <Separator className="my-4" />
+            <Separator />
             <p>Content for {section} section.</p>
           </div>
         )
@@ -758,7 +758,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
               </DragDropContext>
             </div>
           </div>
-          <div className="flex-1 p-6 overflow-auto">
+          <div className="flex-1 p-6 overflow-auto border-0" style={{borderColor: "#E4E4E7"}}>
             <div className="max-w-2xl mx-auto">
               {renderSectionContent(activeSection)}
             </div>

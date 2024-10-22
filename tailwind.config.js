@@ -17,6 +17,7 @@ module.exports = {
     			background: 'hsl(var(--background))',
     			foreground: 'hsl(var(--foreground))',
 				cardBorder: '#2422200d',
+				inputBorder: '#E4E4E7',
 				seperatorColor: '#999999',
     			card: {
     				DEFAULT: 'hsl(var(--card))',
@@ -46,7 +47,7 @@ module.exports = {
     				DEFAULT: 'hsl(var(--destructive))',
     				foreground: 'hsl(var(--destructive-foreground))'
     			},
-    			border: 'hsl(var(--border))',
+    			border: '#E4E4E7',
     			input: 'hsl(var(--input))',
     			ring: 'hsl(var(--ring))',
     			chart: {
