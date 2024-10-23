@@ -35,6 +35,90 @@ export default function EditProfile({ onClose }: EditProfileProps) {
   const [isAttachmentPopupOpen, setIsAttachmentPopupOpen] = useState(false)
   const [attachments, setAttachments] = useState<string[]>([])
 
+  const [generalState, setGeneralState] = useState({
+    name: "John Doe",
+    url: "www.calmmarketing.com/johndoe",
+    headline: "",
+    about: ""
+  })
+
+  const [workExperienceState, setWorkExperienceState] = useState({
+    title: "",
+    company: "",
+    location: "",
+    url: "",
+    from: "",
+    to: "",
+    description: ""
+  })
+
+  const [volunteeringState, setVolunteeringState] = useState({
+    title: "",
+    organization: "",
+    location: "",
+    url: "",
+    from: "",
+    to: "",
+    description: ""
+  })
+
+  const [educationState, setEducationState] = useState({
+    degree: "",
+    institution: "",
+    location: "",
+    url: "",
+    from: "",
+    to: "",
+    description: ""
+  })
+
+  const [certificationState, setCertificationState] = useState({
+    name: "",
+    organization: "",
+    issued: "",
+    expires: "",
+    description: ""
+  })
+
+  const [projectState, setProjectState] = useState({
+    title: "",
+    client: "",
+    year: "",
+    link: "",
+    description: ""
+  })
+
+  const [sideProjectState, setSideProjectState] = useState({
+    title: "",
+    client: "",
+    year: "",
+    link: "",
+    description: ""
+  })
+
+  const [publicationState, setPublicationState] = useState({
+    title: "",
+    publisher: "",
+    date: "",
+    url: "",
+    description: ""
+  })
+
+  const [honorState, setHonorState] = useState({
+    title: "",
+    issuer: "",
+    date: "",
+    url: "",
+    description: ""
+  })
+
+  const [contactState, setContactState] = useState({
+    platform: "",
+    url: "",
+    platformName: "",
+    username: ""
+  })
+
   const popupRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -72,6 +156,56 @@ export default function EditProfile({ onClose }: EditProfileProps) {
       setAttachments([...attachments, file.name])
       setIsAttachmentPopupOpen(false)
     }
+  }
+
+  const handleGeneralChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setGeneralState(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleWorkExperienceChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setWorkExperienceState(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleVolunteeringChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setVolunteeringState(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleEducationChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setEducationState(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleCertificationChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setCertificationState(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleProjectChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setProjectState(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleSideProjectChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setSideProjectState(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handlePublicationChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setPublicationState(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleHonorChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setHonorState(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleContactChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setContactState(prev => ({ ...prev, [name]: value }))
   }
 
   const renderSectionContent = (section: Section) => {
@@ -158,21 +292,44 @@ export default function EditProfile({ onClose }: EditProfileProps) {
               <div className="flex-1 space-y-4">
                 <div>
                   <Label htmlFor="name">Name Surname</Label>
-                  <Input id="name" defaultValue="John Doe" />
+                  <Input 
+                    id="name" 
+                    name="name"
+                    value={generalState.name} 
+                    onChange={handleGeneralChange}
+                  />
                 </div>
                 <div>
                   <Label htmlFor="url">URL</Label>
-                  <Input id="url" defaultValue="www.calmmarketing.com/johndoe" />
+                  <Input 
+                    id="url" 
+                    name="url"
+                    value={generalState.url} 
+                    onChange={handleGeneralChange}
+                  />
                 </div>
               </div>
             </div>
             <div>
               <Label htmlFor="headline">Headline</Label>
-              <Input id="headline" placeholder="Enter your headline" />
+              <Input 
+                id="headline" 
+                name="headline"
+                value={generalState.headline} 
+                onChange={handleGeneralChange} 
+                placeholder="Enter your headline" 
+              />
             </div>
             <div>
               <Label htmlFor="about">About you</Label>
-              <Textarea id="about" rows={4} placeholder="Tell us about yourself" />
+              <Textarea 
+                id="about" 
+                name="about"
+                value={generalState.about} 
+                onChange={handleGeneralChange} 
+                rows={4} 
+                placeholder="Tell us about yourself" 
+              />
             </div>
             <Button className="w-full">Done</Button>
           </div>
@@ -190,11 +347,23 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="title">Title*</Label>
-                    <Input id="title" placeholder="Enter title" />
+                    <Input 
+                      id="title" 
+                      name="title"
+                      value={workExperienceState.title} 
+                      onChange={handleWorkExperienceChange} 
+                      placeholder="Enter title" 
+                    />
                   </div>
                   <div>
                     <Label htmlFor="company">Company*</Label>
-                    <Input id="company" placeholder="Enter company" />
+                    <Input 
+                      id="company" 
+                      name="company"
+                      value={workExperienceState.company} 
+                      onChange={handleWorkExperienceChange} 
+                      placeholder="Enter company" 
+                    />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
@@ -266,11 +435,23 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="title">Title*</Label>
-                    <Input id="title" placeholder="Enter title" />
+                    <Input 
+                      id="title" 
+                      name="title"
+                      value={volunteeringState.title} 
+                      onChange={handleVolunteeringChange} 
+                      placeholder="Enter title" 
+                    />
                   </div>
                   <div>
                     <Label htmlFor="organization">Organization*</Label>
-                    <Input id="organization" placeholder="Enter organization" />
+                    <Input 
+                      id="organization" 
+                      name="organization"
+                      value={volunteeringState.organization} 
+                      onChange={handleVolunteeringChange} 
+                      placeholder="Enter organization" 
+                    />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
