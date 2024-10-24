@@ -7,7 +7,9 @@ import EditProfile from "./EditProfile"
 import { useState } from "react"
 
 const RenderCard = ({ title, content }: { title: string; content: React.ReactNode }) => {
-  if (!content || content.length === 0) return null;
+  if (!content || (Array.isArray(content) && content.length === 0) || (typeof content === 'string' && content.length === 0)) {
+    return null;
+  }
   
   return (
     <Card className="mb-6">

@@ -288,32 +288,20 @@ export default function EditProfile({ onClose }: EditProfileProps) {
     setCertificationState((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleProjectChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setProjectState((prev) => ({ ...prev, [name]: value }));
+  const handleProjectChange = (content: JSONContent) => {
+    setProjectState((prev) => ({ ...prev, description: content }));
   };
 
-  const handleSideProjectChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setSideProjectState((prev) => ({ ...prev, [name]: value }));
+  const handleSideProjectChange = (content: JSONContent) => {
+    setSideProjectState((prev) => ({ ...prev, description: content }));
   };
 
-  const handlePublicationChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setPublicationState((prev) => ({ ...prev, [name]: value }));
+  const handlePublicationChange = (content: JSONContent) => {
+    setPublicationState((prev) => ({ ...prev, description: content }));
   };
 
-  const handleHonorChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setHonorState((prev) => ({ ...prev, [name]: value }));
+  const handleHonorChange = (content: JSONContent) => {
+    setHonorState((prev) => ({ ...prev, description: content }));
   };
 
   const handleContactChange = (
@@ -328,7 +316,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+    const file = event.target.files?.[0] || null; // Ensure file is either File or null
     setLogoFile(file);
     if (file) {
       const reader = new FileReader();
@@ -1059,7 +1047,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                   <Label htmlFor="description">Description</Label>
                   <Draft
                     content={projectState.description}
-                    onChange={(content) => handleProjectChange(content)}
+                    onChange={handleProjectChange}
                     onContentChange={() => {}}
                     border={false}
                   />
@@ -1118,7 +1106,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                   <Label htmlFor="description">Description</Label>
                   <Draft
                     content={sideProjectState.description}
-                    onChange={(content) => handleSideProjectChange(content)}
+                    onChange={handleSideProjectChange}
                     onContentChange={() => {}}
                     border={false}
                   />
@@ -1177,7 +1165,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                   <Label htmlFor="description">Description</Label>
                   <Draft
                     content={publicationState.description}
-                    onChange={(content) => handlePublicationChange(content)}
+                    onChange={handlePublicationChange}
                     onContentChange={() => {}}
                     border={false}
                   />
@@ -1236,7 +1224,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                   <Label htmlFor="description">Description</Label>
                   <Draft
                     content={honorState.description}
-                    onChange={(content) => handleHonorChange(content)}
+                    onChange={handleHonorChange}
                     onContentChange={() => {}}
                     border={false}
                   />
