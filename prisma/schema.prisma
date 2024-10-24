@@ -176,10 +176,7 @@ model Profile {
   user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   logoURL       String?
   nameSurname   String?
-  jobTitle      String?
-  location      String?
   headline      String?
-  siteUrl       String?
   phoneCode     String?
   phone         String?
   about         Json?

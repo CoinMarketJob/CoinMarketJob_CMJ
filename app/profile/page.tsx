@@ -2,6 +2,8 @@
 import React, { useState } from 'react'
 import Button from '../components/general/Button'
 import EditProfile from '../components/profile/EditProfile';
+import ProfilePage from '../components/profile/ProfilePage';
+import { Dice1 } from 'lucide-react';
 
 const Page = () => {
   const [editProfile, setEditProfile] = useState<boolean>(false);
@@ -11,9 +13,8 @@ const Page = () => {
   };
 
   return (
-    <div className="tailwind" style={{ width: "100%" }}>
-      <Button text="Edit Profile" onClick={() => setEditProfile(true)} />
-      {editProfile && <EditProfile onClose={handleCloseEditProfile} />}
+    <div style={{ width: "100%" }}>
+      <ProfilePage />
     </div>
   )
 }

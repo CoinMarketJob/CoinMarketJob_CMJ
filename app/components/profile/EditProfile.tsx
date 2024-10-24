@@ -1,46 +1,94 @@
-"use client"
-import { useState, useRef, useEffect } from "react"
-import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
-import { Button } from "@/app/components/ui/button"
-import { Input } from "@/app/components/ui/input"
-import { Label } from "@/app/components/ui/label"
-import { Textarea } from "../ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select" 
-import { GripVertical, Image as ImageIcon, List, Link, Paperclip, X, Upload, Edit as EditIcon, Camera } from "lucide-react"
-import { Separator } from "@/app/components/ui/separator"
-import { Dialog, DialogContent, DialogTrigger } from "@/app/components/ui/dialog"
-import Image from 'next/image'
+"use client";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import { Button } from "@/app/components/ui/button";
+import { Input } from "@/app/components/ui/input";
+import { Label } from "@/app/components/ui/label";
+import { Textarea } from "@/app/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/components/ui/select";
+import {
+  GripVertical,
+  Image as ImageIcon,
+  List,
+  Link,
+  Paperclip,
+  X,
+  Upload,
+  Edit as EditIcon,
+  Camera,
+} from "lucide-react";
+import { Separator } from "@/app/components/ui/separator";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/app/components/ui/dialog";
+import Image from "next/image";
+import Draft from "@/app/components/general/Draft";
+import { JSONContent } from "@tiptap/react";
+import { uploadFile } from "@/utils/s3Operations";
+import { getCurrentUser } from "@/app/actions/getCurrentUser";
 
-type Section = "General" | "Work Experience" | "Volunteering" | "Education" | "Certification" | "Projects" | "Side Projects" | "Publications" | "Honors" | "Contact"
+type Section =
+  | "General"
+  | "Work Experience"
+  | "Volunteering"
+  | "Education"
+  | "Certification"
+  | "Projects"
+  | "Side Projects"
+  | "Publications"
+  | "Honors"
+  | "Contact";
 
 interface EditProfileProps {
   onClose: () => void;
 }
 
 export default function EditProfile({ onClose }: EditProfileProps) {
-  const [profileImage, setProfileImage] = useState("/PlaceHolderAvatar.png?height=100&width=100")
-  const [activeSection, setActiveSection] = useState<Section>("General")
+  const [profileImage, setProfileImage] = useState<string>(
+    "/PlaceHolderAvatar.png?height=100&width=100"
+  );
+  const [activeSection, setActiveSection] = useState<Section>("General");
   const [sections, setSections] = useState<Section[]>([
-    "General", "Work Experience", "Volunteering", "Education", "Certification", "Projects", "Side Projects", "Publications", "Honors", "Contact"
-  ])
-  const [isAddingWorkExperience, setIsAddingWorkExperience] = useState(false)
-  const [isAddingVolunteering, setIsAddingVolunteering] = useState(false)
-  const [isAddingEducation, setIsAddingEducation] = useState(false)
-  const [isAddingCertification, setIsAddingCertification] = useState(false)
-  const [isAddingProject, setIsAddingProject] = useState(false)
-  const [isAddingSideProject, setIsAddingSideProject] = useState(false)
-  const [isAddingPublication, setIsAddingPublication] = useState(false)
-  const [isAddingHonor, setIsAddingHonor] = useState(false)
-  const [isAddingContact, setIsAddingContact] = useState(false)
-  const [isAttachmentPopupOpen, setIsAttachmentPopupOpen] = useState(false)
-  const [attachments, setAttachments] = useState<string[]>([])
+    "General",
+    "Work Experience",
+    "Volunteering",
+    "Education",
+    "Certification",
+    "Projects",
+    "Side Projects",
+    "Publications",
+    "Honors",
+    "Contact",
+  ]);
+  const [isAddingWorkExperience, setIsAddingWorkExperience] = useState(false);
+  const [isAddingVolunteering, setIsAddingVolunteering] = useState(false);
+  const [isAddingEducation, setIsAddingEducation] = useState(false);
+  const [isAddingCertification, setIsAddingCertification] = useState(false);
+  const [isAddingProject, setIsAddingProject] = useState(false);
+  const [isAddingSideProject, setIsAddingSideProject] = useState(false);
+  const [isAddingPublication, setIsAddingPublication] = useState(false);
+  const [isAddingHonor, setIsAddingHonor] = useState(false);
+  const [isAddingContact, setIsAddingContact] = useState(false);
+  const [isAttachmentPopupOpen, setIsAttachmentPopupOpen] = useState(false);
+  const [attachments, setAttachments] = useState<string[]>([]);
+
+  const [logoURL, setLogoURL] = useState<string>("");
+  const [logoFile, setLogoFile] = useState<File | null>(null);
 
   const [generalState, setGeneralState] = useState({
     name: "John Doe",
-    url: "www.calmmarketing.com/johndoe",
+    url: "www.coinmarketjob.com/feed/merenkirkas",
     headline: "",
-    about: ""
-  })
+    about: {} as JSONContent,
+  });
 
   const [workExperienceState, setWorkExperienceState] = useState({
     title: "",
@@ -49,8 +97,8 @@ export default function EditProfile({ onClose }: EditProfileProps) {
     url: "",
     from: "",
     to: "",
-    description: ""
-  })
+    description: {} as JSONContent,
+  });
 
   const [volunteeringState, setVolunteeringState] = useState({
     title: "",
@@ -59,8 +107,8 @@ export default function EditProfile({ onClose }: EditProfileProps) {
     url: "",
     from: "",
     to: "",
-    description: ""
-  })
+    description: {} as JSONContent,
+  });
 
   const [educationState, setEducationState] = useState({
     degree: "",
@@ -69,61 +117,69 @@ export default function EditProfile({ onClose }: EditProfileProps) {
     url: "",
     from: "",
     to: "",
-    description: ""
-  })
+    description: {} as JSONContent,
+  });
 
   const [certificationState, setCertificationState] = useState({
     name: "",
     organization: "",
     issued: "",
     expires: "",
-    description: ""
-  })
+    description: {} as JSONContent,
+  });
 
   const [projectState, setProjectState] = useState({
     title: "",
     client: "",
     year: "",
     link: "",
-    description: ""
-  })
+    description: {} as JSONContent,
+  });
 
   const [sideProjectState, setSideProjectState] = useState({
     title: "",
     client: "",
     year: "",
     link: "",
-    description: ""
-  })
+    description: {} as JSONContent,
+  });
 
   const [publicationState, setPublicationState] = useState({
     title: "",
     publisher: "",
     date: "",
     url: "",
-    description: ""
-  })
+    description: {} as JSONContent,
+  });
 
   const [honorState, setHonorState] = useState({
     title: "",
     issuer: "",
     date: "",
     url: "",
-    description: ""
-  })
+    description: {} as JSONContent,
+  });
 
   const [contactState, setContactState] = useState({
     platform: "",
     url: "",
     platformName: "",
-    username: ""
-  })
+    username: "",
+  });
+
+  const [descriptionContent, setDescriptionContent] = useState<
+    JSONContent | undefined
+  >(undefined);
 
   const popupRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+      if (
+        popupRef.current &&
+        !popupRef.current.contains(event.target as Node)
+      ) {
         onClose();
       }
     };
@@ -134,79 +190,299 @@ export default function EditProfile({ onClose }: EditProfileProps) {
     };
   }, [onClose]);
 
-  const removeImage = () => {
-    setProfileImage("/PlaceHolderAvatar.png?height=100&width=100")
-  }
+  // Profil verilerini çekmek ve state'leri güncellemek için useEffect
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const response = await fetch("/api/profile/get");
+        if (!response.ok) {
+          throw new Error("Failed to fetch profile data");
+        }
+        const profileData = await response.json();
 
-  const onDragEnd = (result : any) => {
+        // General state'lerini güncelle
+        setGeneralState({
+          name: profileData.nameSurname || "John Doe",
+          url: `www.coinmarketjob.com/feed/${profileData.userId || ""}`,
+          headline: profileData.headline || "",
+          about: profileData.about || {},
+        });
+
+        // Profil resmini güncelle
+        if (profileData.logoURL) {
+          setProfileImage(profileData.logoURL);
+        }
+
+      } catch (error) {
+        console.error("Error fetching profile data:", error);
+      }
+    };
+
+    fetchProfileData();
+  }, []);
+
+  const removeImage = () => {
+    setProfileImage("/PlaceHolderAvatar.png?height=100&width=100");
+  };
+
+  const onDragEnd = (result: any) => {
     if (!result.destination) {
-      return
+      return;
     }
 
-    const newSections = Array.from(sections)
-    const [reorderedItem] = newSections.splice(result.source.index, 1)
-    newSections.splice(result.destination.index, 0, reorderedItem)
+    const newSections = Array.from(sections);
+    const [reorderedItem] = newSections.splice(result.source.index, 1);
+    newSections.splice(result.destination.index, 0, reorderedItem);
 
-    setSections(newSections)
-  }
+    setSections(newSections);
+  };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
+    const file = event.target.files?.[0];
     if (file) {
-      setAttachments([...attachments, file.name])
-      setIsAttachmentPopupOpen(false)
+      setAttachments([...attachments, file.name]);
+      setIsAttachmentPopupOpen(false);
     }
-  }
+  };
 
-  const handleGeneralChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setGeneralState(prev => ({ ...prev, [name]: value }))
-  }
+  const handleGeneralChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | JSONContent
+  ) => {
+    if ("target" in e) {
+      const { name, value } = e.target;
+      setGeneralState((prev) => ({ ...prev, [name]: value }));
+    } else {
+      setGeneralState((prev) => ({ ...prev, about: e }));
+    }
+  };
 
-  const handleWorkExperienceChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setWorkExperienceState(prev => ({ ...prev, [name]: value }))
-  }
+  const handleWorkExperienceChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | JSONContent
+  ) => {
+    if ("target" in e) {
+      const { name, value } = e.target;
+      setWorkExperienceState((prev) => ({ ...prev, [name]: value }));
+    } else {
+      setWorkExperienceState((prev) => ({ ...prev, description: e }));
+    }
+  };
 
-  const handleVolunteeringChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setVolunteeringState(prev => ({ ...prev, [name]: value }))
-  }
+  const handleVolunteeringChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setVolunteeringState((prev) => ({ ...prev, [name]: value }));
+  };
 
-  const handleEducationChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setEducationState(prev => ({ ...prev, [name]: value }))
-  }
+  const handleEducationChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setEducationState((prev) => ({ ...prev, [name]: value }));
+  };
 
-  const handleCertificationChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setCertificationState(prev => ({ ...prev, [name]: value }))
-  }
+  const handleCertificationChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setCertificationState((prev) => ({ ...prev, [name]: value }));
+  };
 
-  const handleProjectChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setProjectState(prev => ({ ...prev, [name]: value }))
-  }
+  const handleProjectChange = (content: JSONContent) => {
+    setProjectState((prev) => ({ ...prev, description: content }));
+  };
 
-  const handleSideProjectChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setSideProjectState(prev => ({ ...prev, [name]: value }))
-  }
+  const handleSideProjectChange = (content: JSONContent) => {
+    setSideProjectState((prev) => ({ ...prev, description: content }));
+  };
 
-  const handlePublicationChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setPublicationState(prev => ({ ...prev, [name]: value }))
-  }
+  const handlePublicationChange = (content: JSONContent) => {
+    setPublicationState((prev) => ({ ...prev, description: content }));
+  };
 
-  const handleHonorChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setHonorState(prev => ({ ...prev, [name]: value }))
-  }
+  const handleHonorChange = (content: JSONContent) => {
+    setHonorState((prev) => ({ ...prev, description: content }));
+  };
 
-  const handleContactChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setContactState(prev => ({ ...prev, [name]: value }))
-  }
+  const handleContactChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setContactState((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleImageClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] || null; // Ensure file is either File or null
+    setLogoFile(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleDescriptionChange = (content: JSONContent) => {
+    setDescriptionContent(content);
+  };
+
+  const handleWorkExperienceSubmit = async () => {
+    try {
+      const response = await fetch("/api/profile/profilesection", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          sectionType: "WorkExperience",
+          title: workExperienceState.title,
+          institution: workExperienceState.company,
+          location: workExperienceState.location,
+          url: workExperienceState.url,
+          from: workExperienceState.from,
+          to: workExperienceState.to,
+          description: workExperienceState.description,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save work experience");
+      }
+
+      // Reset the form
+      setWorkExperienceState({
+        title: "",
+        company: "",
+        location: "",
+        url: "",
+        from: "",
+        to: "",
+        description: {} as JSONContent,
+      });
+
+      setIsAddingWorkExperience(false);
+    } catch (error) {
+      console.error("Error saving work experience:", error);
+    }
+  };
+
+  const handleVolunteeringSubmit = async () => {
+    try {
+      const response = await fetch("/api/profile/profilesection", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          sectionType: "Volunteering",
+          title: volunteeringState.title,
+          institution: volunteeringState.organization,
+          location: volunteeringState.location,
+          url: volunteeringState.url,
+          from: volunteeringState.from,
+          to: volunteeringState.to,
+          description: volunteeringState.description,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save volunteering experience");
+      }
+
+      setVolunteeringState({
+        title: "",
+        organization: "",
+        location: "",
+        url: "",
+        from: "",
+        to: "",
+        description: {} as JSONContent,
+      });
+
+      setIsAddingVolunteering(false);
+    } catch (error) {
+      console.error("Error saving volunteering experience:", error);
+    }
+  };
+
+  const handleEducationSubmit = async () => {
+    try {
+      const response = await fetch("/api/profile/profilesection", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          sectionType: "Education",
+          title: educationState.degree,
+          institution: educationState.institution,
+          location: educationState.location,
+          url: educationState.url,
+          from: educationState.from,
+          to: educationState.to,
+          description: educationState.description,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save education");
+      }
+
+      setEducationState({
+        degree: "",
+        institution: "",
+        location: "",
+        url: "",
+        from: "",
+        to: "",
+        description: {} as JSONContent,
+      });
+
+      setIsAddingEducation(false);
+    } catch (error) {
+      console.error("Error saving education:", error);
+    }
+  };
+
+  const handleCertificationSubmit = async () => {
+    try {
+      const response = await fetch("/api/profile/profilesection", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          sectionType: "Certifications",
+          title: certificationState.name,
+          institution: certificationState.organization,
+          from: certificationState.issued,
+          to: certificationState.expires,
+          description: certificationState.description,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save certification");
+      }
+
+      setCertificationState({
+        name: "",
+        organization: "",
+        issued: "",
+        expires: "",
+        description: {} as JSONContent,
+      });
+
+      setIsAddingCertification(false);
+    } catch (error) {
+      console.error("Error saving certification:", error);
+    }
+  };
 
   const renderSectionContent = (section: Section) => {
     const addButton = (onClick : any) => (
@@ -230,10 +506,13 @@ export default function EditProfile({ onClose }: EditProfileProps) {
           </Button>
         </div>
       </div>
-    )
+    );
 
     const attachmentButton = (
-      <Dialog open={isAttachmentPopupOpen} onOpenChange={setIsAttachmentPopupOpen}>
+      <Dialog
+        open={isAttachmentPopupOpen}
+        onOpenChange={setIsAttachmentPopupOpen}
+      >
         <DialogTrigger asChild>
           <Button variant="outline" className="w-full mt-4">
             <Paperclip className="h-4 w-4 mr-2" />
@@ -244,10 +523,17 @@ export default function EditProfile({ onClose }: EditProfileProps) {
           <div className="p-4">
             <h2 className="text-lg font-semibold mb-4">Add Attachment</h2>
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-              <Input type="file" className="hidden" id="file-upload" onChange={handleFileUpload} />
+              <Input
+                type="file"
+                className="hidden"
+                id="file-upload"
+                onChange={handleFileUpload}
+              />
               <Label htmlFor="file-upload" className="cursor-pointer">
                 <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                <p className="mt-2 text-sm text-gray-500">Click to upload or drag and drop</p>
+                <p className="mt-2 text-sm text-gray-500">
+                  Click to upload or drag and drop
+                </p>
               </Label>
             </div>
             {attachments.length > 0 && (
@@ -255,7 +541,10 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                 <h3 className="font-semibold mb-2">Uploaded Files:</h3>
                 <ul>
                   {attachments.map((attachment, index) => (
-                    <li key={index} className="flex items-center justify-between py-2">
+                    <li
+                      key={index}
+                      className="flex items-center justify-between py-2"
+                    >
                       <span>{attachment}</span>
                       <Button variant="ghost" size="sm">
                         <EditIcon className="h-4 w-4" />
@@ -268,14 +557,16 @@ export default function EditProfile({ onClose }: EditProfileProps) {
           </div>
         </DialogContent>
       </Dialog>
-    )
+    );
 
-    const actionButtons = (onCancel : any) => (
+    const actionButtons = (onCancel: any) => (
       <div className="flex justify-end space-x-2 mt-4">
-        <Button variant="outline" onClick={onCancel}>Cancel</Button>
+        <Button variant="outline" onClick={onCancel}>
+          Cancel
+        </Button>
         <Button onClick={onCancel}>Save</Button>
       </div>
-    )
+    );
 
     switch (section) {
       case "General":
@@ -283,10 +574,28 @@ export default function EditProfile({ onClose }: EditProfileProps) {
           <div className="space-y-6 relative">
             <div className="flex items-start gap-4">
               <div className="relative">
-                <Image src={profileImage} alt="Profile" width={96} height={96} className="rounded-full object-cover" />
-                <Button variant="outline" size="icon" className="absolute bottom-0 right-0 rounded-full bg-white">
+                <Image
+                  src={profileImage}
+                  alt="Profile"
+                  width={96}
+                  height={96}
+                  className="rounded-full object-cover"
+                />
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="absolute bottom-0 right-0 rounded-full bg-white"
+                  onClick={handleImageClick}
+                >
                   <Camera className="h-4 w-4" />
                 </Button>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleImageChange}
+                  accept="image/*"
+                  className="hidden"
+                />
               </div>
               <div className="flex-1 space-y-4">
                 <div>
@@ -294,7 +603,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                   <Input 
                     id="name" 
                     name="name"
-                    value={generalState.name} 
+                    value={generalState.name}
                     onChange={handleGeneralChange}
                     placeholder="Name Surname" 
                   />
@@ -304,7 +613,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                   <Input 
                     id="url" 
                     name="url"
-                    value={generalState.url} 
+                    value={generalState.url}
                     onChange={handleGeneralChange}
                     placeholder="URL" 
                   />
@@ -322,18 +631,18 @@ export default function EditProfile({ onClose }: EditProfileProps) {
             </div>
             <div>
               <Label htmlFor="about">About you</Label>
-              <Textarea 
-                id="about" 
-                name="about"
-                value={generalState.about} 
-                onChange={handleGeneralChange} 
-                rows={4} 
-                placeholder="Tell us about yourself" 
+              <Draft
+                content={generalState.about}
+                onChange={(content) => handleGeneralChange(content)}
+                onContentChange={() => {}}
+                border={false}
               />
             </div>
-            <Button className="w-full">Done</Button>
+            <Button className="w-full" onClick={handleSaveGeneral}>
+              Done
+            </Button>
           </div>
-        )
+        );
       case "Work Experience":
         return (
           <div className="space-y-4 relative">
@@ -413,15 +722,29 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                     </Select>
                   </div>
                 </div>
-                {descriptionArea}
+                <div>
+                  <Label htmlFor="description">Description</Label>
+                  <Draft
+                    content={workExperienceState.description}
+                    onChange={(content) => handleWorkExperienceChange(content)}
+                    onContentChange={() => {}}
+                    border={false}
+                  />
+                </div>
                 {attachmentButton}
-                {actionButtons(() => setIsAddingWorkExperience(false))}
+                {actionButtons(() => {
+                  handleWorkExperienceSubmit();
+                  setIsAddingWorkExperience(false);
+                })}
               </div>
             ) : (
-              <p>No work experience added yet. Click &apos;Add&apos; to add new work experience.</p>
+              <p>
+                No work experience added yet. Click &apos;Add&apos; to add new
+                work experience.
+              </p>
             )}
           </div>
-        )
+        );
       case "Volunteering":
         return (
           <div className="space-y-4 relative">
@@ -435,22 +758,22 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="title">Title*</Label>
-                    <Input 
-                      id="title" 
+                    <Input
+                      id="title"
                       name="title"
-                      value={volunteeringState.title} 
-                      onChange={handleVolunteeringChange} 
-                      placeholder="Enter title" 
+                      value={volunteeringState.title}
+                      onChange={handleVolunteeringChange}
+                      placeholder="Enter title"
                     />
                   </div>
                   <div>
                     <Label htmlFor="organization">Organization*</Label>
-                    <Input 
-                      id="organization" 
+                    <Input
+                      id="organization"
                       name="organization"
-                      value={volunteeringState.organization} 
-                      onChange={handleVolunteeringChange} 
-                      placeholder="Enter organization" 
+                      value={volunteeringState.organization}
+                      onChange={handleVolunteeringChange}
+                      placeholder="Enter organization"
                     />
                   </div>
                 </div>
@@ -501,15 +824,29 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                     </Select>
                   </div>
                 </div>
-                {descriptionArea}
+                <div>
+                  <Label htmlFor="description">Description</Label>
+                  <Draft
+                    content={volunteeringState.description}
+                    onChange={(content: JSONContent) => setVolunteeringState(prev => ({ ...prev, description: content }))}
+                    onContentChange={() => {}}
+                    border={false}
+                  />
+                </div>
                 {attachmentButton}
-                {actionButtons(() => setIsAddingVolunteering(false))}
+                {actionButtons(() => {
+                  handleVolunteeringSubmit();
+                  setIsAddingVolunteering(false);
+                })}
               </div>
             ) : (
-              <p>No volunteering experience added yet. Click &apos;Add&apos; to add new volunteering experience.</p>
+              <p>
+                No volunteering experience added yet. Click &apos;Add&apos; to add new
+                volunteering experience.
+              </p>
             )}
           </div>
-        )
+        );
       case "Education":
         return (
           <div className="space-y-4 relative">
@@ -549,7 +886,7 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                     <Input id="url" placeholder="https://" />
                   </div>
                 </div>
-                <div  className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="from">From*</Label>
                     <Select>
@@ -577,15 +914,29 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                     </Select>
                   </div>
                 </div>
-                {descriptionArea}
+                <div>
+                  <Label htmlFor="description">Description</Label>
+                  <Draft
+                    content={educationState.description}
+                    onChange={(content: JSONContent) => setEducationState(prev => ({ ...prev, description: content }))}
+                    onContentChange={() => {}}
+                    border={false}
+                  />
+                </div>
                 {attachmentButton}
-                {actionButtons(() => setIsAddingEducation(false))}
+                {actionButtons(() => {
+                  handleEducationSubmit();
+                  setIsAddingEducation(false);
+                })}
               </div>
             ) : (
-              <p>No education added yet. Click &apos;Add&apos; to add new education.</p>
+              <p>
+                No education added yet. Click &apos;Add&apos; to add new
+                education.
+              </p>
             )}
           </div>
-        )
+        );
       case "Certification":
         return (
           <div className="space-y-4 relative">
@@ -627,22 +978,38 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                         <SelectValue placeholder="Select date" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="no-expiration">No Expiration</SelectItem>
+                        <SelectItem value="no-expiration">
+                          No Expiration
+                        </SelectItem>
                         <SelectItem value="2024">2024</SelectItem>
                         <SelectItem value="2025">2025</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                 </div>
-                {descriptionArea}
+                <div>
+                  <Label htmlFor="description">Description</Label>
+                  <Draft
+                    content={certificationState.description}
+                    onChange={(content: JSONContent) => setCertificationState(prev => ({ ...prev, description: content }))}
+                    onContentChange={() => {}}
+                    border={false}
+                  />
+                </div>
                 {attachmentButton}
-                {actionButtons(() => setIsAddingCertification(false))}
+                {actionButtons(() => {
+                  handleCertificationSubmit();
+                  setIsAddingCertification(false);
+                })}
               </div>
             ) : (
-              <p>No certifications added yet. Click &apos;Add&apos; to add a new certification.</p>
+              <p>
+                No certifications added yet. Click &apos;Add&apos; to add a new
+                certification.
+              </p>
             )}
           </div>
-        )
+        );
       case "Projects":
         return (
           <div className="space-y-4 relative">
@@ -682,15 +1049,26 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                     <Input id="link" placeholder="https://" />
                   </div>
                 </div>
-                {descriptionArea}
+                <div>
+                  <Label htmlFor="description">Description</Label>
+                  <Draft
+                    content={projectState.description}
+                    onChange={handleProjectChange}
+                    onContentChange={() => {}}
+                    border={false}
+                  />
+                </div>
                 {attachmentButton}
                 {actionButtons(() => setIsAddingProject(false))}
               </div>
             ) : (
-              <p>No projects added yet. Click &apos;Add&apos; to add a new project.</p>
+              <p>
+                No projects added yet. Click &apos;Add&apos; to add a new
+                project.
+              </p>
             )}
           </div>
-        )
+        );
       case "Side Projects":
         return (
           <div className="space-y-4 relative">
@@ -730,15 +1108,26 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                     <Input id="link" placeholder="https://" />
                   </div>
                 </div>
-                {descriptionArea}
+                <div>
+                  <Label htmlFor="description">Description</Label>
+                  <Draft
+                    content={sideProjectState.description}
+                    onChange={handleSideProjectChange}
+                    onContentChange={() => {}}
+                    border={false}
+                  />
+                </div>
                 {attachmentButton}
                 {actionButtons(() => setIsAddingSideProject(false))}
               </div>
             ) : (
-              <p>No side projects added yet. Click &apos;Add&apos; to add a new side project.</p>
+              <p>
+                No side projects added yet. Click &apos;Add&apos; to add a new
+                side project.
+              </p>
             )}
           </div>
-        )
+        );
       case "Publications":
         return (
           <div className="space-y-4 relative">
@@ -778,15 +1167,26 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                     <Input id="url" placeholder="https://" />
                   </div>
                 </div>
-                {descriptionArea}
+                <div>
+                  <Label htmlFor="description">Description</Label>
+                  <Draft
+                    content={publicationState.description}
+                    onChange={handlePublicationChange}
+                    onContentChange={() => {}}
+                    border={false}
+                  />
+                </div>
                 {attachmentButton}
                 {actionButtons(() => setIsAddingPublication(false))}
               </div>
             ) : (
-              <p>No publications added yet. Click &apos;Add&apos; to add a new publication.</p>
+              <p>
+                No publications added yet. Click &apos;Add&apos; to add a new
+                publication.
+              </p>
             )}
           </div>
-        )
+        );
       case "Honors":
         return (
           <div className="space-y-4 relative">
@@ -826,15 +1226,25 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                     <Input id="url" placeholder="https://" />
                   </div>
                 </div>
-                {descriptionArea}
+                <div>
+                  <Label htmlFor="description">Description</Label>
+                  <Draft
+                    content={honorState.description}
+                    onChange={handleHonorChange}
+                    onContentChange={() => {}}
+                    border={false}
+                  />
+                </div>
                 {attachmentButton}
                 {actionButtons(() => setIsAddingHonor(false))}
               </div>
             ) : (
-              <p>No honors added yet. Click &apos;Add&apos; to add a new honor.</p>
+              <p>
+                No honors added yet. Click &apos;Add&apos; to add a new honor.
+              </p>
             )}
           </div>
-        )
+        );
       case "Contact":
         return (
           <div className="space-y-4 relative">
@@ -868,7 +1278,10 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="platformName">Name of Platform</Label>
-                    <Input id="platformName" placeholder="Enter platform name" />
+                    <Input
+                      id="platformName"
+                      placeholder="Enter platform name"
+                    />
                   </div>
                   <div>
                     <Label htmlFor="username">Username</Label>
@@ -878,10 +1291,13 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                 {actionButtons(() => setIsAddingContact(false))}
               </div>
             ) : (
-              <p>No contacts added yet. Click &apos;Add&apos; to add a new contact.</p>
+              <p>
+                No contacts added yet. Click &apos;Add&apos; to add a new
+                contact.
+              </p>
             )}
           </div>
-        )
+        );
       default:
         return (
           <div className="space-y-4 relative">
@@ -892,14 +1308,87 @@ export default function EditProfile({ onClose }: EditProfileProps) {
             <Separator />
             <p>Content for {section} section.</p>
           </div>
-        )
+        );
     }
-  }
+  };
+
+  const uploadLogo = useCallback(
+    async (file: File | Blob, fileName: string): Promise<string> => {
+      const formData = new FormData();
+      formData.append("file", file, fileName);
+      formData.append(
+        "Content-Type",
+        file instanceof File ? file.type : "image/png"
+      );
+  
+      try {
+        const response = await fetch("/api/profileimage/", {
+          method: "POST",
+          body: formData,
+        });
+  
+        if (response.ok) {
+          const data = await response.json();
+          setLogoURL(data.url); // State'i güncelle
+          return data.url; // URL'yi döndür
+        } else {
+          throw new Error("Logo upload failed");
+        }
+      } catch (error) {
+        console.error("Error uploading logo:", error);
+        throw error; // Hatayı yukarı fırlat
+      }
+    },
+    []
+  );
+  
+  const handleSaveGeneral = async () => {
+    try {
+      const currentUser = await getCurrentUser();
+      if (!currentUser) {
+        throw new Error("User not authenticated");
+      }
+  
+      let uploadedLogoURL = logoURL;
+  
+      if (logoFile) {
+        uploadedLogoURL = await uploadLogo(logoFile, logoFile.name);
+      }
+  
+      // API'ye veri gönder
+      const response = await fetch("/api/profile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nameSurname: generalState.name,
+          headline: generalState.headline,
+          about: generalState.about,
+          avatar: uploadedLogoURL,
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to update profile");
+      }
+  
+      onClose();
+    } catch (err) {
+      //Error Period
+      console.error("Error in handleSaveGeneral:", err);
+    } finally {
+      //Warning And Cleaning Period
+    }
+  };
 
   return (
-    <div className="tailwind" style={{width: "100%"}}>
+    <div className="tailwind" style={{ width: "100%" }}>
       <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center shadow-lg">
-        <div ref={popupRef} className="bg-white rounded-2xl shadow-lg w-full max-w-4xl h-[600px] flex overflow-hidden">
+        <div
+          ref={popupRef}
+          className="bg-white rounded-2xl shadow-lg w-full max-w-4xl h-[600px] flex overflow-hidden"
+        >
           <div className="w-64 bg-white border-r">
             <div className="h-full">
               <DragDropContext onDragEnd={onDragEnd}>
@@ -908,7 +1397,9 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                     <nav
                       {...provided.droppableProps}
                       ref={provided.innerRef}
-                      className={`space-y-1 p-4 ${snapshot.isDraggingOver ? 'bg-gray-50' : ''}`}
+                      className={`space-y-1 p-4 ${
+                        snapshot.isDraggingOver ? "bg-gray-50" : ""
+                      }`}
                     >
                       {sections.map((item, index) => (
                         <Draggable key={item} draggableId={item} index={index}>
@@ -920,13 +1411,16 @@ export default function EditProfile({ onClose }: EditProfileProps) {
                                 item === activeSection
                                   ? "bg-gray-200"
                                   : snapshot.isDragging
-                                    ? "bg-gray-100"
-                                    : "hover:bg-gray-100"
+                                  ? "bg-gray-100"
+                                  : "hover:bg-gray-100"
                               }`}
                               onClick={() => setActiveSection(item as Section)}
                             >
                               <span>{item}</span>
-                              <div {...provided.dragHandleProps} className="cursor-grab active:cursor-grabbing">
+                              <div
+                                {...provided.dragHandleProps}
+                                className="cursor-grab active:cursor-grabbing"
+                              >
                                 <GripVertical className="h-4 w-4" />
                               </div>
                             </div>
@@ -940,7 +1434,10 @@ export default function EditProfile({ onClose }: EditProfileProps) {
               </DragDropContext>
             </div>
           </div>
-          <div className="flex-1 p-6 overflow-auto border-0" style={{borderColor: "#E4E4E7"}}>
+          <div
+            className="flex-1 p-6 overflow-auto border-0"
+            style={{ borderColor: "#E4E4E7" }}
+          >
             <div className="max-w-2xl mx-auto">
               {renderSectionContent(activeSection)}
             </div>
@@ -948,5 +1445,5 @@ export default function EditProfile({ onClose }: EditProfileProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }
