@@ -1,34 +1,30 @@
-import { useState } from "react"
 import { Avatar } from "@/app/components/ui/avatar"
 import { Button } from "@/app/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/card"
 import { Edit, Share2, Download } from "lucide-react"
 import Image from "next/image"
 import EditProfile from "./EditProfile"
+import { useState } from "react"
 
-const RenderCard = ({ title, content }) => {
+const RenderCard = ({ title, content }: { title: string; content: React.ReactNode }) => {
   if (!content || content.length === 0) return null;
   
   return (
     <Card className="mb-6">
-      <CardHeader>
+      <CardHeader className="pb-2">
         <CardTitle>{title}</CardTitle>
       </CardHeader>
-      <CardContent>{content}</CardContent>
+      <CardContent className="px-6">{content}</CardContent>
     </Card>
   );
 };
 
 export default function ProfilePage() {
-  const [isEditProfileOpen, setIsEditProfileOpen] = useState(false)
+  const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
 
-  const handleEditProfileClick = () => {
-    setIsEditProfileOpen(true)
-  }
-
-  const handleCloseEditProfile = () => {
-    setIsEditProfileOpen(false)
-  }
+  const handleEditProfileToggle = () => {
+    setIsEditProfileOpen((prev) => !prev);
+  };
 
   const workExperience = [
     {
@@ -111,32 +107,38 @@ export default function ProfilePage() {
 
   return (
     <div className="tailwind">
-      
-      <div className="container mx-auto px-4 py-8 max-w-2xl">
-        <div className="flex justify-end space-x-2 mb-4">
-          <Button variant="outline" size="icon" onClick={handleEditProfileClick}>
-            <Edit className="h-4 w-4" />
-            <span className="sr-only">Edit profile</span>
-          </Button>
-          <Button variant="outline" size="icon">
-            <Share2 className="h-4 w-4" />
-            <span className="sr-only">Share profile</span>
-          </Button>
-          <Button variant="outline" size="icon">
-            <Download className="h-4 w-4" />
-            <span className="sr-only">Download profile</span>
-          </Button>
-        </div>
-        
-        <div className="text-center mb-8">
-          <Avatar className="w-32 h-32 mx-auto mb-4">
-            <img src="/placeholder.svg?height=128&width=128" alt="Profile picture" className="rounded-full" />
-          </Avatar>
-          <h1 className="text-2xl font-bold">John Doe</h1>
-          <p className="text-muted-foreground">Software Developer</p>
+      <div className="container mx-auto px-4 py-8 max-w-3xl">
+        <div className="relative mb-6">
+          <div className="absolute top-1/4 right-4 -translate-y-1/2 flex space-x-2">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={handleEditProfileToggle}
+              aria-label="Edit profile"
+              tabIndex={0}
+            >
+              <Edit className="h-4 w-4" />
+              <span className="sr-only">Edit profile</span>
+            </Button>
+            <Button variant="outline" size="icon">
+              <Share2 className="h-4 w-4" />
+              <span className="sr-only">Share profile</span>
+            </Button>
+            <Button variant="outline" size="icon">
+              <Download className="h-4 w-4" />
+              <span className="sr-only">Download profile</span>
+            </Button>
+          </div>
+          <div className="text-center">
+            <Avatar className="w-32 h-32 mx-auto mb-4">
+              <img src="/placeholder.svg?height=128&width=128" alt="Profile picture" className="rounded-full" />
+            </Avatar>
+            <h1 className="text-2xl font-bold">John Doe</h1>
+            <p className="text-muted-foreground">Software Developer</p>
+          </div>
         </div>
 
-        <section className="mb-8">
+        <section className="mb-8 px-6">
           <h2 className="text-xl font-semibold mb-2">About</h2>
           <p className="text-muted-foreground">
             Passionate software developer with experience in web development and cloud technologies.
@@ -149,7 +151,7 @@ export default function ProfilePage() {
           content={
             <div className="space-y-6">
               {workExperience.map((job, index) => (
-                <div key={index} className="border-b pb-6 last:border-b-0 last:pb-0">
+                <div key={index} className="pb-6 last:pb-0">
                   <h3 className="font-semibold text-lg">{job.role} at {job.company}</h3>
                   <div className="flex text-sm text-muted-foreground mb-2">
                     <span className="mr-8">{job.period}</span>
@@ -297,9 +299,9 @@ export default function ProfilePage() {
         />
 
         {isEditProfileOpen && (
-          <EditProfile onClose={handleCloseEditProfile} />
+          <EditProfile onClose={handleEditProfileToggle} />
         )}
       </div>
     </div>
-  )
+  );
 }
