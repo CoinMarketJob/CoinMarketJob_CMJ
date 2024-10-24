@@ -4,8 +4,8 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
 import { Button } from "@/app/components/ui/button"
 import { Input } from "@/app/components/ui/input"
 import { Label } from "@/app/components/ui/label"
-import { Textarea } from "@/app/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/components/ui/select"
+import { Textarea } from "../ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select" 
 import { GripVertical, Image as ImageIcon, List, Link, Paperclip, X, Upload, Edit as EditIcon, Camera } from "lucide-react"
 import { Separator } from "@/app/components/ui/separator"
 import { Dialog, DialogContent, DialogTrigger } from "@/app/components/ui/dialog"
@@ -210,15 +210,14 @@ export default function EditProfile({ onClose }: EditProfileProps) {
 
   const renderSectionContent = (section: Section) => {
     const addButton = (onClick : any) => (
-      <Button variant="outline" size="sm" onClick={onClick}>
-        Add
-      </Button>
+      <Button variant="default" onClick={onClick}>White Button</Button>
     )
 
     const descriptionArea = (
       <div>
         <Label htmlFor="description">Description</Label>
         <Textarea id="description" placeholder="Add description" className="mt-2" />
+        
         <div className="flex justify-start gap-2 mt-2">
           <Button variant="outline" size="icon">
             <List className="h-4 w-4" />
@@ -291,33 +290,34 @@ export default function EditProfile({ onClose }: EditProfileProps) {
               </div>
               <div className="flex-1 space-y-4">
                 <div>
-                  <Label htmlFor="name">Name Surname</Label>
+                  
                   <Input 
                     id="name" 
                     name="name"
                     value={generalState.name} 
                     onChange={handleGeneralChange}
+                    placeholder="Name Surname" 
                   />
                 </div>
                 <div>
-                  <Label htmlFor="url">URL</Label>
+                  
                   <Input 
                     id="url" 
                     name="url"
                     value={generalState.url} 
                     onChange={handleGeneralChange}
+                    placeholder="URL" 
                   />
                 </div>
               </div>
             </div>
             <div>
-              <Label htmlFor="headline">Headline</Label>
               <Input 
                 id="headline" 
                 name="headline"
                 value={generalState.headline} 
                 onChange={handleGeneralChange} 
-                placeholder="Enter your headline" 
+                placeholder="Headline" 
               />
             </div>
             <div>
@@ -346,23 +346,23 @@ export default function EditProfile({ onClose }: EditProfileProps) {
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="title">Title*</Label>
+                    
                     <Input 
                       id="title" 
                       name="title"
                       value={workExperienceState.title} 
                       onChange={handleWorkExperienceChange} 
-                      placeholder="Enter title" 
+                      placeholder="Title*" 
                     />
                   </div>
                   <div>
-                    <Label htmlFor="company">Company*</Label>
+                    
                     <Input 
                       id="company" 
                       name="company"
                       value={workExperienceState.company} 
                       onChange={handleWorkExperienceChange} 
-                      placeholder="Enter company" 
+                      placeholder="Company*" 
                     />
                   </div>
                 </div>

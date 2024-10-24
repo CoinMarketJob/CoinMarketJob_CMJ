@@ -1,6 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     darkMode: ['class'],
+	plugins: [
+		require('tailwindcss/nesting'),
+		require('tailwindcss'), // Ensure tailwindcss plugin is also included
+	  ],
     content: [
 		'./pages/**/*.{js,ts,jsx,tsx,mdx}',
 		'./components/**/*.{js,ts,jsx,tsx,mdx}',
